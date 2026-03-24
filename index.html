@@ -1521,13 +1521,35 @@
 
 <!-- ═════════════ DASHBOARD ═════════════ -->
 <div id="dash">
+
+  <!-- Login Overlay -->
+  <div id="dashLogin" style="position:absolute;inset:0;z-index:100;background:var(--f0);display:flex;align-items:center;justify-content:center">
+    <div style="background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-xl)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
+        <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
+        <div style="font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t0)">Flott<em style="color:var(--navy);font-style:normal">iq</em> — Intern</div>
+      </div>
+      <div style="font-family:var(--fh);font-size:20px;font-weight:800;color:var(--t0);margin-bottom:6px">Anmelden</div>
+      <div style="font-size:13px;color:var(--t2);margin-bottom:24px">Nur für IMD Fleet Services Team</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);display:block;margin-bottom:5px">Benutzername</label>
+          <input type="text" id="loginUser" class="fi" placeholder="username" autocomplete="username"></div>
+        <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);display:block;margin-bottom:5px">Passwort</label>
+          <input type="password" id="loginPass" class="fi" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <div id="loginErr" style="font-size:12px;color:var(--red);display:none"></div>
+        <button class="btn btn-navy" style="width:100%;justify-content:center;margin-top:4px" onclick="doLogin()">Anmelden →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dash-nav">
     <div class="dash-logo">
       <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
       <div class="dash-logo-name">Flott<em>iq</em> — Intern</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:11px;color:var(--t2)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6203060f0b0c22060f0b040e0707164c0607">[email&#160;protected]</a></span>
+      <span id="dashUserLabel" style="font-size:11px;color:var(--t2)"></span>
+      <button class="dash-close" onclick="doLogout()" style="margin-right:4px">Abmelden</button>
       <button class="dash-close" onclick="closeDash()">← Website</button>
     </div>
   </div>
@@ -1558,23 +1580,26 @@
     <div class="dash-main">
 
       <div class="dp act" id="dOv">
-        <div class="dh">Dashboard</div><div class="dsub">Stand 13.03.2026</div>
+        <div class="dh">Dashboard</div><div id="dashDate" class="dsub">—</div>
         <div class="kpi-row">
-          <div class="kpi"><div class="kpi-lbl">Aktive Fahrzeuge</div><div class="kpi-val">24</div><div class="kpi-delta up">↑ +3 heute</div></div>
-          <div class="kpi"><div class="kpi-lbl">Gutachten offen</div><div class="kpi-val">7</div><div class="kpi-delta flat">→ 2 fällig</div></div>
-          <div class="kpi"><div class="kpi-lbl">Angebote offen</div><div class="kpi-val">5</div><div class="kpi-delta up">↑ +2</div></div>
-          <div class="kpi"><div class="kpi-lbl">Auszahlungen (30d)</div><div class="kpi-val">€182k</div><div class="kpi-delta up">↑ +12%</div></div>
+          <div class="kpi"><div class="kpi-lbl">Anfragen gesamt</div><div class="kpi-val" id="kpiTotal">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Heute eingegangen</div><div class="kpi-val" id="kpiToday">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Neu / unbearbeitet</div><div class="kpi-val" id="kpiNeu">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Status</div><div class="kpi-val" style="color:var(--green);font-size:13px">● Online</div></div>
         </div>
         <div class="tbl-wrap">
-          <div class="tbl-head"><div class="tbl-title">Aktuelle Fahrzeuge</div><div><select class="tbl-sel" onchange="filterTbl(this.value)"><option value="">Alle Status</option><option>Angemeldet</option><option>Logistik</option><option>Gutachten</option><option>Angebot</option><option>Bestätigt</option><option>Ausgezahlt</option></select></div></div>
-          <table><thead><tr><th>Fahrzeug</th><th>Jahr</th><th>KM</th><th>HEK</th><th>Bonus</th><th>EK</th><th>Status</th><th></th></tr></thead><tbody id="tblBody"></tbody></table>
+          <div class="tbl-head">
+            <div class="tbl-title">Neue Anfragen</div>
+            <button class="tbl-sel" onclick="loadDashData()" style="cursor:pointer">↻ Aktualisieren</button>
+          </div>
+          <table><thead><tr><th>Datum</th><th>Firma</th><th>Ansprechpartner</th><th>Telefon</th><th>Fahrzeug</th><th>Status</th></tr></thead><tbody id="tblBody"></tbody></table>
         </div>
       </div>
 
       <div class="dp" id="dAll">
-        <div class="dh">Alle Fahrzeuge</div><div class="dsub">Vollständige Bestandsliste</div>
-        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Fahrzeugbestand</div></div>
-        <table><thead><tr><th>Fahrzeug</th><th>Jahr</th><th>KM</th><th>Firma</th><th>Status</th><th></th></tr></thead><tbody id="tblAll"></tbody></table></div>
+        <div class="dh">Alle Anfragen</div><div class="dsub">Vollständige Liste</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Alle Anfragen</div></div>
+        <table><thead><tr><th>Datum</th><th>Firma</th><th>Name</th><th>Tel</th><th>E-Mail</th><th>Fahrzeug</th><th>KM</th><th>Anmerkung</th><th>Status</th></tr></thead><tbody id="tblAll"></tbody></table></div>
       </div>
 
       <div class="dp" id="dDet">

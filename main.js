@@ -1,21 +1,61 @@
-// ─── DATA ───
-const vehicles=[
-  {id:1,name:'BMW 320d xDrive',year:2021,km:'45.200',firma:'TechCorp GmbH',hek:'22.400',bonus:'800',ek:'23.200',status:'Angebot',sb:'sb-bl'},
-  {id:2,name:'Audi A4 Avant TDI',year:2022,km:'38.100',firma:'Pharma AG',hek:'19.800',bonus:'1.000',ek:'20.800',status:'Bestätigt',sb:'sb-gr'},
-  {id:3,name:'VW Passat GTE',year:2023,km:'29.500',firma:'IT Solutions',hek:'18.200',bonus:'0',ek:'18.200',status:'Gutachten',sb:'sb-am'},
-  {id:4,name:'Mercedes C 220d',year:2020,km:'61.000',firma:'Beratung & Co',hek:'18.400',bonus:'1.200',ek:'19.600',status:'Ausgezahlt',sb:'sb-gr'},
-  {id:5,name:'BMW X3 20d xDrive',year:2021,km:'52.400',firma:'Pharma AG',hek:'26.800',bonus:'2.100',ek:'28.900',status:'Ausgezahlt',sb:'sb-gr'},
-  {id:6,name:'Skoda Octavia RS',year:2022,km:'18.300',firma:'Versicherungs AG',hek:'15.900',bonus:'400',ek:'16.300',status:'Logistik',sb:'sb-bl'},
-  {id:7,name:'Ford Kuga Titanium',year:2021,km:'44.000',firma:'Bau-Holding GmbH',hek:'14.200',bonus:'0',ek:'14.200',status:'Angemeldet',sb:'sb-gy'},
-];
-function makeRows8(list){return list.map(v=>`<tr><td><strong>${v.name}</strong></td><td>${v.year}</td><td>${v.km} km</td><td style="color:var(--green);font-weight:600">${v.hek} €</td><td style="color:var(--navy)">${v.bonus!=='0'?'+'+v.bonus+' €':'—'}</td><td style="font-weight:700">${v.ek} €</td><td><span class="sb ${v.sb}">${v.status}</span></td><td><button class="td-btn" onclick="showPanel('dDet',null)">Detail</button></td></tr>`).join('');}
-function makeRows6(list){return list.map(v=>`<tr><td><strong>${v.name}</strong></td><td>${v.year}</td><td>${v.km} km</td><td>${v.firma}</td><td><span class="sb ${v.sb}">${v.status}</span></td><td><button class="td-btn" onclick="showPanel('dDet',null)">Öffnen</button></td></tr>`).join('');}
-function filterTbl(val){document.getElementById('tblBody').innerHTML=makeRows8(val?vehicles.filter(v=>v.status===val):vehicles);}
-
 // ─── DASHBOARD ───
-function openDash(){document.getElementById('dash').classList.add('open');document.body.style.overflow='hidden';document.getElementById('tblBody').innerHTML=makeRows8(vehicles);document.getElementById('tblAll').innerHTML=makeRows6(vehicles);}
+const STATUS_COLORS={'Neu':'sb-gy','Angemeldet':'sb-gy','In Bearbeitung':'sb-bl','Gutachten':'sb-am','Angebot':'sb-bl','Bestätigt':'sb-gr','Ausgezahlt':'sb-gr','Abgeschlossen':'sb-gr'};
+const STATUS_OPTIONS=['Neu','In Bearbeitung','Gutachten','Angebot','Bestätigt','Ausgezahlt','Abgeschlossen'];
+
+function fmtDate(iso){if(!iso)return'—';return new Date(iso).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
+function statusSelect(id,current){return`<select class="tbl-sel" onchange="updateStatus(${id},this.value)">${STATUS_OPTIONS.map(s=>`<option${s===current?' selected':''}>${s}</option>`).join('')}</select>`;}
+
+async function updateStatus(id,status){await fetch('/api/submissions/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});loadDashData();}
+
+function renderSubmissions(rows,tbodyId,compact){
+  const tbody=document.getElementById(tbodyId);if(!tbody)return;
+  if(!rows||!rows.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:32px">Noch keine Anfragen</td></tr>';return;}
+  tbody.innerHTML=rows.map(r=>{
+    const fzg=[r.marke,r.modell,r.baujahr].filter(Boolean).join(' ')||'—';
+    if(compact)return`<tr><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${fzg}</td><td>${statusSelect(r.id,r.status)}</td></tr>`;
+    return`<tr><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${r.email||'—'}</td><td>${fzg}</td><td>${r.km?r.km+' km':'—'}</td><td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.anmerkung||'—'}</td><td>${statusSelect(r.id,r.status)}</td></tr>`;
+  }).join('');
+}
+
+async function loadDashData(){
+  try{
+    const [stats,subs]=await Promise.all([fetch('/api/stats').then(r=>r.json()),fetch('/api/submissions').then(r=>r.json())]);
+    document.getElementById('kpiTotal').textContent=stats.total??'—';
+    document.getElementById('kpiToday').textContent=stats.today??'—';
+    document.getElementById('kpiNeu').textContent=stats.neu??'—';
+    document.getElementById('dashDate').textContent='Stand '+new Date().toLocaleDateString('de-DE');
+    renderSubmissions(subs,'tblBody',true);
+    renderSubmissions(subs,'tblAll',false);
+  }catch(e){console.error(e);}
+}
+
+async function openDash(){
+  document.getElementById('dash').classList.add('open');
+  document.body.style.overflow='hidden';
+  const auth=await fetch('/api/check-auth').then(r=>r.json());
+  if(auth.authenticated){
+    document.getElementById('dashLogin').style.display='none';
+    document.getElementById('dashUserLabel').textContent=auth.user;
+    loadDashData();
+  }else{
+    document.getElementById('dashLogin').style.display='flex';
+  }
+}
+
 function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
 function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}}
+
+async function doLogin(){
+  const u=document.getElementById('loginUser').value;
+  const p=document.getElementById('loginPass').value;
+  const err=document.getElementById('loginErr');
+  err.style.display='none';
+  const res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})}).then(r=>r.json());
+  if(res.success){document.getElementById('dashLogin').style.display='none';document.getElementById('dashUserLabel').textContent=u;loadDashData();}
+  else{err.textContent=res.error||'Fehler';err.style.display='block';}
+}
+
+async function doLogout(){await fetch('/api/logout',{method:'POST'});closeDash();}
 
 // ─── PROZESS ANIMATION ───
 let prozessAnimated=false;
