@@ -152,8 +152,12 @@ app.get('/api/submissions', requireAuth, async (req, res) => {
 // ── PATCH /api/submissions/:id ────────────────────────────────────────────────
 app.patch('/api/submissions/:id', requireAuth, async (req, res) => {
   try {
-    const { status } = req.body;
-    await pool.query('UPDATE submissions SET status = $1 WHERE id = $2', [status, req.params.id]);
+    const allowed = ['status','firma','name','email','telefon','marke','modell','baujahr','km','anmerkung'];
+    const fields = allowed.filter(f => req.body[f] !== undefined);
+    if (!fields.length) return res.json({ success: false, error: 'Keine Felder angegeben' });
+    const set = fields.map((f, i) => `${f}=$${i + 1}`).join(', ');
+    const vals = [...fields.map(f => req.body[f]), req.params.id];
+    await pool.query(`UPDATE submissions SET ${set} WHERE id=$${vals.length}`, vals);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });

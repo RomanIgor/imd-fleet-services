@@ -1525,9 +1525,8 @@
   <!-- Login Overlay -->
   <div id="dashLogin" style="position:absolute;inset:0;z-index:100;background:var(--f0);display:flex;align-items:center;justify-content:center">
     <div style="background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-xl)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
-        <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
-        <div style="font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t0)">IMD Fleet Services</div>
+      <div style="margin-bottom:28px">
+        <div style="font-family:var(--fh);font-size:17px;font-weight:800;color:var(--t0)">IMD Fleet Services</div>
       </div>
       <div style="font-family:var(--fh);font-size:20px;font-weight:800;color:var(--t0);margin-bottom:6px">Anmelden</div>
       <div style="font-size:13px;color:var(--t2);margin-bottom:24px">Nur für IMD Fleet Services Team</div>
@@ -1542,9 +1541,41 @@
     </div>
   </div>
 
+  <!-- Anfrage Edit Modal -->
+  <div id="anfrageModal" style="display:none;position:absolute;inset:0;z-index:200;background:rgba(9,21,42,.55);align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:14px;padding:32px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.22)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <div style="font-family:var(--fh);font-size:18px;font-weight:800;color:var(--t0)">Anfrage bearbeiten</div>
+        <button onclick="closeAnfrageModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--t3);line-height:1">×</button>
+      </div>
+      <input type="hidden" id="editId">
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Firma</label><input type="text" id="editFirma" class="fi"></div>
+        <div class="fg"><label class="fl">Ansprechpartner</label><input type="text" id="editName" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Telefon</label><input type="text" id="editTelefon" class="fi"></div>
+        <div class="fg"><label class="fl">E-Mail</label><input type="email" id="editEmail" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Marke</label><input type="text" id="editMarke" class="fi"></div>
+        <div class="fg"><label class="fl">Modell</label><input type="text" id="editModell" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Baujahr</label><input type="text" id="editBaujahr" class="fi"></div>
+        <div class="fg"><label class="fl">Kilometerstand</label><input type="text" id="editKm" class="fi"></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label class="fl">Anmerkung</label><textarea id="editAnmerkung" class="fi" rows="3" style="resize:vertical;font-family:inherit"></textarea></div>
+      <div class="fg" style="margin-bottom:24px"><label class="fl">Status</label><select id="editStatus" class="fi fsel"></select></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button onclick="closeAnfrageModal()" class="dash-close" style="padding:10px 20px">Abbrechen</button>
+        <button onclick="saveAnfrage()" class="btn btn-navy" style="padding:10px 24px">Speichern →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dash-nav">
     <div class="dash-logo">
-      <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
       <div class="dash-logo-name">IMD Fleet Services</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">

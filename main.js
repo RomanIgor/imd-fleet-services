@@ -3,18 +3,59 @@ const STATUS_COLORS={'Neu':'sb-gy','Angemeldet':'sb-gy','In Bearbeitung':'sb-bl'
 const STATUS_OPTIONS=['Neu','In Bearbeitung','Gutachten','Angebot','Bestätigt','Ausgezahlt','Abgeschlossen'];
 
 function fmtDate(iso){if(!iso)return'—';return new Date(iso).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
-function statusSelect(id,current){return`<select class="tbl-sel" onchange="updateStatus(${id},this.value)">${STATUS_OPTIONS.map(s=>`<option${s===current?' selected':''}>${s}</option>`).join('')}</select>`;}
+function statusBadge(s){return`<span class="sb ${STATUS_COLORS[s]||'sb-gy'}">${s||'Neu'}</span>`;}
 
-async function updateStatus(id,status){await fetch('/api/submissions/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});loadDashData();}
+let _rows=[];
 
 function renderSubmissions(rows,tbodyId,compact){
+  _rows=rows;
   const tbody=document.getElementById(tbodyId);if(!tbody)return;
-  if(!rows||!rows.length){tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:32px">Noch keine Anfragen</td></tr>';return;}
+  if(!rows||!rows.length){tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:32px">Noch keine Anfragen</td></tr>`;return;}
   tbody.innerHTML=rows.map(r=>{
     const fzg=[r.marke,r.modell,r.baujahr].filter(Boolean).join(' ')||'—';
-    if(compact)return`<tr><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${fzg}</td><td>${statusSelect(r.id,r.status)}</td></tr>`;
-    return`<tr><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${r.email||'—'}</td><td>${fzg}</td><td>${r.km?r.km+' km':'—'}</td><td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.anmerkung||'—'}</td><td>${statusSelect(r.id,r.status)}</td></tr>`;
+    const badge=statusBadge(r.status);
+    const open=`openAnfrage(${r.id})`;
+    if(compact)return`<tr style="cursor:pointer" onclick="${open}"><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${fzg}</td><td>${badge}</td></tr>`;
+    return`<tr style="cursor:pointer" onclick="${open}"><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${r.email||'—'}</td><td>${fzg}</td><td>${r.km?r.km+' km':'—'}</td><td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.anmerkung||'—'}</td><td>${badge}</td></tr>`;
   }).join('');
+}
+
+// ─── ANFRAGE MODAL ───
+function openAnfrage(id){
+  const r=_rows.find(x=>x.id===id);if(!r)return;
+  document.getElementById('editId').value=id;
+  document.getElementById('editFirma').value=r.firma||'';
+  document.getElementById('editName').value=r.name||'';
+  document.getElementById('editTelefon').value=r.telefon||'';
+  document.getElementById('editEmail').value=r.email||'';
+  document.getElementById('editMarke').value=r.marke||'';
+  document.getElementById('editModell').value=r.modell||'';
+  document.getElementById('editBaujahr').value=r.baujahr||'';
+  document.getElementById('editKm').value=r.km||'';
+  document.getElementById('editAnmerkung').value=r.anmerkung||'';
+  const sel=document.getElementById('editStatus');
+  sel.innerHTML=STATUS_OPTIONS.map(s=>`<option${s===r.status?' selected':''}>${s}</option>`).join('');
+  const modal=document.getElementById('anfrageModal');
+  modal.style.display='flex';
+}
+function closeAnfrageModal(){document.getElementById('anfrageModal').style.display='none';}
+async function saveAnfrage(){
+  const id=document.getElementById('editId').value;
+  const data={
+    firma:document.getElementById('editFirma').value,
+    name:document.getElementById('editName').value,
+    telefon:document.getElementById('editTelefon').value,
+    email:document.getElementById('editEmail').value,
+    marke:document.getElementById('editMarke').value,
+    modell:document.getElementById('editModell').value,
+    baujahr:document.getElementById('editBaujahr').value,
+    km:document.getElementById('editKm').value,
+    anmerkung:document.getElementById('editAnmerkung').value,
+    status:document.getElementById('editStatus').value,
+  };
+  const res=await fetch('/api/submissions/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(r=>r.json());
+  if(res.success){closeAnfrageModal();loadDashData();showToast('✓ Gespeichert');}
+  else showToast('⚠ Fehler beim Speichern');
 }
 
 async function loadDashData(){
