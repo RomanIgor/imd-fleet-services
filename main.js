@@ -43,7 +43,7 @@ async function openDash(){
 }
 
 function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
-function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}}
+function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();}
 
 async function doLogin(){
   const u=document.getElementById('loginUser').value;
@@ -56,6 +56,48 @@ async function doLogin(){
 }
 
 async function doLogout(){await fetch('/api/logout',{method:'POST'});closeDash();}
+
+// ─── USERS ───
+async function loadUsers(){
+  try{
+    const rows=await fetch('/api/users').then(r=>r.json());
+    const tbody=document.getElementById('tblUsers');if(!tbody)return;
+    if(!rows.length){tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--t3);padding:24px">Keine Benutzer</td></tr>';return;}
+    tbody.innerHTML=rows.map(u=>`<tr><td><strong>${u.username}</strong></td><td>${fmtDate(u.created_at)}</td><td><button class="tbl-sel" style="cursor:pointer;color:var(--red)" onclick="deleteUser('${u.username}')">Löschen</button></td></tr>`).join('');
+  }catch(e){console.error(e);}
+}
+async function addUser(){
+  const u=document.getElementById('newUserName').value.trim();
+  const p=document.getElementById('newUserPass').value;
+  const msg=document.getElementById('userMsg');
+  if(!u||!p){msg.style.cssText='display:block;color:var(--red)';msg.textContent='Benutzername und Passwort eingeben.';return;}
+  const res=await fetch('/api/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})}).then(r=>r.json());
+  if(res.success){msg.style.cssText='display:block;color:var(--green)';msg.textContent='Benutzer erfolgreich hinzugefügt.';document.getElementById('newUserName').value='';document.getElementById('newUserPass').value='';loadUsers();}
+  else{msg.style.cssText='display:block;color:var(--red)';msg.textContent=res.error||'Fehler';}
+}
+async function deleteUser(username){
+  if(!confirm(`Benutzer "${username}" wirklich löschen?`))return;
+  const res=await fetch('/api/users/'+encodeURIComponent(username),{method:'DELETE'}).then(r=>r.json());
+  if(res.success)loadUsers();
+  else showToast('⚠ '+(res.error||'Fehler'));
+}
+
+// ─── EXCEL EXPORT ───
+function exportExcel(){
+  if(typeof XLSX==='undefined'){showToast('⚠ XLSX-Bibliothek nicht geladen');return;}
+  fetch('/api/submissions').then(r=>r.json()).then(rows=>{
+    const data=rows.map(r=>({
+      'Datum':fmtDate(r.created_at),'Firma':r.firma,'Ansprechpartner':r.name,
+      'Telefon':r.telefon,'E-Mail':r.email||'','Marke':r.marke||'',
+      'Modell':r.modell||'','Baujahr':r.baujahr||'','KM':r.km||'',
+      'Anmerkung':r.anmerkung||'','Status':r.status
+    }));
+    const ws=XLSX.utils.json_to_sheet(data);
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Anfragen');
+    XLSX.writeFile(wb,'IMD_Anfragen_'+new Date().toISOString().split('T')[0]+'.xlsx');
+  }).catch(()=>showToast('⚠ Fehler beim Exportieren'));
+}
 
 // ─── PROZESS ANIMATION ───
 let prozessAnimated=false;
@@ -474,3 +516,8 @@ document.addEventListener('DOMContentLoaded', revealAll);
   }, { threshold: 0.4 });
   stats.forEach(el => obs.observe(el));
 })();
+
+// ─── AUTO-OPEN DASHBOARD ON /intern ───
+if (window.location.pathname === '/intern') {
+  window.addEventListener('load', openDash);
+}

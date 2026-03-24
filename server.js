@@ -6,6 +6,26 @@ const { Resend } = require('resend');
 const { Pool }  = require('pg');
 const session   = require('express-session');
 const path      = require('path');
+const crypto    = require('crypto');
+
+// ── Password hashing (built-in scrypt, no extra deps) ─────────────────────────
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  return new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (err, hash) => {
+      if (err) reject(err);
+      else resolve({ hash: hash.toString('hex'), salt });
+    });
+  });
+}
+function verifyPassword(password, hash, salt) {
+  return new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (err, key) => {
+      if (err) reject(err);
+      else resolve(key.toString('hex') === hash);
+    });
+  });
+}
 
 const app  = express();
 const port = process.env.PORT || 8000;
@@ -36,6 +56,23 @@ async function initDB() {
       ip          TEXT
     )
   `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      username     TEXT PRIMARY KEY,
+      password_hash TEXT NOT NULL,
+      salt         TEXT NOT NULL,
+      created_at   TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+  // Seed admin from env vars if no users exist yet
+  const { rows } = await pool.query('SELECT COUNT(*) FROM users');
+  if (parseInt(rows[0].count) === 0) {
+    const u = process.env.DASH_USER || 'admin';
+    const p = process.env.DASH_PASS || 'imd2024';
+    const { hash, salt } = await hashPassword(p);
+    await pool.query('INSERT INTO users (username, password_hash, salt) VALUES ($1,$2,$3)', [u, hash, salt]);
+    console.log(`✓ Admin user "${u}" seeded`);
+  }
   console.log('✓ DB ready');
 }
 
@@ -59,14 +96,16 @@ function requireAuth(req, res, next) {
 }
 
 // ── POST /api/login ───────────────────────────────────────────────────────────
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  if (username === process.env.DASH_USER && password === process.env.DASH_PASS) {
-    req.session.user = username;
-    res.json({ success: true });
-  } else {
-    res.json({ success: false, error: 'Falscher Benutzername oder Passwort' });
-  }
+  try {
+    const result = await pool.query('SELECT password_hash, salt FROM users WHERE username=$1', [username]);
+    if (!result.rows.length) return res.json({ success: false, error: 'Falscher Benutzername oder Passwort' });
+    const { password_hash, salt } = result.rows[0];
+    const valid = await verifyPassword(password, password_hash, salt);
+    if (valid) { req.session.user = username; res.json({ success: true }); }
+    else res.json({ success: false, error: 'Falscher Benutzername oder Passwort' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // ── POST /api/logout ──────────────────────────────────────────────────────────
@@ -117,6 +156,43 @@ app.patch('/api/submissions/:id', requireAuth, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// ── GET /api/users ────────────────────────────────────────────────────────────
+app.get('/api/users', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT username, created_at FROM users ORDER BY created_at');
+    res.json(result.rows);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── POST /api/users ───────────────────────────────────────────────────────────
+app.post('/api/users', requireAuth, async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) return res.json({ success: false, error: 'Benutzername und Passwort erforderlich' });
+  try {
+    const { hash, salt } = await hashPassword(password);
+    await pool.query('INSERT INTO users (username, password_hash, salt) VALUES ($1,$2,$3)', [username, hash, salt]);
+    res.json({ success: true });
+  } catch (err) {
+    if (err.code === '23505') return res.json({ success: false, error: 'Benutzername bereits vergeben' });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── DELETE /api/users/:username ───────────────────────────────────────────────
+app.delete('/api/users/:username', requireAuth, async (req, res) => {
+  if (req.params.username === req.session.user)
+    return res.json({ success: false, error: 'Sie können sich nicht selbst löschen' });
+  try {
+    await pool.query('DELETE FROM users WHERE username=$1', [req.params.username]);
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── GET /intern ───────────────────────────────────────────────────────────────
+app.get('/intern', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ── POST /submit ──────────────────────────────────────────────────────────────

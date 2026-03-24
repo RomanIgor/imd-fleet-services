@@ -1527,7 +1527,7 @@
     <div style="background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-xl)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
         <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
-        <div style="font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t0)">Flott<em style="color:var(--navy);font-style:normal">iq</em> — Intern</div>
+        <div style="font-family:var(--fh);font-size:15px;font-weight:800;color:var(--t0)">IMD Fleet Services</div>
       </div>
       <div style="font-family:var(--fh);font-size:20px;font-weight:800;color:var(--t0);margin-bottom:6px">Anmelden</div>
       <div style="font-size:13px;color:var(--t2);margin-bottom:24px">Nur für IMD Fleet Services Team</div>
@@ -1545,7 +1545,7 @@
   <div class="dash-nav">
     <div class="dash-logo">
       <div class="dash-logo-ico"><svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><path d="M2 15 L6 7 L10 11 L13 5 L18 13"/></svg></div>
-      <div class="dash-logo-name">Flott<em>iq</em> — Intern</div>
+      <div class="dash-logo-name">IMD Fleet Services</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <span id="dashUserLabel" style="font-size:11px;color:var(--t2)"></span>
@@ -1576,6 +1576,10 @@
         <div class="dsb-item" onclick="showPanel('dHdl',this)"><span class="di">🏢</span><span>Händlernetz</span></div>
         <div class="dsb-item" onclick="showPanel('dPar',this)"><span class="di">🤝</span><span>Partner</span></div>
       </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Einstellungen</div>
+        <div class="dsb-item" onclick="showPanel('dUsers',this)"><span class="di">👤</span><span>Benutzer</span></div>
+      </div>
     </div>
     <div class="dash-main">
 
@@ -1598,7 +1602,7 @@
 
       <div class="dp" id="dAll">
         <div class="dh">Alle Anfragen</div><div class="dsub">Vollständige Liste</div>
-        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Alle Anfragen</div></div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Alle Anfragen</div><button class="tbl-sel" onclick="exportExcel()" style="cursor:pointer">⬇ Excel exportieren</button></div>
         <table><thead><tr><th>Datum</th><th>Firma</th><th>Name</th><th>Tel</th><th>E-Mail</th><th>Fahrzeug</th><th>KM</th><th>Anmerkung</th><th>Status</th></tr></thead><tbody id="tblAll"></tbody></table></div>
       </div>
 
@@ -1713,12 +1717,30 @@
         </div>
       </div>
 
+      <div class="dp" id="dUsers">
+        <div class="dh">Benutzer verwalten</div><div class="dsub">Interne Zugänge</div>
+        <div class="tbl-wrap">
+          <div class="tbl-head"><div class="tbl-title">Alle Benutzer</div><button class="tbl-sel" onclick="loadUsers()" style="cursor:pointer">↻ Aktualisieren</button></div>
+          <table><thead><tr><th>Benutzername</th><th>Erstellt am</th><th>Aktion</th></tr></thead><tbody id="tblUsers"></tbody></table>
+        </div>
+        <div style="margin-top:28px">
+          <div class="dh" style="font-size:16px;margin-bottom:12px">Neuen Benutzer hinzufügen</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+            <div class="fg"><label class="fl">Benutzername</label><input type="text" id="newUserName" class="fi" placeholder="benutzername" style="max-width:200px"></div>
+            <div class="fg"><label class="fl">Passwort</label><input type="password" id="newUserPass" class="fi" placeholder="••••••••" style="max-width:200px"></div>
+            <button class="btn btn-navy" style="height:44px;margin-bottom:1px" onclick="addUser()">Hinzufügen →</button>
+          </div>
+          <div id="userMsg" style="font-size:12px;margin-top:8px;display:none"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"><span class="toast-ico">✓</span><span id="toastMsg"></span></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
 
 
