@@ -5,6 +5,7 @@ const multer    = require('multer');
 const { Resend } = require('resend');
 const { Pool }  = require('pg');
 const session   = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const path      = require('path');
 const crypto    = require('crypto');
 
@@ -78,6 +79,7 @@ async function initDB() {
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(session({
+  store: new pgSession({ pool, createTableIfMissing: true }),
   secret: process.env.SESSION_SECRET || 'imd-fleet-secret-2024',
   resave: false,
   saveUninitialized: false,
