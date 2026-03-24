@@ -1625,16 +1625,19 @@
         <div class="tbl-wrap">
           <div class="tbl-head">
             <div class="tbl-title">Neue Anfragen</div>
-            <button class="tbl-sel" onclick="loadDashData()" style="cursor:pointer">↻ Aktualisieren</button>
+            <div style="display:flex;gap:8px">
+              <button class="tbl-sel" onclick="exportExcel()" style="cursor:pointer">⬇ Excel</button>
+              <button class="tbl-sel" onclick="loadDashData()" style="cursor:pointer">↻ Aktualisieren</button>
+            </div>
           </div>
           <table><thead><tr><th>Datum</th><th>Firma</th><th>Ansprechpartner</th><th>Telefon</th><th>Fahrzeug</th><th>Status</th></tr></thead><tbody id="tblBody"></tbody></table>
         </div>
       </div>
 
       <div class="dp" id="dAll">
-        <div class="dh">Alle Anfragen</div><div class="dsub">Vollständige Liste</div>
-        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Alle Anfragen</div><button class="tbl-sel" onclick="exportExcel()" style="cursor:pointer">⬇ Excel exportieren</button></div>
-        <table><thead><tr><th>Datum</th><th>Firma</th><th>Name</th><th>Tel</th><th>E-Mail</th><th>Fahrzeug</th><th>KM</th><th>Anmerkung</th><th>Status</th></tr></thead><tbody id="tblAll"></tbody></table></div>
+        <div class="dh">Alle Fahrzeuge</div><div class="dsub">Fahrzeugübersicht aller Anfragen</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Fahrzeugliste</div></div>
+        <table><thead><tr><th>Marke</th><th>Modell</th><th>Baujahr</th><th>KM-Stand</th><th>Firma</th><th>Datum</th><th>Status</th></tr></thead><tbody id="tblAll"></tbody></table></div>
       </div>
 
       <div class="dp" id="dDet">

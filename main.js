@@ -7,15 +7,20 @@ function statusBadge(s){return`<span class="sb ${STATUS_COLORS[s]||'sb-gy'}">${s
 
 let _rows=[];
 
-function renderSubmissions(rows,tbodyId,compact){
+// mode: 'compact' | 'full' | 'fahrzeuge'
+function renderSubmissions(rows,tbodyId,mode){
   _rows=rows;
   const tbody=document.getElementById(tbodyId);if(!tbody)return;
-  if(!rows||!rows.length){tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;color:var(--t3);padding:32px">Noch keine Anfragen</td></tr>`;return;}
+  const colspan=mode==='compact'?6:mode==='fahrzeuge'?7:9;
+  if(!rows||!rows.length){tbody.innerHTML=`<tr><td colspan="${colspan}" style="text-align:center;color:var(--t3);padding:32px">Noch keine Einträge</td></tr>`;return;}
   tbody.innerHTML=rows.map(r=>{
     const fzg=[r.marke,r.modell,r.baujahr].filter(Boolean).join(' ')||'—';
     const badge=statusBadge(r.status);
     const open=`openAnfrage(${r.id})`;
-    if(compact)return`<tr style="cursor:pointer" onclick="${open}"><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${fzg}</td><td>${badge}</td></tr>`;
+    if(mode==='compact')
+      return`<tr style="cursor:pointer" onclick="${open}"><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${fzg}</td><td>${badge}</td></tr>`;
+    if(mode==='fahrzeuge')
+      return`<tr style="cursor:pointer" onclick="${open}"><td>${r.marke||'—'}</td><td>${r.modell||'—'}</td><td>${r.baujahr||'—'}</td><td>${r.km?r.km+' km':'—'}</td><td>${r.firma}</td><td>${fmtDate(r.created_at)}</td><td>${badge}</td></tr>`;
     return`<tr style="cursor:pointer" onclick="${open}"><td>${fmtDate(r.created_at)}</td><td><strong>${r.firma}</strong></td><td>${r.name}</td><td>${r.telefon}</td><td>${r.email||'—'}</td><td>${fzg}</td><td>${r.km?r.km+' km':'—'}</td><td style="max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.anmerkung||'—'}</td><td>${badge}</td></tr>`;
   }).join('');
 }
@@ -65,8 +70,8 @@ async function loadDashData(){
     document.getElementById('kpiToday').textContent=stats.today??'—';
     document.getElementById('kpiNeu').textContent=stats.neu??'—';
     document.getElementById('dashDate').textContent='Stand '+new Date().toLocaleDateString('de-DE');
-    renderSubmissions(subs,'tblBody',true);
-    renderSubmissions(subs,'tblAll',false);
+    renderSubmissions(subs,'tblBody','compact');
+    renderSubmissions(subs,'tblAll','fahrzeuge');
   }catch(e){console.error(e);}
 }
 
