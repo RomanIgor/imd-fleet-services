@@ -87,7 +87,7 @@ app.post('/submit', upload.none(), async (req, res) => {
   try {
     const { error } = await resend.emails.send({
       from:    'IMD Fleet Services <onboarding@resend.dev>',
-      to:      process.env.RECIPIENT_EMAIL.split(',').map(e => e.trim()),
+      to:      process.env.RECIPIENT_EMAIL,
       replyTo: email || undefined,
       subject: `Neue Fahrzeuganmeldung — ${firma} (${marke} ${modell})`.trim(),
       html,
