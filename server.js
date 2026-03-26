@@ -203,7 +203,7 @@ app.post('/api/vertrag/export', requireAuth, (req, res) => {
     const { an_firmierung, ag_firma, ort_an, ort_ag, datum } = req.body;
     if (!ag_firma || !datum) return res.status(400).json({ error: 'Pflichtfelder fehlen' });
 
-    const b64Path = '/etc/secrets/Rahmenvertrag_Version1.b64';
+    const b64Path = '/etc/secrets/rahmenvertrag.b64';
     const docxPath = path.join(__dirname, 'Rahmenvertrag_Version1.docx');
     const fs = require('fs');
     const buf = fs.existsSync(b64Path)
