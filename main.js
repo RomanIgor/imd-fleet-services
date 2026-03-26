@@ -145,6 +145,50 @@ function exportExcel(){
   }).catch(()=>showToast('⚠ Fehler beim Exportieren'));
 }
 
+// ─── VERTRÄGE ───
+async function exportVertrag() {
+  const ag_firma = document.getElementById('vAGFirma').value.trim();
+  const datum    = document.getElementById('vDatum').value;
+  const msg      = document.getElementById('vertragMsg');
+
+  if (!ag_firma || !datum) {
+    msg.style.cssText = 'display:inline;color:var(--red)';
+    msg.textContent   = 'Pflichtfelder: Firma und Datum ausfüllen.';
+    return;
+  }
+  msg.style.display = 'none';
+
+  const body = {
+    an_firmierung: document.getElementById('vAN').value.trim() || 'IMD Fleet Services',
+    ag_firma,
+    ort_an: document.getElementById('vOrtAN').value.trim(),
+    ort_ag: document.getElementById('vOrtAG').value.trim(),
+    datum,
+  };
+
+  try {
+    const res = await fetch('/api/vertrag/export', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) { const e = await res.json(); throw new Error(e.error); }
+
+    const blob = await res.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    const safeName = ag_firma.replace(/[^a-zA-Z0-9äöüÄÖÜß]/g, '_');
+    a.href     = url;
+    a.download = `Rahmenvertrag_${safeName}.docx`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✓ Vertrag exportiert');
+  } catch (err) {
+    msg.style.cssText = 'display:inline;color:var(--red)';
+    msg.textContent   = '⚠ Fehler: ' + err.message;
+  }
+}
+
 // ─── PROZESS ANIMATION ───
 let prozessAnimated=false;
 function checkProzess(){

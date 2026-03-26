@@ -8,6 +8,7 @@ const session   = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const path      = require('path');
 const crypto    = require('crypto');
+const PizZip    = require('pizzip');
 
 // ── Password hashing (built-in scrypt, no extra deps) ─────────────────────────
 function hashPassword(password) {
@@ -194,6 +195,43 @@ app.delete('/api/users/:username', requireAuth, async (req, res) => {
     await pool.query('DELETE FROM users WHERE username=$1', [req.params.username]);
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── POST /api/vertrag/export ──────────────────────────────────────────────────
+app.post('/api/vertrag/export', requireAuth, (req, res) => {
+  try {
+    const { an_firmierung, ag_firma, ort_an, ort_ag, datum } = req.body;
+    if (!ag_firma || !datum) return res.status(400).json({ error: 'Pflichtfelder fehlen' });
+
+    const templatePath = path.join(__dirname, 'Rahmenvertrag_Version1.docx');
+    const buf = require('fs').readFileSync(templatePath);
+    const zip = new PizZip(buf);
+    let xml = zip.file('word/document.xml').asText();
+
+    const escXml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    const anFirm = an_firmierung || 'IMD Fleet Services';
+    const ortAN  = ort_an  || 'Ort';
+    const ortAG  = ort_ag  || 'Ort';
+
+    xml = xml.replace('IMD Fleet Services [vollständige Firmierung + Adresse]',
+      escXml(anFirm));
+    xml = xml.replace('[Kunde / Unternehmen]', escXml(ag_firma));
+    xml = xml.replace('Ort, Datum', escXml(`${ortAN}, ${datum}`));
+    xml = xml.replace('Ort, Datum', escXml(`${ortAG}, ${datum}`));
+    xml = xml.replace('[Auftraggeber]', escXml(ag_firma));
+
+    zip.file('word/document.xml', xml);
+    const output = zip.generate({ type: 'nodebuffer', compression: 'DEFLATE' });
+
+    const safeName = ag_firma.replace(/[^a-zA-Z0-9äöüÄÖÜß]/g, '_');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    res.setHeader('Content-Disposition', `attachment; filename="Rahmenvertrag_${safeName}.docx"`);
+    res.send(output);
+  } catch (err) {
+    console.error('Vertrag export error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // ── GET /intern ───────────────────────────────────────────────────────────────

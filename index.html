@@ -1608,6 +1608,8 @@
         <div class="dsb-item" onclick="showPanel('dPar',this)"><span class="di">🤝</span><span>Partner</span></div>
       </div>
       <div class="dsb-sec">
+        <div class="dsb-lbl">Dokumente</div>
+        <div class="dsb-item" onclick="showPanel('dVert',this)"><span class="di">📝</span><span>Verträge</span></div>
         <div class="dsb-lbl">Einstellungen</div>
         <div class="dsb-item" onclick="showPanel('dUsers',this)"><span class="di">👤</span><span>Benutzer</span></div>
       </div>
@@ -1748,6 +1750,61 @@
           <div class="fg" style="margin-bottom:10px"><label class="fl">Firma</label><input type="text" class="fi" placeholder="Musterfirma GmbH"></div>
           <div class="fg" style="margin-bottom:16px"><label class="fl">Abholadresse</label><input type="text" class="fi" placeholder="Straße Nr., PLZ Ort"></div>
           <button class="btn-next" onclick="showToast('Fahrzeug aufgenommen!')">Speichern →</button>
+        </div>
+      </div>
+
+      <div class="dp" id="dVert">
+        <div class="dh">Verträge</div><div class="dsub">Rahmenvertrag erstellen &amp; exportieren</div>
+
+        <div style="max-width:640px;margin-top:24px">
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Auftragnehmer (AN)</div>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
+            <div class="fg">
+              <label class="fl">AN Firmierung &amp; Adresse</label>
+              <input type="text" id="vAN" class="fi" placeholder="IMD Fleet Services, Musterstraße 1, 12345 Berlin">
+            </div>
+          </div>
+
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Auftraggeber (AG)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Firma / Unternehmen *</label>
+              <input type="text" id="vAGFirma" class="fi" placeholder="Muster GmbH &amp; Co. KG">
+            </div>
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Adresse (optional — für interne Notiz)</label>
+              <input type="text" id="vAGAdresse" class="fi" placeholder="Musterstraße 1, 12345 Musterstadt">
+            </div>
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Ansprechpartner (optional)</label>
+              <input type="text" id="vAGAnsp" class="fi" placeholder="Max Mustermann">
+            </div>
+          </div>
+
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Vertragsdetails</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:32px">
+            <div class="fg">
+              <label class="fl">Datum *</label>
+              <input type="date" id="vDatum" class="fi">
+            </div>
+            <div class="fg">
+              <label class="fl">Ort (AN-Seite)</label>
+              <input type="text" id="vOrtAN" class="fi" placeholder="Berlin">
+            </div>
+            <div class="fg">
+              <label class="fl">Ort (AG-Seite)</label>
+              <input type="text" id="vOrtAG" class="fi" placeholder="München">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center">
+            <button class="btn btn-navy" onclick="exportVertrag()">Word exportieren →</button>
+            <span id="vertragMsg" style="font-size:13px;display:none"></span>
+          </div>
+
+          <div style="margin-top:24px;padding:16px;background:var(--f1);border-radius:8px;font-size:12px;color:var(--t3);line-height:1.6">
+            <strong>Hinweis:</strong> Der Export befüllt automatisch den <em>Rahmenvertrag_Version1.docx</em>-Vorlage mit den eingegebenen Daten und lädt die fertige Word-Datei herunter. Das Dokument kann dann direkt ausgedruckt und unterschrieben werden.
+          </div>
         </div>
       </div>
 
