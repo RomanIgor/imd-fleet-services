@@ -644,10 +644,12 @@ nav.sc .burger span{background:var(--t0)}
   align-items: flex-start;
   padding-bottom: 10px;
 }
+.mgp-order-step:last-child { padding-bottom: 0; }
 .mgp-order-step-track {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0;
   flex-shrink: 0;
 }
 .mgp-order-step-dot {
@@ -676,7 +678,7 @@ nav.sc .burger span{background:var(--t0)}
   height: 18px;
 }
 .mgp-order-step-line--done { background: rgba(0,200,122,.3); }
-.mgp-order-step-line--pending { background: rgba(255,255,255,.08); }
+.mgp-order-step-line--pending { background: rgba(255,255,255,.1); }
 .mgp-order-step-body { padding-top: 2px; }
 .mgp-order-step-title {
   font-family: var(--fh);
