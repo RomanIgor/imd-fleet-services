@@ -562,83 +562,82 @@
               <!-- Professional logistics status card -->
               <div class="mgp-card mgp-anim-right" style="--d:.2s;padding:0;overflow:hidden">
                 <!-- Card header -->
-                <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between">
-                  <div style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4)">Abholauftrag #2024-0847</div>
-                  <div style="display:flex;align-items:center;gap:6px;font-family:var(--fh);font-size:10px;font-weight:700;color:#00C87A">
-                    <div style="width:7px;height:7px;border-radius:50%;background:#00C87A;animation:dotPulse 2s infinite"></div>
+                <div class="mgp-order-header">
+                  <div class="mgp-order-label">Abholauftrag #2024-0847</div>
+                  <div class="mgp-order-live">
+                    <div class="mgp-order-live-dot"></div>
                     Aktiv
                   </div>
                 </div>
                 <!-- Vehicle info -->
-                <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)">
-                  <div style="display:flex;align-items:center;gap:12px">
-                    <div style="width:42px;height:42px;background:rgba(0,87,168,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🚗</div>
-                    <div>
-                      <div style="font-family:var(--fh);font-size:13px;font-weight:700;color:#fff">BMW 320d xDrive</div>
-                      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">2021 · 45.200 km · Diesel</div>
-                    </div>
-                    <div style="margin-left:auto;font-family:var(--fh);font-size:9px;font-weight:700;background:rgba(0,87,168,.25);color:#90C8F0;padding:3px 10px;border-radius:100px;letter-spacing:.08em">ABHOLUNG</div>
+                <div class="mgp-order-vehicle">
+                  <div class="mgp-order-vehicle-ico">🚗</div>
+                  <div>
+                    <div class="mgp-order-vehicle-name">BMW 320d xDrive</div>
+                    <div class="mgp-order-vehicle-sub">2021 · 45.200 km · Diesel</div>
                   </div>
+                  <div class="mgp-order-vehicle-tag">ABHOLUNG</div>
                 </div>
                 <!-- Timeline steps -->
-                <div style="padding:14px 18px">
-                  <div style="font-family:var(--fh);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px">Prozessstatus</div>
-                  <div style="display:flex;flex-direction:column;gap:0">
-                    <!-- Step done -->
-                    <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px">
-                      <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#00C87A;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:800">✓</div>
-                        <div style="width:1.5px;height:18px;background:rgba(0,200,122,.3)"></div>
-                      </div>
-                      <div style="padding-top:2px">
-                        <div style="font-family:var(--fh);font-size:11px;font-weight:600;color:#fff">Fahrzeugmeldung eingegangen</div>
-                        <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:1px">Heute, 09:14 Uhr</div>
-                      </div>
+                <div class="mgp-order-steps">
+                  <div class="mgp-order-steps-label">Prozessstatus</div>
+                  <!-- Step done -->
+                  <div class="mgp-order-step">
+                    <div class="mgp-order-step-track">
+                      <div class="mgp-order-step-dot mgp-order-step-dot--done">✓</div>
+                      <div class="mgp-order-step-line mgp-order-step-line--done"></div>
                     </div>
-                    <!-- Step done -->
-                    <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px">
-                      <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#00C87A;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:800">✓</div>
-                        <div style="width:1.5px;height:18px;background:rgba(0,200,122,.3)"></div>
-                      </div>
-                      <div style="padding-top:2px">
-                        <div style="font-family:var(--fh);font-size:11px;font-weight:600;color:#fff">Abholtermin bestätigt</div>
-                        <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:1px">Morgen, 10:00–12:00 Uhr</div>
-                      </div>
+                    <div class="mgp-order-step-body">
+                      <div class="mgp-order-step-title">Fahrzeugmeldung eingegangen</div>
+                      <div class="mgp-order-step-time">Heute, 09:14 Uhr</div>
                     </div>
-                    <!-- Step active -->
-                    <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px">
-                      <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0057A8;border:2px solid #90C8F0;display:flex;align-items:center;justify-content:center;animation:dotPulse 2s infinite"></div>
-                        <div style="width:1.5px;height:18px;background:rgba(255,255,255,.1)"></div>
-                      </div>
-                      <div style="padding-top:2px">
-                        <div style="font-family:var(--fh);font-size:11px;font-weight:700;color:#90C8F0">Logistikpartner unterwegs</div>
-                        <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:1px">Ankunft geplant: 10:30 Uhr</div>
-                      </div>
+                  </div>
+                  <!-- Step done -->
+                  <div class="mgp-order-step">
+                    <div class="mgp-order-step-track">
+                      <div class="mgp-order-step-dot mgp-order-step-dot--done">✓</div>
+                      <div class="mgp-order-step-line mgp-order-step-line--done"></div>
                     </div>
-                    <!-- Steps pending -->
-                    <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:10px">
-                      <div style="display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0">
-                        <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04)"></div>
-                        <div style="width:1.5px;height:18px;background:rgba(255,255,255,.08)"></div>
-                      </div>
-                      <div style="padding-top:2px">
-                        <div style="font-family:var(--fh);font-size:11px;font-weight:500;color:rgba(255,255,255,.4)">Fahrzeugübergabe</div>
-                      </div>
+                    <div class="mgp-order-step-body">
+                      <div class="mgp-order-step-title">Abholtermin bestätigt</div>
+                      <div class="mgp-order-step-time">Morgen, 10:00–12:00 Uhr</div>
                     </div>
-                    <div style="display:flex;gap:12px;align-items:flex-start">
-                      <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);flex-shrink:0"></div>
-                      <div style="padding-top:2px">
-                        <div style="font-family:var(--fh);font-size:11px;font-weight:500;color:rgba(255,255,255,.4)">GKK-Gutachten &amp; Angebot</div>
-                      </div>
+                  </div>
+                  <!-- Step active -->
+                  <div class="mgp-order-step">
+                    <div class="mgp-order-step-track">
+                      <div class="mgp-order-step-dot mgp-order-step-dot--active"></div>
+                      <div class="mgp-order-step-line mgp-order-step-line--pending"></div>
+                    </div>
+                    <div class="mgp-order-step-body">
+                      <div class="mgp-order-step-title mgp-order-step-title--active">Logistikpartner unterwegs</div>
+                      <div class="mgp-order-step-time">Ankunft geplant: 10:30 Uhr</div>
+                    </div>
+                  </div>
+                  <!-- Step pending -->
+                  <div class="mgp-order-step">
+                    <div class="mgp-order-step-track">
+                      <div class="mgp-order-step-dot mgp-order-step-dot--pending"></div>
+                      <div class="mgp-order-step-line mgp-order-step-line--pending"></div>
+                    </div>
+                    <div class="mgp-order-step-body">
+                      <div class="mgp-order-step-title mgp-order-step-title--pending">Fahrzeugübergabe</div>
+                    </div>
+                  </div>
+                  <!-- Step pending (last — no line) -->
+                  <div class="mgp-order-step">
+                    <div class="mgp-order-step-track">
+                      <div class="mgp-order-step-dot mgp-order-step-dot--pending"></div>
+                    </div>
+                    <div class="mgp-order-step-body">
+                      <div class="mgp-order-step-title mgp-order-step-title--pending">GKK-Gutachten &amp; Angebot</div>
                     </div>
                   </div>
                 </div>
                 <!-- Footer -->
-                <div style="padding:10px 18px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,200,122,.06);display:flex;align-items:center;gap:8px">
-                  <div style="width:7px;height:7px;border-radius:50%;background:#00C87A;flex-shrink:0;animation:dotPulse 2s infinite"></div>
-                  <div style="font-family:var(--fh);font-size:11px;color:rgba(255,255,255,.6)">Kein Aufwand für Sie — IMD Fleet Services koordiniert alles</div>
+                <div class="mgp-order-footer">
+                  <div class="mgp-order-footer-dot"></div>
+                  <div class="mgp-order-footer-text">Kein Aufwand für Sie — IMD Fleet Services koordiniert alles</div>
                 </div>
               </div>
               <!-- Highlight box -->
