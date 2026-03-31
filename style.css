@@ -196,6 +196,55 @@ nav.sc .burger span{background:var(--t0)}
 .hf-dot.g{background:var(--green)}.hf-dot.b{background:var(--navy-ll)}
 .hf-text{font-family:var(--fh);font-size:11px;font-weight:600;color:#fff}
 
+/* ── HERO RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-in {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 72px 0 48px;
+  }
+  .hero-right {
+    width: 100%;
+  }
+  .hero-float {
+    display: none;
+  }
+  .dash-preview {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .hero-h1 {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: 0 20px;
+  }
+  .hero-kpi {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .hkpi {
+    padding: 14px 10px;
+  }
+  .hkpi-val {
+    font-size: 20px;
+  }
+  .nav-in {
+    padding: 0 20px;
+  }
+  .trust-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 20px;
+  }
+  .ti:nth-child(5) {
+    grid-column: 1 / -1;
+    border-right: none;
+    border-top: 1px solid var(--f2);
+  }
+}
+
 /* ══════════════ TRUST BAR ══════════════ */
 .trust-bar{background:#fff;border-bottom:1px solid var(--f2);box-shadow:var(--sh-sm)}
 .trust-inner{max-width:1160px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(5,1fr)}
