@@ -776,6 +776,7 @@ nav.sc .burger span{background:var(--t0)}
 .branche{background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-lg);padding:13px 15px;display:flex;align-items:center;gap:11px;transition:all .22s var(--ease)}
 .branche:hover{border-color:var(--navy);background:var(--sky);transform:translateX(3px)}
 .branche-ico{width:36px;height:36px;background:var(--sky);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.branche-ico svg{display:block}
 .branche-name{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--t0)}
 .branche-sub{font-family:var(--fb);font-size:11px;color:var(--t2);margin-top:1px}
 .persona{background:linear-gradient(145deg,var(--ink2),var(--ink3));border-radius:var(--r-2xl);padding:32px;position:relative;overflow:hidden}
