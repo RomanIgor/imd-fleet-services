@@ -707,6 +707,7 @@ nav.sc .burger span{background:var(--t0)}
 .wk-head.bad{background:linear-gradient(to right,#FFF5F5,#fff)}
 .wk-head.good{background:linear-gradient(to right,var(--green-pale),#fff)}
 .wk-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.wk-ico svg { display: block; }
 .wk-ico.bad{background:#FEE2E2}.wk-ico.good{background:var(--green-pale)}
 .wk-name{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--t0)}
 .wk-sub{font-family:var(--fb);font-size:11px;color:var(--t2);margin-top:2px}
