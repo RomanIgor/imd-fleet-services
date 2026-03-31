@@ -209,6 +209,37 @@ function checkProzess(){
 window.addEventListener('scroll',checkProzess,{passive:true});
 window.addEventListener('load',checkProzess);
 
+// ─── COUNTUP ANIMATION ───
+function animateCountup(el) {
+  var target = parseFloat(el.dataset.countup);
+  var prefix = el.dataset.prefix || '';
+  var suffix = el.dataset.suffix || '';
+  var duration = 1600;
+  var start = performance.now();
+  var isDecimal = target % 1 !== 0;
+
+  function step(now) {
+    var progress = Math.min((now - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    var current = eased * target;
+    el.textContent = prefix + (isDecimal ? current.toFixed(1) : Math.floor(current)) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.querySelectorAll('.stat-num[data-countup]').forEach(function(el) {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        animateCountup(el);
+        obs.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  obs.observe(el);
+});
+
 // ─── CALCULATOR ───
 function calcUpdate(){
   const n=+document.getElementById('cAnzahl').value||5;
