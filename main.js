@@ -222,7 +222,7 @@ function animateCountup(el) {
     var progress = Math.min((now - start) / duration, 1);
     var eased = 1 - Math.pow(1 - progress, 3);
     var current = eased * target;
-    el.textContent = prefix + (isDecimal ? current.toFixed(1) : Math.floor(current)) + suffix;
+    el.textContent = prefix + (isDecimal ? current.toFixed(1).replace('.',',') : Math.floor(current)) + suffix;
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
@@ -608,35 +608,6 @@ window.addEventListener('load', () => {
 
 // Also reveal on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', revealAll);
-
-// ─── COUNTUP ANIMATION ───
-(function(){
-  const stats = document.querySelectorAll('.stat-num[data-countup]');
-  if(!stats.length) return;
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(!entry.isIntersecting) return;
-      obs.unobserve(entry.target);
-      const el = entry.target;
-      const target = parseFloat(el.dataset.countup);
-      const prefix = el.dataset.prefix || '';
-      const suffix = el.dataset.suffix || '';
-      const isDecimal = target % 1 !== 0;
-      const duration = 1400;
-      const steps = 60;
-      const step = duration / steps;
-      let current = 0;
-      let frame = 0;
-      const timer = setInterval(() => {
-        frame++;
-        current = target * (frame / steps);
-        if(frame >= steps){ current = target; clearInterval(timer); }
-        el.textContent = prefix + (isDecimal ? current.toFixed(1).replace('.',',') : Math.round(current)) + suffix;
-      }, step);
-    });
-  }, { threshold: 0.4 });
-  stats.forEach(el => obs.observe(el));
-})();
 
 // ─── AUTO-OPEN DASHBOARD ON /intern ───
 if (window.location.pathname === '/intern') {
