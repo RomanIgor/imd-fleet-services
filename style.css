@@ -992,7 +992,7 @@ nav.sc .burger span{background:var(--t0)}
 .cr-note{font-size:11px;color:var(--t3);text-align:center;margin-top:10px;font-style:italic}
 
 /* ══════════════ FAQ ══════════════ */
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:44px;align-items:start}
 .faq-item{border:1.5px solid var(--f2);border-radius:var(--r-xl);background:#fff;overflow:hidden;transition:border-color .2s}
 .faq-item.open{border-color:var(--navy)}
 .faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;cursor:pointer;user-select:none;transition:background .2s}
