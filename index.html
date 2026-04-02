@@ -1554,6 +1554,10 @@
         <div class="dsb-item" onclick="showPanel('dNew',this)"><span class="di">➕</span><span>Neu erfassen</span></div>
       </div>
       <div class="dsb-sec">
+        <div class="dsb-lbl">Schäden</div>
+        <div class="dsb-item" onclick="showPanel('dSch',this)"><span class="di">🚨</span><span>Schäden</span></div>
+      </div>
+      <div class="dsb-sec">
         <div class="dsb-lbl">Prozess</div>
         <div class="dsb-item" onclick="showPanel('dGut',this)"><span class="di">📋</span><span>Gutachten</span></div>
         <div class="dsb-item" onclick="showPanel('dPre',this)"><span class="di">📈</span><span>Preisermittlung</span></div>
@@ -1779,6 +1783,35 @@
             <button class="btn btn-navy" style="height:44px;margin-bottom:1px" onclick="addUser()">Hinzufügen →</button>
           </div>
           <div id="userMsg" style="font-size:12px;margin-top:8px;display:none"></div>
+        </div>
+      </div>
+
+      <div class="dp" id="dSch">
+        <div class="dh">Schäden</div>
+        <div id="dSchDate" class="dsub">—</div>
+        <div class="kpi-row" style="margin-bottom:24px">
+          <div class="kpi-card"><div class="kpi-val" id="schTotal">—</div><div class="kpi-lbl">Gesamt</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="schNeu">—</div><div class="kpi-lbl">Neu</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="schInProgress">—</div><div class="kpi-lbl">In Bearbeitung</div></div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="dt" id="schTable">
+            <thead>
+              <tr>
+                <th>Fall-Nr</th><th>Datum</th><th>Fahrer</th><th>Firma</th>
+                <th>Kennzeichen</th><th>Fahrbereit</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="schBody"></tbody>
+          </table>
+        </div>
+        <!-- Detail panel (hidden by default) -->
+        <div id="schDetail" style="display:none;margin-top:24px;background:var(--f0);border-radius:12px;padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-family:var(--fh);font-size:16px;font-weight:800;color:var(--t0)" id="schDetailTitle">—</div>
+            <button onclick="document.getElementById('schDetail').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--t3)">×</button>
+          </div>
+          <div id="schDetailBody"></div>
         </div>
       </div>
 

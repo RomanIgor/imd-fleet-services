@@ -89,7 +89,7 @@ async function openDash(){
 }
 
 function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
-function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();}
+function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();}
 
 async function doLogin(){
   const u=document.getElementById('loginUser').value;
@@ -126,6 +126,64 @@ async function deleteUser(username){
   const res=await fetch('/api/users/'+encodeURIComponent(username),{method:'DELETE'}).then(r=>r.json());
   if(res.success)loadUsers();
   else showToast('⚠ '+(res.error||'Fehler'));
+}
+
+// ─── SCHAEDEN ───
+async function loadSchaeden() {
+  const today = new Date().toLocaleDateString('de-DE', {weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('dSchDate').textContent = today;
+  try {
+    const rows = await fetch('/api/schaeden').then(r => r.json());
+    document.getElementById('schTotal').textContent = rows.length;
+    document.getElementById('schNeu').textContent = rows.filter(r => r.status === 'Neu').length;
+    document.getElementById('schInProgress').textContent = rows.filter(r => r.status === 'In Bearbeitung').length;
+    const tbody = document.getElementById('schBody');
+    tbody.innerHTML = '';
+    rows.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.style.cursor = 'pointer';
+      tr.onclick = () => showSchDetail(row);
+      const fbBadge = row.fahrbereit
+        ? '<span style="background:#d1fae5;color:#065f46;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:700">✓ Ja</span>'
+        : '<span style="background:#fee2e2;color:#991b1b;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:700">✗ Nein</span>';
+      const statusColors = {'Neu':'#dbeafe','In Bearbeitung':'#fef9c3','Abgeschlossen':'#d1fae5'};
+      const statusSelect = `<select onchange="patchSchadenStatus(${row.id},this.value)" onclick="event.stopPropagation()" style="font-size:11px;padding:3px 6px;border-radius:6px;border:1px solid var(--f2);background:${statusColors[row.status]||'#fff'}">
+        ${['Neu','In Bearbeitung','Abgeschlossen'].map(s => `<option${s===row.status?' selected':''}>${s}</option>`).join('')}
+      </select>`;
+      const date = new Date(row.created_at).toLocaleDateString('de-DE');
+      tr.innerHTML = `<td><strong>${row.fall_nr||'—'}</strong></td><td>${date}</td><td>${row.fahrer_name}</td><td>${row.firma||'—'}</td><td>${row.kennzeichen}</td><td>${fbBadge}</td><td>${statusSelect}</td>`;
+      tbody.appendChild(tr);
+    });
+  } catch(e) { console.error('loadSchaeden:', e); }
+}
+
+function showSchDetail(row) {
+  document.getElementById('schDetailTitle').textContent = (row.fall_nr || '—') + ' · ' + row.kennzeichen;
+  document.getElementById('schDetailBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+      <div><strong>Fahrer:</strong> ${row.fahrer_name}</div>
+      <div><strong>Firma:</strong> ${row.firma||'—'}</div>
+      <div><strong>Telefon:</strong> ${row.fahrer_telefon}</div>
+      <div><strong>E-Mail:</strong> ${row.fahrer_email||'—'}</div>
+      <div><strong>Kennzeichen:</strong> ${row.kennzeichen}</div>
+      <div><strong>Fahrzeugtyp:</strong> ${row.fahrzeugtyp||'—'}</div>
+      <div><strong>Baujahr:</strong> ${row.baujahr||'—'}</div>
+      <div><strong>Fahrbereit:</strong> ${row.fahrbereit ? '✓ Ja' : '✗ Nein'}</div>
+      <div><strong>Unfalldatum:</strong> ${row.unfall_datum||'—'} ${row.unfall_uhrzeit||''}</div>
+      <div><strong>Unfallort:</strong> ${row.unfall_ort||'—'}</div>
+      <div><strong>Polizei:</strong> ${row.polizei_gerufen ? 'Ja' : 'Nein'}</div>
+      <div><strong>Unfallgegner:</strong> ${row.unfallgegner ? 'Ja' : 'Nein'}</div>
+    </div>
+    <div style="margin-top:12px;font-size:13px"><strong>Beschreibung:</strong><br><div style="margin-top:4px;padding:10px;background:#fff;border-radius:8px;line-height:1.6">${row.beschreibung}</div></div>`;
+  document.getElementById('schDetail').style.display = 'block';
+}
+
+async function patchSchadenStatus(id, status) {
+  await fetch('/api/schaeden/' + id + '/status', {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ status })
+  });
 }
 
 // ─── EXCEL EXPORT ───
