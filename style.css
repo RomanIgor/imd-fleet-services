@@ -1342,3 +1342,36 @@ nav.sc .logo-light { display: block; }
   .scd-tl-item{display:flex;gap:16px;text-align:left;align-items:flex-start}
   .scd-tl-num{flex-shrink:0;margin:0}
 }
+
+/* Form wrapper + progress */
+.scd-form-wrap{max-width:720px;margin:0 auto;background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;box-shadow:var(--sh-md)}
+.scd-progress{display:flex;align-items:center;margin-bottom:40px}
+.scd-progress-step{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0}
+.scd-progress-dot{width:32px;height:32px;border-radius:50%;background:var(--f1);border:2px solid var(--f2);font-family:var(--fh);font-size:13px;font-weight:700;color:var(--t2);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.scd-progress-step.active .scd-progress-dot{background:var(--navy);border-color:var(--navy);color:#fff}
+.scd-progress-step.done .scd-progress-dot{background:var(--green);border-color:var(--green);color:#fff}
+.scd-progress-label{font-family:var(--fh);font-size:10px;font-weight:600;color:var(--t2);text-align:center;white-space:nowrap}
+.scd-progress-step.active .scd-progress-label,.scd-progress-step.done .scd-progress-label{color:var(--navy)}
+.scd-progress-line{flex:1;height:2px;background:var(--f2);margin:0 8px;margin-bottom:18px;transition:background .3s}
+.scd-progress-line.done{background:var(--green)}
+
+/* Steps */
+.scd-step{display:none}
+.scd-step.active{display:block}
+
+/* Toggle buttons (Ja/Nein) */
+.scd-toggle-group{display:flex;gap:8px;margin-top:4px}
+.scd-toggle{font-family:var(--fh);font-size:12px;font-weight:700;padding:8px 20px;border-radius:8px;border:1.5px solid var(--f2);background:#fff;color:var(--t1);cursor:pointer;transition:all .2s}
+.scd-toggle.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* Upload zone */
+.scd-upload-zone{border:2px dashed var(--f2);border-radius:var(--r-xl);padding:40px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-top:8px}
+.scd-upload-zone:hover{border-color:var(--blue);background:var(--sky)}
+.scd-thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.scd-thumb{width:80px;height:80px;border-radius:8px;object-fit:cover;border:1.5px solid var(--f2)}
+
+/* Error, nav, fall box */
+.scd-err{color:var(--red);font-size:13px;margin-top:12px;padding:10px 14px;background:#fff0f0;border-radius:8px;border:1px solid #fecaca}
+.scd-form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--f2)}
+.scd-fall-box{background:var(--sky);border:2px solid var(--blue);border-radius:12px;padding:20px 32px;display:inline-block}
+@media(max-width:600px){.scd-form-wrap{padding:24px 18px}}
