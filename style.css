@@ -1328,3 +1328,17 @@ nav.sc .logo-light { display: block; }
 .scd-card-desc{font-size:12px;color:var(--t2);line-height:1.5}
 @media(max-width:900px){.scd-cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.scd-cards{grid-template-columns:1fr}}
+
+/* Prozess timeline */
+.scd-timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.scd-tl-item{text-align:center;padding:0 12px;position:relative}
+.scd-tl-num{width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--fh);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.scd-tl-connector{position:absolute;top:24px;left:calc(50% + 24px);right:calc(-50% + 24px);height:2px;background:rgba(255,255,255,.15)}
+.scd-tl-title{font-family:var(--fh);font-size:13px;font-weight:700;color:#fff;margin-bottom:8px}
+.scd-tl-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
+@media(max-width:860px){
+  .scd-timeline{grid-template-columns:1fr;gap:32px}
+  .scd-tl-connector{display:none!important}
+  .scd-tl-item{display:flex;gap:16px;text-align:left;align-items:flex-start}
+  .scd-tl-num{flex-shrink:0;margin:0}
+}
