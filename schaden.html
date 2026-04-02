@@ -328,5 +328,160 @@ function closeScdMob() {
 }
 </script>
 
+<script>
+// ─── SCHADEN FORM ───
+let scdFiles = [];
+
+function scdToggle(groupId, val) {
+  document.querySelectorAll('#' + groupId + ' .scd-toggle').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.val === val);
+  });
+}
+
+function scdGetToggle(groupId) {
+  const active = document.querySelector('#' + groupId + ' .scd-toggle.active');
+  return active ? active.dataset.val : null;
+}
+
+function scdShowStep(n) {
+  document.querySelectorAll('.scd-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('scdStep' + n).classList.add('active');
+  document.querySelectorAll('.scd-progress-step').forEach(s => {
+    const sn = parseInt(s.dataset.step);
+    s.classList.toggle('active', sn === n);
+    s.classList.toggle('done', sn < n);
+  });
+  document.querySelectorAll('.scd-progress-line').forEach((line, i) => {
+    line.classList.toggle('done', i + 1 < n);
+  });
+  document.getElementById('scd-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function scdNext(step) {
+  if (step === 1) {
+    const name = document.getElementById('scdFahrerName').value.trim();
+    const tel  = document.getElementById('scdTelefon').value.trim();
+    const email = document.getElementById('scdEmail').value.trim();
+    const kz   = document.getElementById('scdKennzeichen').value.trim();
+    if (!name || !tel || !email || !kz) {
+      const err = document.getElementById('scdErr1');
+      err.textContent = 'Bitte füllen Sie alle Pflichtfelder aus (Name, Telefon, E-Mail, Kennzeichen).';
+      err.style.display = 'block';
+      return;
+    }
+    document.getElementById('scdErr1').style.display = 'none';
+    scdShowStep(2);
+  } else if (step === 2) {
+    const datum = document.getElementById('scdDatum').value;
+    const ort   = document.getElementById('scdOrt').value.trim();
+    const fb    = scdGetToggle('scdFahrbereit');
+    const desc  = document.getElementById('scdBeschreibung').value.trim();
+    if (!datum || !ort || !fb || desc.length < 20) {
+      const err = document.getElementById('scdErr2');
+      err.textContent = !fb
+        ? 'Bitte wählen Sie aus ob das Fahrzeug fahrbereit ist.'
+        : desc.length < 20
+          ? 'Bitte beschreiben Sie den Schaden (mindestens 20 Zeichen).'
+          : 'Bitte füllen Sie alle Pflichtfelder aus (Datum, Ort, Beschreibung).';
+      err.style.display = 'block';
+      return;
+    }
+    document.getElementById('scdErr2').style.display = 'none';
+    scdShowStep(3);
+  }
+}
+
+function scdBack(step) {
+  scdShowStep(step - 1);
+}
+
+function scdHandleFiles(fileList) {
+  const err = document.getElementById('scdErr3');
+  const newFiles = Array.from(fileList);
+  for (const f of newFiles) {
+    if (f.size > 5 * 1024 * 1024) {
+      err.textContent = `"${f.name}" ist zu groß (max. 5 MB).`;
+      err.style.display = 'block';
+      return;
+    }
+  }
+  scdFiles = scdFiles.concat(newFiles).slice(0, 5);
+  err.style.display = 'none';
+  const thumbs = document.getElementById('scdThumbs');
+  thumbs.innerHTML = '';
+  scdFiles.forEach(f => {
+    const img = document.createElement('img');
+    img.className = 'scd-thumb';
+    img.src = URL.createObjectURL(f);
+    thumbs.appendChild(img);
+  });
+}
+
+// Drag and drop support
+document.addEventListener('DOMContentLoaded', () => {
+  const zone = document.getElementById('scdUploadZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--blue)'; });
+  zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    scdHandleFiles(e.dataTransfer.files);
+  });
+});
+
+async function scdSubmit() {
+  const err = document.getElementById('scdErr3');
+  if (scdFiles.length === 0) {
+    err.textContent = 'Bitte laden Sie mindestens ein Foto hoch.';
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+
+  const btn = document.getElementById('scdSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet...';
+
+  const fd = new FormData();
+  fd.append('fahrer_name',     document.getElementById('scdFahrerName').value.trim());
+  fd.append('firma',           document.getElementById('scdFirma').value.trim());
+  fd.append('fahrer_telefon',  document.getElementById('scdTelefon').value.trim());
+  fd.append('fahrer_email',    document.getElementById('scdEmail').value.trim());
+  fd.append('kennzeichen',     document.getElementById('scdKennzeichen').value.trim().toUpperCase());
+  fd.append('fahrzeugtyp',     document.getElementById('scdFahrzeugtyp').value.trim());
+  fd.append('baujahr',         document.getElementById('scdBaujahr').value.trim());
+  fd.append('unfall_datum',    document.getElementById('scdDatum').value);
+  fd.append('unfall_uhrzeit',  document.getElementById('scdUhrzeit').value);
+  fd.append('unfall_ort',      document.getElementById('scdOrt').value.trim());
+  fd.append('fahrbereit',      scdGetToggle('scdFahrbereit') || 'nein');
+  fd.append('polizei_gerufen', scdGetToggle('scdPolizei') || 'nein');
+  fd.append('unfallgegner',    scdGetToggle('scdGegner') || 'nein');
+  fd.append('beschreibung',    document.getElementById('scdBeschreibung').value.trim());
+  scdFiles.forEach(f => fd.append('photos', f));
+
+  try {
+    const res = await fetch('/api/schaden', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('scdFallNr').textContent = data.fall_nr;
+      document.querySelectorAll('.scd-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('scdSuccess').classList.add('active');
+      document.getElementById('scdProgress').style.display = 'none';
+      document.getElementById('scd-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      err.textContent = data.error || 'Fehler beim Senden. Bitte versuchen Sie es erneut.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Schaden melden →';
+    }
+  } catch (e) {
+    err.textContent = 'Verbindungsfehler. Bitte versuchen Sie es erneut.';
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Schaden melden →';
+  }
+}
+</script>
+
 </body>
 </html>
