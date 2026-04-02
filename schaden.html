@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Digitales Schadenmanagement — IMD Fleet Services</title>
+  <meta name="description" content="Schaden melden und IMD Fleet Services übernimmt den gesamten Prozess — 24/7, bundesweit, kostenlos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-in">
+    <div class="nav-logo" onclick="window.location.href='/'" style="cursor:pointer">
+      <img class="logo-dark" src="logo_dark.png" alt="IMD Fleet Services"/>
+      <img class="logo-light" src="logo_light.png" alt="IMD Fleet Services"/>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/#service">Für Fuhrparks</a></li>
+      <li><a href="/#prozess">So funktioniert es</a></li>
+      <li><a href="/#warum">Warum wir</a></li>
+      <li><a href="/#ueber-uns">Über uns</a></li>
+      <li><a href="/schaden" class="active">Schadenmanagement</a></li>
+      <li><a href="/#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('scd-form-section').scrollIntoView({behavior:'smooth'})">Schaden melden</button>
+    <button class="burger" id="burger" onclick="toggleScdMob()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="scdMobMenu">
+  <a href="/#service" onclick="closeScdMob()">Für Fuhrparks</a>
+  <a href="/#prozess" onclick="closeScdMob()">So funktioniert es</a>
+  <a href="/#warum" onclick="closeScdMob()">Warum wir</a>
+  <a href="/#ueber-uns" onclick="closeScdMob()">Über uns</a>
+  <a href="/schaden" onclick="closeScdMob()">Schadenmanagement</a>
+  <a href="/#kontakt" onclick="closeScdMob()">Kontakt</a>
+</div>
+
+<!-- SECTIONS GO HERE -->
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div style="margin-bottom:12px"><img src="logo_dark.png" alt="IMD Fleet Services" style="width:200px;height:auto;display:block;margin-bottom:8px" loading="lazy"></div>
+        <div class="fb-desc">IMD Fleet Services — professioneller Flottenankauf und digitales Schadenmanagement. Bundesweit, kostenfrei, revisionssicher.</div>
+        <div class="fb-badges"><span class="fb-badge">🚨 24/7 Hotline</span><span class="fb-badge">⚡ 2h Reaktion</span><span class="fb-badge">🚛 Bundesweit</span></div>
+      </div>
+      <div class="f-col"><h5>Service</h5><ul>
+        <li><a href="/#service">Für Fuhrparks</a></li>
+        <li><a href="/#prozess">So funktioniert es</a></li>
+        <li><a href="/schaden">Schadenmanagement</a></li>
+        <li><a href="/#anmelden">Fahrzeug anmelden</a></li>
+      </ul></div>
+      <div class="f-col"><h5>Unternehmen</h5><ul>
+        <li><a href="/#ueber-uns">Über uns</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+      </ul></div>
+      <div class="f-col"><h5>Kontakt</h5><ul>
+        <li><a href="#">+49 371 123 456</a></li>
+        <li><a href="#">Chemnitz, Deutschland</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="f-copy">© 2026 IMD Fleet Services GmbH. Alle Rechte vorbehalten.</div>
+      <div class="f-links"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('sc', scrollY > 50);
+}, {passive: true});
+function toggleScdMob() {
+  const m = document.getElementById('scdMobMenu');
+  const b = document.getElementById('burger');
+  m.classList.toggle('open');
+  b.classList.toggle('open');
+  document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+}
+function closeScdMob() {
+  document.getElementById('scdMobMenu').classList.remove('open');
+  document.getElementById('burger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+</body>
+</html>
