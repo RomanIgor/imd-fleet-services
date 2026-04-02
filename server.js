@@ -66,6 +66,29 @@ async function initDB() {
       created_at   TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS schaeden (
+      id              SERIAL PRIMARY KEY,
+      created_at      TIMESTAMPTZ DEFAULT NOW(),
+      fall_nr         TEXT UNIQUE,
+      firma           TEXT,
+      fahrer_name     TEXT NOT NULL,
+      fahrer_email    TEXT,
+      fahrer_telefon  TEXT NOT NULL,
+      kennzeichen     TEXT NOT NULL,
+      fahrzeugtyp     TEXT,
+      baujahr         TEXT,
+      unfall_datum    TEXT,
+      unfall_uhrzeit  TEXT,
+      unfall_ort      TEXT,
+      fahrbereit      BOOLEAN,
+      polizei_gerufen BOOLEAN,
+      unfallgegner    BOOLEAN,
+      beschreibung    TEXT NOT NULL,
+      status          TEXT DEFAULT 'Neu',
+      ip              TEXT
+    )
+  `);
   // Seed admin from env vars if no users exist yet
   const { rows } = await pool.query('SELECT COUNT(*) FROM users');
   if (parseInt(rows[0].count) === 0) {
