@@ -349,6 +349,152 @@ app.post('/submit', upload.none(), async (req, res) => {
   }
 });
 
+// ── POST /api/schaden ─────────────────────────────────────────────────────────
+app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
+  const {
+    firma = '', fahrer_name = '', fahrer_email = '', fahrer_telefon = '',
+    kennzeichen = '', fahrzeugtyp = '', baujahr = '',
+    unfall_datum = '', unfall_uhrzeit = '', unfall_ort = '',
+    fahrbereit = '', polizei_gerufen = '', unfallgegner = '',
+    beschreibung = ''
+  } = req.body;
+
+  // Validate required fields
+  if (!fahrer_name || !fahrer_telefon || !fahrer_email || !kennzeichen || !beschreibung) {
+    return res.json({ success: false, error: 'Pflichtfelder fehlen' });
+  }
+  if (!req.files || req.files.length === 0) {
+    return res.json({ success: false, error: 'Mindestens ein Foto erforderlich' });
+  }
+
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unbekannt';
+  const timestamp = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
+
+  try {
+    // Insert row first to get the serial id
+    const insertResult = await pool.query(
+      `INSERT INTO schaeden
+        (firma, fahrer_name, fahrer_email, fahrer_telefon, kennzeichen, fahrzeugtyp,
+         baujahr, unfall_datum, unfall_uhrzeit, unfall_ort, fahrbereit, polizei_gerufen,
+         unfallgegner, beschreibung, ip)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+       RETURNING id`,
+      [
+        firma, fahrer_name, fahrer_email, fahrer_telefon, kennzeichen, fahrzeugtyp,
+        baujahr, unfall_datum, unfall_uhrzeit, unfall_ort,
+        fahrbereit === 'ja', polizei_gerufen === 'ja', unfallgegner === 'ja',
+        beschreibung, ip
+      ]
+    );
+    const id = insertResult.rows[0].id;
+    const year = new Date().getFullYear();
+    const fall_nr = `SCH-${year}-${String(id).padStart(4, '0')}`;
+    await pool.query('UPDATE schaeden SET fall_nr=$1 WHERE id=$2', [fall_nr, id]);
+
+    // Build attachments array for Resend
+    const attachments = req.files.map(f => ({
+      filename: f.originalname,
+      content: f.buffer.toString('base64'),
+    }));
+
+    // Email HTML for IMD
+    const fahrbereitBadge = fahrbereit === 'ja'
+      ? '<span style="background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:4px;font-weight:700">✓ Fahrbereit</span>'
+      : '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700">✗ NICHT fahrbereit</span>';
+
+    const imdHtml = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<style>
+  body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px}
+  .card{background:#fff;border-radius:8px;padding:32px;max-width:600px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  h2{color:#0052A3;margin:0 0 4px}
+  .fall{font-size:22px;font-weight:800;color:#09152A;margin-bottom:8px}
+  .meta{color:#536E94;font-size:13px;margin-bottom:24px}
+  .section{background:#0052A3;color:#fff;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:20px;border-radius:4px 4px 0 0}
+  table{width:100%;border-collapse:collapse}
+  td{padding:10px 12px;border-bottom:1px solid #ECF1F8;font-size:14px;color:#09152A;vertical-align:top}
+  td.lbl{width:38%;font-weight:600;color:#2E4666}
+  .footer{margin-top:24px;font-size:12px;color:#8899B4;border-top:1px solid #DDE6F0;padding-top:12px}
+</style></head><body>
+<div class="card">
+  <h2>🚨 Neue Schadensmeldung</h2>
+  <div class="fall">${fall_nr}</div>
+  <p class="meta">Eingegangen am ${timestamp} &bull; IP: ${ip}</p>
+  <div class="section">Fahrer &amp; Kontakt</div>
+  <table>
+    <tr><td class="lbl">Fahrer</td><td>${fahrer_name}</td></tr>
+    <tr><td class="lbl">Firma</td><td>${firma || '—'}</td></tr>
+    <tr><td class="lbl">Telefon</td><td>${fahrer_telefon}</td></tr>
+    <tr><td class="lbl">E-Mail</td><td>${fahrer_email}</td></tr>
+  </table>
+  <div class="section">Fahrzeug</div>
+  <table>
+    <tr><td class="lbl">Kennzeichen</td><td>${kennzeichen}</td></tr>
+    <tr><td class="lbl">Fahrzeugtyp</td><td>${fahrzeugtyp || '—'}</td></tr>
+    <tr><td class="lbl">Baujahr</td><td>${baujahr || '—'}</td></tr>
+    <tr><td class="lbl">Fahrbereit</td><td>${fahrbereitBadge}</td></tr>
+  </table>
+  <div class="section">Schadensdetails</div>
+  <table>
+    <tr><td class="lbl">Datum</td><td>${unfall_datum}${unfall_uhrzeit ? ' · ' + unfall_uhrzeit : ''}</td></tr>
+    <tr><td class="lbl">Unfallort</td><td>${unfall_ort || '—'}</td></tr>
+    <tr><td class="lbl">Polizei gerufen</td><td>${polizei_gerufen === 'ja' ? 'Ja' : 'Nein'}</td></tr>
+    <tr><td class="lbl">Unfallgegner</td><td>${unfallgegner === 'ja' ? 'Ja' : 'Nein'}</td></tr>
+    <tr><td class="lbl">Beschreibung</td><td>${beschreibung}</td></tr>
+  </table>
+  <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang</div>
+</div></body></html>`;
+
+    // Confirmation email HTML for client
+    const clientHtml = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<style>
+  body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px}
+  .card{background:#fff;border-radius:8px;padding:32px;max-width:580px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .logo{font-family:Arial,sans-serif;font-size:15px;font-weight:800;color:#0052A3;margin-bottom:24px}
+  h2{color:#09152A;margin:0 0 8px;font-size:20px}
+  .fall-box{background:#f0f7ff;border:2px solid #0052A3;border-radius:8px;padding:18px 24px;margin:24px 0;text-align:center}
+  .fall-label{font-size:12px;color:#536E94;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+  .fall-nr{font-size:28px;font-weight:800;color:#0052A3;letter-spacing:.04em}
+  p{color:#536E94;font-size:14px;line-height:1.6}
+  .contact{background:#f4f7fb;border-radius:6px;padding:14px 18px;font-size:13px;color:#09152A;margin-top:20px}
+  .footer{margin-top:24px;font-size:12px;color:#8899B4;border-top:1px solid #DDE6F0;padding-top:12px}
+</style></head><body>
+<div class="card">
+  <div class="logo">IMD Fleet Services</div>
+  <h2>Ihre Schadensmeldung wurde empfangen</h2>
+  <p>Sehr geehrte/r ${fahrer_name},<br>wir haben Ihre Schadensmeldung erhalten und werden uns innerhalb von 2 Stunden bei Ihnen melden.</p>
+  <div class="fall-box">
+    <div class="fall-label">Ihre Fallnummer</div>
+    <div class="fall-nr">${fall_nr}</div>
+  </div>
+  <p>Bitte halten Sie diese Fallnummer bereit — sie wird für alle weiteren Kommunikationen benötigt.</p>
+  <div class="contact"><strong>Bei dringenden Fragen:</strong><br>+49 371 123 456 (24/7 Notfallhotline)</div>
+  <div class="footer">IMD Fleet Services · Chemnitz, Deutschland</div>
+</div></body></html>`;
+
+    // Send emails
+    await resend.emails.send({
+      from: 'IMD Fleet Services <onboarding@resend.dev>',
+      to: process.env.RECIPIENT_EMAIL,
+      subject: `🚨 Neuer Schaden: ${fall_nr} — ${kennzeichen}${firma ? ' — ' + firma : ''}`,
+      html: imdHtml,
+      attachments,
+    });
+
+    await resend.emails.send({
+      from: 'IMD Fleet Services <onboarding@resend.dev>',
+      to: fahrer_email,
+      subject: `Ihre Schadensmeldung ${fall_nr} wurde empfangen — IMD Fleet Services`,
+      html: clientHtml,
+    });
+
+    console.log(`[${timestamp}] ✓ Schaden ${fall_nr} — ${kennzeichen} saved + emails sent`);
+    res.json({ success: true, fall_nr });
+  } catch (err) {
+    console.error('Schaden error:', err.message);
+    res.status(500).json({ success: false, error: 'Fehler bei der Verarbeitung. Bitte versuchen Sie es erneut.' });
+  }
+});
+
 // ── Start ─────────────────────────────────────────────────────────────────────
 initDB().then(() => {
   app.listen(port, () => {
