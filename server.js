@@ -266,6 +266,11 @@ app.get('/intern', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// ── GET /schaden ──────────────────────────────────────────────────────────────
+app.get('/schaden', (req, res) => {
+  res.sendFile(path.join(__dirname, 'schaden.html'));
+});
+
 // ── POST /submit ──────────────────────────────────────────────────────────────
 app.post('/submit', upload.none(), async (req, res) => {
   const {
