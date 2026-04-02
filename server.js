@@ -472,20 +472,22 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
 </div></body></html>`;
 
     // Send emails
-    await resend.emails.send({
+    const { error: imdErr } = await resend.emails.send({
       from: 'IMD Fleet Services <onboarding@resend.dev>',
       to: process.env.RECIPIENT_EMAIL,
       subject: `🚨 Neuer Schaden: ${fall_nr} — ${kennzeichen}${firma ? ' — ' + firma : ''}`,
       html: imdHtml,
       attachments,
     });
+    if (imdErr) throw new Error(imdErr.message);
 
-    await resend.emails.send({
+    const { error: clientErr } = await resend.emails.send({
       from: 'IMD Fleet Services <onboarding@resend.dev>',
       to: fahrer_email,
       subject: `Ihre Schadensmeldung ${fall_nr} wurde empfangen — IMD Fleet Services`,
       html: clientHtml,
     });
+    if (clientErr) throw new Error(clientErr.message);
 
     console.log(`[${timestamp}] ✓ Schaden ${fall_nr} — ${kennzeichen} saved + emails sent`);
     res.json({ success: true, fall_nr });
