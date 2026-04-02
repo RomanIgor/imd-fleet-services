@@ -497,6 +497,29 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   }
 });
 
+// ── GET /api/schaeden ─────────────────────────────────────────────────────────
+app.get('/api/schaeden', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM schaeden ORDER BY created_at DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── PATCH /api/schaeden/:id/status ────────────────────────────────────────────
+app.patch('/api/schaeden/:id/status', requireAuth, async (req, res) => {
+  const { status } = req.body;
+  const allowed = ['Neu', 'In Bearbeitung', 'Abgeschlossen'];
+  if (!allowed.includes(status)) return res.json({ success: false, error: 'Ungültiger Status' });
+  try {
+    await pool.query('UPDATE schaeden SET status=$1 WHERE id=$2', [status, req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Start ─────────────────────────────────────────────────────────────────────
 initDB().then(() => {
   app.listen(port, () => {
