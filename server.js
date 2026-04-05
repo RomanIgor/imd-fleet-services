@@ -268,6 +268,7 @@ app.get('/intern', (req, res) => {
 
 // ── GET /schaden ──────────────────────────────────────────────────────────────
 app.get('/schaden', (req, res) => {
+  if (!req.session || !req.session.user) return res.redirect('/intern');
   res.sendFile(path.join(__dirname, 'schaden.html'));
 });
 
