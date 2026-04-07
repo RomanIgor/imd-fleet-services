@@ -338,15 +338,44 @@ app.post('/submit', upload.none(), async (req, res) => {
   <div class="footer">Automatisch generiert durch das Kontaktformular auf imd-fleet-services.de</div>
 </div></body></html>`;
 
+  const confirmationHtml = `
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
+<style>
+  body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px}
+  .card{background:#fff;border-radius:8px;padding:32px;max-width:600px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  h2{color:#0052A3;margin:0 0 8px}
+  .meta{color:#536E94;font-size:14px;margin-bottom:24px}
+  .footer{margin-top:24px;font-size:12px;color:#8899B4;border-top:1px solid #DDE6F0;padding-top:12px}
+</style></head><body>
+<div class="card">
+  <h2>Vielen Dank für Ihre Anfrage</h2>
+  <p class="meta">Guten Tag ${name},<br><br>
+  wir haben Ihre Fahrzeuganmeldung erfolgreich erhalten und werden uns so schnell wie möglich bei Ihnen melden.<br><br>
+  Bei Fragen erreichen Sie uns jederzeit unter <a href="mailto:info@imdfleet.de">info@imdfleet.de</a>.
+  </p>
+  <div class="footer">IMD Fleet Services &bull; imdfleet.de</div>
+</div></body></html>`;
+
   try {
-    const { error } = await resend.emails.send({
+    const { error: imdErr } = await resend.emails.send({
       from:    'IMD Fleet Services <info@imdfleet.de>',
       to:      process.env.RECIPIENT_EMAIL,
       replyTo: email || undefined,
       subject: `Neue Fahrzeuganmeldung — ${firma} (${marke} ${modell})`.trim(),
       html,
     });
-    if (error) throw new Error(error.message);
+    if (imdErr) throw new Error(imdErr.message);
+
+    if (email) {
+      const { error: clientErr } = await resend.emails.send({
+        from:    'IMD Fleet Services <info@imdfleet.de>',
+        to:      email,
+        subject: 'Ihre Anfrage bei IMD Fleet Services',
+        html:    confirmationHtml,
+      });
+      if (clientErr) console.error(`[${timestamp}] ✗ Confirmation mail error:`, clientErr.message);
+    }
+
     console.log(`[${timestamp}] ✓ ${firma} / ${name} → saved + email sent`);
     res.json({ success: true });
   } catch (err) {
