@@ -335,7 +335,7 @@ app.post('/submit', upload.none(), async (req, res) => {
     <tr><td class="lbl">Anmerkung</td><td>${anmerkung || '—'}</td></tr>
     <tr><td class="lbl">Zustimmung</td><td>✓ Ja</td></tr>
   </table>
-  <div class="footer">Automatisch generiert durch das Kontaktformular auf imdfleet.de/</div>
+  <div class="footer">Automatisch generiert durch das Kontaktformular auf imdfleet.de</div>
 </div></body></html>`;
 
   const confirmationHtml = `
