@@ -101,6 +101,19 @@ async function initDB() {
   console.log('✓ DB ready');
 }
 
+// ── Maintenance Basic Auth ────────────────────────────────────────────────────
+if (process.env.MAINTENANCE_PASS) {
+  app.use((req, res, next) => {
+    const auth = req.headers['authorization'];
+    if (auth && auth.startsWith('Basic ')) {
+      const [user, pass] = Buffer.from(auth.slice(6), 'base64').toString().split(':');
+      if (user === 'imd' && pass === process.env.MAINTENANCE_PASS) return next();
+    }
+    res.set('WWW-Authenticate', 'Basic realm="IMD Fleet"');
+    res.status(401).send('Zugang gesperrt');
+  });
+}
+
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(session({
   store: new pgSession({ pool, createTableIfMissing: true }),
