@@ -110,7 +110,6 @@ app.use(session({
   cookie: { maxAge: 8 * 60 * 60 * 1000 } // 8h
 }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
 
 // ── Maintenance Gate (session-based, works on iOS Safari) ─────────────────────
 if (process.env.MAINTENANCE_PASS) {
@@ -171,6 +170,9 @@ if (process.env.MAINTENANCE_PASS) {
     res.redirect('/maintenance');
   });
 }
+
+// express.static runs AFTER maintenance gate so protected files aren't served without auth
+app.use(express.static(path.join(__dirname)));
 
 // ── Resend ────────────────────────────────────────────────────────────────────
 const resend = new Resend(process.env.RESEND_API_KEY);
