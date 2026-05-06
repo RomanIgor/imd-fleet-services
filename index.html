@@ -1556,6 +1556,7 @@
       <div class="dsb-sec">
         <div class="dsb-lbl">Schäden</div>
         <div class="dsb-item" onclick="showPanel('dSch',this)"><span class="di">🚨</span><span>Schäden</span></div>
+        <div class="dsb-item" onclick="showPanel('dWerk',this)"><span class="di">🔧</span><span>Werkstätten</span></div>
       </div>
       <div class="dsb-sec">
         <div class="dsb-lbl">Prozess</div>
@@ -1816,6 +1817,38 @@
             <button onclick="document.getElementById('schDetail').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--t3)">×</button>
           </div>
           <div id="schDetailBody"></div>
+        </div>
+      </div>
+
+      <div class="dp" id="dWerk">
+        <div class="dh">Werkstätten</div>
+        <div class="dsub">IMD-Partnerwerkstätten verwalten</div>
+
+        <!-- Add form -->
+        <div style="background:var(--f0);border-radius:12px;padding:20px;margin-bottom:24px">
+          <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Neue Werkstatt hinzufügen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <input id="wName"     class="fi" placeholder="Name *" style="grid-column:1/-1">
+            <input id="wCity"     class="fi" placeholder="Stadt">
+            <input id="wPlz"      class="fi" placeholder="PLZ">
+            <input id="wEmail"    class="fi" placeholder="E-Mail *" type="email" style="grid-column:1/-1">
+            <input id="wServices" class="fi" placeholder="Leistungen (z.B. Karosserie · Lack)" style="grid-column:1/-1">
+            <input id="wRating"   class="fi" placeholder="Bewertung (z.B. 4.8)" type="number" min="1" max="5" step="0.1">
+          </div>
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <button class="td-btn" onclick="addWerkstatt()">+ Hinzufügen</button>
+            <span id="werkMsg" style="font-size:13px"></span>
+          </div>
+        </div>
+
+        <!-- List -->
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Werkstätten</div>
+            <button class="tbl-sel" onclick="loadWerkstaetten()" style="cursor:pointer">↻ Aktualisieren</button>
+          </div>
+          <table><thead><tr><th>Name</th><th>Ort</th><th>E-Mail</th><th>Leistungen</th><th>★</th><th>Aktiv</th><th>Aktion</th></tr></thead>
+          <tbody id="tblWerk"></tbody></table>
         </div>
       </div>
 

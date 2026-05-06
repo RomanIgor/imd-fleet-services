@@ -89,7 +89,7 @@ async function openDash(){
 }
 
 function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
-function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();}
+function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();if(id==='dWerk')loadWerkstaetten();}
 
 async function doLogin(){
   const u=document.getElementById('loginUser').value;
@@ -184,6 +184,58 @@ async function patchSchadenStatus(id, status) {
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ status })
   });
+}
+
+// ─── WERKSTAETTEN ───
+async function loadWerkstaetten() {
+  try {
+    const rows = await fetch('/api/werkstaetten').then(r => r.json());
+    const tbody = document.getElementById('tblWerk');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--t3)">Keine Werkstätten vorhanden.</td></tr>';
+      return;
+    }
+    rows.forEach(w => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><strong>${w.name}</strong></td><td>${w.plz||''} ${w.city||''}</td><td>${w.email}</td><td style="font-size:12px;color:var(--t2)">${w.services||'—'}</td><td>${w.rating||'—'}</td><td><span class="sb ${w.aktiv ? 'sb-gr' : 'sb-am'}">${w.aktiv ? 'Aktiv' : 'Inaktiv'}</span></td><td><button class="td-btn" onclick="deleteWerkstatt(${w.id}, '${w.name.replace(/'/g,"\\'")}')">Löschen</button></td>`;
+      tbody.appendChild(tr);
+    });
+  } catch(e) { console.error('loadWerkstaetten:', e); }
+}
+
+async function addWerkstatt() {
+  const name     = document.getElementById('wName').value.trim();
+  const city     = document.getElementById('wCity').value.trim();
+  const plz      = document.getElementById('wPlz').value.trim();
+  const email    = document.getElementById('wEmail').value.trim();
+  const services = document.getElementById('wServices').value.trim();
+  const rating   = document.getElementById('wRating').value.trim();
+  const msg      = document.getElementById('werkMsg');
+  if (!name || !email) { msg.style.cssText='color:var(--red)'; msg.textContent='Name und E-Mail sind Pflichtfelder.'; return; }
+  try {
+    const res = await fetch('/api/werkstaetten', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, city, plz, email, services, rating: rating ? parseFloat(rating) : null }),
+    }).then(r => r.json());
+    if (res.success) {
+      msg.style.cssText = 'color:var(--green)';
+      msg.textContent = '✓ Werkstatt hinzugefügt.';
+      ['wName','wCity','wPlz','wEmail','wServices','wRating'].forEach(id => { document.getElementById(id).value = ''; });
+      loadWerkstaetten();
+    } else { msg.style.cssText='color:var(--red)'; msg.textContent = res.error || 'Fehler'; }
+  } catch(e) { msg.style.cssText='color:var(--red)'; msg.textContent = 'Netzwerkfehler.'; }
+}
+
+async function deleteWerkstatt(id, name) {
+  if (!confirm(`Werkstatt "${name}" wirklich löschen?`)) return;
+  try {
+    const res = await fetch('/api/werkstaetten/' + id, { method: 'DELETE' }).then(r => r.json());
+    if (res.success) loadWerkstaetten();
+    else showToast('⚠ ' + (res.error || 'Fehler'));
+  } catch(e) { showToast('⚠ Netzwerkfehler'); }
 }
 
 // ─── EXCEL EXPORT ───

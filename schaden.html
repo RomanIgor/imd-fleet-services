@@ -742,12 +742,7 @@ const UPLOAD_DEFS = [
   { label: 'Dokumente / Polizei',    required: false },
 ];
 
-const WORKSHOPS = [
-  { id:1, name:'Karosseriezentrum Müller GmbH', city:'Berlin',   plz:'10115', distance:'3,8 km', email:'service@mueller-karosserie.de', services:'Karosserie · Lack · Glas',                rating:4.8 },
-  { id:2, name:'Auto Lack Zentrum Nord',         city:'Hamburg',  plz:'20095', distance:'7,2 km', email:'info@alzn.de',                  services:'Lack · Karosserie · Ersatzwagen',          rating:4.6 },
-  { id:3, name:'Fleet Repair Partner Süd',       city:'München',  plz:'80331', distance:'5,4 km', email:'claim@repair-sued.de',          services:'Karosserie · Glas · Hol-/Bringservice',   rating:4.9 },
-  { id:4, name:'BMTI Werkstattpartner Sachsen',  city:'Chemnitz', plz:'09111', distance:'2,1 km', email:'service@bmti-sachsen.de',       services:'Karosserie · Lack · Mechanik',            rating:4.7 },
-];
+let workshops = [];
 
 // ═══════════════════════════════════════════════════════════════════════════
 // HELPERS
@@ -868,8 +863,15 @@ function prevStep() {
 }
 
 function selectWorkshop(id) {
-  state.selectedWorkshop = WORKSHOPS.find(w => w.id === id);
+  state.selectedWorkshop = workshops.find(w => w.id === id);
   render();
+}
+
+async function loadWorkshops() {
+  try {
+    workshops = await fetch('/api/werkstaetten').then(r => r.json());
+    if (state.step === 4) renderFormOnly();
+  } catch(e) { console.error('loadWorkshops:', e); }
 }
 
 function handleFileUpload(label, inputEl) {
@@ -925,6 +927,9 @@ async function submitClaim() {
     );
   }
   fd.append('beschreibung', descParts.join('\n\n') || 'Keine weitere Beschreibung');
+
+  fd.append('werkstatt_name',  state.selectedWorkshop?.name  || '');
+  fd.append('werkstatt_email', state.selectedWorkshop?.email || '');
 
   let photoCount = 0;
   for (const file of Object.values(state.uploadFiles)) {
@@ -1055,11 +1060,14 @@ function renderStep3() {
 
 function renderStep4() {
   const q = (state.formData._wsq || '').trim().toLowerCase();
-  const filtered = !q ? WORKSHOPS : WORKSHOPS.filter(w =>
-    w.plz.startsWith(q.slice(0, 2)) || w.city.toLowerCase().includes(q)
+  const aktiv = workshops.filter(w => w.aktiv !== false);
+  const filtered = !q ? aktiv : aktiv.filter(w =>
+    (w.plz||'').startsWith(q.slice(0, 2)) || (w.city||'').toLowerCase().includes(q)
   );
 
-  const cards = filtered.map(w => {
+  const cards = filtered.length === 0
+    ? `<div style="color:var(--text-soft);font-size:13px;padding:12px 0;">Keine Werkstätten gefunden.</div>`
+    : filtered.map(w => {
     const sel = state.selectedWorkshop?.id === w.id;
     return `
       <button type="button" class="workshop-card ${sel ? 'selected' : ''}" onclick="selectWorkshop(${w.id})">
@@ -1069,12 +1077,11 @@ function renderStep4() {
         </div>
         <div class="workshop-meta">
           ${icon('i-pin',12)}
-          <span>${w.plz} ${escapeHtml(w.city)} ·</span>
-          <span class="km">${w.distance}</span>
+          <span>${escapeHtml(w.plz||'')} ${escapeHtml(w.city||'')}</span>
         </div>
-        <div class="workshop-services">${escapeHtml(w.services)}</div>
+        ${w.services ? `<div class="workshop-services">${escapeHtml(w.services)}</div>` : ''}
         <div class="workshop-foot">
-          <div class="workshop-rating"><span class="star">★</span> ${w.rating}</div>
+          <div class="workshop-rating"><span class="star">★</span> ${w.rating||'—'}</div>
           <div class="workshop-imdtag">Freigabe nur durch IMD</div>
         </div>
       </button>`;
@@ -1268,6 +1275,7 @@ function render() {
   renderCcWorkshop();
 }
 
+loadWorkshops();
 render();
 </script>
 
