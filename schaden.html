@@ -368,6 +368,110 @@
   .chat-send:disabled { background:var(--border-2);cursor:not-allowed; }
   .chat-disclaimer { font-size:10px;color:var(--text-soft);text-align:center;margin-top:8px;line-height:1.4; }
   .chat-disclaimer b { color:var(--imd-dark); }
+
+  /* LOGO PILL */
+  .logo-pill {
+    background: var(--imd-dark); padding: 4px 8px; border-radius: 8px;
+    display: flex; align-items: center; flex-shrink: 0;
+  }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: var(--bg); border: 1px solid var(--border-2);
+    color: var(--text-mid); display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { background: var(--border); }
+
+  /* PWA INSTALL BANNER */
+  .pwa-banner {
+    display: none; align-items: center; gap: 10px;
+    background: var(--imd-dark); color: white;
+    padding: 10px 16px; font-size: 13px; font-weight: 500;
+  }
+  .pwa-banner.show { display: flex; }
+  .pwa-banner-text { flex: 1; }
+  .pwa-banner-btn {
+    background: white; color: var(--imd-dark);
+    padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .pwa-banner-btn:hover { background: #F0F2F7; }
+  .pwa-banner-close {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(255,255,255,0.14); color: white;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; border: 0;
+  }
+  .pwa-banner-close:hover { background: rgba(255,255,255,0.24); }
+
+  /* DARK MODE */
+  [data-theme="dark"] {
+    --bg:        #0F1218;
+    --card:      #1A1F2C;
+    --border:    #252C3D;
+    --border-2:  #313A50;
+    --text:      #E4EAF5;
+    --text-mid:  #8A95AB;
+    --text-soft: #5E6880;
+    --imd-blue-bg: rgba(59,130,196,0.13);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.45);
+    --shadow:    0 4px 16px rgba(0,0,0,0.55);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.65);
+    --green-bg:  rgba(26,122,74,0.18);
+    --amber-bg:  rgba(179,107,0,0.18);
+    --red-bg:    rgba(196,43,43,0.18);
+  }
+  [data-theme="dark"] body { background: var(--bg); }
+  [data-theme="dark"] .header { background: rgba(10,13,20,0.97); }
+  [data-theme="dark"] .assistant-card,
+  [data-theme="dark"] .form-card,
+  [data-theme="dark"] .info-card { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .field-input,
+  [data-theme="dark"] .field-select,
+  [data-theme="dark"] .field-textarea { background: #1E2435; border-color: var(--border-2); color: var(--text); }
+  [data-theme="dark"] .field-input::placeholder { color: var(--text-soft); }
+  [data-theme="dark"] .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A95AB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  [data-theme="dark"] .input-block { background: #12161F; border-color: var(--border); }
+  [data-theme="dark"] .stepbar { background: #12161F; border-color: var(--border); }
+  [data-theme="dark"] .step { background: var(--card); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .step-num { background: #252C3D; color: var(--text-soft); }
+  [data-theme="dark"] .upload-tile { background: var(--card); border-color: var(--border-2); }
+  [data-theme="dark"] .search-box { background: #1E2435; border-color: var(--border-2); }
+  [data-theme="dark"] .search-box input { color: var(--text); }
+  [data-theme="dark"] .workshop-card { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .review-item { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .status-item { background: #12161F; border-color: var(--border); }
+  [data-theme="dark"] .info-row { background: #12161F; border-color: var(--border); }
+  [data-theme="dark"] .info-row-icon { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .btn-back { background: var(--card); border-color: var(--border-2); color: var(--text-mid); }
+  [data-theme="dark"] .success-card { background: var(--card); }
+  [data-theme="dark"] .success-inner { background: linear-gradient(180deg,rgba(26,122,74,0.15) 0%,var(--card) 100%); }
+  [data-theme="dark"] .success-claimnr { background: var(--imd-blue); }
+  [data-theme="dark"] .quick-q { background: var(--card); border-color: var(--border); color: var(--text); }
+  [data-theme="dark"] .faq-item { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .faq-q { color: var(--text); }
+  [data-theme="dark"] .faq-a-inner { border-top-color: var(--border); }
+  [data-theme="dark"] .chat-panel { background: var(--card); }
+  [data-theme="dark"] .chat-body { background: #0F1218; }
+  [data-theme="dark"] .chat-input-wrap { background: var(--card); border-top-color: var(--border); }
+  [data-theme="dark"] .chat-input-row { background: #12161F; border-color: var(--border); }
+  [data-theme="dark"] .chat-input { color: var(--text); }
+  [data-theme="dark"] .msg-row.bot .msg-bubble { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .page-footer { border-top-color: var(--border); }
+
+  /* DESKTOP IMPROVEMENTS */
+  @media (min-width: 900px) {
+    main { padding: 24px 32px; }
+    .form-content { padding: 36px 40px; }
+    .hero h1 { font-size: 38px; }
+    .hero p { font-size: 15px; }
+    .bottom-grid { gap: 20px; }
+  }
+  @media (min-width: 1200px) {
+    main { max-width: 1100px; padding: 28px 40px; }
+  }
 </style>
 </head>
 <body>
@@ -400,16 +504,32 @@
   </defs>
 </svg>
 
+<div id="pwa-banner" class="pwa-banner">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+  <span class="pwa-banner-text">IMD Schaden als App auf dem Homescreen installieren</span>
+  <button class="pwa-banner-btn" onclick="installPWA()">Installieren</button>
+  <button class="pwa-banner-close" onclick="dismissPWABanner()" aria-label="Schließen">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+  </button>
+</div>
 <header class="header">
   <div class="header-inner">
     <div class="logo">
-      <img src="/logo_dark.png" alt="IMD Fleet Services" class="logo-img">
+      <div class="logo-pill">
+        <img src="/logo_dark.png" alt="IMD Fleet Services" class="logo-img">
+      </div>
       <div class="logo-divider"></div>
       <div class="logo-sub-block">Schadenmanagement</div>
     </div>
-    <div class="header-status">
-      <div class="pulse-dot"></div>
-      <span>Online</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn" title="Erscheinungsbild wechseln" aria-label="Dark/Light Mode">
+        <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <div class="header-status">
+        <div class="pulse-dot"></div>
+        <span>Online</span>
+      </div>
     </div>
   </div>
 </header>
@@ -1259,6 +1379,53 @@ function renderFaq() {
 }
 
 function toggleFaq(key) { chatState.faqOpen[key] = !chatState.faqOpen[key]; renderFaq(); }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════════════════════════════════
+function applyTheme(dark) {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  const moon = document.getElementById('theme-icon-moon');
+  const sun  = document.getElementById('theme-icon-sun');
+  if (moon) moon.style.display = dark ? 'none' : '';
+  if (sun)  sun.style.display  = dark ? '' : 'none';
+}
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = !isDark;
+  localStorage.setItem('imd-theme', next ? 'dark' : 'light');
+  applyTheme(next);
+}
+(function initTheme() {
+  const saved = localStorage.getItem('imd-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved ? saved === 'dark' : prefersDark);
+})();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PWA INSTALL
+// ═══════════════════════════════════════════════════════════════════════════
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const banner = document.getElementById('pwa-banner');
+  if (banner && !sessionStorage.getItem('pwa-banner-dismissed')) {
+    banner.classList.add('show');
+  }
+});
+function installPWA() {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(() => { deferredInstallPrompt = null; });
+  dismissPWABanner();
+}
+function dismissPWABanner() {
+  const banner = document.getElementById('pwa-banner');
+  if (banner) banner.classList.remove('show');
+  sessionStorage.setItem('pwa-banner-dismissed', '1');
+}
+window.addEventListener('appinstalled', dismissPWABanner);
 
 // Service Worker Registration
 if ('serviceWorker' in navigator) {
