@@ -1069,7 +1069,7 @@ function renderStep4() {
   const q = (state.formData._wsq || '').trim().toLowerCase();
   const aktiv = workshops.filter(w => w.aktiv !== false);
   const filtered = !q ? aktiv : aktiv.filter(w =>
-    (w.plz||'').startsWith(q.slice(0, 2)) || (w.city||'').toLowerCase().includes(q)
+    (w.plz||'').startsWith(q) || (w.city||'').toLowerCase().includes(q) || (w.name||'').toLowerCase().includes(q)
   );
 
   const cards = filtered.length === 0

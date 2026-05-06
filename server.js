@@ -9,10 +9,11 @@ const pgSession = require('connect-pg-simple')(session);
 const path      = require('path');
 const crypto    = require('crypto');
 const PizZip    = require('pizzip');
-const PDFDocument = require('pdfkit');
+let PDFDocument; try { PDFDocument = require('pdfkit'); } catch(_) { console.warn('pdfkit not installed — PDF generation disabled. Run: npm install'); }
 
 // ── PDF Generation ────────────────────────────────────────────────────────────
 function generateSchadenPDF(d) {
+  if (!PDFDocument) return Promise.resolve(null);
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ margin: 50, size: 'A4', info: { Title: `Schadenmeldung ${d.fall_nr}`, Author: 'IMD Fleet Services' } });
     const chunks = [];
