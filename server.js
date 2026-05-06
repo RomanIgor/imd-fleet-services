@@ -658,10 +658,13 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
         werkstatt_name, werkstatt_email, signatureBase64,
       });
     } catch (pdfErr) {
-      console.error(`[${timestamp}] ✗ PDF generation error:`, pdfErr.message);
+      console.error(`[${timestamp}] ✗ PDF error:`, pdfErr.message);
     }
     if (pdfBuffer) {
-      attachments.push({ filename: `Schadenmeldung_${fall_nr}.pdf`, content: pdfBuffer.toString('base64') });
+      attachments.push({ filename: `Schadenmeldung_${fall_nr}.pdf`, content: pdfBuffer });
+      console.log(`[${timestamp}] ✓ PDF generated (${Math.round(pdfBuffer.length/1024)} KB)`);
+    } else {
+      console.warn(`[${timestamp}] ⚠ PDF skipped — pdfkit not installed or generation failed`);
     }
 
     // Werkstatt email HTML

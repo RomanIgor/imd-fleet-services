@@ -1253,7 +1253,6 @@ function renderSuccess() {
         <h2>Schadenmeldung übermittelt</h2>
         <p>
           IMD Fleet Services hat das vollständige Schadenprotokoll inklusive Bilder erhalten.
-          Wir melden uns innerhalb von 2 Stunden bei Ihnen.
           ${state.selectedWorkshop ? `<br><br>Gewünschte Werkstatt <strong>${escapeHtml(state.selectedWorkshop.name)}</strong> wurde notiert.` : ''}
         </p>
         <div class="success-claimnr">${icon('i-file',14)} Schadennummer: ${escapeHtml(state.fallNr || '—')}</div>
