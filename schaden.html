@@ -1021,7 +1021,7 @@ function renderStep3() {
           <div class="upload-tile-status">${escapeHtml(displayName)}</div>
         </button>
         <input type="file" id="${inputId}" accept="image/*" style="display:none"
-               onchange="handleFileUpload(${labelJson}, this)">
+               onchange='handleFileUpload(${labelJson}, this)'>
       </div>`;
   }).join('');
 
