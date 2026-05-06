@@ -9,6 +9,96 @@ const pgSession = require('connect-pg-simple')(session);
 const path      = require('path');
 const crypto    = require('crypto');
 const PizZip    = require('pizzip');
+const PDFDocument = require('pdfkit');
+
+// ── PDF Generation ────────────────────────────────────────────────────────────
+function generateSchadenPDF(d) {
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument({ margin: 50, size: 'A4', info: { Title: `Schadenmeldung ${d.fall_nr}`, Author: 'IMD Fleet Services' } });
+    const chunks = [];
+    doc.on('data', c => chunks.push(c));
+    doc.on('end',  () => resolve(Buffer.concat(chunks)));
+    doc.on('error', reject);
+
+    const W = doc.page.width;
+    const navy = '#0052A3', dark = '#09152A', gray = '#6B7B99', light = '#D0DCF0';
+
+    // Header bar
+    doc.rect(0, 0, W, 72).fill(navy);
+    doc.fillColor('#fff').font('Helvetica-Bold').fontSize(16).text('IMD Fleet Services', 50, 18);
+    doc.font('Helvetica').fontSize(10).fillColor('#A8C4E8').text('Schadenmeldung', 50, 40);
+    doc.font('Helvetica-Bold').fontSize(13).fillColor('#fff').text(d.fall_nr, W - 200, 20, { width: 150, align: 'right' });
+    doc.font('Helvetica').fontSize(9).fillColor('#A8C4E8').text(d.timestamp, W - 200, 40, { width: 150, align: 'right' });
+
+    doc.y = 92;
+
+    function sec(title) {
+      if (doc.y > doc.page.height - 150) doc.addPage();
+      doc.moveDown(0.5);
+      doc.fillColor(navy).font('Helvetica-Bold').fontSize(8).text(title.toUpperCase(), 50, doc.y, { characterSpacing: 0.8 });
+      doc.moveDown(0.15);
+      doc.moveTo(50, doc.y).lineTo(W - 50, doc.y).strokeColor(light).lineWidth(0.5).stroke();
+      doc.moveDown(0.5);
+    }
+
+    function row(label, value) {
+      const y0 = doc.y;
+      doc.fillColor(gray).font('Helvetica').fontSize(9).text(label, 50, y0, { width: 145, lineBreak: false });
+      doc.fillColor(dark).font('Helvetica').fontSize(9).text(value || '—', 200, y0, { width: W - 255 });
+      if (doc.y < y0 + 13) doc.y = y0 + 13;
+    }
+
+    const fmtDe = iso => { if (!iso) return '—'; const [y,m,d2] = iso.split('-'); return `${d2}.${m}.${y}`; };
+
+    sec('Fahrer & Fahrzeug');
+    row('Name',         d.fahrer_name);
+    row('Telefon',      d.fahrer_telefon);
+    row('E-Mail',       d.fahrer_email);
+    row('Unternehmen',  d.firma);
+    row('Kennzeichen',  d.kennzeichen);
+    if (d.fahrzeugtyp) row('Fahrzeugtyp', d.fahrzeugtyp);
+
+    sec('Schadensdetails');
+    row('Datum', fmtDe(d.unfall_datum) + (d.unfall_uhrzeit ? ', ' + d.unfall_uhrzeit + ' Uhr' : ''));
+    row('Unfallort',    d.unfall_ort);
+    row('Fahrbereit',   d.fahrbereit === 'ja' ? 'Ja' : 'Nein');
+    row('Unfallgegner', d.unfallgegner === 'ja' ? 'Ja' : 'Nein');
+    row('Beschreibung', d.beschreibung);
+
+    if (d.werkstatt_name) {
+      sec('Gewünschte Werkstatt (Wunsch des Fahrers)');
+      row('Name',   d.werkstatt_name);
+      if (d.werkstatt_email) row('E-Mail', d.werkstatt_email);
+    }
+
+    sec('Unterschrift des Fahrers');
+    doc.fillColor(gray).font('Helvetica').fontSize(8.5)
+       .text('Ich bestätige die Richtigkeit der obigen Angaben. Eine Reparaturfreigabe darf ausschließlich durch IMD Fleet Services erfolgen.', 50, doc.y, { width: W - 100 });
+    doc.moveDown(0.8);
+
+    if (d.signatureBase64 && d.signatureBase64.startsWith('data:image/png;base64,')) {
+      try {
+        const sigBuf = Buffer.from(d.signatureBase64.slice(22), 'base64');
+        const sigY = doc.y;
+        doc.image(sigBuf, 50, sigY, { width: 220, height: 80 });
+        doc.y = sigY + 90;
+      } catch (_) { /* skip */ }
+    }
+
+    doc.moveTo(50, doc.y).lineTo(270, doc.y).strokeColor(dark).lineWidth(0.5).stroke();
+    doc.moveDown(0.3);
+    doc.fillColor(gray).font('Helvetica').fontSize(8.5)
+       .text(`${d.fahrer_name}  ·  ${new Date().toLocaleDateString('de-DE')}`, 50, doc.y);
+
+    // Footer
+    const footY = doc.page.height - 38;
+    doc.moveTo(50, footY - 8).lineTo(W - 50, footY - 8).strokeColor(light).lineWidth(0.5).stroke();
+    doc.fillColor('#9AA8BF').font('Helvetica').fontSize(7.5)
+       .text('IMD Fleet Services  ·  imdfleet.de  ·  Automatisch erstellt', 50, footY - 2, { align: 'center', width: W - 100 });
+
+    doc.end();
+  });
+}
 
 // ── Password hashing (built-in scrypt, no extra deps) ─────────────────────────
 function hashPassword(password) {
@@ -553,8 +643,25 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang</div>
 </div></body></html>`;
 
-    const werkstatt_name  = (req.body.werkstatt_name  || '').trim();
-    const werkstatt_email = (req.body.werkstatt_email || '').trim();
+    const werkstatt_name   = (req.body.werkstatt_name  || '').trim();
+    const werkstatt_email  = (req.body.werkstatt_email || '').trim();
+    const signatureBase64  = (req.body.signature       || '').trim();
+
+    // Generate PDF Schadenmeldung
+    let pdfBuffer = null;
+    try {
+      pdfBuffer = await generateSchadenPDF({
+        fall_nr, timestamp, fahrer_name, fahrer_telefon, fahrer_email,
+        firma, kennzeichen, fahrzeugtyp, unfall_datum, unfall_uhrzeit,
+        unfall_ort, fahrbereit, unfallgegner, beschreibung,
+        werkstatt_name, werkstatt_email, signatureBase64,
+      });
+    } catch (pdfErr) {
+      console.error(`[${timestamp}] ✗ PDF generation error:`, pdfErr.message);
+    }
+    if (pdfBuffer) {
+      attachments.push({ filename: `Schadenmeldung_${fall_nr}.pdf`, content: pdfBuffer.toString('base64') });
+    }
 
     // Werkstatt email HTML
     const werkstattHtml = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">

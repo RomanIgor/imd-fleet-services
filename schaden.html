@@ -718,6 +718,7 @@ let state = {
   formData: {},
   selectedWorkshop: null,
   uploadFiles: {},     // label -> File object
+  signatureData: null,
   status: 'Entwurf',
   fallNr: null,
   submitting: false,
@@ -889,6 +890,11 @@ function handleFileUpload(label, inputEl) {
 
 async function submitClaim() {
   if (state.submitting) return;
+  if (!state.signatureData) {
+    state.submitError = 'Bitte unterschreiben Sie das Formular vor dem Absenden.';
+    renderFormOnly();
+    return;
+  }
   state.submitting = true;
   state.submitError = null;
   renderFormOnly();
@@ -930,6 +936,7 @@ async function submitClaim() {
 
   fd.append('werkstatt_name',  state.selectedWorkshop?.name  || '');
   fd.append('werkstatt_email', state.selectedWorkshop?.email || '');
+  fd.append('signature', state.signatureData || '');
 
   let photoCount = 0;
   for (const file of Object.values(state.uploadFiles)) {
@@ -963,7 +970,7 @@ async function submitClaim() {
 function resetForm() {
   state = {
     step: 1, formData: {}, selectedWorkshop: null,
-    uploadFiles: {}, status: 'Entwurf',
+    uploadFiles: {}, signatureData: null, status: 'Entwurf',
     fallNr: null, submitting: false, stepError: null, submitError: null,
   };
   render();
@@ -1152,6 +1159,27 @@ function renderStep5() {
           <div style="font-size:13px;color:var(--text-soft);padding:8px 0;">Keine Werkstatt ausgewählt — IMD wählt die geeignete Werkstatt aus.</div>`
       }</div>`
     })}
+    <div class="input-block" style="margin-top:14px">
+      <div class="input-block-head">
+        <div class="input-block-icon">${icon('i-file',16)}</div>
+        <div class="input-block-text">
+          <div class="input-block-title">Unterschrift des Fahrers</div>
+          <div class="input-block-sub">Mit dem Finger oder der Maus unterzeichnen</div>
+        </div>
+      </div>
+      <div class="input-grid">
+        <div class="full">
+          <div style="position:relative;background:#fff;border:1.5px solid ${state.signatureData ? 'var(--navy, #242A37)' : 'var(--border, #dde6f0)'};border-radius:10px;overflow:hidden">
+            <canvas id="sig-canvas" style="display:block;width:100%;height:160px;cursor:crosshair;touch-action:none"></canvas>
+            <div id="sig-ph" style="position:absolute;inset:0;display:${state.signatureData ? 'none' : 'flex'};flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;color:#aab">
+              <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 012.828 2.828L11.828 15.828a4 4 0 01-2.828 1.172H7v-2a4 4 0 011.172-2.828z"/></svg>
+              <span style="font-size:13px">Hier unterschreiben</span>
+            </div>
+          </div>
+          <button type="button" onclick="clearSig()" style="margin-top:8px;background:none;border:1px solid var(--border,#dde6f0);color:var(--text-mid,#536e94);font-size:12px;padding:5px 14px;border-radius:6px;cursor:pointer">Unterschrift löschen</button>
+        </div>
+      </div>
+    </div>
     <div class="alert alert-blue">
       ${icon('i-shield',18)}
       <div>
@@ -1215,7 +1243,7 @@ function renderFormContent() {
   c.innerHTML = `<div class="fade-in">${body}${errorHtml}${nav}</div>`;
 }
 
-function renderFormOnly() { renderFormContent(); }
+function renderFormOnly() { renderFormContent(); if (state.step === 5) requestAnimationFrame(initSigCanvas); }
 
 function renderSuccess() {
   return `
@@ -1266,6 +1294,7 @@ function render() {
     successBlock.style.display = 'none';
     renderStepBar();
     renderFormContent();
+    if (state.step === 5) requestAnimationFrame(initSigCanvas);
   } else {
     formCard.style.display    = 'none';
     successBlock.style.display = '';
@@ -1273,6 +1302,53 @@ function render() {
   }
   renderStatusList();
   renderCcWorkshop();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SIGNATURE PAD
+// ═══════════════════════════════════════════════════════════════════════════
+function initSigCanvas() {
+  const c = document.getElementById('sig-canvas');
+  if (!c) return;
+  c.width  = c.offsetWidth  || 400;
+  c.height = c.offsetHeight || 160;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, c.width, c.height);
+  if (state.signatureData) {
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, c.width, c.height);
+    img.src = state.signatureData;
+  }
+  ctx.strokeStyle = '#09152A';
+  ctx.lineWidth   = 2.5;
+  ctx.lineCap     = 'round';
+  ctx.lineJoin    = 'round';
+  let drawing = false;
+  function pos(e) {
+    const r = c.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * c.width / r.width, y: (e.clientY - r.top) * c.height / r.height };
+  }
+  function start(e) {
+    drawing = true;
+    const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    const ph = document.getElementById('sig-ph'); if (ph) ph.style.display = 'none';
+  }
+  function draw(e)  { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+  function end()    { if (!drawing) return; drawing = false; state.signatureData = c.toDataURL('image/png'); }
+  c.addEventListener('mousedown',  start);
+  c.addEventListener('mousemove',  draw);
+  c.addEventListener('mouseup',    end);
+  c.addEventListener('mouseleave', end);
+  c.addEventListener('touchstart', e => { e.preventDefault(); start(e.touches[0]); }, { passive: false });
+  c.addEventListener('touchmove',  e => { e.preventDefault(); draw(e.touches[0]);  }, { passive: false });
+  c.addEventListener('touchend',   e => { e.preventDefault(); end(); },               { passive: false });
+}
+function clearSig() {
+  state.signatureData = null;
+  const c = document.getElementById('sig-canvas');
+  if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); }
+  const ph = document.getElementById('sig-ph'); if (ph) ph.style.display = 'flex';
 }
 
 loadWorkshops();
