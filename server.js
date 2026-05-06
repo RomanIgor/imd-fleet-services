@@ -670,6 +670,19 @@ app.post('/api/werkstaetten', requireAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// ── PATCH /api/werkstaetten/:id ───────────────────────────────────────────────
+app.patch('/api/werkstaetten/:id', requireAuth, async (req, res) => {
+  const { name, city, plz, email, services, rating } = req.body;
+  if (!name || !email) return res.json({ success: false, error: 'Name und E-Mail sind Pflichtfelder' });
+  try {
+    await pool.query(
+      'UPDATE werkstaetten SET name=$1, city=$2, plz=$3, email=$4, services=$5, rating=$6 WHERE id=$7',
+      [name, city || '', plz || '', email, services || '', rating || 5.0, req.params.id]
+    );
+    res.json({ success: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // ── DELETE /api/werkstaetten/:id ──────────────────────────────────────────────
 app.delete('/api/werkstaetten/:id', requireAuth, async (req, res) => {
   try {

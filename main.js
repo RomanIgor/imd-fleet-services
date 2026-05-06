@@ -187,6 +187,8 @@ async function patchSchadenStatus(id, status) {
 }
 
 // ─── WERKSTAETTEN ───
+let _werkEditId = null;
+
 async function loadWerkstaetten() {
   try {
     const rows = await fetch('/api/werkstaetten').then(r => r.json());
@@ -199,13 +201,37 @@ async function loadWerkstaetten() {
     }
     rows.forEach(w => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td><strong>${w.name}</strong></td><td>${w.plz||''} ${w.city||''}</td><td>${w.email}</td><td style="font-size:12px;color:var(--t2)">${w.services||'—'}</td><td>${w.rating||'—'}</td><td><span class="sb ${w.aktiv ? 'sb-gr' : 'sb-am'}">${w.aktiv ? 'Aktiv' : 'Inaktiv'}</span></td><td><button class="td-btn" onclick="deleteWerkstatt(${w.id}, '${w.name.replace(/'/g,"\\'")}')">Löschen</button></td>`;
+      const safeName = w.name.replace(/'/g, "\\'");
+      tr.innerHTML = `<td><strong>${w.name}</strong></td><td>${w.plz||''} ${w.city||''}</td><td>${w.email}</td><td style="font-size:12px;color:var(--t2)">${w.services||'—'}</td><td>${w.rating||'—'}</td><td><span class="sb ${w.aktiv ? 'sb-gr' : 'sb-am'}">${w.aktiv ? 'Aktiv' : 'Inaktiv'}</span></td><td style="display:flex;gap:6px"><button class="td-btn" onclick="startEditWerkstatt(${w.id},'${safeName}','${(w.city||'').replace(/'/g,"\\'")}','${(w.plz||'').replace(/'/g,"\\'")}','${w.email.replace(/'/g,"\\'")}','${(w.services||'').replace(/'/g,"\\'")}','${w.rating||''}')">Bearbeiten</button><button class="td-btn" style="color:var(--red)" onclick="deleteWerkstatt(${w.id},'${safeName}')">Löschen</button></td>`;
       tbody.appendChild(tr);
     });
   } catch(e) { console.error('loadWerkstaetten:', e); }
 }
 
-async function addWerkstatt() {
+function startEditWerkstatt(id, name, city, plz, email, services, rating) {
+  _werkEditId = id;
+  document.getElementById('wName').value     = name;
+  document.getElementById('wCity').value     = city;
+  document.getElementById('wPlz').value      = plz;
+  document.getElementById('wEmail').value    = email;
+  document.getElementById('wServices').value = services;
+  document.getElementById('wRating').value   = rating;
+  document.getElementById('wSaveBtn').textContent = '💾 Speichern';
+  document.getElementById('wCancelBtn').style.display = 'inline-block';
+  document.getElementById('werkMsg').textContent = '';
+  document.getElementById('wName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  document.getElementById('wName').focus();
+}
+
+function cancelEditWerkstatt() {
+  _werkEditId = null;
+  ['wName','wCity','wPlz','wEmail','wServices','wRating'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('wSaveBtn').textContent = '+ Hinzufügen';
+  document.getElementById('wCancelBtn').style.display = 'none';
+  document.getElementById('werkMsg').textContent = '';
+}
+
+async function saveWerkstatt() {
   const name     = document.getElementById('wName').value.trim();
   const city     = document.getElementById('wCity').value.trim();
   const plz      = document.getElementById('wPlz').value.trim();
@@ -214,16 +240,19 @@ async function addWerkstatt() {
   const rating   = document.getElementById('wRating').value.trim();
   const msg      = document.getElementById('werkMsg');
   if (!name || !email) { msg.style.cssText='color:var(--red)'; msg.textContent='Name und E-Mail sind Pflichtfelder.'; return; }
+  const isEdit = _werkEditId !== null;
+  const url    = isEdit ? '/api/werkstaetten/' + _werkEditId : '/api/werkstaetten';
+  const method = isEdit ? 'PATCH' : 'POST';
   try {
-    const res = await fetch('/api/werkstaetten', {
-      method: 'POST',
+    const res = await fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, city, plz, email, services, rating: rating ? parseFloat(rating) : null }),
     }).then(r => r.json());
     if (res.success) {
       msg.style.cssText = 'color:var(--green)';
-      msg.textContent = '✓ Werkstatt hinzugefügt.';
-      ['wName','wCity','wPlz','wEmail','wServices','wRating'].forEach(id => { document.getElementById(id).value = ''; });
+      msg.textContent = isEdit ? '✓ Gespeichert.' : '✓ Hinzugefügt.';
+      cancelEditWerkstatt();
       loadWerkstaetten();
     } else { msg.style.cssText='color:var(--red)'; msg.textContent = res.error || 'Fehler'; }
   } catch(e) { msg.style.cssText='color:var(--red)'; msg.textContent = 'Netzwerkfehler.'; }
@@ -233,7 +262,7 @@ async function deleteWerkstatt(id, name) {
   if (!confirm(`Werkstatt "${name}" wirklich löschen?`)) return;
   try {
     const res = await fetch('/api/werkstaetten/' + id, { method: 'DELETE' }).then(r => r.json());
-    if (res.success) loadWerkstaetten();
+    if (res.success) { if (_werkEditId === id) cancelEditWerkstatt(); loadWerkstaetten(); }
     else showToast('⚠ ' + (res.error || 'Fehler'));
   } catch(e) { showToast('⚠ Netzwerkfehler'); }
 }
