@@ -177,7 +177,7 @@ if (process.env.MAINTENANCE_PASS) {
     if (MAINTENANCE_PUBLIC.includes(req.path)) return next();
     if (req.path.startsWith('/api/schaden')) return next();
     if (req.path.startsWith('/api/maintenance')) return next();
-    if (req.session && req.session.maintenanceAuth) return next();
+    if (req.session && (req.session.maintenanceAuth || req.session.loggedIn)) return next();
     if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Maintenance' });
     req.session.maintenanceRedirect = req.path;
     res.redirect('/maintenance');
