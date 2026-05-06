@@ -1,11 +1,14 @@
-const CACHE = 'imd-schaden-v6';
+const CACHE = 'imd-schaden-v7';
 const PRECACHE = ['/schaden', '/manifest.json', '/logo_dark.png', '/logo_light.png', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(c => c.addAll(PRECACHE).catch(() => {}))
   );
-  self.skipWaiting();
+});
+
+self.addEventListener('message', e => {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
