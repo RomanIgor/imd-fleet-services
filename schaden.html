@@ -1,485 +1,1272 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digitales Schadenmanagement — IMD Fleet Services</title>
-  <meta name="description" content="Schaden melden und IMD Fleet Services übernimmt den gesamten Prozess — 24/7, bundesweit, kostenlos.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#242A37">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>IMD Fleet Services — Schadenmeldung</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/logo_dark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --imd-dark:       #242A37;
+    --imd-darker:     #181C25;
+    --imd-mid:        #2E3548;
+    --imd-blue:       #3B82C4;
+    --imd-blue-light: #5BA1DC;
+    --imd-blue-bg:    #EAF3FB;
+    --bg:        #F4F6FA;
+    --card:      #FFFFFF;
+    --border:    #E2E6ED;
+    --border-2:  #CBD2DD;
+    --text:      #1A1F2C;
+    --text-mid:  #555E6E;
+    --text-soft: #8A93A1;
+    --green:        #1A7A4A;
+    --green-bg:     #DDF1E5;
+    --amber:        #B36B00;
+    --amber-bg:     #FFF1D6;
+    --red:          #C42B2B;
+    --red-bg:       #FDE5E5;
+    --shadow-sm: 0 1px 3px rgba(36,42,55,0.06), 0 1px 2px rgba(36,42,55,0.04);
+    --shadow:    0 4px 16px rgba(36,42,55,0.08);
+    --shadow-lg: 0 12px 32px rgba(36,42,55,0.14);
+    --radius:    12px;
+    --radius-lg: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  button { font-family: inherit; cursor: pointer; border: 0; background: transparent; }
+  input, select, textarea { font-family: inherit; }
+
+  /* HEADER */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding-top: env(safe-area-inset-top);
+  }
+  .header-inner {
+    max-width: 960px; margin: 0 auto;
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .logo-img { height: 38px; width: auto; flex-shrink: 0; display: block; }
+  @media (min-width: 600px) { .logo-img { height: 44px; } }
+  .logo-divider { width: 1px; height: 28px; background: var(--border-2); flex-shrink: 0; }
+  .logo-sub-block {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--imd-blue); font-weight: 700; line-height: 1.3; white-space: nowrap;
+  }
+  @media (max-width: 480px) { .logo-divider { display: none; } .logo-sub-block { display: none; } }
+  .header-status {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--green-bg); color: var(--green);
+    padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  }
+  .pulse-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+  /* HERO */
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.4fr 0.6fr; gap: 16px; } }
+  .hero {
+    position: relative; overflow: hidden; border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--imd-darker) 0%, var(--imd-dark) 50%, var(--imd-mid) 100%);
+    color: white; padding: 28px 22px; box-shadow: var(--shadow-lg);
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size: 32px 32px; pointer-events: none;
+  }
+  .hero::after {
+    content: ""; position: absolute; top:-80px; right:-80px; width:280px; height:280px;
+    background: radial-gradient(circle,rgba(59,130,196,0.4) 0%,transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 700;
+    margin-bottom: 16px; backdrop-filter: blur(8px);
+  }
+  .hero-tag-dot { width: 6px; height: 6px; background: var(--imd-blue-light); border-radius: 50%; }
+  .hero h1 { font-size: clamp(24px,6vw,36px); font-weight: 800; line-height: 1.15; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .hero h1 .accent { color: var(--imd-blue-light); display: block; }
+  .hero p { font-size: 14px; color: #B8C2D4; margin-bottom: 18px; max-width: 480px; line-height: 1.6; }
+  .hero-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 700;
+    transition: all 0.15s ease; text-decoration: none; min-height: 44px; white-space: nowrap;
+  }
+  .btn-primary { background: white; color: var(--imd-dark); box-shadow: var(--shadow); }
+  .btn-primary:hover,.btn-primary:active { background: #F0F2F7; transform: translateY(-1px); }
+  .btn-outline-light { background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.25); }
+  .btn-outline-light:hover,.btn-outline-light:active { background: rgba(255,255,255,0.15); }
+
+  /* ASSISTANT CARD */
+  .assistant-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+  .assistant-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .assistant-icon { width: 34px; height: 34px; background: var(--imd-dark); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .assistant-title { font-weight: 700; font-size: 14px; color: var(--imd-dark); }
+  .assistant-quote { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 12px; }
+  .assistant-example { background: var(--imd-blue-bg); border-radius: 10px; padding: 12px; font-size: 12px; color: var(--text-mid); }
+  .assistant-example b { color: var(--imd-dark); display: block; margin-bottom: 2px; }
+
+  /* FORM CARD */
+  .form-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+
+  /* STEP BAR */
+  .stepbar { background: #F8FAFC; border-bottom: 1px solid var(--border); padding: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .stepbar-inner { display: flex; gap: 8px; min-width: max-content; }
+  @media (min-width: 768px) { .stepbar-inner { display: grid; grid-template-columns: repeat(5,1fr); min-width: 0; } }
+  .step { display: flex; align-items: center; gap: 10px; background: white; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; transition: all 0.15s; min-width: 160px; text-align: left; }
+  @media (min-width: 768px) { .step { min-width: 0; } }
+  .step.active { background: var(--imd-dark); border-color: var(--imd-dark); color: white; box-shadow: var(--shadow); }
+  .step.done { background: white; border-color: var(--green); color: var(--imd-dark); }
+  .step-num { width: 26px; height: 26px; border-radius: 7px; background: #EEF1F6; color: var(--text-mid); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .step.active .step-num { background: var(--imd-blue); color: white; }
+  .step.done .step-num { background: var(--green-bg); color: var(--green); }
+  .step-info { min-width: 0; }
+  .step-info-tag { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; line-height: 1; margin-bottom: 2px; }
+  .step-info-title { font-size: 12px; font-weight: 600; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* FORM CONTENT */
+  .form-content { padding: 20px; }
+  @media (min-width: 768px) { .form-content { padding: 28px; } }
+
+  /* INPUT BLOCK */
+  .input-block { background: #F8FAFC; border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+  .input-block-head { display: flex; align-items: flex-start; gap: 12px; padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .input-block-icon { width: 36px; height: 36px; background: var(--imd-dark); color: white; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: var(--shadow-sm); }
+  .input-block-text { flex: 1; min-width: 0; }
+  .input-block-title { font-weight: 700; font-size: 14px; color: var(--imd-dark); }
+  .input-block-sub { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+  .input-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 600px) { .input-grid { grid-template-columns: 1fr 1fr; } }
+  .input-grid .full { grid-column: 1 / -1; }
+  .field-label { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--text-mid); margin-bottom: 6px; }
+  .field-label .req { color: var(--red); margin-left: 2px; }
+  .field-input, .field-select, .field-textarea {
+    width: 100%; padding: 12px 14px; background: white; border: 1px solid var(--border-2);
+    border-radius: 10px; font-size: 15px; color: var(--text); outline: none; transition: all 0.15s;
+    font-weight: 500; -webkit-appearance: none; appearance: none; min-height: 44px;
+  }
+  @media screen and (max-width: 767px) { .field-input,.field-select,.field-textarea { font-size: 16px; } }
+  .field-input::placeholder { color: var(--text-soft); font-weight: 400; }
+  .field-input:focus,.field-select:focus,.field-textarea:focus { border-color: var(--imd-blue); box-shadow: 0 0 0 3px rgba(59,130,196,0.15); }
+  .field-textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+  .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23555E6E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+  /* ALERT */
+  .alert { border-radius: 10px; padding: 14px; display: flex; gap: 12px; font-size: 13px; line-height: 1.55; }
+  .alert-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid #F0DAA0; }
+  .alert-blue { background: var(--imd-blue-bg); color: var(--imd-dark); border: 1px solid #B8D5EC; }
+  .alert-red { background: var(--red-bg); color: var(--red); border: 1px solid #F5C0C0; }
+  .alert b { display: block; margin-bottom: 2px; font-weight: 700; }
+  .alert-icon { flex-shrink: 0; margin-top: 1px; }
+
+  /* UPLOAD GRID */
+  .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (min-width: 768px) { .upload-grid { grid-template-columns: repeat(3,1fr); gap: 12px; } }
+  .upload-tile {
+    border: 2px dashed var(--border-2); background: white; border-radius: 12px;
+    padding: 16px 12px; text-align: center; transition: all 0.15s;
+    min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    width: 100%;
+  }
+  .upload-tile:active,.upload-tile:hover { border-color: var(--imd-blue); background: var(--imd-blue-bg); }
+  .upload-tile.uploaded { border-color: var(--green); border-style: solid; background: var(--green-bg); }
+  .upload-tile-icon { width: 38px; height: 38px; background: #EEF1F6; color: var(--imd-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .upload-tile.uploaded .upload-tile-icon { background: var(--green); color: white; }
+  .upload-tile-label { font-size: 11.5px; font-weight: 700; color: var(--imd-dark); line-height: 1.25; }
+  .upload-tile-label .req { color: var(--red); }
+  .upload-tile-status { font-size: 10px; color: var(--text-soft); margin-top: 4px; word-break: break-all; }
+  .upload-tile.uploaded .upload-tile-status { color: var(--green); font-weight: 700; }
+
+  /* WORKSHOP */
+  .search-box { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border-2); border-radius: 10px; padding: 0 14px; margin-bottom: 16px; transition: all 0.15s; }
+  .search-box:focus-within { border-color: var(--imd-blue); box-shadow: 0 0 0 3px rgba(59,130,196,0.15); }
+  .search-box svg { color: var(--text-soft); flex-shrink: 0; }
+  .search-box input { flex: 1; border: 0; outline: 0; padding: 12px 0; background: transparent; font-size: 15px; color: var(--text); min-height: 44px; }
+  @media (max-width: 767px) { .search-box input { font-size: 16px; } }
+  .workshop-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 700px) { .workshop-grid { grid-template-columns: 1fr 1fr; } }
+  .workshop-card { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 16px; text-align: left; transition: all 0.15s; width: 100%; }
+  .workshop-card:active,.workshop-card:hover { border-color: var(--imd-blue); box-shadow: var(--shadow); }
+  .workshop-card.selected { border-color: var(--imd-dark); background: linear-gradient(180deg,var(--imd-blue-bg) 0%,white 100%); box-shadow: var(--shadow); }
+  .workshop-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .workshop-name { font-weight: 700; color: var(--imd-dark); font-size: 14px; line-height: 1.3; }
+  .workshop-check { width: 22px; height: 22px; border-radius: 50%; background: var(--imd-dark); color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .workshop-meta { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-mid); margin-bottom: 6px; }
+  .workshop-meta .km { color: var(--imd-blue); font-weight: 700; }
+  .workshop-services { font-size: 12px; color: var(--text-soft); margin-bottom: 12px; }
+  .workshop-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+  .workshop-rating { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--imd-dark); }
+  .workshop-rating .star { color: #F5A623; }
+  .workshop-imdtag { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; color: var(--imd-blue); }
+
+  /* REVIEW */
+  .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .review-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .review-item-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-soft); margin-bottom: 4px; }
+  .review-item-value { font-size: 14px; font-weight: 600; color: var(--imd-dark); word-break: break-word; }
+
+  /* FORM NAV */
+  .form-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 20px; margin-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .btn-back { background: white; border: 1px solid var(--border-2); color: var(--text-mid); font-weight: 600; }
+  .btn-back:hover { background: #F8FAFC; }
+  .btn-back:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-next { background: var(--imd-dark); color: white; box-shadow: var(--shadow); }
+  .btn-next:hover,.btn-next:active { background: var(--imd-darker); }
+  .btn-submit { background: var(--green); color: white; box-shadow: var(--shadow); }
+  .btn-submit:hover { background: #155835; }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .step-counter { font-size: 11px; color: var(--text-soft); font-weight: 600; text-align: center; flex-shrink: 0; }
+
+  /* SUCCESS */
+  .success-card { background: white; border: 1px solid var(--green); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .success-inner { background: linear-gradient(180deg,var(--green-bg) 0%,white 100%); padding: 36px 24px; text-align: center; }
+  .success-icon { width: 64px; height: 64px; background: var(--green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(26,122,74,0.3); }
+  .success-card h2 { font-size: clamp(22px,5vw,28px); font-weight: 800; color: var(--imd-dark); margin-bottom: 10px; letter-spacing: -0.02em; }
+  .success-card p { font-size: 14px; color: var(--text-mid); max-width: 480px; margin: 0 auto; line-height: 1.6; }
+  .success-claimnr { display: inline-flex; align-items: center; gap: 8px; background: var(--imd-dark); color: white; padding: 10px 18px; border-radius: 999px; font-size: 12px; font-weight: 700; margin-top: 20px; }
+  .success-actions { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+
+  /* BOTTOM */
+  .bottom-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 768px) { .bottom-grid { grid-template-columns: 1fr 1fr; } }
+  .info-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+  .info-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .info-head-icon { width: 34px; height: 34px; background: var(--imd-dark); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .info-head-title { font-weight: 700; color: var(--imd-dark); font-size: 15px; }
+  .status-list { display: flex; flex-direction: column; gap: 6px; }
+  .status-item { display: flex; align-items: center; gap: 10px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+  .status-item.active { background: var(--imd-blue-bg); border-color: rgba(59,130,196,0.3); }
+  .status-item-dot { width: 22px; height: 22px; border-radius: 50%; background: #DEE2EA; color: var(--text-soft); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .status-item.active .status-item-dot { background: var(--imd-dark); color: white; }
+  .status-item-label { font-size: 13px; color: var(--text-soft); }
+  .status-item.active .status-item-label { color: var(--imd-dark); font-weight: 600; }
+  .info-row { display: flex; align-items: center; gap: 12px; background: #F8FAFC; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 6px; }
+  .info-row-icon { width: 30px; height: 30px; background: white; border: 1px solid var(--border); border-radius: 7px; color: var(--imd-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .info-row-text { min-width: 0; flex: 1; }
+  .info-row-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-soft); }
+  .info-row-val { font-size: 13px; font-weight: 600; color: var(--imd-dark); word-break: break-word; }
+
+  /* FOOTER */
+  .page-footer { text-align: center; padding: 32px 16px; font-size: 11px; color: var(--text-soft); border-top: 1px solid var(--border); margin-top: 24px; }
+
+  /* ICONS */
+  .icon { display: inline-block; vertical-align: middle; }
+
+  /* ANIMATIONS */
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+  /* CHAT FAB */
+  .chat-fab {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--imd-dark); color: white; border: 3px solid white;
+    box-shadow: 0 8px 28px rgba(36,42,55,0.35); z-index: 60;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: transform 0.2s ease;
+  }
+  .chat-fab:hover,.chat-fab:active { transform: scale(1.06); }
+  .chat-fab.hide { display: none; }
+  .chat-fab-pulse { position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--imd-blue); animation: chatpulse 2.4s ease-out infinite; pointer-events: none; }
+  .chat-fab-badge { position: absolute; top: -2px; right: -2px; width: 22px; height: 22px; background: var(--imd-blue); color: white; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
+  @keyframes chatpulse { 0%{transform:scale(1);opacity:0.8} 100%{transform:scale(1.45);opacity:0} }
+
+  .chat-overlay { position: fixed; inset: 0; background: rgba(20,25,35,0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 70; display: none; animation: fadeOverlay 0.2s ease-out; }
+  .chat-overlay.open { display: block; }
+  @keyframes fadeOverlay { from{opacity:0} to{opacity:1} }
+  .chat-panel { position: fixed; z-index: 80; background: white; box-shadow: 0 -4px 32px rgba(36,42,55,0.18); display: flex; flex-direction: column; overflow: hidden; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+  .chat-panel.open { transform: translateY(0); }
+  @media (max-width: 767px) { .chat-panel { left:0;right:0;bottom:0;height:88vh;border-radius:20px 20px 0 0;padding-bottom:env(safe-area-inset-bottom); } }
+  @media (min-width: 768px) { .chat-panel { right:20px;bottom:20px;width:420px;height:640px;max-height:calc(100vh - 40px);border-radius:18px;transform:translateY(120%) scale(0.96); } .chat-panel.open{transform:translateY(0) scale(1);} }
+  .chat-header { background: linear-gradient(135deg,var(--imd-darker) 0%,var(--imd-dark) 100%); color: white; padding: 18px 18px 14px; position: relative; overflow: hidden; flex-shrink: 0; }
+  .chat-header::after { content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(59,130,196,0.4) 0%,transparent 70%);border-radius:50%;pointer-events:none; }
+  .chat-header-row { display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1; }
+  .chat-header-info { display:flex;align-items:center;gap:10px;min-width:0; }
+  .chat-avatar { width:38px;height:38px;border-radius:50%;background:white;color:var(--imd-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  .chat-avatar-status { position:absolute;width:11px;height:11px;background:#22c55e;border-radius:50%;border:2px solid var(--imd-dark);margin-left:26px;margin-top:26px; }
+  .chat-title-block { min-width:0; }
+  .chat-title { font-size:14px;font-weight:700;line-height:1.2; }
+  .chat-subtitle { font-size:11px;color:#B8C2D4;line-height:1.2;margin-top:2px;display:flex;align-items:center;gap:4px; }
+  .chat-subtitle .dot { width:6px;height:6px;background:#22c55e;border-radius:50%; }
+  .chat-close { width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.12);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s; }
+  .chat-close:hover,.chat-close:active { background:rgba(255,255,255,0.2); }
+  .chat-tabs { display:flex;background:var(--imd-mid);padding:0 12px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.06); }
+  .chat-tab { flex:1;padding:10px 8px;color:#B8C2D4;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-bottom:2px solid transparent;transition:all 0.15s;text-align:center; }
+  .chat-tab.active { color:white;border-bottom-color:var(--imd-blue-light); }
+  .chat-body { flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#F4F6FA;padding:16px; }
+  .msg-row { display:flex;margin-bottom:12px;gap:8px;animation:msgIn 0.25s ease-out; }
+  @keyframes msgIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .msg-row.user { justify-content:flex-end; }
+  .msg-bubble { max-width:80%;padding:10px 13px;border-radius:14px;font-size:13.5px;line-height:1.5;word-wrap:break-word; }
+  .msg-row.bot .msg-bubble { background:white;border:1px solid var(--border);color:var(--text);border-bottom-left-radius:4px; }
+  .msg-row.user .msg-bubble { background:var(--imd-dark);color:white;border-bottom-right-radius:4px; }
+  .msg-bubble b { color:var(--imd-dark); }
+  .msg-row.user .msg-bubble b { color:white; }
+  .msg-bubble ul { margin:8px 0 0 0;padding-left:18px; }
+  .msg-bubble li { margin-bottom:4px; }
+  .msg-avatar { width:28px;height:28px;border-radius:50%;background:var(--imd-dark);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800; }
+  .quick-qs { display:flex;flex-direction:column;gap:8px;margin-bottom:12px; }
+  .quick-q { background:white;border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:13px;color:var(--imd-dark);text-align:left;transition:all 0.15s;display:flex;align-items:center;gap:10px;width:100%; }
+  .quick-q:hover,.quick-q:active { border-color:var(--imd-blue);background:var(--imd-blue-bg); }
+  .quick-q-icon { width:30px;height:30px;background:var(--imd-blue-bg);color:var(--imd-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+  .quick-q-text { flex:1;font-weight:600; }
+  .quick-q-arrow { color:var(--text-soft);flex-shrink:0; }
+  .faq-section { margin-bottom:18px; }
+  .faq-section-title { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--imd-blue);margin-bottom:10px;padding-left:4px; }
+  .faq-item { background:white;border:1px solid var(--border);border-radius:10px;margin-bottom:6px;overflow:hidden;transition:all 0.15s; }
+  .faq-item.open { border-color:var(--imd-blue);box-shadow:var(--shadow-sm); }
+  .faq-q { width:100%;text-align:left;padding:12px 14px;font-size:13px;font-weight:600;color:var(--imd-dark);display:flex;justify-content:space-between;align-items:center;gap:10px; }
+  .faq-q-icon { width:22px;height:22px;border-radius:6px;background:var(--imd-blue-bg);color:var(--imd-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.2s;font-weight:800; }
+  .faq-item.open .faq-q-icon { background:var(--imd-dark);color:white;transform:rotate(45deg); }
+  .faq-a { max-height:0;overflow:hidden;transition:max-height 0.25s ease-out; }
+  .faq-item.open .faq-a { max-height:800px; }
+  .faq-a-inner { padding:0 14px 14px;font-size:13px;color:var(--text-mid);line-height:1.6;border-top:1px solid var(--border);padding-top:12px; }
+  .faq-a-inner ul { margin:6px 0;padding-left:20px; }
+  .faq-a-inner li { margin-bottom:4px; }
+  .faq-a-inner b { color:var(--imd-dark); }
+  .chat-input-wrap { flex-shrink:0;background:white;border-top:1px solid var(--border);padding:12px; }
+  .chat-input-row { display:flex;gap:8px;align-items:flex-end;background:#F4F6FA;border:1px solid var(--border);border-radius:14px;padding:6px;transition:border-color 0.15s; }
+  .chat-input-row:focus-within { border-color:var(--imd-blue);box-shadow:0 0 0 3px rgba(59,130,196,0.12); }
+  .chat-input { flex:1;border:0;outline:0;background:transparent;padding:10px 8px;font-size:14px;color:var(--text);resize:none;max-height:100px;min-height:24px;line-height:1.4;font-family:inherit; }
+  @media (max-width:767px) { .chat-input { font-size:16px; } }
+  .chat-send { width:40px;height:40px;background:var(--imd-dark);color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s; }
+  .chat-send:hover { background:var(--imd-darker); }
+  .chat-send:disabled { background:var(--border-2);cursor:not-allowed; }
+  .chat-disclaimer { font-size:10px;color:var(--text-soft);text-align:center;margin-top:8px;line-height:1.4; }
+  .chat-disclaimer b { color:var(--imd-dark); }
+</style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-in">
-    <div class="nav-logo" onclick="window.location.href='/'" style="cursor:pointer">
-      <img class="logo-dark" src="logo_dark.png" alt="IMD Fleet Services"/>
-      <img class="logo-light" src="logo_light.png" alt="IMD Fleet Services"/>
+<svg style="display:none">
+  <defs>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.19 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+  </defs>
+</svg>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <img src="/logo_dark.png" alt="IMD Fleet Services" class="logo-img">
+      <div class="logo-divider"></div>
+      <div class="logo-sub-block">Schadenmanagement</div>
     </div>
-    <ul class="nav-links">
-      <li><a href="/#service">Für Fuhrparks</a></li>
-      <li><a href="/#prozess">So funktioniert es</a></li>
-      <li><a href="/#warum">Warum wir</a></li>
-      <li><a href="/#ueber-uns">Über uns</a></li>
-      <li><a href="/schaden" class="active">Schadenmanagement</a></li>
-      <li><a href="/#kontakt">Kontakt</a></li>
-    </ul>
-    <button class="nav-cta" onclick="document.getElementById('scd-form-section').scrollIntoView({behavior:'smooth'})">Schaden melden</button>
-    <button class="burger" id="burger" onclick="toggleScdMob()"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mob-menu" id="scdMobMenu">
-  <a href="/#service" onclick="closeScdMob()">Für Fuhrparks</a>
-  <a href="/#prozess" onclick="closeScdMob()">So funktioniert es</a>
-  <a href="/#warum" onclick="closeScdMob()">Warum wir</a>
-  <a href="/#ueber-uns" onclick="closeScdMob()">Über uns</a>
-  <a href="/schaden" onclick="closeScdMob()">Schadenmanagement</a>
-  <a href="/#kontakt" onclick="closeScdMob()">Kontakt</a>
-</div>
-
-<!-- ═══════════ HERO ═══════════ -->
-<section class="scd-hero">
-  <div class="wrap">
-    <div class="scd-hero-badge">Für IMD Fleet Services Kunden</div>
-    <h1 class="scd-hero-h1">Digitales<br>Schadenmanagement</h1>
-    <p class="scd-hero-sub">All-in-Service · 24/7/365<br>Wir übernehmen den gesamten Prozess ab dem Unfall.</p>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:32px">
-      <button class="btn btn-green btn-lg" onclick="document.getElementById('scd-form-section').scrollIntoView({behavior:'smooth'})">Schaden melden →</button>
-      <a href="/" class="btn btn-ghost-white btn-lg">Zur Startseite</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ SERVICE CARDS ═══════════ -->
-<section class="section sec-light">
-  <div class="wrap">
-    <div class="eyebrow" style="text-align:center">Was wir übernehmen</div>
-    <h2 class="h2" style="text-align:center;margin-bottom:48px">Unser Service</h2>
-    <div class="scd-cards">
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.36 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.27 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.36a16 16 0 0 0 6 6l.72-.72a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        <div class="scd-card-title">24h Hotline</div>
-        <div class="scd-card-desc">Rund um die Uhr erreichbar</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <div class="scd-card-title">Fahrtenmessung ab Unfall</div>
-        <div class="scd-card-desc">Dokumentation ab dem Schadensort</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-        <div class="scd-card-title">Kostenloser Abschleppservice</div>
-        <div class="scd-card-desc">Wir organisieren die Bergung</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="16" r="1"/></svg></div>
-        <div class="scd-card-title">Kostenloser Unfallersatzwagen</div>
-        <div class="scd-card-desc">Mobilität während der Reparatur</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <div class="scd-card-title">Bundesweites Werkstattnetz</div>
-        <div class="scd-card-desc">Geprüfte Partner in ganz Deutschland</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div class="scd-card-title">Rechtslage-Prüfung</div>
-        <div class="scd-card-desc">Durch spezialisierte Verkehrsanwälte</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-        <div class="scd-card-title">Reparatursteuerung</div>
-        <div class="scd-card-desc">Überwachung des gesamten Prozesses</div>
-      </div>
-      <div class="scd-card">
-        <div class="scd-card-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-        <div class="scd-card-title">Digitale Schadenakte</div>
-        <div class="scd-card-desc">Alle Dokumente zentral und digital</div>
-      </div>
+    <div class="header-status">
+      <div class="pulse-dot"></div>
+      <span>Online</span>
     </div>
   </div>
-</section>
+</header>
 
-<!-- ═══════════ PROZESS ═══════════ -->
-<section class="section" style="background:var(--navy)">
-  <div class="wrap">
-    <div class="eyebrow" style="text-align:center;color:rgba(255,255,255,.4)">Wie es funktioniert</div>
-    <h2 class="h2 h2-white" style="text-align:center;margin-bottom:48px">Unser Prozess</h2>
-    <div class="scd-timeline">
-      <div class="scd-tl-item">
-        <div class="scd-tl-num">01</div>
-        <div class="scd-tl-connector"></div>
-        <div class="scd-tl-title">Schaden melden</div>
-        <div class="scd-tl-desc">Kunde meldet per Telefon, App oder Formular. Schnell und unkompliziert.</div>
+<main>
+  <section class="hero-grid">
+    <div class="hero">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Digitale Schadenmeldung für Flottenfahrer
       </div>
-      <div class="scd-tl-item">
-        <div class="scd-tl-num">02</div>
-        <div class="scd-tl-connector"></div>
-        <div class="scd-tl-title">Erste Hilfe</div>
-        <div class="scd-tl-desc">IMD koordiniert Abschleppen, Polizei und Unfallersatzwagen — 24/7.</div>
-      </div>
-      <div class="scd-tl-item">
-        <div class="scd-tl-num">03</div>
-        <div class="scd-tl-connector"></div>
-        <div class="scd-tl-title">Begutachtung</div>
-        <div class="scd-tl-desc">Unabhängiges Gutachten, Werkstattauswahl aus bundesweitem Netz.</div>
-      </div>
-      <div class="scd-tl-item">
-        <div class="scd-tl-num">04</div>
-        <div class="scd-tl-connector"></div>
-        <div class="scd-tl-title">Reparatur</div>
-        <div class="scd-tl-desc">IMD überwacht Reparaturprozess und Rechnungskontrolle lückenlos.</div>
-      </div>
-      <div class="scd-tl-item">
-        <div class="scd-tl-num">05</div>
-        <div class="scd-tl-connector" style="display:none"></div>
-        <div class="scd-tl-title">Prozessende</div>
-        <div class="scd-tl-desc">Fahrzeugübergabe, Abschluss aller Kommunikation und Dokumentation.</div>
+      <h1>Schaden melden.<span class="accent">IMD übernimmt den Rest.</span></h1>
+      <p>Strukturierte Schadenerfassung Schritt für Schritt. IMD erhält ein vollständiges Schadenprotokoll mit Bildern, Unfalldaten und Werkstattauswahl — die Reparaturfreigabe erfolgt zentral durch IMD.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="scrollToForm()">
+          Schaden jetzt melden
+          <svg class="icon" width="14" height="14"><use href="#i-arrow-right"/></svg>
+        </button>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ═══════════ CTA ═══════════ -->
-<section class="section" style="background:var(--green);padding:72px 0">
-  <div class="wrap" style="text-align:center">
-    <h2 class="h2" style="color:#fff;margin-bottom:12px">Schaden melden —<br>wir übernehmen den Rest.</h2>
-    <p style="color:rgba(255,255,255,.8);font-size:16px;margin-bottom:32px">Kostenlos · Bundesweit · 24/7</p>
-    <button class="btn btn-lg" style="background:#fff;color:var(--green);font-weight:700" onclick="document.getElementById('scd-form-section').scrollIntoView({behavior:'smooth'})">Jetzt Schaden melden →</button>
-  </div>
-</section>
-
-<!-- ═══════════ FORM ═══════════ -->
-<section class="section sec-light" id="scd-form-section">
-  <div class="wrap">
-    <div class="eyebrow" style="text-align:center">Schadensmeldung</div>
-    <h2 class="h2" style="text-align:center;margin-bottom:8px">Schaden digital melden</h2>
-    <p class="lead" style="text-align:center;margin-bottom:40px">Füllen Sie das Formular aus — wir melden uns innerhalb von 2 Stunden.</p>
-
-    <!-- Progress bar -->
-    <div class="scd-form-wrap">
-      <div class="scd-progress" id="scdProgress">
-        <div class="scd-progress-step active" data-step="1">
-          <div class="scd-progress-dot">1</div>
-          <div class="scd-progress-label">Kontakt & Fahrzeug</div>
-        </div>
-        <div class="scd-progress-line"></div>
-        <div class="scd-progress-step" data-step="2">
-          <div class="scd-progress-dot">2</div>
-          <div class="scd-progress-label">Schadensdetails</div>
-        </div>
-        <div class="scd-progress-line"></div>
-        <div class="scd-progress-step" data-step="3">
-          <div class="scd-progress-dot">3</div>
-          <div class="scd-progress-label">Fotos hochladen</div>
-        </div>
+    <div class="assistant-card">
+      <div class="assistant-head">
+        <div class="assistant-icon"><svg width="16" height="16"><use href="#i-shield"/></svg></div>
+        <div class="assistant-title">IMD Schadenassistent</div>
       </div>
-
-      <!-- Step 1 -->
-      <div class="scd-step active" id="scdStep1">
-        <div class="fg2">
-          <div class="fg"><label class="fl">Fahrer Name *</label><input type="text" id="scdFahrerName" class="fi" placeholder="Max Mustermann"></div>
-          <div class="fg"><label class="fl">Firma / Unternehmen</label><input type="text" id="scdFirma" class="fi" placeholder="Muster GmbH"></div>
-        </div>
-        <div class="fg2">
-          <div class="fg"><label class="fl">Telefon *</label><input type="tel" id="scdTelefon" class="fi" placeholder="+49 171 ..."></div>
-          <div class="fg"><label class="fl">E-Mail *</label><input type="email" id="scdEmail" class="fi" placeholder="fahrer@firma.de"></div>
-        </div>
-        <div class="fg2">
-          <div class="fg"><label class="fl">Kennzeichen *</label><input type="text" id="scdKennzeichen" class="fi" placeholder="C-AB 1234" style="text-transform:uppercase"></div>
-          <div class="fg"><label class="fl">Fahrzeugtyp / Marke & Modell</label><input type="text" id="scdFahrzeugtyp" class="fi" placeholder="BMW 320d"></div>
-        </div>
-        <div class="fg2">
-          <div class="fg"><label class="fl">Baujahr</label><input type="text" id="scdBaujahr" class="fi" placeholder="2022"></div>
-          <div class="fg"></div>
-        </div>
-        <div id="scdErr1" class="scd-err" style="display:none"></div>
-        <div class="scd-form-nav">
-          <div></div>
-          <button class="btn btn-navy" onclick="scdNext(1)">Weiter →</button>
-        </div>
+      <p class="assistant-quote">
+        „Ich begleite Sie durch die Schadenmeldung. Bitte geben Sie kein Schuldanerkenntnis ab. Die finale Reparaturfreigabe erfolgt ausschließlich durch IMD Fleet Services."
+      </p>
+      <div class="assistant-example">
+        <b>Beispiel-Frage: „Welche Fotos brauche ich?"</b>
+        Gesamtansicht, Schaden-Detail, Kennzeichen, Unfallstelle, ggf. Unfallgegner und Dokumente.
       </div>
-
-      <!-- Step 2 -->
-      <div class="scd-step" id="scdStep2">
-        <div class="fg2">
-          <div class="fg"><label class="fl">Unfalldatum *</label><input type="date" id="scdDatum" class="fi"></div>
-          <div class="fg"><label class="fl">Uhrzeit</label><input type="time" id="scdUhrzeit" class="fi"></div>
-        </div>
-        <div class="fg"><label class="fl">Unfallort (Straße, Stadt) *</label><input type="text" id="scdOrt" class="fi" placeholder="Hauptstraße 12, Chemnitz"></div>
-        <div class="fg2" style="margin-top:8px">
-          <div class="fg">
-            <label class="fl">Fahrzeug fahrbereit? *</label>
-            <div class="scd-toggle-group" id="scdFahrbereit">
-              <button type="button" class="scd-toggle" data-val="ja" onclick="scdToggle('scdFahrbereit','ja')">✓ Ja</button>
-              <button type="button" class="scd-toggle" data-val="nein" onclick="scdToggle('scdFahrbereit','nein')">✗ Nein</button>
-            </div>
-          </div>
-          <div class="fg">
-            <label class="fl">Polizei gerufen?</label>
-            <div class="scd-toggle-group" id="scdPolizei">
-              <button type="button" class="scd-toggle" data-val="ja" onclick="scdToggle('scdPolizei','ja')">Ja</button>
-              <button type="button" class="scd-toggle" data-val="nein" onclick="scdToggle('scdPolizei','nein')">Nein</button>
-            </div>
-          </div>
-        </div>
-        <div class="fg2">
-          <div class="fg">
-            <label class="fl">Unfallgegner vorhanden?</label>
-            <div class="scd-toggle-group" id="scdGegner">
-              <button type="button" class="scd-toggle" data-val="ja" onclick="scdToggle('scdGegner','ja')">Ja</button>
-              <button type="button" class="scd-toggle" data-val="nein" onclick="scdToggle('scdGegner','nein')">Nein</button>
-            </div>
-          </div>
-          <div class="fg"></div>
-        </div>
-        <div class="fg"><label class="fl">Beschreibung des Schadens *</label><textarea id="scdBeschreibung" class="fi" rows="4" style="resize:vertical;font-family:inherit" placeholder="Bitte beschreiben Sie den Schaden so genau wie möglich..."></textarea></div>
-        <div id="scdErr2" class="scd-err" style="display:none"></div>
-        <div class="scd-form-nav">
-          <button class="btn-back" onclick="scdBack(2)">← Zurück</button>
-          <button class="btn btn-navy" onclick="scdNext(2)">Weiter →</button>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="scd-step" id="scdStep3">
-        <label class="fl">Fotos vom Schaden * (min. 1, max. 5 · JPG/PNG · max. 5 MB pro Foto)</label>
-        <div class="scd-upload-zone" id="scdUploadZone" onclick="document.getElementById('scdPhotos').click()">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--t3);margin-bottom:12px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <div style="font-family:var(--fh);font-size:14px;font-weight:600;color:var(--t0);margin-bottom:4px">Fotos hier ablegen oder klicken</div>
-          <div style="font-size:12px;color:var(--t3)">JPG, PNG · max. 5 MB pro Foto</div>
-        </div>
-        <input type="file" id="scdPhotos" accept="image/jpeg,image/png" multiple style="display:none" onchange="scdHandleFiles(this.files)">
-        <div class="scd-thumbs" id="scdThumbs"></div>
-        <div id="scdErr3" class="scd-err" style="display:none"></div>
-        <div class="scd-form-nav">
-          <button class="btn-back" onclick="scdBack(3)">← Zurück</button>
-          <button class="btn btn-green btn-lg" id="scdSubmitBtn" onclick="scdSubmit()">Schaden melden →</button>
-        </div>
-      </div>
-
-      <!-- Success screen -->
-      <div class="scd-step" id="scdSuccess" style="text-align:center;padding:48px 0">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#00C87A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 20px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <h2 class="h2" style="margin-bottom:8px">Ihr Schaden wurde gemeldet.</h2>
-        <p style="color:var(--t2);margin-bottom:28px">Wir melden uns innerhalb von 2 Stunden bei Ihnen.</p>
-        <div class="scd-fall-box">
-          <div style="font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t2);margin-bottom:6px">Ihre Fallnummer</div>
-          <div id="scdFallNr" style="font-family:var(--fh);font-size:32px;font-weight:800;color:var(--navy);letter-spacing:.04em"></div>
-        </div>
-        <p style="color:var(--t2);font-size:13px;margin:20px 0 32px">Bei dringenden Fragen: <strong>+49 371 123 456</strong> (24/7 Notfallhotline)</p>
-        <a href="/" class="btn btn-navy btn-lg">Zur Startseite</a>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-grid">
+  <div id="formular" class="form-card" data-form-card>
+    <div class="stepbar">
+      <div class="stepbar-inner" id="stepbar-inner"></div>
+    </div>
+    <div class="form-content" id="form-content"></div>
+  </div>
+
+  <div id="success-block" style="display:none;"></div>
+
+  <section class="bottom-grid">
+    <div class="info-card">
+      <div class="info-head">
+        <div class="info-head-icon"><svg width="16" height="16"><use href="#i-clock"/></svg></div>
+        <div class="info-head-title">Statusverlauf</div>
+      </div>
+      <div class="status-list" id="status-list"></div>
+    </div>
+    <div class="info-card">
+      <div class="info-head">
+        <div class="info-head-icon"><svg width="16" height="16"><use href="#i-file"/></svg></div>
+        <div class="info-head-title">Automatischer Versand</div>
+      </div>
       <div>
-        <div style="margin-bottom:12px"><img src="logo_dark.png" alt="IMD Fleet Services" style="width:200px;height:auto;display:block;margin-bottom:8px" loading="lazy"></div>
-        <div class="fb-desc">IMD Fleet Services — professioneller Flottenankauf und digitales Schadenmanagement. Bundesweit, kostenfrei, revisionssicher.</div>
-        <div class="fb-badges"><span class="fb-badge">🚨 24/7 Hotline</span><span class="fb-badge">⚡ 2h Reaktion</span><span class="fb-badge">🚛 Bundesweit</span></div>
+        <div class="info-row">
+          <div class="info-row-icon"><svg width="14" height="14"><use href="#i-mail"/></svg></div>
+          <div class="info-row-text">
+            <div class="info-row-label">An</div>
+            <div class="info-row-val">schaden@imd-fleet-services.de</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon"><svg width="14" height="14"><use href="#i-building"/></svg></div>
+          <div class="info-row-text">
+            <div class="info-row-label">Gewünschte Werkstatt</div>
+            <div class="info-row-val" id="cc-workshop">noch nicht ausgewählt</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-row-icon"><svg width="14" height="14"><use href="#i-file"/></svg></div>
+          <div class="info-row-text">
+            <div class="info-row-label">Anhänge</div>
+            <div class="info-row-val">Schadenprotokoll, Bilder, strukturierte Daten</div>
+          </div>
+        </div>
+        <div class="alert alert-amber" style="margin-top:10px;">
+          <svg class="alert-icon" width="18" height="18"><use href="#i-alert"/></svg>
+          <div>
+            <b>Hinweis an Werkstatt</b>
+            Reparaturfreigabe erfolgt ausschließlich durch IMD Fleet Services.
+          </div>
+        </div>
       </div>
-      <div class="f-col"><h5>Service</h5><ul>
-        <li><a href="/#service">Für Fuhrparks</a></li>
-        <li><a href="/#prozess">So funktioniert es</a></li>
-        <li><a href="/schaden">Schadenmanagement</a></li>
-        <li><a href="/#anmelden">Fahrzeug anmelden</a></li>
-      </ul></div>
-      <div class="f-col"><h5>Unternehmen</h5><ul>
-        <li><a href="/#ueber-uns">Über uns</a></li>
-        <li><a href="/#faq">FAQ</a></li>
-      </ul></div>
-      <div class="f-col"><h5>Kontakt</h5><ul>
-        <li><a href="#">+49 371 123 456</a></li>
-        <li><a href="#">Chemnitz, Deutschland</a></li>
-      </ul></div>
     </div>
-    <div class="footer-bottom">
-      <div class="f-copy">© 2026 IMD Fleet Services GmbH. Alle Rechte vorbehalten.</div>
-      <div class="f-links"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
-    </div>
-  </div>
-</footer>
+  </section>
+
+  <footer class="page-footer">
+    IMD Fleet Services GmbH · Schadenmanagement-Modul · Stand 2026
+  </footer>
+</main>
 
 <script>
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('sc', scrollY > 50);
-}, {passive: true});
-function toggleScdMob() {
-  const m = document.getElementById('scdMobMenu');
-  const b = document.getElementById('burger');
-  m.classList.toggle('open');
-  b.classList.toggle('open');
-  document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
-}
-function closeScdMob() {
-  document.getElementById('scdMobMenu').classList.remove('open');
-  document.getElementById('burger').classList.remove('open');
-  document.body.style.overflow = '';
-}
-</script>
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let state = {
+  step: 1,
+  formData: {},
+  selectedWorkshop: null,
+  uploadFiles: {},     // label -> File object
+  status: 'Entwurf',
+  fallNr: null,
+  submitting: false,
+  stepError: null,
+  submitError: null,
+};
 
-<script>
-// ─── SCHADEN FORM ───
-let scdFiles = [];
+const STEPS = [
+  { num: 1, title: 'Fahrer & Fahrzeug',  icon: 'i-user'   },
+  { num: 2, title: 'Schaden erfassen',   icon: 'i-alert'  },
+  { num: 3, title: 'Bilder hochladen',   icon: 'i-camera' },
+  { num: 4, title: 'Werkstatt wählen',   icon: 'i-wrench' },
+  { num: 5, title: 'Prüfen & senden',    icon: 'i-file'   },
+];
 
-function scdToggle(groupId, val) {
-  document.querySelectorAll('#' + groupId + ' .scd-toggle').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.val === val);
-  });
+const UPLOAD_DEFS = [
+  { label: 'Gesamtansicht Fahrzeug', required: true  },
+  { label: 'Schaden Nahaufnahme',    required: true  },
+  { label: 'Kennzeichen',            required: true  },
+  { label: 'Unfallstelle',           required: false },
+  { label: 'Unfallgegner',           required: false },
+  { label: 'Dokumente / Polizei',    required: false },
+];
+
+const WORKSHOPS = [
+  { id:1, name:'Karosseriezentrum Müller GmbH', city:'Berlin',   plz:'10115', distance:'3,8 km', email:'service@mueller-karosserie.de', services:'Karosserie · Lack · Glas',                rating:4.8 },
+  { id:2, name:'Auto Lack Zentrum Nord',         city:'Hamburg',  plz:'20095', distance:'7,2 km', email:'info@alzn.de',                  services:'Lack · Karosserie · Ersatzwagen',          rating:4.6 },
+  { id:3, name:'Fleet Repair Partner Süd',       city:'München',  plz:'80331', distance:'5,4 km', email:'claim@repair-sued.de',          services:'Karosserie · Glas · Hol-/Bringservice',   rating:4.9 },
+  { id:4, name:'BMTI Werkstattpartner Sachsen',  city:'Chemnitz', plz:'09111', distance:'2,1 km', email:'service@bmti-sachsen.de',       services:'Karosserie · Lack · Mechanik',            rating:4.7 },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+const $ = (sel) => document.querySelector(sel);
+const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function icon(name, size=16){ return `<svg class="icon" width="${size}" height="${size}"><use href="#${name}"/></svg>`; }
+
+function field(opts) {
+  const { label, name, placeholder='', full=false, required=false, type='text' } = opts;
+  const val = escapeHtml(state.formData[name] || '');
+  return `
+    <label class="${full ? 'full' : ''}">
+      <span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>
+      <input class="field-input" type="${type}" name="${name}" value="${val}"
+             placeholder="${escapeHtml(placeholder)}"
+             oninput="updateField('${name}', this.value)" />
+    </label>`;
 }
 
-function scdGetToggle(groupId) {
-  const active = document.querySelector('#' + groupId + ' .scd-toggle.active');
-  return active ? active.dataset.val : null;
+function selectField(opts) {
+  const { label, name, options, full=false, required=false } = opts;
+  const val = state.formData[name] || '';
+  return `
+    <label class="${full ? 'full' : ''}">
+      <span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>
+      <select class="field-select" name="${name}" onchange="updateField('${name}', this.value)">
+        <option value="">Bitte wählen…</option>
+        ${options.map(o => `<option value="${escapeHtml(o)}" ${val===o?'selected':''}>${escapeHtml(o)}</option>`).join('')}
+      </select>
+    </label>`;
 }
 
-function scdShowStep(n) {
-  document.querySelectorAll('.scd-step').forEach(s => s.classList.remove('active'));
-  document.getElementById('scdStep' + n).classList.add('active');
-  document.querySelectorAll('.scd-progress-step').forEach(s => {
-    const sn = parseInt(s.dataset.step);
-    s.classList.toggle('active', sn === n);
-    s.classList.toggle('done', sn < n);
-  });
-  document.querySelectorAll('.scd-progress-line').forEach((line, i) => {
-    line.classList.toggle('done', i + 1 < n);
-  });
-  document.getElementById('scd-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+function textareaField(opts) {
+  const { label, name, placeholder='', required=false } = opts;
+  const val = escapeHtml(state.formData[name] || '');
+  return `
+    <label class="full">
+      <span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>
+      <textarea class="field-textarea" name="${name}"
+                placeholder="${escapeHtml(placeholder)}"
+                oninput="updateField('${name}', this.value)">${val}</textarea>
+    </label>`;
 }
 
-function scdNext(step) {
-  if (step === 1) {
-    const name = document.getElementById('scdFahrerName').value.trim();
-    const tel  = document.getElementById('scdTelefon').value.trim();
-    const email = document.getElementById('scdEmail').value.trim();
-    const kz   = document.getElementById('scdKennzeichen').value.trim();
-    if (!name || !tel || !email || !kz) {
-      const err = document.getElementById('scdErr1');
-      err.textContent = 'Bitte füllen Sie alle Pflichtfelder aus (Name, Telefon, E-Mail, Kennzeichen).';
-      err.style.display = 'block';
-      return;
-    }
-    document.getElementById('scdErr1').style.display = 'none';
-    scdShowStep(2);
-  } else if (step === 2) {
-    const datum = document.getElementById('scdDatum').value;
-    const ort   = document.getElementById('scdOrt').value.trim();
-    const fb    = scdGetToggle('scdFahrbereit');
-    const desc  = document.getElementById('scdBeschreibung').value.trim();
-    if (!datum || !ort || !fb || desc.length < 20) {
-      const err = document.getElementById('scdErr2');
-      err.textContent = !fb
-        ? 'Bitte wählen Sie aus ob das Fahrzeug fahrbereit ist.'
-        : desc.length < 20
-          ? 'Bitte beschreiben Sie den Schaden (mindestens 20 Zeichen).'
-          : 'Bitte füllen Sie alle Pflichtfelder aus (Datum, Ort, Beschreibung).';
-      err.style.display = 'block';
-      return;
-    }
-    document.getElementById('scdErr2').style.display = 'none';
-    scdShowStep(3);
+function inputBlock(opts) {
+  const { iconName, title, subtitle, content } = opts;
+  return `
+    <div class="input-block">
+      <div class="input-block-head">
+        <div class="input-block-icon">${icon(iconName,16)}</div>
+        <div class="input-block-text">
+          <div class="input-block-title">${escapeHtml(title)}</div>
+          ${subtitle ? `<div class="input-block-sub">${escapeHtml(subtitle)}</div>` : ''}
+        </div>
+      </div>
+      <div class="input-grid">${content}</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════════════════════════
+function updateField(name, value) {
+  state.formData[name] = value;
+}
+
+function setStep(n) {
+  if (n < 1 || n > 6) return;
+  state.step = n;
+  render();
+  if (n <= 5) {
+    const fc = document.querySelector('[data-form-card]');
+    if (fc) fc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-function scdBack(step) {
-  scdShowStep(step - 1);
-}
-
-function scdHandleFiles(fileList) {
-  const err = document.getElementById('scdErr3');
-  const newFiles = Array.from(fileList);
-  for (const f of newFiles) {
-    if (f.size > 5 * 1024 * 1024) {
-      err.textContent = `"${f.name}" ist zu groß (max. 5 MB).`;
-      err.style.display = 'block';
-      return;
-    }
+function validateStep(n) {
+  const fd = state.formData;
+  if (n === 1) {
+    if (!fd.driverName?.trim()) return 'Bitte geben Sie Ihren Namen ein.';
+    if (!fd.driverPhone?.trim()) return 'Bitte geben Sie Ihre Telefonnummer ein.';
+    if (!fd.driverEmail?.trim()) return 'Bitte geben Sie Ihre E-Mail-Adresse ein.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fd.driverEmail.trim())) return 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+    if (!fd.company?.trim()) return 'Bitte geben Sie Ihr Unternehmen an.';
+    if (!fd.plate?.trim()) return 'Bitte geben Sie das Kennzeichen ein.';
   }
-  scdFiles = scdFiles.concat(newFiles).slice(0, 5);
-  err.style.display = 'none';
-  const thumbs = document.getElementById('scdThumbs');
-  thumbs.innerHTML = '';
-  scdFiles.forEach(f => {
-    const img = document.createElement('img');
-    img.className = 'scd-thumb';
-    img.src = URL.createObjectURL(f);
-    thumbs.appendChild(img);
-  });
+  if (n === 2) {
+    if (!fd.damageDate) return 'Bitte geben Sie das Schadendatum an.';
+    if (!fd.damageLocation?.trim()) return 'Bitte geben Sie den Schadenort an.';
+    if (!fd.description?.trim() || fd.description.trim().length < 10)
+      return 'Bitte beschreiben Sie den Schaden (mindestens 10 Zeichen).';
+  }
+  if (n === 3) {
+    if (Object.keys(state.uploadFiles).length === 0)
+      return 'Bitte laden Sie mindestens ein Pflichtfoto hoch (mit * markiert).';
+  }
+  return null;
 }
 
-// Drag and drop support
-document.addEventListener('DOMContentLoaded', () => {
-  const zone = document.getElementById('scdUploadZone');
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--blue)'; });
-  zone.addEventListener('dragleave', () => { zone.style.borderColor = ''; });
-  zone.addEventListener('drop', e => {
-    e.preventDefault();
-    zone.style.borderColor = '';
-    scdHandleFiles(e.dataTransfer.files);
-  });
-});
-
-async function scdSubmit() {
-  const err = document.getElementById('scdErr3');
-  if (scdFiles.length === 0) {
-    err.textContent = 'Bitte laden Sie mindestens ein Foto hoch.';
-    err.style.display = 'block';
+function nextStep() {
+  const err = validateStep(state.step);
+  if (err) {
+    state.stepError = err;
+    renderFormOnly();
     return;
   }
-  err.style.display = 'none';
+  state.stepError = null;
+  setStep(state.step + 1);
+}
 
-  const btn = document.getElementById('scdSubmitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Wird gesendet...';
+function prevStep() {
+  state.stepError = null;
+  state.submitError = null;
+  setStep(Math.max(1, state.step - 1));
+}
 
+function selectWorkshop(id) {
+  state.selectedWorkshop = WORKSHOPS.find(w => w.id === id);
+  render();
+}
+
+function handleFileUpload(label, inputEl) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  if (file.size > 15 * 1024 * 1024) {
+    alert('Das Bild ist zu groß (max. 15 MB). Bitte wählen Sie ein kleineres Bild.');
+    inputEl.value = '';
+    return;
+  }
+  state.uploadFiles[label] = file;
+  state.stepError = null;
+  renderFormOnly();
+}
+
+async function submitClaim() {
+  if (state.submitting) return;
+  state.submitting = true;
+  state.submitError = null;
+  renderFormOnly();
+
+  const fd_data = state.formData;
   const fd = new FormData();
-  fd.append('fahrer_name',     document.getElementById('scdFahrerName').value.trim());
-  fd.append('firma',           document.getElementById('scdFirma').value.trim());
-  fd.append('fahrer_telefon',  document.getElementById('scdTelefon').value.trim());
-  fd.append('fahrer_email',    document.getElementById('scdEmail').value.trim());
-  fd.append('kennzeichen',     document.getElementById('scdKennzeichen').value.trim().toUpperCase());
-  fd.append('fahrzeugtyp',     document.getElementById('scdFahrzeugtyp').value.trim());
-  fd.append('baujahr',         document.getElementById('scdBaujahr').value.trim());
-  fd.append('unfall_datum',    document.getElementById('scdDatum').value);
-  fd.append('unfall_uhrzeit',  document.getElementById('scdUhrzeit').value);
-  fd.append('unfall_ort',      document.getElementById('scdOrt').value.trim());
-  fd.append('fahrbereit',      scdGetToggle('scdFahrbereit') || 'nein');
-  fd.append('polizei_gerufen', scdGetToggle('scdPolizei') || 'nein');
-  fd.append('unfallgegner',    scdGetToggle('scdGegner') || 'nein');
-  fd.append('beschreibung',    document.getElementById('scdBeschreibung').value.trim());
-  scdFiles.forEach(f => fd.append('photos', f));
+
+  fd.append('fahrer_name',    (fd_data.driverName   || '').trim());
+  fd.append('fahrer_telefon', (fd_data.driverPhone  || '').trim());
+  fd.append('fahrer_email',   (fd_data.driverEmail  || '').trim());
+  fd.append('firma',          (fd_data.company      || '').trim());
+  fd.append('kennzeichen',    (fd_data.plate        || '').trim().toUpperCase());
+  fd.append('fahrzeugtyp',    (fd_data.model        || '').trim());
+  fd.append('baujahr',        '');
+  fd.append('unfall_datum',   fd_data.damageDate   || '');
+  fd.append('unfall_uhrzeit', fd_data.damageTime   || '');
+  fd.append('unfall_ort',     (fd_data.damageLocation || '').trim());
+  fd.append('fahrbereit',     fd_data.driveable === 'Ja' ? 'ja' : 'nein');
+  fd.append('unfallgegner',   fd_data.opponent   === 'Ja' ? 'ja' : 'nein');
+  fd.append('polizei_gerufen', fd_data.policeRef?.trim() ? 'ja' : 'nein');
+
+  const descParts = [];
+  if (fd_data.damageType) descParts.push('Schadenart: ' + fd_data.damageType);
+  if (fd_data.description?.trim()) descParts.push(fd_data.description.trim());
+  if (fd_data.vin?.trim())  descParts.push('FIN: ' + fd_data.vin.trim());
+  if (fd_data.km?.trim())   descParts.push('Kilometerstand: ' + fd_data.km.trim());
+  if (fd_data.opponent === 'Ja') {
+    if (fd_data.opponentPlate?.trim())     descParts.push('Gegner-Kennzeichen: ' + fd_data.opponentPlate.trim());
+    if (fd_data.opponentInsurance?.trim()) descParts.push('Gegner-Versicherung: ' + fd_data.opponentInsurance.trim());
+  }
+  if (fd_data.policeRef?.trim()) descParts.push('Polizei-Aktenzeichen: ' + fd_data.policeRef.trim());
+  if (state.selectedWorkshop) {
+    descParts.push(
+      'Gewünschte Werkstatt: ' + state.selectedWorkshop.name +
+      ' (' + state.selectedWorkshop.plz + ' ' + state.selectedWorkshop.city + ', ' + state.selectedWorkshop.email + ')'
+    );
+  }
+  fd.append('beschreibung', descParts.join('\n\n') || 'Keine weitere Beschreibung');
+
+  let photoCount = 0;
+  for (const file of Object.values(state.uploadFiles)) {
+    if (file && photoCount < 5) {
+      fd.append('photos', file);
+      photoCount++;
+    }
+  }
 
   try {
     const res = await fetch('/api/schaden', { method: 'POST', body: fd });
     const data = await res.json();
     if (data.success) {
-      document.getElementById('scdFallNr').textContent = data.fall_nr;
-      document.querySelectorAll('.scd-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('scdSuccess').classList.add('active');
-      document.getElementById('scdProgress').style.display = 'none';
-      document.getElementById('scd-form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      state.fallNr = data.fall_nr;
+      state.status = 'Gesendet';
+      state.step = 6;
+      state.submitting = false;
+      render();
     } else {
-      err.textContent = data.error || 'Fehler beim Senden. Bitte versuchen Sie es erneut.';
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'Schaden melden →';
+      state.submitting = false;
+      state.submitError = data.error || 'Fehler beim Senden. Bitte versuchen Sie es erneut.';
+      renderFormOnly();
     }
   } catch (e) {
-    err.textContent = 'Verbindungsfehler. Bitte versuchen Sie es erneut.';
-    err.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Schaden melden →';
+    state.submitting = false;
+    state.submitError = 'Verbindungsfehler. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
+    renderFormOnly();
   }
+}
+
+function resetForm() {
+  state = {
+    step: 1, formData: {}, selectedWorkshop: null,
+    uploadFiles: {}, status: 'Entwurf',
+    fallNr: null, submitting: false, stepError: null, submitError: null,
+  };
+  render();
+}
+
+function scrollToForm() {
+  state.step = 1;
+  render();
+  const fc = document.querySelector('[data-form-card]');
+  if (fc) fc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RENDER STEPS
+// ═══════════════════════════════════════════════════════════════════════════
+function renderStep1() {
+  return `
+    ${inputBlock({ iconName:'i-user', title:'Fahrerdaten', subtitle:'Persönliche Daten des meldenden Fahrers',
+      content:
+        field({ label:'Name',        name:'driverName',  placeholder:'Max Mustermann',          required:true }) +
+        field({ label:'Telefon',     name:'driverPhone', placeholder:'+49 30 12345678',          required:true, type:'tel' }) +
+        field({ label:'E-Mail',      name:'driverEmail', placeholder:'fahrer@unternehmen.de',   required:true, type:'email' }) +
+        field({ label:'Unternehmen', name:'company',     placeholder:'Muster GmbH',              required:true })
+    })}
+    ${inputBlock({ iconName:'i-car', title:'Fahrzeugdaten', subtitle:'Daten des betroffenen Fahrzeugs',
+      content:
+        field({ label:'Kennzeichen',        name:'plate', placeholder:'C-IMD 123', required:true }) +
+        field({ label:'FIN (optional)',      name:'vin',   placeholder:'WBA…' }) +
+        field({ label:'Hersteller / Modell', name:'model', placeholder:'BMW 320d xDrive', full:false }) +
+        field({ label:'Kilometerstand',      name:'km',    placeholder:'123.450 km' })
+    })}`;
+}
+
+function renderStep2() {
+  return `
+    ${inputBlock({ iconName:'i-alert', title:'Schadendaten', subtitle:'Wann, wo und wie ist der Schaden entstanden?',
+      content:
+        field({ label:'Schadendatum', name:'damageDate',     type:'date', required:true }) +
+        field({ label:'Uhrzeit',      name:'damageTime',     type:'time' }) +
+        field({ label:'Schadenort',   name:'damageLocation', placeholder:'Straße, PLZ, Ort', full:true, required:true }) +
+        selectField({ label:'Schadenart', name:'damageType', options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
+        selectField({ label:'Fahrzeug fahrbereit?', name:'driveable', options:['Ja','Nein','Eingeschränkt'] }) +
+        textareaField({ label:'Schadenhergang', name:'description', placeholder:'Bitte kurz beschreiben…', required:true })
+    })}
+    ${inputBlock({ iconName:'i-user', title:'Unfallgegner & Polizei', subtitle:'Optional — nur ausfüllen falls zutreffend',
+      content:
+        selectField({ label:'Unfallgegner vorhanden?', name:'opponent', options:['Nein','Ja'] }) +
+        field({ label:'Kennzeichen Gegner',     name:'opponentPlate',     placeholder:'optional' }) +
+        field({ label:'Versicherung Gegner',    name:'opponentInsurance', placeholder:'optional' }) +
+        field({ label:'Polizei-Aktenzeichen',   name:'policeRef',         placeholder:'optional' })
+    })}
+    <div class="alert alert-amber">
+      ${icon('i-alert',18)}
+      <div>
+        <b>Wichtiger Hinweis</b>
+        Geben Sie am Unfallort kein Schuldanerkenntnis ab. Die Schuldfrage wird durch die Versicherungen geklärt.
+      </div>
+    </div>`;
+}
+
+function renderStep3() {
+  const tiles = UPLOAD_DEFS.map((u, idx) => {
+    const hasFile = !!state.uploadFiles[u.label];
+    const fileObj  = state.uploadFiles[u.label];
+    const inputId  = 'upinput-' + idx;
+    const labelJson = JSON.stringify(u.label);
+    const displayName = hasFile && fileObj
+      ? (fileObj.name.length > 20 ? fileObj.name.substring(0, 18) + '…' : fileObj.name)
+      : (u.required ? 'Pflichtfoto — antippen' : 'Optional — antippen');
+    return `
+      <div>
+        <button type="button" class="upload-tile ${hasFile ? 'uploaded' : ''}"
+                onclick="document.getElementById('${inputId}').click()">
+          <div class="upload-tile-icon">
+            ${icon(hasFile ? 'i-check-mark' : 'i-camera', 18)}
+          </div>
+          <div class="upload-tile-label">
+            ${escapeHtml(u.label)}${u.required ? '<span class="req">*</span>' : ''}
+          </div>
+          <div class="upload-tile-status">${escapeHtml(displayName)}</div>
+        </button>
+        <input type="file" id="${inputId}" accept="image/*" style="display:none"
+               onchange="handleFileUpload(${labelJson}, this)">
+      </div>`;
+  }).join('');
+
+  return inputBlock({
+    iconName: 'i-camera',
+    title: 'Bilder & Dokumente',
+    subtitle: 'Pflichtfotos sind mit * markiert — antippen zum Aufnehmen oder Auswählen',
+    content: `<div class="full"><div class="upload-grid">${tiles}</div></div>`
+  });
+}
+
+function renderStep4() {
+  const q = (state.formData._wsq || '').trim().toLowerCase();
+  const filtered = !q ? WORKSHOPS : WORKSHOPS.filter(w =>
+    w.plz.startsWith(q.slice(0, 2)) || w.city.toLowerCase().includes(q)
+  );
+
+  const cards = filtered.map(w => {
+    const sel = state.selectedWorkshop?.id === w.id;
+    return `
+      <button type="button" class="workshop-card ${sel ? 'selected' : ''}" onclick="selectWorkshop(${w.id})">
+        <div class="workshop-head">
+          <div class="workshop-name">${escapeHtml(w.name)}</div>
+          ${sel ? `<div class="workshop-check">${icon('i-check-mark',12)}</div>` : ''}
+        </div>
+        <div class="workshop-meta">
+          ${icon('i-pin',12)}
+          <span>${w.plz} ${escapeHtml(w.city)} ·</span>
+          <span class="km">${w.distance}</span>
+        </div>
+        <div class="workshop-services">${escapeHtml(w.services)}</div>
+        <div class="workshop-foot">
+          <div class="workshop-rating"><span class="star">★</span> ${w.rating}</div>
+          <div class="workshop-imdtag">Freigabe nur durch IMD</div>
+        </div>
+      </button>`;
+  }).join('');
+
+  return `
+    ${inputBlock({
+      iconName: 'i-wrench', title: 'Partnerwerkstatt finden', subtitle: 'Suche nach PLZ oder Stadt — optional',
+      content: `<div class="full">
+        <div class="search-box">
+          ${icon('i-search',18)}
+          <input type="text" placeholder="PLZ, Stadt oder Ort eingeben…"
+                 value="${escapeHtml(state.formData._wsq || '')}"
+                 oninput="state.formData._wsq=this.value; renderFormOnly();">
+        </div>
+      </div>`
+    })}
+    <div class="workshop-grid">${cards}</div>
+    <div class="alert alert-blue" style="margin-top:14px;">
+      ${icon('i-file',18)}
+      <div>
+        <b>Hinweis</b>
+        Die Werkstattauswahl ist eine Präferenz. IMD entscheidet abschließend über die Zuweisung und gibt die Reparatur frei.
+      </div>
+    </div>`;
+}
+
+function renderStep5() {
+  const fd = state.formData;
+  const photoCount = Object.keys(state.uploadFiles).length;
+  const dateDisplay = fd.damageDate
+    ? new Date(fd.damageDate + 'T00:00:00').toLocaleDateString('de-DE')
+    : '—';
+
+  const items = [
+    { label:'Fahrer',       value: fd.driverName      || '—' },
+    { label:'E-Mail',       value: fd.driverEmail      || '—' },
+    { label:'Unternehmen',  value: fd.company          || '—' },
+    { label:'Kennzeichen',  value: fd.plate            || '—' },
+    { label:'Schadendatum', value: dateDisplay },
+    { label:'Schadenort',   value: fd.damageLocation   || '—' },
+    { label:'Schadenart',   value: fd.damageType       || '—' },
+    { label:'Fotos',        value: photoCount > 0 ? photoCount + ' Foto(s) bereit' : '⚠ Keine Fotos!' },
+  ];
+
+  return `
+    ${inputBlock({
+      iconName: 'i-file', title: 'Zusammenfassung', subtitle: 'Prüfen Sie Ihre Eingaben vor dem Absenden',
+      content: `<div class="full"><div class="review-grid">${
+        items.map(d => `
+          <div class="review-item">
+            <div class="review-item-label">${escapeHtml(d.label)}</div>
+            <div class="review-item-value">${escapeHtml(d.value)}</div>
+          </div>`).join('')
+      }</div></div>`
+    })}
+    ${inputBlock({
+      iconName: 'i-wrench', title: 'Ausgewählte Werkstatt',
+      content: `<div class="full">${
+        state.selectedWorkshop ? `
+          <div class="review-item">
+            <div class="review-item-value" style="margin-bottom:6px;">${escapeHtml(state.selectedWorkshop.name)}</div>
+            <div style="font-size:13px;color:var(--text-mid);line-height:1.7;">
+              ${icon('i-pin',12)} ${state.selectedWorkshop.plz} ${escapeHtml(state.selectedWorkshop.city)}<br>
+              ${icon('i-mail',12)} ${escapeHtml(state.selectedWorkshop.email)}
+            </div>
+          </div>` : `
+          <div style="font-size:13px;color:var(--text-soft);padding:8px 0;">Keine Werkstatt ausgewählt — IMD wählt die geeignete Werkstatt aus.</div>`
+      }</div>`
+    })}
+    <div class="alert alert-blue">
+      ${icon('i-shield',18)}
+      <div>
+        <b>Bestätigung</b>
+        Mit Absenden bestätige ich die Richtigkeit der Angaben. Die Meldung wird an IMD Fleet Services gesendet. Eine Reparaturfreigabe darf ausschließlich durch IMD Fleet Services erfolgen.
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════════════
+function renderStepBar() {
+  $('#stepbar-inner').innerHTML = STEPS.map(s => {
+    const isActive = state.step === s.num;
+    const isDone   = state.step > s.num;
+    const cls = isActive ? 'step active' : (isDone ? 'step done' : 'step');
+    return `
+      <button type="button" class="${cls}" onclick="setStep(${s.num})">
+        <div class="step-num">${isDone ? icon('i-check-mark',12) : s.num}</div>
+        <div class="step-info">
+          <div class="step-info-tag">Schritt ${s.num}</div>
+          <div class="step-info-title">${escapeHtml(s.title)}</div>
+        </div>
+      </button>`;
+  }).join('');
+}
+
+function renderFormContent() {
+  const c = $('#form-content');
+  let body = '';
+  switch (state.step) {
+    case 1: body = renderStep1(); break;
+    case 2: body = renderStep2(); break;
+    case 3: body = renderStep3(); break;
+    case 4: body = renderStep4(); break;
+    case 5: body = renderStep5(); break;
+  }
+
+  const isLast = state.step === 5;
+  const errMsg = state.stepError || state.submitError;
+  const errorHtml = errMsg ? `
+    <div class="alert alert-red" style="margin-top:16px;">
+      ${icon('i-alert',18)}
+      <div>${escapeHtml(errMsg)}</div>
+    </div>` : '';
+
+  const nav = `
+    <div class="form-nav">
+      <button type="button" class="btn btn-back" ${state.step===1 ? 'disabled' : ''} onclick="prevStep()">← Zurück</button>
+      <div class="step-counter">Schritt ${state.step} von 5</div>
+      ${isLast
+        ? `<button type="button" class="btn btn-submit" onclick="submitClaim()" ${state.submitting ? 'disabled' : ''}>
+             ${state.submitting
+               ? '<span style="opacity:0.7">Wird gesendet…</span>'
+               : icon('i-send',14) + ' An IMD senden'}
+           </button>`
+        : `<button type="button" class="btn btn-next" onclick="nextStep()">Weiter ${icon('i-arrow-right',14)}</button>`}
+    </div>`;
+
+  c.innerHTML = `<div class="fade-in">${body}${errorHtml}${nav}</div>`;
+}
+
+function renderFormOnly() { renderFormContent(); }
+
+function renderSuccess() {
+  return `
+    <div class="success-card fade-in">
+      <div class="success-inner">
+        <div class="success-icon">${icon('i-check-mark',32)}</div>
+        <h2>Schadenmeldung übermittelt</h2>
+        <p>
+          IMD Fleet Services hat das vollständige Schadenprotokoll inklusive Bilder erhalten.
+          Wir melden uns innerhalb von 2 Stunden bei Ihnen.
+          ${state.selectedWorkshop ? `<br><br>Gewünschte Werkstatt <strong>${escapeHtml(state.selectedWorkshop.name)}</strong> wurde notiert.` : ''}
+        </p>
+        <div class="success-claimnr">${icon('i-file',14)} Schadennummer: ${escapeHtml(state.fallNr || '—')}</div>
+        <div class="success-actions">
+          <button type="button" class="btn btn-back" onclick="resetForm()">Neue Meldung</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderStatusList() {
+  const sent = state.status !== 'Entwurf';
+  const items = [
+    { label: 'Schadenmeldung erstellt',      active: true },
+    { label: 'An IMD übermittelt',           active: sent },
+    { label: 'Werkstatt informiert',         active: sent && !!state.selectedWorkshop },
+    { label: 'IMD prüft Reparaturfreigabe',  active: sent },
+    { label: 'Terminvereinbarung',           active: false },
+  ];
+  $('#status-list').innerHTML = items.map((it, i) => `
+    <div class="status-item ${it.active ? 'active' : ''}">
+      <div class="status-item-dot">${it.active ? '✓' : i+1}</div>
+      <div class="status-item-label">${escapeHtml(it.label)}</div>
+    </div>`).join('');
+}
+
+function renderCcWorkshop() {
+  const el = $('#cc-workshop');
+  if (el) el.textContent = state.selectedWorkshop ? state.selectedWorkshop.name : 'noch nicht ausgewählt';
+}
+
+function render() {
+  const formCard    = document.querySelector('[data-form-card]');
+  const successBlock = $('#success-block');
+
+  if (state.step <= 5) {
+    formCard.style.display    = '';
+    successBlock.style.display = 'none';
+    renderStepBar();
+    renderFormContent();
+  } else {
+    formCard.style.display    = 'none';
+    successBlock.style.display = '';
+    successBlock.innerHTML     = renderSuccess();
+  }
+  renderStatusList();
+  renderCcWorkshop();
+}
+
+render();
+</script>
+
+<!-- KI ASSISTANT — Floating Action Button -->
+<button class="chat-fab" id="chat-fab" onclick="toggleChat()" aria-label="KI-Assistent öffnen">
+  <span class="chat-fab-pulse"></span>
+  <span class="chat-fab-badge">KI</span>
+  <svg width="26" height="26"><use href="#i-chat"/></svg>
+</button>
+
+<div class="chat-overlay" id="chat-overlay" onclick="toggleChat()"></div>
+
+<div class="chat-panel" id="chat-panel" role="dialog" aria-label="KI-Schadenassistent">
+  <div class="chat-header">
+    <div class="chat-header-row">
+      <div class="chat-header-info">
+        <div style="position:relative;">
+          <div class="chat-avatar"><svg width="18" height="18"><use href="#i-sparkles"/></svg></div>
+          <div class="chat-avatar-status"></div>
+        </div>
+        <div class="chat-title-block">
+          <div class="chat-title">IMD KI-Schadenassistent</div>
+          <div class="chat-subtitle"><span class="dot"></span>Online · 24/7 verfügbar</div>
+        </div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()" aria-label="Schließen">
+        <svg width="18" height="18"><use href="#i-x"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="chat-tabs">
+    <button class="chat-tab active" data-tab="chat" onclick="switchTab('chat')">💬 Chat</button>
+    <button class="chat-tab" data-tab="faq" onclick="switchTab('faq')">📖 Verhaltensregeln</button>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div id="chat-messages"></div>
+    <div class="quick-qs" id="chat-quickqs"></div>
+  </div>
+  <div class="chat-body" id="faq-body" style="display:none;">
+    <div id="faq-content"></div>
+  </div>
+  <div class="chat-input-wrap" id="chat-input-wrap">
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chat-input" rows="1"
+                placeholder="Frage stellen…"
+                oninput="autoGrow(this)"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+      <button class="chat-send" onclick="sendMsg()" aria-label="Senden">
+        <svg width="18" height="18"><use href="#i-send"/></svg>
+      </button>
+    </div>
+    <div class="chat-disclaimer">
+      <b>Hinweis:</b> Demo-Modus. Vollversion mit echter KI + Hotline (24/7) folgt.
+    </div>
+  </div>
+</div>
+
+<script>
+// KI ASSISTANT
+const KNOWLEDGE = [
+  { q:"Was muss ich am Unfallort sofort tun?", keywords:["unfallort","sofort","tun","verhalten","passiert"],
+    a:`<b>Die ersten Schritte am Unfallort:</b><ul><li><b>Ruhe bewahren</b> und Unfallstelle absichern (Warnblinker, Warndreieck mind. 50 m)</li><li>Verletzte versorgen, ggf. <b>Rettungsdienst rufen (112)</b></li><li>Bei Personenschaden oder hohem Sachschaden: <b>Polizei rufen (110)</b></li><li>Daten austauschen: Name, Adresse, Versicherung, Kennzeichen</li><li><b>Fotos machen</b> aus mehreren Perspektiven</li><li>IMD über die App informieren — wir steuern den Rest</li></ul>`},
+  { q:"Darf ich am Unfallort ein Schuldanerkenntnis abgeben?", keywords:["schuld","schuldanerkenntnis","zugeben","schuldig"],
+    a:`<b>NEIN — auf keinen Fall.</b><ul><li>Geben Sie <b>niemals</b> ein Schuldanerkenntnis ab — auch nicht mündlich</li><li>Sagen Sie nicht "Tut mir leid, war meine Schuld"</li><li>Die Schuldfrage wird ausschließlich durch die Versicherungen geklärt</li><li>Unterschreiben Sie keine Erklärungen außer dem Europäischen Unfallbericht</li></ul>`},
+  { q:"Welche Fotos muss ich machen?", keywords:["foto","bilder","fotos","kamera","machen"],
+    a:`<b>Pflichtfotos für die Schadenmeldung:</b><ul><li><b>Gesamtansicht</b> des Fahrzeugs (alle vier Seiten)</li><li><b>Schaden-Detailaufnahme</b> aus der Nähe</li><li><b>Kennzeichen</b> beider Fahrzeuge gut lesbar</li><li><b>Unfallstelle</b> mit Umgebung</li><li>Fahrzeugschein und Führerschein des Gegners (falls Einverständnis)</li></ul><b>Tipp:</b> Lieber zu viele Fotos als zu wenige.`},
+  { q:"Wann muss ich die Polizei rufen?", keywords:["polizei","110","rufen","anrufen"],
+    a:`<b>Polizei (110) ist Pflicht bei:</b><ul><li>Personenschäden</li><li>Fahrerflucht des Unfallgegners</li><li>Verdacht auf Alkohol/Drogen beim Gegner</li><li>Hohem Sachschaden (über 1.500 €)</li><li>Wildunfällen (Wildschadenbescheinigung erforderlich!)</li></ul>`},
+  { q:"Wo darf ich mit dem Dienstwagen reparieren lassen?", keywords:["reparatur","werkstatt","reparieren"],
+    a:`<b>Reparaturen NUR über IMD-Partnerwerkstätten.</b><ul><li>In der App können Sie aus unseren <b>geprüften Partnerwerkstätten</b> bundesweit wählen</li><li>Die Reparaturfreigabe erfolgt <b>ausschließlich durch IMD Fleet Services</b></li><li>Keine Reparaturen ohne Freigabe — Kosten werden sonst nicht übernommen</li></ul>`},
+  { q:"Bin ich bei einem Schaden persönlich haftbar?", keywords:["haftung","haftbar","haften","selbstbeteiligung"],
+    a:`<b>In der Regel nein — aber mit Ausnahmen.</b><ul><li>Bei normalem Fahrverhalten haftet der Arbeitgeber bzw. die Versicherung</li><li>Eine <b>Selbstbeteiligung</b> kann anfallen (oft 150–500 €)</li><li>Bei <b>grober Fahrlässigkeit</b> oder Vorsatz haften Sie persönlich</li></ul>`},
+  { q:"Was ist beim Wildschaden zu beachten?", keywords:["wild","wildschaden","tier","reh"],
+    a:`<b>Wildunfall — so geht's richtig:</b><ul><li><b>Polizei rufen (110)</b> — sie verständigt Förster/Jagdpächter</li><li><b>Wildschadenbescheinigung</b> anfordern</li><li>Tier <b>nicht anfassen</b> (gilt als Wilderei!)</li><li>Fotos machen, Unfallstelle absichern</li></ul>`},
+  { q:"Was tun bei Parkschaden ohne Verursacher?", keywords:["park","parkschaden","verursacher","geflüchtet"],
+    a:`<b>Verursacher unbekannt — Fahrerflucht:</b><ul><li>Mindestens <b>30 Minuten</b> warten oder Polizei verständigen</li><li>Polizei rufen (110) — Aktenzeichen aufnehmen</li><li>Zeugen suchen und Kontaktdaten notieren</li><li>Fotos machen</li></ul>`},
+  { q:"Was muss ich bei einem Glasschaden beachten?", keywords:["glas","glasschaden","scheibe","windschutz","stein"],
+    a:`<b>Glasschaden — Sonderfall:</b><ul><li><b>Kleiner Steinschlag</b>: kann oft repariert werden</li><li>Reparatur ist meist <b>günstiger</b> als Austausch</li><li>Glasschäden meist über Teilkasko, oft <b>ohne Selbstbeteiligung</b></li><li>Sofort melden — Risse breiten sich aus</li></ul>`},
+  { q:"Wie lange dauert die Schadenabwicklung?", keywords:["dauer","dauert","wann","lange"],
+    a:`<b>Typischer Ablauf nach der Meldung:</b><ul><li><b>Tag 1:</b> IMD prüft die Meldung</li><li><b>Tag 1–2:</b> Werkstatt wird informiert, Termin vereinbart</li><li><b>Tag 2–5:</b> Reparaturfreigabe nach Kostenvoranschlag</li><li><b>Tag 5–14:</b> Reparatur (je nach Schadensumfang)</li></ul>`},
+];
+
+const FAQ_CATEGORIES = [
+  { title:"Verhalten am Unfallort", items:[{q:"Was muss ich am Unfallort sofort tun?",k:0},{q:"Darf ich Schuld zugeben?",k:1},{q:"Welche Fotos sind Pflicht?",k:2},{q:"Wann ist die Polizei zu rufen?",k:3},{q:"Parkschaden ohne Verursacher — was tun?",k:7}]},
+  { title:"Reparatur & Werkstatt", items:[{q:"Wo darf ich reparieren lassen?",k:4},{q:"Wie lange dauert die Abwicklung?",k:9},{q:"Was bei Glasschaden?",k:8}]},
+  { title:"Haftung & Pflichten", items:[{q:"Bin ich persönlich haftbar?",k:5},{q:"Wildschaden — was beachten?",k:6}]},
+];
+
+let chatState = { open:false, tab:'chat', messages:[], faqOpen:{} };
+
+function toggleChat() {
+  chatState.open = !chatState.open;
+  document.getElementById('chat-overlay').classList.toggle('open', chatState.open);
+  document.getElementById('chat-panel').classList.toggle('open', chatState.open);
+  document.getElementById('chat-fab').classList.toggle('hide', chatState.open);
+  if (chatState.open && chatState.messages.length === 0) initChat();
+}
+
+function switchTab(tab) {
+  chatState.tab = tab;
+  document.querySelectorAll('.chat-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
+  document.getElementById('chat-body').style.display = tab === 'chat' ? '' : 'none';
+  document.getElementById('faq-body').style.display = tab === 'faq' ? '' : 'none';
+  document.getElementById('chat-input-wrap').style.display = tab === 'chat' ? '' : 'none';
+  if (tab === 'faq') renderFaq();
+}
+
+function initChat() {
+  chatState.messages = [{ from:'bot', text:`<b>Hallo! 👋</b><br>Ich bin Ihr IMD KI-Schadenassistent und helfe Ihnen rund um die Uhr bei Fragen zu Schäden, Verhaltensregeln und Pflichten als Dienstwagenfahrer.<br><br>Wie kann ich Ihnen helfen?` }];
+  renderChat();
+}
+
+function renderChat() {
+  document.getElementById('chat-messages').innerHTML = chatState.messages.map(m => `
+    <div class="msg-row ${m.from}">
+      ${m.from === 'bot' ? '<div class="msg-avatar">KI</div>' : ''}
+      <div class="msg-bubble">${m.text}</div>
+    </div>`).join('');
+
+  const quickQs = document.getElementById('chat-quickqs');
+  if (chatState.messages.length <= 1) {
+    quickQs.innerHTML = `
+      <div style="font-size:11px;color:var(--text-soft);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;padding-left:4px;">Häufige Fragen</div>
+      ${[0,1,2,4,5].map(idx => `
+        <button type="button" class="quick-q" onclick="askQuick(${idx})">
+          <div class="quick-q-icon"><svg width="14" height="14"><use href="#i-help"/></svg></div>
+          <div class="quick-q-text">${KNOWLEDGE[idx].q}</div>
+          <svg class="quick-q-arrow" width="14" height="14"><use href="#i-arrow-right"/></svg>
+        </button>`).join('')}`;
+  } else {
+    quickQs.innerHTML = '';
+  }
+  setTimeout(() => { const b = document.getElementById('chat-body'); b.scrollTop = b.scrollHeight; }, 50);
+}
+
+function askQuick(idx) {
+  const item = KNOWLEDGE[idx];
+  chatState.messages.push({ from:'user', text:item.q });
+  renderChat();
+  setTimeout(() => { chatState.messages.push({ from:'bot', text:item.a }); renderChat(); }, 400);
+}
+
+function findAnswer(query) {
+  const q = query.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const item of KNOWLEDGE) {
+    let score = 0;
+    for (const kw of item.keywords) if (q.includes(kw)) score += kw.length;
+    if (score > bestScore) { bestScore = score; best = item; }
+  }
+  if (best && bestScore >= 4) return best.a;
+  return `Ich habe keine direkte Antwort gefunden. Versuchen Sie eine andere Formulierung — oder schauen Sie im Tab <b>📖 Verhaltensregeln</b> nach.`;
+}
+
+function sendMsg() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  chatState.messages.push({ from:'user', text:text.replace(/</g,'&lt;') });
+  input.value = ''; autoGrow(input); renderChat();
+  setTimeout(() => {
+    chatState.messages.push({ from:'bot', text:'<i style="opacity:0.6">KI denkt nach…</i>' });
+    renderChat();
+    setTimeout(() => {
+      chatState.messages.pop();
+      chatState.messages.push({ from:'bot', text:findAnswer(text) });
+      renderChat();
+    }, 600);
+  }, 200);
+}
+
+function autoGrow(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
+
+function renderFaq() {
+  document.getElementById('faq-content').innerHTML = FAQ_CATEGORIES.map((cat, ci) => `
+    <div class="faq-section">
+      <div class="faq-section-title">${cat.title}</div>
+      ${cat.items.map((item, ii) => {
+        const key = `${ci}-${ii}`, isOpen = chatState.faqOpen[key];
+        return `
+          <div class="faq-item ${isOpen ? 'open' : ''}">
+            <button type="button" class="faq-q" onclick="toggleFaq('${key}')">
+              <span>${item.q}</span><span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">${KNOWLEDGE[item.k].a}</div></div>
+          </div>`;
+      }).join('')}
+    </div>`).join('') + `
+    <div class="alert alert-blue" style="margin-top:8px;">
+      <svg class="alert-icon" width="18" height="18"><use href="#i-phone"/></svg>
+      <div><b>24/7-Hotline (in Kürze verfügbar)</b>Für komplexe Fälle erreichen Sie demnächst rund um die Uhr einen Schadenmanager telefonisch.</div>
+    </div>`;
+}
+
+function toggleFaq(key) { chatState.faqOpen[key] = !chatState.faqOpen[key]; renderFaq(); }
+
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('[IMD] Service Worker registered'))
+      .catch(e => console.warn('[IMD] SW registration failed:', e));
+  });
 }
 </script>
 
