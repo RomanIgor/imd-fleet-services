@@ -1142,16 +1142,15 @@ function renderStep3() {
   });
 }
 
-function renderStep4() {
-  const q = (state.formData._wsq || '').trim().toLowerCase();
+function buildWorkshopCards(q) {
+  const sq = (q || '').trim().toLowerCase();
   const aktiv = workshops.filter(w => w.aktiv !== false);
-  const filtered = !q ? aktiv : aktiv.filter(w =>
-    (w.plz||'').startsWith(q) || (w.city||'').toLowerCase().includes(q) || (w.name||'').toLowerCase().includes(q)
+  const filtered = !sq ? aktiv : aktiv.filter(w =>
+    (w.plz||'').startsWith(sq) || (w.city||'').toLowerCase().includes(sq) || (w.name||'').toLowerCase().includes(sq)
   );
-
-  const cards = filtered.length === 0
-    ? `<div style="color:var(--text-soft);font-size:13px;padding:12px 0;">Keine Werkstätten gefunden.</div>`
-    : filtered.map(w => {
+  if (filtered.length === 0)
+    return `<div style="color:var(--text-soft);font-size:13px;padding:12px 0;">Keine Werkstätten gefunden.</div>`;
+  return filtered.map(w => {
     const sel = state.selectedWorkshop?.id === w.id;
     return `
       <button type="button" class="workshop-card ${sel ? 'selected' : ''}" onclick="selectWorkshop(${w.id})">
@@ -1170,7 +1169,15 @@ function renderStep4() {
         </div>
       </button>`;
   }).join('');
+}
 
+function filterWorkshops(val) {
+  state.formData._wsq = val;
+  const grid = document.getElementById('workshop-grid');
+  if (grid) grid.innerHTML = buildWorkshopCards(val);
+}
+
+function renderStep4() {
   return `
     ${inputBlock({
       iconName: 'i-wrench', title: 'Partnerwerkstatt finden', subtitle: 'Suche nach PLZ oder Stadt — optional',
@@ -1179,11 +1186,11 @@ function renderStep4() {
           ${icon('i-search',18)}
           <input type="text" placeholder="PLZ, Stadt oder Ort eingeben…"
                  value="${escapeHtml(state.formData._wsq || '')}"
-                 oninput="state.formData._wsq=this.value; renderFormOnly();">
+                 oninput="filterWorkshops(this.value)">
         </div>
       </div>`
     })}
-    <div class="workshop-grid">${cards}</div>
+    <div class="workshop-grid" id="workshop-grid">${buildWorkshopCards(state.formData._wsq)}</div>
     <div class="alert alert-blue" style="margin-top:14px;">
       ${icon('i-file',18)}
       <div>
