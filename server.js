@@ -979,67 +979,15 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
       console.warn(`[${timestamp}] ⚠ PDF skipped — pdfkit not installed or generation failed`);
     }
 
-    // Werkstatt email HTML
-    const werkstattHtml = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
-<style>
-  body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px}
-  .card{background:#fff;border-radius:8px;padding:32px;max-width:600px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-  h2{color:#0052A3;margin:0 0 4px}
-  .fall{font-size:20px;font-weight:800;color:#09152A;margin-bottom:8px}
-  .meta{color:#536E94;font-size:13px;margin-bottom:24px}
-  .section{background:#0052A3;color:#fff;padding:8px 12px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:20px;border-radius:4px 4px 0 0}
-  table{width:100%;border-collapse:collapse}
-  td{padding:10px 12px;border-bottom:1px solid #ECF1F8;font-size:14px;color:#09152A;vertical-align:top}
-  td.lbl{width:38%;font-weight:600;color:#2E4666}
-  .hinweis{background:#FFF8E7;border:1px solid #F5C842;border-radius:8px;padding:14px 16px;margin-top:20px;font-size:13px;color:#7A5C00}
-  .footer{margin-top:24px;font-size:12px;color:#8899B4;border-top:1px solid #DDE6F0;padding-top:12px}
-</style></head><body>
-<div class="card">
-  <h2>🔧 Schadensauftrag von IMD Fleet Services</h2>
-  <div class="fall">${fall_nr}</div>
-  <p class="meta">Eingegangen am ${timestamp}</p>
-  <div class="section">Fahrzeug &amp; Fahrer</div>
-  <table>
-    <tr><td class="lbl">Kennzeichen</td><td><strong>${kennzeichen}</strong></td></tr>
-    <tr><td class="lbl">Fahrzeugtyp</td><td>${fahrzeugtyp || '—'}</td></tr>
-    <tr><td class="lbl">Fahrer</td><td>${fahrer_name}</td></tr>
-    <tr><td class="lbl">Telefon</td><td>${fahrer_telefon}</td></tr>
-    <tr><td class="lbl">E-Mail</td><td>${fahrer_email || '—'}</td></tr>
-    <tr><td class="lbl">Firma</td><td>${firma || '—'}</td></tr>
-  </table>
-  <div class="section">Schadensdetails</div>
-  <table>
-    <tr><td class="lbl">Datum</td><td>${unfall_datum}${unfall_uhrzeit ? ' · ' + unfall_uhrzeit : ''}</td></tr>
-    <tr><td class="lbl">Unfallort</td><td>${unfall_ort || '—'}</td></tr>
-    <tr><td class="lbl">Beschreibung</td><td>${beschreibung}</td></tr>
-  </table>
-  <div class="hinweis">
-    <strong>⚠️ Wichtiger Hinweis:</strong><br>
-    Die Reparaturfreigabe erfolgt <strong>ausschließlich durch IMD Fleet Services</strong>. Bitte nehmen Sie Kontakt mit dem Fahrer auf und erstellen Sie zunächst einen Kostenvoranschlag. Reparaturen dürfen erst nach schriftlicher Freigabe durch IMD beginnen.
-  </div>
-  <div class="footer">IMD Fleet Services · Fallnummer: ${fall_nr} · Automatisch generiert</div>
-</div></body></html>`;
-
     // Email 1 → IMD mit Fotos
     const { error: imdErr } = await resend.emails.send({
-      from: 'IMD Fleet Services <info@imdfleet.de>',
+      from: 'IMD Fleet Services <schaden@imdfleet.de>',
       to: process.env.RECIPIENT_EMAIL,
       subject: `🚨 Neuer Schaden: ${fall_nr} — ${kennzeichen}${firma ? ' — ' + firma : ''}`,
       html: imdHtml,
       attachments,
     });
     if (imdErr) throw new Error(imdErr.message);
-
-    // Email 2 → Werkstatt (nur wenn ausgewählt)
-    if (werkstatt_email) {
-      const { error: wsErr } = await resend.emails.send({
-        from: 'IMD Fleet Services <info@imdfleet.de>',
-        to: werkstatt_email,
-        subject: `Schadensauftrag ${fall_nr} — ${kennzeichen} — IMD Fleet Services`,
-        html: werkstattHtml,
-      });
-      if (wsErr) console.error(`[${timestamp}] ✗ Werkstatt mail error:`, wsErr.message);
-    }
 
     console.log(`[${timestamp}] ✓ Schaden ${fall_nr} — ${kennzeichen} saved + emails sent`);
     res.json({ success: true, fall_nr });
