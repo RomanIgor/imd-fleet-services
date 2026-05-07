@@ -45,7 +45,7 @@ function generateSchadenPDF(d) {
       doc.circle(L + 10, y + 8, 5.5).strokeColor('rgba(255,255,255,0.55)').lineWidth(0.9).stroke();
       doc.fillColor('#FFFFFF').font('Helvetica-Bold').fontSize(7.5)
          .text(title, L + 22, y + 4.5, { lineBreak: false, characterSpacing: 0.4 });
-      y += 20;
+      y += 17;
     }
 
     // Draw labeled field: label (small top) + value (dark) + underline
@@ -61,7 +61,7 @@ function generateSchadenPDF(d) {
     }
 
     // Row of labeled fields, auto-split remaining width
-    function fRow(items, h = 21) {
+    function fRow(items, h = 18) {
       const gap = 4;
       const fixed = items.reduce((s, it) => s + (it.w || 0), 0);
       const flex  = items.filter(it => !it.w).length;
@@ -246,7 +246,7 @@ function generateSchadenPDF(d) {
          .text(d.beschreibung, L + 1, y, { width: CW - 2, lineBreak: true });
       y = doc.y + 2;
     }
-    const hEnd = y + 52;
+    const hEnd = y + 42;
     for (let ly = y + 13; ly < hEnd; ly += 13) {
       doc.moveTo(L, ly).lineTo(L + CW, ly).strokeColor(LINE).lineWidth(0.3).stroke();
     }
@@ -262,7 +262,6 @@ function generateSchadenPDF(d) {
       { label: 'Fahrername:', value: d.opponent_lastname || '' },
       { label: 'Vorname:',    value: d.opponent_firstname || '' },
     ]);
-    fRow([{ label: 'Adresse:', value: '' }]);
     fRow([
       { label: 'Telefon tagsüber:',  value: d.opponent_phone || '' },
       { label: 'Mobilfunknummer:',   value: d.opponent_mobile || '' },
