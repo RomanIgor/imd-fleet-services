@@ -434,6 +434,7 @@ app.get('/intern', (req, res) => {
 
 // ── GET /schaden ──────────────────────────────────────────────────────────────
 app.get('/schaden', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache');
   res.sendFile(path.join(__dirname, 'schaden.html'));
 });
 
