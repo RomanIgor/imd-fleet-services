@@ -1201,6 +1201,18 @@ async function submitClaim() {
   fd.append('opponent_insurance_nr',(fd_data.opponentInsuranceNr || '').trim());
   fd.append('opponent_damage',      (fd_data.opponentDamage      || '').trim());
   fd.append('photo_labels', JSON.stringify(Object.keys(state.uploadFiles)));
+  fd.append('fahrer_adresse',            (fd_data.driverAddress           || '').trim());
+  fd.append('fahrerlaubnis',             (fd_data.fahrerlaubnis           || '').trim());
+  fd.append('fahrerlaubnis_datum',       (fd_data.fahrerlaubnisDate       || '').trim());
+  fd.append('fahrerlaubnis_behoerde',    (fd_data.fahrerlaubnisBehoerde   || '').trim());
+  fd.append('fuehrerschein_nr',          (fd_data.fuehrerscheinNr         || '').trim());
+  fd.append('fuehrerschein_klassen',     (fd_data.fuehrerscheinKlassen    || '').trim());
+  fd.append('alkohol',                   (fd_data.alkohol                 || '').trim());
+  fd.append('drogen',                    (fd_data.drogen                  || '').trim());
+  fd.append('blutprobe_feld',            (fd_data.blutprobe               || '').trim());
+  fd.append('blutprobe_ergebnis',        (fd_data.blutprobeErgebnis       || '').trim());
+  fd.append('blutprobe_entnommen',       (fd_data.blutprobeEntnommen      || '').trim());
+  fd.append('blutprobe_ergebnis_detail', (fd_data.blutprobeErgebnisDetail || '').trim());
 
   const descParts = [];
   if (fd_data.description?.trim()) descParts.push(fd_data.description.trim());
@@ -1278,6 +1290,15 @@ function renderStep1() {
         field({ label:'FIN (optional)',      name:'vin',   placeholder:'WBA…' }) +
         field({ label:'Hersteller / Modell', name:'model', placeholder:'BMW 320d xDrive', full:false }) +
         field({ label:'Kilometerstand',      name:'km',    placeholder:'123.450 km' })
+    })}
+    ${inputBlock({ iconName:'i-shield', title:'Führerschein & Adresse', subtitle:'Angaben zur Fahrerlaubnis des Fahrers',
+      content:
+        field({ label:'Privatadresse', name:'driverAddress', placeholder:'Musterstraße 1, 12345 Berlin', full:true }) +
+        selectField({ label:'Erforderliche Fahrerlaubnis', name:'fahrerlaubnis', options:['Nein','Ja'] }) +
+        field({ label:'Ausstellungsdatum Fahrerlaubnis', name:'fahrerlaubnisDate', type:'date' }) +
+        field({ label:'Ausstellende Behörde', name:'fahrerlaubnisBehoerde', placeholder:'z.B. Bürgeramt Berlin' }) +
+        field({ label:'Führerschein-Nr.', name:'fuehrerscheinNr', placeholder:'z.B. B123456789' }) +
+        field({ label:'Führerscheinklassen', name:'fuehrerscheinKlassen', placeholder:'z.B. B, BE' })
     })}`;
 }
 
@@ -1316,6 +1337,15 @@ function renderStep2() {
         selectField({ label:'Fahrzeug fahrbereit?',  name:'driveable',    options:['Ja','Nein','Eingeschränkt'] }) +
         selectField({ label:'Personenschaden?',      name:'personDamage', options:['Nein','Ja'] }) +
         textareaField({ label:'Unfallhergang', name:'description', placeholder:'Bitte so ausführlich wie möglich beschreiben…', required:true, full:true, mic:true })
+    })}
+    ${inputBlock({ iconName:'i-alert', title:'Alkohol / Drogen / Blutprobe', subtitle:'',
+      content:
+        selectField({ label:'Alkoholkonsum', name:'alkohol', options:['Nein','Ja'] }) +
+        selectField({ label:'Drogenkonsum',  name:'drogen',  options:['Nein','Ja'] }) +
+        selectField({ label:'Blutprobe',     name:'blutprobe', options:['Nein','Ja'] }) +
+        field({ label:'Ergebnis', name:'blutprobeErgebnis', placeholder:'' }) +
+        selectField({ label:'Wurde eine Blutprobe entnommen?', name:'blutprobeEntnommen', options:['Nein','Ja'], full:true }) +
+        field({ label:'Wenn ja, mit welchem Ergebnis', name:'blutprobeErgebnisDetail', placeholder:'', full:true })
     })}
     ${inputBlock({ iconName:'i-user', title:'Polizei & Unfallgegner', subtitle:'Nur ausfüllen falls zutreffend',
       content:

@@ -159,7 +159,7 @@ function generateSchadenPDF(d) {
       { label: 'Vorname:',      value: '' },
       { label: 'Geburtsdatum:', value: '' },
     ]);
-    fRow([{ label: 'Privatadresse:', value: '' }]);
+    fRow([{ label: 'Privatadresse:', value: d.fahrer_adresse || '' }]);
 
     // Telefon + Fahrerlaubnis ja/nein (mixed row)
     {
@@ -168,17 +168,17 @@ function generateSchadenPDF(d) {
       const rx = L + telW + 4;
       doc.fillColor(GRAY).font('Helvetica').fontSize(6.5)
          .text('Erforderliche Fahrerlaubnis:', rx, y, { lineBreak: false });
-      jn('', false, rx + 102, y + 7, 0);
+      jn('', d.fahrerlaubnis === 'Ja', rx + 102, y + 7, 0);
       doc.moveTo(rx, y + h - 2).lineTo(L + CW - 1, y + h - 2).strokeColor(LINE).lineWidth(0.5).stroke();
       y += h;
     }
     fRow([
-      { label: 'Ausstellungsdatum Fahrerlaubnis:', value: '' },
-      { label: 'Ausstellende Behörde:',            value: '' },
+      { label: 'Ausstellungsdatum Fahrerlaubnis:', value: d.fahrerlaubnis_datum    || '' },
+      { label: 'Ausstellende Behörde:',            value: d.fahrerlaubnis_behoerde || '' },
     ]);
     fRow([
-      { label: 'Führerschein-Nr.:',    value: '' },
-      { label: 'Führerscheinklassen:', value: '' },
+      { label: 'Führerschein-Nr.:',    value: d.fuehrerschein_nr      || '' },
+      { label: 'Führerscheinklassen:', value: d.fuehrerschein_klassen || '' },
     ]);
 
     // ══ ALKOHOL / DROGEN / BLUTPROBE ═════════════════════════════════════
@@ -186,17 +186,17 @@ function generateSchadenPDF(d) {
     {
       const h = 18;
       let ax = L;
-      ax = jn('Alkoholkonsum',  false, ax, y, 62); ax += 3;
-      ax = jn('Drogenkonsum',   false, ax, y, 60); ax += 3;
-      ax = jn('Blutprobe',      false, ax, y, 48); ax += 3;
-      fld('Ergebnis:', '', ax, y, L + CW - ax - 1, h);
+      ax = jn('Alkoholkonsum',  d.alkohol      === 'Ja', ax, y, 62); ax += 3;
+      ax = jn('Drogenkonsum',   d.drogen       === 'Ja', ax, y, 60); ax += 3;
+      ax = jn('Blutprobe',      d.blutprobe_feld === 'Ja', ax, y, 48); ax += 3;
+      fld('Ergebnis:', d.blutprobe_ergebnis || '', ax, y, L + CW - ax - 1, h);
       y += h;
     }
     {
       const h = 18;
       let ax = L;
-      ax = jn('Wurde eine Blutprobe entnommen?', false, ax, y, 130); ax += 3;
-      fld('Wenn ja, mit welchem Ergebnis:', '', ax, y, L + CW - ax - 1, h);
+      ax = jn('Wurde eine Blutprobe entnommen?', d.blutprobe_entnommen === 'Ja', ax, y, 130); ax += 3;
+      fld('Wenn ja, mit welchem Ergebnis:', d.blutprobe_ergebnis_detail || '', ax, y, L + CW - ax - 1, h);
       y += h;
     }
 
@@ -847,6 +847,18 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   const opponent_insurance   = (req.body.opponent_insurance   || '').trim();
   const opponent_insurance_nr= (req.body.opponent_insurance_nr|| '').trim();
   const opponent_damage      = (req.body.opponent_damage      || '').trim();
+  const fahrer_adresse            = (req.body.fahrer_adresse            || '').trim();
+  const fahrerlaubnis             = (req.body.fahrerlaubnis             || '').trim();
+  const fahrerlaubnis_datum       = (req.body.fahrerlaubnis_datum       || '').trim();
+  const fahrerlaubnis_behoerde    = (req.body.fahrerlaubnis_behoerde    || '').trim();
+  const fuehrerschein_nr          = (req.body.fuehrerschein_nr          || '').trim();
+  const fuehrerschein_klassen     = (req.body.fuehrerschein_klassen     || '').trim();
+  const alkohol                   = (req.body.alkohol                   || '').trim();
+  const drogen                    = (req.body.drogen                    || '').trim();
+  const blutprobe_feld            = (req.body.blutprobe_feld            || '').trim();
+  const blutprobe_ergebnis        = (req.body.blutprobe_ergebnis        || '').trim();
+  const blutprobe_entnommen       = (req.body.blutprobe_entnommen       || '').trim();
+  const blutprobe_ergebnis_detail = (req.body.blutprobe_ergebnis_detail || '').trim();
   let photoLabels = [];
   try { photoLabels = JSON.parse(req.body.photo_labels || '[]'); } catch(_) {}
 
@@ -967,6 +979,10 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
         opponent_plate, opponent_type, opponent_phone, opponent_mobile,
         opponent_insurance, opponent_insurance_nr, opponent_damage,
         werkstatt_name, werkstatt_email, photoLabels, signatureBase64,
+        fahrer_adresse, fahrerlaubnis, fahrerlaubnis_datum, fahrerlaubnis_behoerde,
+        fuehrerschein_nr, fuehrerschein_klassen,
+        alkohol, drogen, blutprobe_feld, blutprobe_ergebnis,
+        blutprobe_entnommen, blutprobe_ergebnis_detail,
       });
     } catch (pdfErr) {
       console.error(`[${timestamp}] ✗ PDF error:`, pdfErr.message);
