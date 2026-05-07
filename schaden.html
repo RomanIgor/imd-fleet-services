@@ -1610,17 +1610,17 @@ function dismissIOSBanner() {
   sessionStorage.setItem('ios-banner-dismissed', '1');
 }
 
-// Service Worker — auto-update silently
+// Service Worker — network-first for HTML, so iOS always gets fresh page
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .catch(e => console.warn('[IMD] SW registration failed:', e));
   });
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    // Reload only if the driver hasn't started filling the form
-    const formEmpty = state.step === 1 && !Object.values(state.formData).some(v => String(v).trim());
-    if (formEmpty) window.location.reload();
+  // Force SW update check when app comes back to foreground
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      navigator.serviceWorker.ready.then(reg => reg.update()).catch(() => {});
+    }
   });
 }
 </script>
