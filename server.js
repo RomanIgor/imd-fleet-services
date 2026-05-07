@@ -112,8 +112,12 @@ function generateSchadenPDF(d) {
     // ══ HEADER ═══════════════════════════════════════════════════════════
     doc.rect(0, 0, PW, 58).fill('#FFFFFF');
     doc.moveTo(L, 58).lineTo(PW - 20, 58).strokeColor(LINE).lineWidth(0.5).stroke();
-    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(17).text('IMD', L, 10, { lineBreak: false });
-    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(6.5).text('FLEET SERVICES', L, 29, { lineBreak: false, characterSpacing: 1.2 });
+    try {
+      doc.image(path.join(__dirname, 'logo_light.png'), L, 8, { height: 42 });
+    } catch(_) {
+      doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(17).text('IMD', L, 10, { lineBreak: false });
+      doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(6.5).text('FLEET SERVICES', L, 29, { lineBreak: false, characterSpacing: 1.2 });
+    }
     doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(24)
        .text('SCHADENMELDUNG', 0, 15, { align: 'right', width: PW - 22, lineBreak: false });
     doc.fillColor(LGRAY).font('Helvetica').fontSize(7.5)
@@ -128,16 +132,18 @@ function generateSchadenPDF(d) {
     y += 18;
 
     // ══ SCHULDFRAGE ══════════════════════════════════════════════════════
+    const schuld = (d.schuldfrage || '').toLowerCase();
+    const fahrt  = (d.fahrtart    || '').toLowerCase();
     doc.fillColor(DARK).font('Helvetica').fontSize(7.5)
-       .text('Die Schuld liegt meines Erachtens bei mir:', L, y + 1, { lineBreak: false });
-    let sx = L + 143;
-    sx = cb('bei mir', false, sx, y);
-    sx = cb('beim Gegner', false, sx, y);
-    cb('unklar', false, sx, y);
+       .text('Die Schuld liegt meines Erachtens bei:', L, y + 1, { lineBreak: false });
+    let sx = L + 138;
+    sx = cb('bei mir', schuld === 'bei mir', sx, y);
+    sx = cb('beim Gegner', schuld === 'beim gegner', sx, y);
+    cb('unklar', schuld === 'unklar', sx, y);
     const ftX = L + CW * 0.57;
-    let ftx = cb('Dienstfahrt', false, ftX, y);
-    ftx = cb('Fahrt Wohnung-Arbeitsstätte', false, ftx, y);
-    cb('Privatfahrt', false, ftx, y);
+    let ftx = cb('Dienstfahrt', fahrt === 'dienstfahrt', ftX, y);
+    ftx = cb('Fahrt Wohnung-Arbeitsstätte', fahrt.includes('wohnung'), ftx, y);
+    cb('Privatfahrt', fahrt === 'privatfahrt', ftx, y);
     y += 12;
     doc.moveTo(L, y).lineTo(L + CW, y).strokeColor(LINE).lineWidth(0.4).stroke();
     y += 5;
@@ -196,7 +202,11 @@ function generateSchadenPDF(d) {
 
     // ══ UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG ════════════════════════
     secBar('UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG');
-    fRow([{ label: 'Unfallort mit PLZ:', value: d.unfall_ort }]);
+    fRow([{ label: 'Straße (Unfallort):', value: d.unfall_strasse || d.unfall_ort || '' }]);
+    fRow([
+      { label: 'PLZ:', value: d.unfall_plz || '', w: 70 },
+      { label: 'Ort:', value: d.unfall_ort_name || '' },
+    ]);
     fRow([{ label: 'Schaden am eigenen Fahrzeug (z.B. Frontschaden, Heckschaden o.ä.):', value: d.schadenart || '' }]);
     {
       const h = 18;
@@ -321,7 +331,7 @@ function generateSchadenPDF(d) {
     // Right: email + signature
     let ry = botY + 18;
     doc.fillColor(GRAY).font('Helvetica').fontSize(7)
-       .text('Senden an: schaden@imd-fleet-services.de', rX, ry, { lineBreak: false });
+       .text('Senden an: schaden@imdfleet.de', rX, ry, { lineBreak: false });
     ry += 11;
     const sigH = Math.max(leftEndY - ry - 22, 46);
     doc.rect(rX, ry, rW - 1, sigH).strokeColor(LINE).lineWidth(0.5).stroke();
@@ -817,6 +827,11 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     beschreibung = ''
   } = req.body;
 
+  const schuldfrage          = (req.body.schuldfrage          || '').trim();
+  const fahrtart             = (req.body.fahrtart             || '').trim();
+  const unfall_strasse       = (req.body.unfall_strasse       || '').trim();
+  const unfall_plz           = (req.body.unfall_plz           || '').trim();
+  const unfall_ort_name      = (req.body.unfall_ort_name      || '').trim();
   const personenschaden      = (req.body.personenschaden      || 'nein').trim();
   const polizei_aufgenommen  = (req.body.polizei_aufgenommen  || polizei_gerufen || 'nein').trim();
   const polizei_aktenzeichen = (req.body.polizei_aktenzeichen || '').trim();
@@ -945,7 +960,8 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
         fall_nr, timestamp,
         fahrer_name, fahrer_telefon, fahrer_email, firma,
         kennzeichen, fahrzeugtyp, km,
-        unfall_datum, unfall_uhrzeit, unfall_ort, schadenart,
+        schuldfrage, fahrtart,
+        unfall_datum, unfall_uhrzeit, unfall_ort, unfall_strasse, unfall_plz, unfall_ort_name, schadenart,
         fahrbereit, personenschaden, unfallgegner,
         beschreibung, polizei_aufgenommen, polizei_aktenzeichen,
         opponent_holder, opponent_address, opponent_lastname, opponent_firstname,

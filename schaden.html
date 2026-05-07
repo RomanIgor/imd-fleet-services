@@ -681,7 +681,7 @@
           <div class="info-row-icon"><svg width="14" height="14"><use href="#i-mail"/></svg></div>
           <div class="info-row-text">
             <div class="info-row-label">An</div>
-            <div class="info-row-val">schaden@imd-fleet-services.de</div>
+            <div class="info-row-val">schaden@imdfleet.de</div>
           </div>
         </div>
         <div class="info-row">
@@ -817,6 +817,24 @@ function inputBlock(opts) {
 function updateField(name, value) {
   state.formData[name] = value;
 }
+
+async function lookupPlz(plz) {
+  if (!/^\d{5}$/.test(plz)) return;
+  try {
+    const r = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(plz)}&format=json&addressdetails=1&countrycodes=de&limit=1`,
+      { headers: { 'Accept-Language': 'de', 'User-Agent': 'IMDFleet/1.0' } }
+    );
+    const data = await r.json();
+    if (!data.length) return;
+    const addr = data[0].address;
+    const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || '';
+    if (city && !state.formData.damageOrt) {
+      state.formData.damageOrt = city;
+      renderFormOnly();
+    }
+  } catch(_) {}
+}
 function updateAndRender(name, val) {
   state.formData[name] = val;
   renderFormOnly();
@@ -846,7 +864,9 @@ function validateStep(n) {
   }
   if (n === 2) {
     if (!fd.damageDate) return 'Bitte geben Sie das Schadendatum an.';
-    if (!fd.damageLocation?.trim()) return 'Bitte geben Sie den Schadenort an.';
+    if (!fd.damageStrasse?.trim()) return 'Bitte geben Sie die Straße des Unfallortes an.';
+    if (!fd.damagePlz?.trim()) return 'Bitte geben Sie die PLZ des Unfallortes an.';
+    if (!fd.damageOrt?.trim()) return 'Bitte geben Sie den Ort des Unfalles an.';
     if (!fd.description?.trim() || fd.description.trim().length < 10)
       return 'Bitte beschreiben Sie den Schaden (mindestens 10 Zeichen).';
     if (!fd.policePresent) return 'Bitte angeben ob die Polizei aufgenommen hat.';
@@ -924,7 +944,15 @@ async function submitClaim() {
   fd.append('baujahr',        '');
   fd.append('unfall_datum',   fd_data.damageDate    || '');
   fd.append('unfall_uhrzeit', fd_data.damageTime    || '');
-  fd.append('unfall_ort',     (fd_data.damageLocation || '').trim());
+  const _str = (fd_data.damageStrasse || '').trim();
+  const _plz = (fd_data.damagePlz    || '').trim();
+  const _ort = (fd_data.damageOrt    || '').trim();
+  fd.append('unfall_strasse',   _str);
+  fd.append('unfall_plz',       _plz);
+  fd.append('unfall_ort_name',  _ort);
+  fd.append('unfall_ort',       [_str, [_plz, _ort].filter(Boolean).join(' ')].filter(Boolean).join(', '));
+  fd.append('schuldfrage',    (fd_data.schuldfrage  || '').trim());
+  fd.append('fahrtart',       (fd_data.fahrtart     || '').trim());
   fd.append('schadenart',     (fd_data.damageType   || '').trim());
   fd.append('fahrbereit',     fd_data.driveable     === 'Ja' ? 'ja' : 'nein');
   fd.append('personenschaden',fd_data.personDamage  === 'Ja' ? 'ja' : 'nein');
@@ -1046,9 +1074,13 @@ function renderStep2() {
   return `
     ${inputBlock({ iconName:'i-alert', title:'Schadendaten', subtitle:'Wann, wo und wie ist der Schaden entstanden?',
       content:
+        selectField({ label:'Schuldfrage', name:'schuldfrage', options:['Bei mir','Beim Gegner','Unklar'] }) +
+        selectField({ label:'Fahrtart', name:'fahrtart', options:['Dienstfahrt','Fahrt Wohnung-Arbeitsstätte','Privatfahrt'] }) +
         field({ label:'Schadendatum', name:'damageDate', type:'date', required:true }) +
         field({ label:'Uhrzeit',      name:'damageTime', type:'time' }) +
-        field({ label:'Schadenort mit PLZ', name:'damageLocation', placeholder:'Straße, PLZ, Ort', full:true, required:true }) +
+        field({ label:'Straße (Unfallort)', name:'damageStrasse', placeholder:'Musterstraße 12', required:true }) +
+        `<label class=""><span class="field-label">PLZ <span class="req">*</span></span><input class="field-input" type="text" name="damagePlz" value="${escapeHtml(state.formData.damagePlz||'')}" placeholder="12345" maxlength="5" inputmode="numeric" oninput="updateField('damagePlz',this.value);if(this.value.length===5)lookupPlz(this.value);" /></label>` +
+        field({ label:'Ort', name:'damageOrt', placeholder:'Berlin', required:true }) +
         selectField({ label:'Schadenart',            name:'damageType',   options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
         selectField({ label:'Fahrzeug fahrbereit?',  name:'driveable',    options:['Ja','Nein','Eingeschränkt'] }) +
         selectField({ label:'Personenschaden?',      name:'personDamage', options:['Nein','Ja'] }) +
