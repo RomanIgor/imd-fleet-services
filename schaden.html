@@ -1067,7 +1067,10 @@ async function submitClaim() {
   fd.append('polizei_aufgenommen',fd_data.policePresent === 'Ja' ? 'ja' : 'nein');
   fd.append('polizei_aktenzeichen', (fd_data.policeRef || '').trim());
   fd.append('opponent_holder',      (fd_data.opponentHolder      || '').trim());
-  fd.append('opponent_address',     (fd_data.opponentAddress     || '').trim());
+  const _opa = (fd_data.opponentAddress || '').trim();
+  const _opplz = (fd_data.opponentPlz  || '').trim();
+  const _opOrt = (fd_data.opponentOrt  || '').trim();
+  fd.append('opponent_address', [_opa, [_opplz, _opOrt].filter(Boolean).join(' ')].filter(Boolean).join(', '));
   fd.append('opponent_lastname',    (fd_data.opponentLastName    || '').trim());
   fd.append('opponent_firstname',   (fd_data.opponentFirstName   || '').trim());
   fd.append('opponent_plate',       (fd_data.opponentPlate       || '').trim());
@@ -1164,14 +1167,16 @@ function renderStep2() {
   const hasPolice   = fd.policePresent === 'Ja';
 
   const opponentFields = hasOpponent ? (
-    field({ label:'Fahrzeughalter',               name:'opponentHolder',      placeholder:'Name des Fahrzeughalters', full:true }) +
-    field({ label:'Adresse (Unfallgegner)',        name:'opponentAddress',     placeholder:'Straße, PLZ, Ort', full:true }) +
-    field({ label:'Fahrername (Gegner)',           name:'opponentLastName',    placeholder:'Nachname' }) +
+    field({ label:'Nachname (Gegner)',             name:'opponentLastName',    placeholder:'Nachname' }) +
     field({ label:'Vorname (Gegner)',              name:'opponentFirstName',   placeholder:'Vorname' }) +
-    field({ label:'Kennzeichen (Gegner)',          name:'opponentPlate',       placeholder:'B-XY 123' }) +
-    field({ label:'Fahrzeugtyp (Gegner)',          name:'opponentType',        placeholder:'z.B. VW Golf' }) +
+    field({ label:'Fahrzeughalter',               name:'opponentHolder',      placeholder:'Name des Fahrzeughalters (falls abweichend)', full:true }) +
+    field({ label:'Adresse (Straße + Nr.)',        name:'opponentAddress',     placeholder:'Musterstraße 1', full:true }) +
+    field({ label:'PLZ',                          name:'opponentPlz',         placeholder:'12345' }) +
+    field({ label:'Ort',                          name:'opponentOrt',         placeholder:'Berlin' }) +
     field({ label:'Telefon tagsüber',             name:'opponentPhone',       placeholder:'+49…', type:'tel' }) +
     field({ label:'Mobilfunknummer',              name:'opponentMobile',      placeholder:'+49…', type:'tel' }) +
+    field({ label:'Kennzeichen (Gegner)',          name:'opponentPlate',       placeholder:'B-XY 123' }) +
+    field({ label:'Fahrzeugtyp (Gegner)',          name:'opponentType',        placeholder:'z.B. VW Golf' }) +
     field({ label:'Versichert bei',               name:'opponentInsurance',   placeholder:'Versicherungsname' }) +
     field({ label:'Versicherungsschein-Nr.',       name:'opponentInsuranceNr', placeholder:'z.B. 1234567' }) +
     textareaField({ label:'Schaden am gegnerischen Fahrzeug', name:'opponentDamage', placeholder:'z.B. Frontschaden, Heckschaden o.ä.', full:true })
@@ -1184,9 +1189,9 @@ function renderStep2() {
         selectField({ label:'Fahrtart', name:'fahrtart', options:['Dienstfahrt','Fahrt Wohnung-Arbeitsstätte','Privatfahrt'] }) +
         field({ label:'Schadendatum', name:'damageDate', type:'date', required:true }) +
         field({ label:'Uhrzeit',      name:'damageTime', type:'time' }) +
-        `<label class=""><span class="field-label">Ort <span class="req">*</span></span><div class="ac-wrap"><input id="ac-input-ort" class="field-input" type="text" placeholder="Berlin" value="${escapeHtml(state.formData.damageOrt||'')}" oninput="updateField('damageOrt',this.value);_acOrt(this.value)" onblur="_acClose('ac-dd-ort')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-ort"></div></div></label>` +
+        `<label class="full"><span class="field-label">Straße + Nr. (Unfallort) <span class="req">*</span></span><div class="ac-wrap"><input id="ac-input-str" class="field-input" type="text" placeholder="Musterstraße 12" value="${escapeHtml(state.formData.damageStrasse||'')}" oninput="updateField('damageStrasse',this.value);_acStr(this.value)" onblur="_acClose('ac-dd-str')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-str"></div></div></label>` +
         `<label class=""><span class="field-label">PLZ <span class="req">*</span></span><input id="ac-input-plz" class="field-input" type="text" placeholder="12345" maxlength="5" inputmode="numeric" value="${escapeHtml(state.formData.damagePlz||'')}" oninput="updateField('damagePlz',this.value);if(this.value.length===5)lookupPlz(this.value);" autocomplete="off"></label>` +
-        `<label class="full"><span class="field-label">Straße (Unfallort) <span class="req">*</span></span><div class="ac-wrap"><input id="ac-input-str" class="field-input" type="text" placeholder="Musterstraße 12" value="${escapeHtml(state.formData.damageStrasse||'')}" oninput="updateField('damageStrasse',this.value);_acStr(this.value)" onblur="_acClose('ac-dd-str')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-str"></div></div></label>` +
+        `<label class=""><span class="field-label">Ort <span class="req">*</span></span><div class="ac-wrap"><input id="ac-input-ort" class="field-input" type="text" placeholder="Berlin" value="${escapeHtml(state.formData.damageOrt||'')}" oninput="updateField('damageOrt',this.value);_acOrt(this.value)" onblur="_acClose('ac-dd-ort')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-ort"></div></div></label>` +
         selectField({ label:'Schadenart',            name:'damageType',   options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
         selectField({ label:'Fahrzeug fahrbereit?',  name:'driveable',    options:['Ja','Nein','Eingeschränkt'] }) +
         selectField({ label:'Personenschaden?',      name:'personDamage', options:['Nein','Ja'] }) +
