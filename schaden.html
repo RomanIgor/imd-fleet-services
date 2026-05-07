@@ -896,6 +896,17 @@ function _acSelect(id, idx) {
     state.formData.damageStrasse = it.main;
     const el = document.getElementById('ac-input-str');
     if (el) el.value = it.main;
+  } else if (id === 'ac-dd-oort') {
+    state.formData.opponentOrt = it.main;
+    if (it.plz) state.formData.opponentPlz = it.plz;
+    const ortEl = document.getElementById('ac-input-oort');
+    const plzEl = document.getElementById('ac-input-oplz');
+    if (ortEl) ortEl.value = it.main;
+    if (plzEl && it.plz) plzEl.value = it.plz;
+  } else if (id === 'ac-dd-ostr') {
+    state.formData.opponentAddress = it.main;
+    const el = document.getElementById('ac-input-ostr');
+    if (el) el.value = it.main;
   }
   _acClose(id);
 }
@@ -933,12 +944,48 @@ const _acStr = _debounce(async (val) => {
       .filter(f => f.properties.name && f.properties.type !== 'country' && f.properties.type !== 'state')
       .map(f => {
         const cityName = f.properties.city || f.properties.town || f.properties.village || '';
-        return {
-          main: f.properties.name,
-          sub:  [f.properties.postcode, cityName].filter(Boolean).join(' ')
-        };
+        return { main: f.properties.name, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
       });
     _acShow('ac-dd-str', items);
+  } catch(_) {}
+}, 280);
+
+const _acOOrt = _debounce(async (val) => {
+  if (val.length < 2) { _acClose('ac-dd-oort'); return; }
+  try {
+    const res = await fetch(
+      `https://photon.komoot.io/api/?q=${encodeURIComponent(val)}&limit=6&lang=de&countrycode=de`,
+      { headers: { 'Accept-Language': 'de' } }
+    );
+    const data = await res.json();
+    const items = (data.features || [])
+      .filter(f => ['city','town','village','municipality','suburb','quarter'].includes(f.properties.type))
+      .map(f => ({
+        main: f.properties.name,
+        plz:  f.properties.postcode || '',
+        sub:  [f.properties.state, f.properties.postcode].filter(Boolean).join(' · ')
+      }));
+    _acShow('ac-dd-oort', items);
+  } catch(_) {}
+}, 280);
+
+const _acOStr = _debounce(async (val) => {
+  if (val.length < 3) { _acClose('ac-dd-ostr'); return; }
+  const city = state.formData.opponentOrt || '';
+  const q = city ? `${val}, ${city}` : val;
+  try {
+    const res = await fetch(
+      `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&lang=de&countrycode=de`,
+      { headers: { 'Accept-Language': 'de' } }
+    );
+    const data = await res.json();
+    const items = (data.features || [])
+      .filter(f => f.properties.name && f.properties.type !== 'country' && f.properties.type !== 'state')
+      .map(f => {
+        const cityName = f.properties.city || f.properties.town || f.properties.village || '';
+        return { main: f.properties.name, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
+      });
+    _acShow('ac-dd-ostr', items);
   } catch(_) {}
 }, 280);
 function updateAndRender(name, val) {
@@ -1170,9 +1217,9 @@ function renderStep2() {
     field({ label:'Nachname (Gegner)',             name:'opponentLastName',    placeholder:'Nachname' }) +
     field({ label:'Vorname (Gegner)',              name:'opponentFirstName',   placeholder:'Vorname' }) +
     field({ label:'Fahrzeughalter',               name:'opponentHolder',      placeholder:'Name des Fahrzeughalters (falls abweichend)', full:true }) +
-    field({ label:'Adresse (Straße + Nr.)',        name:'opponentAddress',     placeholder:'Musterstraße 1', full:true }) +
-    field({ label:'PLZ',                          name:'opponentPlz',         placeholder:'12345' }) +
-    field({ label:'Ort',                          name:'opponentOrt',         placeholder:'Berlin' }) +
+    `<label class="full"><span class="field-label">Straße + Nr. (Gegner)</span><div class="ac-wrap"><input id="ac-input-ostr" class="field-input" type="text" placeholder="Musterstraße 1" value="${escapeHtml(state.formData.opponentAddress||'')}" oninput="updateField('opponentAddress',this.value);_acOStr(this.value)" onblur="_acClose('ac-dd-ostr')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-ostr"></div></div></label>` +
+    `<label class=""><span class="field-label">PLZ</span><input id="ac-input-oplz" class="field-input" type="text" placeholder="12345" maxlength="5" inputmode="numeric" value="${escapeHtml(state.formData.opponentPlz||'')}" oninput="updateField('opponentPlz',this.value)" autocomplete="off"></label>` +
+    `<label class=""><span class="field-label">Ort</span><div class="ac-wrap"><input id="ac-input-oort" class="field-input" type="text" placeholder="Berlin" value="${escapeHtml(state.formData.opponentOrt||'')}" oninput="updateField('opponentOrt',this.value);_acOOrt(this.value)" onblur="_acClose('ac-dd-oort')" autocomplete="off"><div class="ac-dropdown" id="ac-dd-oort"></div></div></label>` +
     field({ label:'Telefon tagsüber',             name:'opponentPhone',       placeholder:'+49…', type:'tel' }) +
     field({ label:'Mobilfunknummer',              name:'opponentMobile',      placeholder:'+49…', type:'tel' }) +
     field({ label:'Kennzeichen (Gegner)',          name:'opponentPlate',       placeholder:'B-XY 123' }) +
