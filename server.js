@@ -15,87 +15,220 @@ let PDFDocument; try { PDFDocument = require('pdfkit'); } catch(_) { console.war
 function generateSchadenPDF(d) {
   if (!PDFDocument) return Promise.resolve(null);
   return new Promise((resolve, reject) => {
-    const doc = new PDFDocument({ margin: 50, size: 'A4', info: { Title: `Schadenmeldung ${d.fall_nr}`, Author: 'IMD Fleet Services' } });
+    const doc = new PDFDocument({ margin: 0, size: 'A4' });
     const chunks = [];
     doc.on('data', c => chunks.push(c));
     doc.on('end',  () => resolve(Buffer.concat(chunks)));
     doc.on('error', reject);
 
-    const W = doc.page.width;
-    const navy = '#0052A3', dark = '#09152A', gray = '#6B7B99', light = '#D0DCF0';
+    const PW = doc.page.width;
+    const PH = doc.page.height;
+    const ML = 32, MR = 32;
+    const CW = PW - ML - MR;
 
-    // Header bar
-    doc.rect(0, 0, W, 72).fill(navy);
-    doc.fillColor('#fff').font('Helvetica-Bold').fontSize(16).text('IMD Fleet Services', 50, 18);
-    doc.font('Helvetica').fontSize(10).fillColor('#A8C4E8').text('Schadenmeldung', 50, 40);
-    doc.font('Helvetica-Bold').fontSize(13).fillColor('#fff').text(d.fall_nr, W - 200, 20, { width: 150, align: 'right' });
-    doc.font('Helvetica').fontSize(9).fillColor('#A8C4E8').text(d.timestamp, W - 200, 40, { width: 150, align: 'right' });
+    const NAVY  = '#0A1F5C';
+    const DARK  = '#09152A';
+    const GRAY  = '#667080';
+    const LTEXT = '#8896AA';
+    const LINE  = '#CDD5E0';
 
-    doc.y = 92;
+    let y = 0;
 
-    function sec(title) {
-      if (doc.y > doc.page.height - 150) doc.addPage();
-      doc.moveDown(0.5);
-      doc.fillColor(navy).font('Helvetica-Bold').fontSize(8).text(title.toUpperCase(), 50, doc.y, { characterSpacing: 0.8 });
-      doc.moveDown(0.15);
-      doc.moveTo(50, doc.y).lineTo(W - 50, doc.y).strokeColor(light).lineWidth(0.5).stroke();
-      doc.moveDown(0.5);
+    function checkPage(needed) {
+      if (y + (needed || 80) > PH - 30) { doc.addPage(); y = 28; }
     }
 
-    function row(label, value) {
-      const y0 = doc.y;
-      doc.fillColor(gray).font('Helvetica').fontSize(9).text(label, 50, y0, { width: 145, lineBreak: false });
-      doc.fillColor(dark).font('Helvetica').fontSize(9).text(value || '—', 200, y0, { width: W - 255 });
-      if (doc.y < y0 + 13) doc.y = y0 + 13;
+    function sectionHeader(title) {
+      checkPage(60);
+      doc.rect(ML, y, CW, 16).fill(NAVY);
+      doc.fillColor('#fff').font('Helvetica-Bold').fontSize(7.5)
+         .text(title, ML + 8, y + 4.5, { lineBreak: false, characterSpacing: 0.8 });
+      y += 22;
     }
 
-    const fmtDe = iso => { if (!iso) return '—'; const [y,m,d2] = iso.split('-'); return `${d2}.${m}.${y}`; };
+    // Single full-width labeled field
+    function f1(label, value) {
+      doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text(label + ':', ML, y, { lineBreak: false });
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text(String(value || '—'), ML, y + 10, { lineBreak: false, width: CW - 2 });
+      doc.moveTo(ML, y + 22).lineTo(ML + CW - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      y += 28;
+    }
 
-    sec('Fahrer & Fahrzeug');
-    row('Name',         d.fahrer_name);
-    row('Telefon',      d.fahrer_telefon);
-    row('E-Mail',       d.fahrer_email);
-    row('Unternehmen',  d.firma);
-    row('Kennzeichen',  d.kennzeichen);
-    if (d.fahrzeugtyp) row('Fahrzeugtyp', d.fahrzeugtyp);
+    // Two-column labeled fields
+    function f2(l1, v1, l2, v2) {
+      const w = (CW - 8) / 2;
+      const x2 = ML + w + 8;
+      doc.fillColor(LTEXT).font('Helvetica').fontSize(7);
+      doc.text(l1 + ':', ML, y, { lineBreak: false });
+      doc.text(l2 + ':', x2, y, { lineBreak: false });
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5);
+      doc.text(String(v1 || '—'), ML, y + 10, { lineBreak: false, width: w - 2 });
+      doc.text(String(v2 || '—'), x2, y + 10, { lineBreak: false, width: w - 2 });
+      doc.moveTo(ML, y + 22).lineTo(ML + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      doc.moveTo(x2, y + 22).lineTo(x2 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      y += 28;
+    }
 
-    sec('Schadensdetails');
-    row('Datum', fmtDe(d.unfall_datum) + (d.unfall_uhrzeit ? ', ' + d.unfall_uhrzeit + ' Uhr' : ''));
-    row('Unfallort',    d.unfall_ort);
-    row('Fahrbereit',   d.fahrbereit === 'ja' ? 'Ja' : 'Nein');
-    row('Unfallgegner', d.unfallgegner === 'ja' ? 'Ja' : 'Nein');
-    row('Beschreibung', d.beschreibung);
+    // Three-column labeled fields
+    function f3(l1, v1, l2, v2, l3, v3) {
+      const w = (CW - 16) / 3;
+      const x2 = ML + w + 8;
+      const x3 = x2 + w + 8;
+      doc.fillColor(LTEXT).font('Helvetica').fontSize(7);
+      doc.text(l1 + ':', ML, y, { lineBreak: false });
+      doc.text(l2 + ':', x2, y, { lineBreak: false });
+      doc.text(l3 + ':', x3, y, { lineBreak: false });
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5);
+      doc.text(String(v1 || '—'), ML, y + 10, { lineBreak: false, width: w - 2 });
+      doc.text(String(v2 || '—'), x2, y + 10, { lineBreak: false, width: w - 2 });
+      doc.text(String(v3 || '—'), x3, y + 10, { lineBreak: false, width: w - 2 });
+      doc.moveTo(ML, y + 22).lineTo(ML + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      doc.moveTo(x2, y + 22).lineTo(x2 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      doc.moveTo(x3, y + 22).lineTo(x3 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
+      y += 28;
+    }
+
+    // Checkbox row: Label: [x] Ja  [ ] Nein
+    function checkRow(label, isJa) {
+      const sz = 7;
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text(label + ':', ML, y + 1, { lineBreak: false, width: 160 });
+      let cx = ML + 168;
+      doc.rect(cx, y, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (isJa)  { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text('Ja', cx + 10, y + 1, { lineBreak: false });
+      cx = ML + 196;
+      doc.rect(cx, y, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (!isJa) { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text('Nein', cx + 10, y + 1, { lineBreak: false });
+      y += 16;
+    }
+
+    const fmtDate = iso => { if (!iso) return '—'; const [yr,mo,da] = iso.split('-'); return `${da}.${mo}.${yr}`; };
+
+    // ── HEADER ────────────────────────────────────────────────────────────
+    doc.rect(0, 0, PW, 54).fill('#FFFFFF');
+    doc.rect(0, 54, PW, 2).fill(NAVY);
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(14).text('IMD', ML, 11, { lineBreak: false });
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(6).text('FLEET SERVICES', ML, 27, { lineBreak: false, characterSpacing: 1.8 });
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(22)
+       .text('SCHADENMELDUNG', 0, 13, { align: 'right', width: PW - MR, lineBreak: false });
+    y = 64;
+    doc.fillColor(LTEXT).font('Helvetica').fontSize(7.5)
+       .text(`Fall-Nr.: ${d.fall_nr}   ·   ${new Date().toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' })}`, ML, y, { lineBreak: false });
+    y += 16;
+
+    // ── FAHRERDATEN ───────────────────────────────────────────────────────
+    sectionHeader('FAHRERDATEN');
+    f3('Kennzeichen', d.kennzeichen, 'Unfalldatum', fmtDate(d.unfall_datum), 'Uhrzeit', d.unfall_uhrzeit ? d.unfall_uhrzeit + ' Uhr' : '—');
+    f2('Fahrername', d.fahrer_name, 'Telefon für Rückfragen', d.fahrer_telefon);
+    f2('E-Mail', d.fahrer_email, 'Unternehmen / Firma', d.firma);
+    if (d.fahrzeugtyp) f2('Fahrzeugtyp / Modell', d.fahrzeugtyp, 'Kilometerstand', d.km || '—');
+
+    // ── UNFALLORT UND SCHADEN ─────────────────────────────────────────────
+    sectionHeader('UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG');
+    f1('Unfallort mit PLZ und Ort', d.unfall_ort);
+    if (d.schadenart) f1('Art des Schadens', d.schadenart);
+    checkRow('Fahrzeug fahrbereit', d.fahrbereit === 'ja');
+    checkRow('Personenschaden', d.personenschaden === 'ja');
+    y += 4;
+
+    // ── UNFALLHERGANG ─────────────────────────────────────────────────────
+    sectionHeader('UNFALLHERGANG');
+    doc.fillColor(LTEXT).font('Helvetica').fontSize(7)
+       .text('Schadenhergang / Unfallbeschreibung:', ML, y, { lineBreak: false });
+    y += 10;
+    doc.fillColor(DARK).font('Helvetica').fontSize(8.5)
+       .text(String(d.beschreibung || '—'), ML, y, { width: CW, lineBreak: true });
+    y = doc.y + 8;
+
+    // ── POLIZEI ───────────────────────────────────────────────────────────
+    sectionHeader('POLIZEI / BEHÖRDEN');
+    checkRow('Polizeilich aufgenommen', d.polizei_aufgenommen === 'ja');
+    if (d.polizei_aktenzeichen) f1('Tagebuch-Nr. / Aktenzeichen', d.polizei_aktenzeichen);
+    y += 4;
+
+    // ── UNFALLGEGNER ──────────────────────────────────────────────────────
+    if (d.unfallgegner === 'ja') {
+      sectionHeader('UNFALLGEGNER');
+      if (d.opponent_holder) f1('Fahrzeughalter', d.opponent_holder);
+      if (d.opponent_lastname || d.opponent_firstname)
+        f2('Fahrername (Gegner)', d.opponent_lastname, 'Vorname (Gegner)', d.opponent_firstname);
+      if (d.opponent_address) f1('Adresse', d.opponent_address);
+      if (d.opponent_plate || d.opponent_type)
+        f2('Kennzeichen (Gegner)', d.opponent_plate, 'Fahrzeugtyp (Gegner)', d.opponent_type);
+      if (d.opponent_phone || d.opponent_mobile)
+        f2('Telefon tagsüber', d.opponent_phone, 'Mobilfunknummer', d.opponent_mobile);
+      if (d.opponent_insurance || d.opponent_insurance_nr)
+        f2('Versichert bei', d.opponent_insurance, 'Versicherungsschein-Nr.', d.opponent_insurance_nr);
+      if (d.opponent_damage) f1('Schaden am gegnerischen Fahrzeug', d.opponent_damage);
+    }
+
+    // ── FOTODOKUMENTATION ─────────────────────────────────────────────────
+    sectionHeader('FOTODOKUMENTATION');
+    const photos = Array.isArray(d.photoLabels) ? d.photoLabels : [];
+    const hasPhoto = key => photos.some(p => p && p.toLowerCase().includes(key.toLowerCase()));
+    const photoItems = [
+      { label: 'Kennzeichen',              key: 'Kennzeichen' },
+      { label: 'Gesamtansicht',            key: 'Gesamtansicht' },
+      { label: 'Schaden Detail',           key: 'Schaden' },
+      { label: 'Unfallstelle',             key: 'Unfallstelle' },
+      { label: 'Unfallgegner / geg. Fz.', key: 'Unfallgegner' },
+      { label: 'Dokumente / Polizei',      key: 'Dokumente' },
+    ];
+    const cbSz = 7, colW = CW / 3;
+    photoItems.forEach((item, i) => {
+      const col = i % 3;
+      if (col === 0 && i > 0) y += 16;
+      const cx = ML + col * colW;
+      const checked = hasPhoto(item.key);
+      doc.rect(cx, y, cbSz, cbSz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (checked) { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(checked ? DARK : LTEXT).font('Helvetica').fontSize(8)
+         .text(item.label, cx + 10, y + 0.5, { lineBreak: false, width: colW - 14 });
+    });
+    y += 20;
 
     if (d.werkstatt_name) {
-      sec('Gewünschte Werkstatt (Wunsch des Fahrers)');
-      row('Name',   d.werkstatt_name);
-      if (d.werkstatt_email) row('E-Mail', d.werkstatt_email);
+      checkPage(60);
+      sectionHeader('GEWÜNSCHTE WERKSTATT (WUNSCH DES FAHRERS)');
+      f2('Werkstatt', d.werkstatt_name, 'E-Mail Werkstatt', d.werkstatt_email || '—');
     }
 
-    sec('Unterschrift des Fahrers');
-    doc.fillColor(gray).font('Helvetica').fontSize(8.5)
-       .text('Ich bestätige die Richtigkeit der obigen Angaben. Eine Reparaturfreigabe darf ausschließlich durch IMD Fleet Services erfolgen.', 50, doc.y, { width: W - 100 });
-    doc.moveDown(0.8);
+    // ── VERSAND / UNTERSCHRIFT ────────────────────────────────────────────
+    checkPage(130);
+    sectionHeader('VERSAND / UNTERSCHRIFT');
+    const sigColW = Math.floor(CW * 0.52) - 4;
+    const sigX    = ML + sigColW + 8;
+    const sigW    = CW - sigColW - 8;
+    const sigTopY = y;
+
+    doc.fillColor(GRAY).font('Helvetica').fontSize(7.5)
+       .text(
+         'Ich bestätige die Richtigkeit und Vollständigkeit meiner Angaben. Die Datenverarbeitung erfolgt ausschließlich durch IMD Fleet Services. Eine Reparaturfreigabe darf ausschließlich durch IMD Fleet Services erfolgen. Datenschutz gemäß DSGVO/DSG.',
+         ML, y, { width: sigColW - 4, lineBreak: true }
+       );
 
     if (d.signatureBase64 && d.signatureBase64.startsWith('data:image/png;base64,')) {
       try {
         const sigBuf = Buffer.from(d.signatureBase64.slice(22), 'base64');
-        const sigY = doc.y;
-        doc.image(sigBuf, 50, sigY, { width: 220, height: 80 });
-        doc.y = sigY + 90;
+        doc.image(sigBuf, sigX, sigTopY, { width: sigW, height: 55 });
       } catch (_) { /* skip */ }
     }
 
-    doc.moveTo(50, doc.y).lineTo(270, doc.y).strokeColor(dark).lineWidth(0.5).stroke();
-    doc.moveDown(0.3);
-    doc.fillColor(gray).font('Helvetica').fontSize(8.5)
-       .text(`${d.fahrer_name}  ·  ${new Date().toLocaleDateString('de-DE')}`, 50, doc.y);
+    y = sigTopY + 64;
+    const dateStr = new Date().toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' });
+    doc.moveTo(sigX, y).lineTo(sigX + 65, y).strokeColor(DARK).lineWidth(0.5).stroke();
+    doc.moveTo(sigX + 75, y).lineTo(sigX + sigW - 2, y).strokeColor(DARK).lineWidth(0.5).stroke();
+    doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text('Datum', sigX, y + 3, { lineBreak: false });
+    doc.fillColor(DARK).font('Helvetica').fontSize(8).text(dateStr, sigX + 30, y + 3, { lineBreak: false });
+    doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text('Unterschrift Fahrer', sigX + 75, y + 3, { lineBreak: false });
+    y += 20;
 
-    // Footer
-    const footY = doc.page.height - 38;
-    doc.moveTo(50, footY - 8).lineTo(W - 50, footY - 8).strokeColor(light).lineWidth(0.5).stroke();
-    doc.fillColor('#9AA8BF').font('Helvetica').fontSize(7.5)
-       .text('IMD Fleet Services  ·  imdfleet.de  ·  Automatisch erstellt', 50, footY - 2, { align: 'center', width: W - 100 });
+    // ── FOOTER ────────────────────────────────────────────────────────────
+    const footY = PH - 20;
+    doc.moveTo(ML, footY - 5).lineTo(PW - MR, footY - 5).strokeColor(LINE).lineWidth(0.4).stroke();
+    doc.fillColor(LTEXT).font('Helvetica').fontSize(6.5)
+       .text('IMD intern:   Eingang  |  Prüfung  |  Werkstattzuweisung  |  Freigabe  |  Versicherung', 0, footY, { align: 'center', width: PW, lineBreak: false });
 
     doc.end();
   });
@@ -560,6 +693,25 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     beschreibung = ''
   } = req.body;
 
+  const personenschaden      = (req.body.personenschaden      || 'nein').trim();
+  const polizei_aufgenommen  = (req.body.polizei_aufgenommen  || polizei_gerufen || 'nein').trim();
+  const polizei_aktenzeichen = (req.body.polizei_aktenzeichen || '').trim();
+  const schadenart           = (req.body.schadenart           || '').trim();
+  const km                   = (req.body.km                   || '').trim();
+  const opponent_holder      = (req.body.opponent_holder      || '').trim();
+  const opponent_address     = (req.body.opponent_address     || '').trim();
+  const opponent_lastname    = (req.body.opponent_lastname    || '').trim();
+  const opponent_firstname   = (req.body.opponent_firstname   || '').trim();
+  const opponent_plate       = (req.body.opponent_plate       || '').trim();
+  const opponent_type        = (req.body.opponent_type        || '').trim();
+  const opponent_phone       = (req.body.opponent_phone       || '').trim();
+  const opponent_mobile      = (req.body.opponent_mobile      || '').trim();
+  const opponent_insurance   = (req.body.opponent_insurance   || '').trim();
+  const opponent_insurance_nr= (req.body.opponent_insurance_nr|| '').trim();
+  const opponent_damage      = (req.body.opponent_damage      || '').trim();
+  let photoLabels = [];
+  try { photoLabels = JSON.parse(req.body.photo_labels || '[]'); } catch(_) {}
+
   // Validate required fields
   if (!fahrer_name || !fahrer_telefon || !fahrer_email || !kennzeichen || !beschreibung) {
     return res.json({ success: false, error: 'Pflichtfelder fehlen' });
@@ -638,11 +790,24 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   <table>
     <tr><td class="lbl">Datum</td><td>${unfall_datum}${unfall_uhrzeit ? ' · ' + unfall_uhrzeit : ''}</td></tr>
     <tr><td class="lbl">Unfallort</td><td>${unfall_ort || '—'}</td></tr>
-    <tr><td class="lbl">Polizei gerufen</td><td>${polizei_gerufen === 'ja' ? 'Ja' : 'Nein'}</td></tr>
+    <tr><td class="lbl">Polizei aufgenommen</td><td>${polizei_aufgenommen === 'ja' ? 'Ja' : 'Nein'}${polizei_aktenzeichen ? ' — ' + polizei_aktenzeichen : ''}</td></tr>
+    <tr><td class="lbl">Personenschaden</td><td>${personenschaden === 'ja' ? '<span style="color:#991b1b;font-weight:700">Ja</span>' : 'Nein'}</td></tr>
     <tr><td class="lbl">Unfallgegner</td><td>${unfallgegner === 'ja' ? 'Ja' : 'Nein'}</td></tr>
     <tr><td class="lbl">Beschreibung</td><td>${beschreibung}</td></tr>
   </table>
-  <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang</div>
+  ${unfallgegner === 'ja' ? `
+  <div class="section">Unfallgegner</div>
+  <table>
+    ${opponent_holder     ? `<tr><td class="lbl">Fahrzeughalter</td><td>${opponent_holder}</td></tr>` : ''}
+    ${(opponent_lastname||opponent_firstname) ? `<tr><td class="lbl">Fahrername</td><td>${opponent_firstname} ${opponent_lastname}</td></tr>` : ''}
+    ${opponent_address    ? `<tr><td class="lbl">Adresse</td><td>${opponent_address}</td></tr>` : ''}
+    ${opponent_plate      ? `<tr><td class="lbl">Kennzeichen</td><td>${opponent_plate}</td></tr>` : ''}
+    ${opponent_type       ? `<tr><td class="lbl">Fahrzeugtyp</td><td>${opponent_type}</td></tr>` : ''}
+    ${opponent_insurance  ? `<tr><td class="lbl">Versichert bei</td><td>${opponent_insurance}</td></tr>` : ''}
+    ${opponent_insurance_nr ? `<tr><td class="lbl">Versicherungsschein-Nr.</td><td>${opponent_insurance_nr}</td></tr>` : ''}
+    ${opponent_damage     ? `<tr><td class="lbl">Schaden Gegner</td><td>${opponent_damage}</td></tr>` : ''}
+  </table>` : ''}
+  <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang · PDF beigefügt</div>
 </div></body></html>`;
 
     const werkstatt_name   = (req.body.werkstatt_name  || '').trim();
@@ -653,10 +818,16 @@ app.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     let pdfBuffer = null;
     try {
       pdfBuffer = await generateSchadenPDF({
-        fall_nr, timestamp, fahrer_name, fahrer_telefon, fahrer_email,
-        firma, kennzeichen, fahrzeugtyp, unfall_datum, unfall_uhrzeit,
-        unfall_ort, fahrbereit, unfallgegner, beschreibung,
-        werkstatt_name, werkstatt_email, signatureBase64,
+        fall_nr, timestamp,
+        fahrer_name, fahrer_telefon, fahrer_email, firma,
+        kennzeichen, fahrzeugtyp, km,
+        unfall_datum, unfall_uhrzeit, unfall_ort, schadenart,
+        fahrbereit, personenschaden, unfallgegner,
+        beschreibung, polizei_aufgenommen, polizei_aktenzeichen,
+        opponent_holder, opponent_address, opponent_lastname, opponent_firstname,
+        opponent_plate, opponent_type, opponent_phone, opponent_mobile,
+        opponent_insurance, opponent_insurance_nr, opponent_damage,
+        werkstatt_name, werkstatt_email, photoLabels, signatureBase64,
       });
     } catch (pdfErr) {
       console.error(`[${timestamp}] ✗ PDF error:`, pdfErr.message);

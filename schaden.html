@@ -817,6 +817,10 @@ function inputBlock(opts) {
 function updateField(name, value) {
   state.formData[name] = value;
 }
+function updateAndRender(name, val) {
+  state.formData[name] = val;
+  renderFormOnly();
+}
 
 function setStep(n) {
   if (n < 1 || n > 6) return;
@@ -845,6 +849,7 @@ function validateStep(n) {
     if (!fd.damageLocation?.trim()) return 'Bitte geben Sie den Schadenort an.';
     if (!fd.description?.trim() || fd.description.trim().length < 10)
       return 'Bitte beschreiben Sie den Schaden (mindestens 10 Zeichen).';
+    if (!fd.policePresent) return 'Bitte angeben ob die Polizei aufgenommen hat.';
   }
   if (n === 3) {
     if (Object.keys(state.uploadFiles).length === 0)
@@ -915,29 +920,37 @@ async function submitClaim() {
   fd.append('firma',          (fd_data.company      || '').trim());
   fd.append('kennzeichen',    (fd_data.plate        || '').trim().toUpperCase());
   fd.append('fahrzeugtyp',    (fd_data.model        || '').trim());
+  fd.append('km',             (fd_data.km           || '').trim());
   fd.append('baujahr',        '');
-  fd.append('unfall_datum',   fd_data.damageDate   || '');
-  fd.append('unfall_uhrzeit', fd_data.damageTime   || '');
+  fd.append('unfall_datum',   fd_data.damageDate    || '');
+  fd.append('unfall_uhrzeit', fd_data.damageTime    || '');
   fd.append('unfall_ort',     (fd_data.damageLocation || '').trim());
-  fd.append('fahrbereit',     fd_data.driveable === 'Ja' ? 'ja' : 'nein');
-  fd.append('unfallgegner',   fd_data.opponent   === 'Ja' ? 'ja' : 'nein');
-  fd.append('polizei_gerufen', fd_data.policeRef?.trim() ? 'ja' : 'nein');
+  fd.append('schadenart',     (fd_data.damageType   || '').trim());
+  fd.append('fahrbereit',     fd_data.driveable     === 'Ja' ? 'ja' : 'nein');
+  fd.append('personenschaden',fd_data.personDamage  === 'Ja' ? 'ja' : 'nein');
+  fd.append('unfallgegner',   fd_data.opponent      === 'Ja' ? 'ja' : 'nein');
+  fd.append('polizei_gerufen',    fd_data.policePresent === 'Ja' ? 'ja' : 'nein');
+  fd.append('polizei_aufgenommen',fd_data.policePresent === 'Ja' ? 'ja' : 'nein');
+  fd.append('polizei_aktenzeichen', (fd_data.policeRef || '').trim());
+  fd.append('opponent_holder',      (fd_data.opponentHolder      || '').trim());
+  fd.append('opponent_address',     (fd_data.opponentAddress     || '').trim());
+  fd.append('opponent_lastname',    (fd_data.opponentLastName    || '').trim());
+  fd.append('opponent_firstname',   (fd_data.opponentFirstName   || '').trim());
+  fd.append('opponent_plate',       (fd_data.opponentPlate       || '').trim());
+  fd.append('opponent_type',        (fd_data.opponentType        || '').trim());
+  fd.append('opponent_phone',       (fd_data.opponentPhone       || '').trim());
+  fd.append('opponent_mobile',      (fd_data.opponentMobile      || '').trim());
+  fd.append('opponent_insurance',   (fd_data.opponentInsurance   || '').trim());
+  fd.append('opponent_insurance_nr',(fd_data.opponentInsuranceNr || '').trim());
+  fd.append('opponent_damage',      (fd_data.opponentDamage      || '').trim());
+  fd.append('photo_labels', JSON.stringify(Object.keys(state.uploadFiles)));
 
   const descParts = [];
-  if (fd_data.damageType) descParts.push('Schadenart: ' + fd_data.damageType);
   if (fd_data.description?.trim()) descParts.push(fd_data.description.trim());
-  if (fd_data.vin?.trim())  descParts.push('FIN: ' + fd_data.vin.trim());
-  if (fd_data.km?.trim())   descParts.push('Kilometerstand: ' + fd_data.km.trim());
-  if (fd_data.opponent === 'Ja') {
-    if (fd_data.opponentPlate?.trim())     descParts.push('Gegner-Kennzeichen: ' + fd_data.opponentPlate.trim());
-    if (fd_data.opponentInsurance?.trim()) descParts.push('Gegner-Versicherung: ' + fd_data.opponentInsurance.trim());
-  }
-  if (fd_data.policeRef?.trim()) descParts.push('Polizei-Aktenzeichen: ' + fd_data.policeRef.trim());
+  if (fd_data.vin?.trim()) descParts.push('FIN: ' + fd_data.vin.trim());
   if (state.selectedWorkshop) {
-    descParts.push(
-      'Gewünschte Werkstatt: ' + state.selectedWorkshop.name +
-      ' (' + state.selectedWorkshop.plz + ' ' + state.selectedWorkshop.city + ', ' + state.selectedWorkshop.email + ')'
-    );
+    descParts.push('Gewünschte Werkstatt: ' + state.selectedWorkshop.name +
+      ' (' + state.selectedWorkshop.plz + ' ' + state.selectedWorkshop.city + ')');
   }
   fd.append('beschreibung', descParts.join('\n\n') || 'Keine weitere Beschreibung');
 
@@ -1012,22 +1025,41 @@ function renderStep1() {
 }
 
 function renderStep2() {
+  const fd = state.formData;
+  const hasOpponent = fd.opponent === 'Ja';
+  const hasPolice   = fd.policePresent === 'Ja';
+
+  const opponentFields = hasOpponent ? (
+    field({ label:'Fahrzeughalter',               name:'opponentHolder',      placeholder:'Name des Fahrzeughalters', full:true }) +
+    field({ label:'Adresse (Unfallgegner)',        name:'opponentAddress',     placeholder:'Straße, PLZ, Ort', full:true }) +
+    field({ label:'Fahrername (Gegner)',           name:'opponentLastName',    placeholder:'Nachname' }) +
+    field({ label:'Vorname (Gegner)',              name:'opponentFirstName',   placeholder:'Vorname' }) +
+    field({ label:'Kennzeichen (Gegner)',          name:'opponentPlate',       placeholder:'B-XY 123' }) +
+    field({ label:'Fahrzeugtyp (Gegner)',          name:'opponentType',        placeholder:'z.B. VW Golf' }) +
+    field({ label:'Telefon tagsüber',             name:'opponentPhone',       placeholder:'+49…', type:'tel' }) +
+    field({ label:'Mobilfunknummer',              name:'opponentMobile',      placeholder:'+49…', type:'tel' }) +
+    field({ label:'Versichert bei',               name:'opponentInsurance',   placeholder:'Versicherungsname' }) +
+    field({ label:'Versicherungsschein-Nr.',       name:'opponentInsuranceNr', placeholder:'z.B. 1234567' }) +
+    textareaField({ label:'Schaden am gegnerischen Fahrzeug', name:'opponentDamage', placeholder:'z.B. Frontschaden, Heckschaden o.ä.', full:true })
+  ) : '';
+
   return `
     ${inputBlock({ iconName:'i-alert', title:'Schadendaten', subtitle:'Wann, wo und wie ist der Schaden entstanden?',
       content:
-        field({ label:'Schadendatum', name:'damageDate',     type:'date', required:true }) +
-        field({ label:'Uhrzeit',      name:'damageTime',     type:'time' }) +
-        field({ label:'Schadenort',   name:'damageLocation', placeholder:'Straße, PLZ, Ort', full:true, required:true }) +
-        selectField({ label:'Schadenart', name:'damageType', options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
-        selectField({ label:'Fahrzeug fahrbereit?', name:'driveable', options:['Ja','Nein','Eingeschränkt'] }) +
-        textareaField({ label:'Schadenhergang', name:'description', placeholder:'Bitte kurz beschreiben…', required:true })
+        field({ label:'Schadendatum', name:'damageDate', type:'date', required:true }) +
+        field({ label:'Uhrzeit',      name:'damageTime', type:'time' }) +
+        field({ label:'Schadenort mit PLZ', name:'damageLocation', placeholder:'Straße, PLZ, Ort', full:true, required:true }) +
+        selectField({ label:'Schadenart',            name:'damageType',   options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
+        selectField({ label:'Fahrzeug fahrbereit?',  name:'driveable',    options:['Ja','Nein','Eingeschränkt'] }) +
+        selectField({ label:'Personenschaden?',      name:'personDamage', options:['Nein','Ja'] }) +
+        textareaField({ label:'Unfallhergang', name:'description', placeholder:'Bitte so ausführlich wie möglich beschreiben…', required:true, full:true })
     })}
-    ${inputBlock({ iconName:'i-user', title:'Unfallgegner & Polizei', subtitle:'Optional — nur ausfüllen falls zutreffend',
+    ${inputBlock({ iconName:'i-user', title:'Polizei & Unfallgegner', subtitle:'Nur ausfüllen falls zutreffend',
       content:
-        selectField({ label:'Unfallgegner vorhanden?', name:'opponent', options:['Nein','Ja'] }) +
-        field({ label:'Kennzeichen Gegner',     name:'opponentPlate',     placeholder:'optional' }) +
-        field({ label:'Versicherung Gegner',    name:'opponentInsurance', placeholder:'optional' }) +
-        field({ label:'Polizei-Aktenzeichen',   name:'policeRef',         placeholder:'optional' })
+        `<label class="full"><span class="field-label">Polizeilich aufgenommen? <span class="req">*</span></span><div class="select-wrap"><select class="field-select" onchange="updateAndRender('policePresent', this.value)"><option value="">Bitte wählen…</option><option value="Nein" ${fd.policePresent==='Nein'?'selected':''}>Nein</option><option value="Ja" ${fd.policePresent==='Ja'?'selected':''}>Ja</option></select></div></label>` +
+        (hasPolice ? field({ label:'Tagebuch-Nr. / Aktenzeichen', name:'policeRef', placeholder:'Tagebuch-Nr. oder Aktenzeichen', full:true }) : '') +
+        `<label class="full"><span class="field-label">Unfallgegner vorhanden?</span><div class="select-wrap"><select class="field-select" onchange="updateAndRender('opponent', this.value)"><option value="">Bitte wählen…</option><option value="Nein" ${fd.opponent==='Nein'?'selected':''}>Nein</option><option value="Ja" ${fd.opponent==='Ja'?'selected':''}>Ja</option></select></div></label>` +
+        opponentFields
     })}
     <div class="alert alert-amber">
       ${icon('i-alert',18)}
