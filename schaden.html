@@ -896,6 +896,8 @@ function _acSelect(id, idx) {
     state.formData.damageStrasse = it.main;
     const el = document.getElementById('ac-input-str');
     if (el) el.value = it.main;
+    if (it.plz) { state.formData.damagePlz = it.plz; const p = document.getElementById('ac-input-plz'); if (p) p.value = it.plz; }
+    if (it.city) { state.formData.damageOrt = it.city; const o = document.getElementById('ac-input-ort'); if (o) o.value = it.city; }
   } else if (id === 'ac-dd-oort') {
     state.formData.opponentOrt = it.main;
     if (it.plz) state.formData.opponentPlz = it.plz;
@@ -907,6 +909,8 @@ function _acSelect(id, idx) {
     state.formData.opponentAddress = it.main;
     const el = document.getElementById('ac-input-ostr');
     if (el) el.value = it.main;
+    if (it.plz) { state.formData.opponentPlz = it.plz; const p = document.getElementById('ac-input-oplz'); if (p) p.value = it.plz; }
+    if (it.city) { state.formData.opponentOrt = it.city; const o = document.getElementById('ac-input-oort'); if (o) o.value = it.city; }
   }
   _acClose(id);
 }
@@ -944,7 +948,7 @@ const _acStr = _debounce(async (val) => {
       .filter(f => f.properties.name && f.properties.type !== 'country' && f.properties.type !== 'state')
       .map(f => {
         const cityName = f.properties.city || f.properties.town || f.properties.village || '';
-        return { main: f.properties.name, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
+        return { main: f.properties.name, plz: f.properties.postcode || '', city: cityName, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
       });
     _acShow('ac-dd-str', items);
   } catch(_) {}
@@ -983,7 +987,7 @@ const _acOStr = _debounce(async (val) => {
       .filter(f => f.properties.name && f.properties.type !== 'country' && f.properties.type !== 'state')
       .map(f => {
         const cityName = f.properties.city || f.properties.town || f.properties.village || '';
-        return { main: f.properties.name, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
+        return { main: f.properties.name, plz: f.properties.postcode || '', city: cityName, sub: [f.properties.postcode, cityName].filter(Boolean).join(' ') };
       });
     _acShow('ac-dd-ostr', items);
   } catch(_) {}
