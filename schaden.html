@@ -501,6 +501,21 @@
   [data-theme="dark"] .workshop-card.selected { background: linear-gradient(180deg, rgba(59,130,196,0.15) 0%, var(--card) 100%); border-color: var(--imd-blue); }
   [data-theme="dark"] .workshop-foot { border-top-color: var(--border); }
 
+  /* Mic button */
+  .mic-btn {
+    display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px;
+    border-radius: 8px; font-size: 11.5px; font-weight: 600; font-family: inherit;
+    border: 1.5px solid var(--border-2); background: var(--card);
+    color: var(--text-mid); cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+  }
+  .mic-btn:hover { border-color: var(--imd-blue); color: var(--imd-blue); }
+  .mic-btn.recording { background: var(--red); border-color: var(--red); color: #fff; animation: mic-pulse 1.1s ease infinite; }
+  @keyframes mic-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.65; } }
+  .field-label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 0; }
+  [data-theme="dark"] .mic-btn { background: #1E2435; border-color: var(--border-2); color: var(--text-soft); }
+  [data-theme="dark"] .mic-btn:hover { border-color: var(--imd-blue); color: var(--imd-blue); }
+  [data-theme="dark"] .mic-btn.recording { background: var(--red); border-color: var(--red); color: #fff; }
+
   /* Autocomplete dropdown */
   .ac-wrap { position: relative; }
   .ac-dropdown {
@@ -583,6 +598,7 @@
     <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.19 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
     <symbol id="i-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="18" y2="22"/><line x1="8" x2="16" y1="22" y2="22"/></symbol>
   </defs>
 </svg>
 
@@ -807,11 +823,15 @@ function selectField(opts) {
 }
 
 function textareaField(opts) {
-  const { label, name, placeholder='', required=false } = opts;
+  const { label, name, placeholder='', required=false, mic=false, full=true } = opts;
   const val = escapeHtml(state.formData[name] || '');
+  const btnId = `mic-btn-${name}`;
+  const labelRow = mic
+    ? `<span class="field-label-row"><span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span><button type="button" class="mic-btn" id="${btnId}" onclick="toggleSpeech('${name}','${btnId}')">${icon('i-mic',14)} Diktieren</button></span>`
+    : `<span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>`;
   return `
-    <label class="full">
-      <span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>
+    <label class="${full ? 'full' : ''}">
+      ${labelRow}
       <textarea class="field-textarea" name="${name}"
                 placeholder="${escapeHtml(placeholder)}"
                 oninput="updateField('${name}', this.value)">${val}</textarea>
@@ -992,6 +1012,48 @@ const _acOStr = _debounce(async (val) => {
     _acShow('ac-dd-ostr', items);
   } catch(_) {}
 }, 280);
+
+let _sr = null, _srActive = false;
+function toggleSpeech(fieldName, btnId) {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    alert('Spracherkennung nicht unterstützt. Bitte Chrome oder Edge verwenden.');
+    return;
+  }
+  if (_srActive) { _sr && _sr.stop(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  _sr = new SR();
+  _sr.lang = 'de-DE';
+  _sr.continuous = true;
+  _sr.interimResults = false;
+  const btn = document.getElementById(btnId);
+  _sr.onstart = () => {
+    _srActive = true;
+    if (btn) { btn.classList.add('recording'); btn.innerHTML = icon('i-mic',14) + ' Aufnahme läuft…'; }
+  };
+  _sr.onresult = (e) => {
+    let t = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) t += e.results[i][0].transcript + ' ';
+    }
+    if (t) {
+      const cur = state.formData[fieldName] || '';
+      state.formData[fieldName] = cur ? cur.trimEnd() + ' ' + t.trim() : t.trim();
+      const ta = document.querySelector(`textarea[name="${fieldName}"]`);
+      if (ta) ta.value = state.formData[fieldName];
+    }
+  };
+  _sr.onerror = (e) => {
+    _srActive = false;
+    if (btn) { btn.classList.remove('recording'); btn.innerHTML = icon('i-mic',14) + ' Diktieren'; }
+    if (e.error === 'not-allowed') alert('Mikrofon-Zugriff verweigert.');
+  };
+  _sr.onend = () => {
+    _srActive = false;
+    if (btn) { btn.classList.remove('recording'); btn.innerHTML = icon('i-mic',14) + ' Diktieren'; }
+  };
+  _sr.start();
+}
+
 function updateAndRender(name, val) {
   state.formData[name] = val;
   renderFormOnly();
@@ -1246,7 +1308,7 @@ function renderStep2() {
         selectField({ label:'Schadenart',            name:'damageType',   options:['Parkschaden','Unfall mit Beteiligung','Glasschaden','Wildschaden','Vandalismus','Diebstahl','Sonstige'] }) +
         selectField({ label:'Fahrzeug fahrbereit?',  name:'driveable',    options:['Ja','Nein','Eingeschränkt'] }) +
         selectField({ label:'Personenschaden?',      name:'personDamage', options:['Nein','Ja'] }) +
-        textareaField({ label:'Unfallhergang', name:'description', placeholder:'Bitte so ausführlich wie möglich beschreiben…', required:true, full:true })
+        textareaField({ label:'Unfallhergang', name:'description', placeholder:'Bitte so ausführlich wie möglich beschreiben…', required:true, full:true, mic:true })
     })}
     ${inputBlock({ iconName:'i-user', title:'Polizei & Unfallgegner', subtitle:'Nur ausfüllen falls zutreffend',
       content:
