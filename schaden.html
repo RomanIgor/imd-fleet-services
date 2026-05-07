@@ -186,6 +186,7 @@
   .field-input:focus,.field-select:focus,.field-textarea:focus { border-color: var(--imd-blue); box-shadow: 0 0 0 3px rgba(59,130,196,0.15); }
   .field-textarea { resize: vertical; min-height: 80px; font-family: inherit; }
   .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23555E6E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  .select-wrap { position: relative; border-radius: 10px; }
 
   /* ALERT */
   .alert { border-radius: 10px; padding: 14px; display: flex; gap: 12px; font-size: 13px; line-height: 1.55; }
@@ -480,10 +481,10 @@
   [data-theme="dark"] .form-card,
   [data-theme="dark"] .info-card { background: var(--card); border-color: var(--border); }
   [data-theme="dark"] .field-input,
-  [data-theme="dark"] .field-select,
   [data-theme="dark"] .field-textarea { background: #1E2435; border-color: var(--border-2); color: var(--text); }
+  [data-theme="dark"] .field-select { background-color: transparent !important; border-color: var(--border-2); color: var(--text); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A95AB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  [data-theme="dark"] .select-wrap { background: #1E2435; }
   [data-theme="dark"] .field-input::placeholder { color: var(--text-soft); }
-  [data-theme="dark"] .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A95AB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
   [data-theme="dark"] .alert-blue { background: rgba(59,130,196,0.12); color: var(--text); border-color: rgba(59,130,196,0.35); }
   [data-theme="dark"] .input-block { background: #12161F; border-color: var(--border); }
   [data-theme="dark"] .stepbar { background: #12161F; border-color: var(--border); }
@@ -767,10 +768,12 @@ function selectField(opts) {
   return `
     <label class="${full ? 'full' : ''}">
       <span class="field-label">${escapeHtml(label)}${required ? '<span class="req">*</span>' : ''}</span>
-      <select class="field-select" name="${name}" onchange="updateField('${name}', this.value)">
-        <option value="">Bitte wählen…</option>
-        ${options.map(o => `<option value="${escapeHtml(o)}" ${val===o?'selected':''}>${escapeHtml(o)}</option>`).join('')}
-      </select>
+      <div class="select-wrap">
+        <select class="field-select" name="${name}" onchange="updateField('${name}', this.value)">
+          <option value="">Bitte wählen…</option>
+          ${options.map(o => `<option value="${escapeHtml(o)}" ${val===o?'selected':''}>${escapeHtml(o)}</option>`).join('')}
+        </select>
+      </div>
     </label>`;
 }
 
