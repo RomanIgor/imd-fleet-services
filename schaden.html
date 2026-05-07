@@ -174,7 +174,7 @@
   @media (min-width: 600px) { .input-grid { grid-template-columns: 1fr 1fr; } }
   .input-grid .full { grid-column: 1 / -1; }
   .field-label { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--text-mid); margin-bottom: 6px; }
-  .field-label .req { color: var(--red); margin-left: 2px; }
+  .field-label .req, .input-block-title .req { color: var(--red); margin-left: 2px; }
   .field-input, .field-select, .field-textarea {
     width: 100%; padding: 12px 14px; background: white; border: 1px solid var(--border-2);
     border-radius: 10px; font-size: 15px; color: var(--text); outline: none; transition: all 0.15s;
@@ -184,7 +184,7 @@
   .field-input::placeholder { color: var(--text-soft); font-weight: 400; }
   .field-input:focus,.field-select:focus,.field-textarea:focus { border-color: var(--imd-blue); box-shadow: 0 0 0 3px rgba(59,130,196,0.15); }
   .field-textarea { resize: vertical; min-height: 80px; font-family: inherit; }
-  .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23555E6E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23555E6E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; color-scheme: light; }
 
   /* ALERT */
   .alert { border-radius: 10px; padding: 14px; display: flex; gap: 12px; font-size: 13px; line-height: 1.55; }
@@ -482,7 +482,8 @@
   [data-theme="dark"] .field-select,
   [data-theme="dark"] .field-textarea { background: #1E2435; border-color: var(--border-2); color: var(--text); }
   [data-theme="dark"] .field-input::placeholder { color: var(--text-soft); }
-  [data-theme="dark"] .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A95AB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  [data-theme="dark"] .field-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A95AB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-color: #1E2435 !important; color-scheme: light; }
+  [data-theme="dark"] .alert-blue { background: rgba(59,130,196,0.12); color: var(--text); border-color: rgba(59,130,196,0.35); }
   [data-theme="dark"] .input-block { background: #12161F; border-color: var(--border); }
   [data-theme="dark"] .stepbar { background: #12161F; border-color: var(--border); }
   [data-theme="dark"] .step { background: var(--card); border-color: var(--border); color: var(--text); }
@@ -1158,7 +1159,7 @@ function renderStep5() {
       <div class="input-block-head">
         <div class="input-block-icon">${icon('i-file',16)}</div>
         <div class="input-block-text">
-          <div class="input-block-title">Unterschrift des Fahrers</div>
+          <div class="input-block-title">Unterschrift des Fahrers <span class="req">*</span></div>
           <div class="input-block-sub">Mit dem Finger oder der Maus unterzeichnen</div>
         </div>
       </div>
