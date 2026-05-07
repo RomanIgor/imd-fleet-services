@@ -23,212 +23,336 @@ function generateSchadenPDF(d) {
 
     const PW = doc.page.width;
     const PH = doc.page.height;
-    const ML = 32, MR = 32;
-    const CW = PW - ML - MR;
+    const L = 20;
+    const CW = PW - L - 20;
 
-    const NAVY  = '#0A1F5C';
-    const DARK  = '#09152A';
-    const GRAY  = '#667080';
-    const LTEXT = '#8896AA';
-    const LINE  = '#CDD5E0';
+    const NAVY  = '#0C2461';
+    const DARK  = '#1A2644';
+    const GRAY  = '#546E8A';
+    const LINE  = '#B8C5D0';
+    const LGRAY = '#8899AA';
 
     let y = 0;
 
-    function checkPage(needed) {
-      if (y + (needed || 80) > PH - 30) { doc.addPage(); y = 28; }
+    function checkPage(need) {
+      if (y + (need || 50) > PH - 22) { doc.addPage(); y = 22; }
     }
 
-    function sectionHeader(title) {
-      checkPage(60);
-      doc.rect(ML, y, CW, 16).fill(NAVY);
-      doc.fillColor('#fff').font('Helvetica-Bold').fontSize(7.5)
-         .text(title, ML + 8, y + 4.5, { lineBreak: false, characterSpacing: 0.8 });
-      y += 22;
+    // Navy section bar with circle icon
+    function secBar(title) {
+      checkPage(40);
+      doc.rect(L, y, CW, 16).fill(NAVY);
+      doc.circle(L + 10, y + 8, 5.5).strokeColor('rgba(255,255,255,0.55)').lineWidth(0.9).stroke();
+      doc.fillColor('#FFFFFF').font('Helvetica-Bold').fontSize(7.5)
+         .text(title, L + 22, y + 4.5, { lineBreak: false, characterSpacing: 0.4 });
+      y += 20;
     }
 
-    // Single full-width labeled field
-    function f1(label, value) {
-      doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text(label + ':', ML, y, { lineBreak: false });
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text(String(value || '—'), ML, y + 10, { lineBreak: false, width: CW - 2 });
-      doc.moveTo(ML, y + 22).lineTo(ML + CW - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      y += 28;
+    // Draw labeled field: label (small top) + value (dark) + underline
+    function fld(label, value, x, atY, w, h) {
+      doc.fillColor(GRAY).font('Helvetica').fontSize(6.5)
+         .text(label, x, atY, { lineBreak: false, width: w - 1 });
+      if (value) {
+        doc.fillColor(DARK).font('Helvetica').fontSize(8.5)
+           .text(String(value), x + 1, atY + 8, { lineBreak: false, width: w - 4 });
+      }
+      doc.moveTo(x, atY + h - 2).lineTo(x + w - 1, atY + h - 2)
+         .strokeColor(LINE).lineWidth(0.5).stroke();
     }
 
-    // Two-column labeled fields
-    function f2(l1, v1, l2, v2) {
-      const w = (CW - 8) / 2;
-      const x2 = ML + w + 8;
-      doc.fillColor(LTEXT).font('Helvetica').fontSize(7);
-      doc.text(l1 + ':', ML, y, { lineBreak: false });
-      doc.text(l2 + ':', x2, y, { lineBreak: false });
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5);
-      doc.text(String(v1 || '—'), ML, y + 10, { lineBreak: false, width: w - 2 });
-      doc.text(String(v2 || '—'), x2, y + 10, { lineBreak: false, width: w - 2 });
-      doc.moveTo(ML, y + 22).lineTo(ML + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      doc.moveTo(x2, y + 22).lineTo(x2 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      y += 28;
+    // Row of labeled fields, auto-split remaining width
+    function fRow(items, h = 21) {
+      const gap = 4;
+      const fixed = items.reduce((s, it) => s + (it.w || 0), 0);
+      const flex  = items.filter(it => !it.w).length;
+      const fw    = flex ? (CW - fixed - gap * (items.length - 1)) / flex : 0;
+      let x = L;
+      for (let i = 0; i < items.length; i++) {
+        const w = items[i].w || fw;
+        fld(items[i].label, items[i].value || '', x, y, w, h);
+        x += w + (i < items.length - 1 ? gap : 0);
+      }
+      y += h;
     }
 
-    // Three-column labeled fields
-    function f3(l1, v1, l2, v2, l3, v3) {
-      const w = (CW - 16) / 3;
-      const x2 = ML + w + 8;
-      const x3 = x2 + w + 8;
-      doc.fillColor(LTEXT).font('Helvetica').fontSize(7);
-      doc.text(l1 + ':', ML, y, { lineBreak: false });
-      doc.text(l2 + ':', x2, y, { lineBreak: false });
-      doc.text(l3 + ':', x3, y, { lineBreak: false });
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5);
-      doc.text(String(v1 || '—'), ML, y + 10, { lineBreak: false, width: w - 2 });
-      doc.text(String(v2 || '—'), x2, y + 10, { lineBreak: false, width: w - 2 });
-      doc.text(String(v3 || '—'), x3, y + 10, { lineBreak: false, width: w - 2 });
-      doc.moveTo(ML, y + 22).lineTo(ML + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      doc.moveTo(x2, y + 22).lineTo(x2 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      doc.moveTo(x3, y + 22).lineTo(x3 + w - 2, y + 22).strokeColor(LINE).lineWidth(0.4).stroke();
-      y += 28;
-    }
-
-    // Checkbox row: Label: [x] Ja  [ ] Nein
-    function checkRow(label, isJa) {
+    // Single checkbox □ label, returns x after
+    function cb(label, checked, x, atY) {
       const sz = 7;
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text(label + ':', ML, y + 1, { lineBreak: false, width: 160 });
-      let cx = ML + 168;
-      doc.rect(cx, y, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
-      if (isJa)  { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text('Ja', cx + 10, y + 1, { lineBreak: false });
-      cx = ML + 196;
-      doc.rect(cx, y, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
-      if (!isJa) { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
-      doc.fillColor(DARK).font('Helvetica').fontSize(8.5).text('Nein', cx + 10, y + 1, { lineBreak: false });
-      y += 16;
+      doc.rect(x, atY, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (checked) {
+        doc.moveTo(x+1.5,atY+3.5).lineTo(x+3,atY+5.5).lineTo(x+5.5,atY+1)
+           .strokeColor(DARK).lineWidth(1.2).stroke();
+      }
+      doc.fillColor(DARK).font('Helvetica').fontSize(7.5)
+         .text(label, x + sz + 2, atY + 0.5, { lineBreak: false });
+      return x + sz + 2 + doc.widthOfString(label, { font: 'Helvetica', fontSize: 7.5 }) + 5;
     }
 
-    const fmtDate = iso => { if (!iso) return '—'; const [yr,mo,da] = iso.split('-'); return `${da}.${mo}.${yr}`; };
-
-    // ── HEADER ────────────────────────────────────────────────────────────
-    doc.rect(0, 0, PW, 54).fill('#FFFFFF');
-    doc.rect(0, 54, PW, 2).fill(NAVY);
-    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(14).text('IMD', ML, 11, { lineBreak: false });
-    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(6).text('FLEET SERVICES', ML, 27, { lineBreak: false, characterSpacing: 1.8 });
-    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(22)
-       .text('SCHADENMELDUNG', 0, 13, { align: 'right', width: PW - MR, lineBreak: false });
-    y = 64;
-    doc.fillColor(LTEXT).font('Helvetica').fontSize(7.5)
-       .text(`Fall-Nr.: ${d.fall_nr}   ·   ${new Date().toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' })}`, ML, y, { lineBreak: false });
-    y += 16;
-
-    // ── FAHRERDATEN ───────────────────────────────────────────────────────
-    sectionHeader('FAHRERDATEN');
-    f3('Kennzeichen', d.kennzeichen, 'Unfalldatum', fmtDate(d.unfall_datum), 'Uhrzeit', d.unfall_uhrzeit ? d.unfall_uhrzeit + ' Uhr' : '—');
-    f2('Fahrername', d.fahrer_name, 'Telefon für Rückfragen', d.fahrer_telefon);
-    f2('E-Mail', d.fahrer_email, 'Unternehmen / Firma', d.firma);
-    if (d.fahrzeugtyp) f2('Fahrzeugtyp / Modell', d.fahrzeugtyp, 'Kilometerstand', d.km || '—');
-
-    // ── UNFALLORT UND SCHADEN ─────────────────────────────────────────────
-    sectionHeader('UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG');
-    f1('Unfallort mit PLZ und Ort', d.unfall_ort);
-    if (d.schadenart) f1('Art des Schadens', d.schadenart);
-    checkRow('Fahrzeug fahrbereit', d.fahrbereit === 'ja');
-    checkRow('Personenschaden', d.personenschaden === 'ja');
-    y += 4;
-
-    // ── UNFALLHERGANG ─────────────────────────────────────────────────────
-    sectionHeader('UNFALLHERGANG');
-    doc.fillColor(LTEXT).font('Helvetica').fontSize(7)
-       .text('Schadenhergang / Unfallbeschreibung:', ML, y, { lineBreak: false });
-    y += 10;
-    doc.fillColor(DARK).font('Helvetica').fontSize(8.5)
-       .text(String(d.beschreibung || '—'), ML, y, { width: CW, lineBreak: true });
-    y = doc.y + 8;
-
-    // ── POLIZEI ───────────────────────────────────────────────────────────
-    sectionHeader('POLIZEI / BEHÖRDEN');
-    checkRow('Polizeilich aufgenommen', d.polizei_aufgenommen === 'ja');
-    if (d.polizei_aktenzeichen) f1('Tagebuch-Nr. / Aktenzeichen', d.polizei_aktenzeichen);
-    y += 4;
-
-    // ── UNFALLGEGNER ──────────────────────────────────────────────────────
-    if (d.unfallgegner === 'ja') {
-      sectionHeader('UNFALLGEGNER');
-      if (d.opponent_holder) f1('Fahrzeughalter', d.opponent_holder);
-      if (d.opponent_lastname || d.opponent_firstname)
-        f2('Fahrername (Gegner)', d.opponent_lastname, 'Vorname (Gegner)', d.opponent_firstname);
-      if (d.opponent_address) f1('Adresse', d.opponent_address);
-      if (d.opponent_plate || d.opponent_type)
-        f2('Kennzeichen (Gegner)', d.opponent_plate, 'Fahrzeugtyp (Gegner)', d.opponent_type);
-      if (d.opponent_phone || d.opponent_mobile)
-        f2('Telefon tagsüber', d.opponent_phone, 'Mobilfunknummer', d.opponent_mobile);
-      if (d.opponent_insurance || d.opponent_insurance_nr)
-        f2('Versichert bei', d.opponent_insurance, 'Versicherungsschein-Nr.', d.opponent_insurance_nr);
-      if (d.opponent_damage) f1('Schaden am gegnerischen Fahrzeug', d.opponent_damage);
+    // "Label: □ ja  □ nein" inline, returns x after
+    function jn(label, isJa, x, atY, lw) {
+      if (label) {
+        doc.fillColor(DARK).font('Helvetica').fontSize(7.5)
+           .text(label + ':', x, atY + 0.5, { lineBreak: false, width: lw });
+      }
+      const sz = 7;
+      let nx = x + lw + (label ? 3 : 0);
+      doc.rect(nx, atY, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (isJa) { doc.moveTo(nx+1.5,atY+3.5).lineTo(nx+3,atY+5.5).lineTo(nx+5.5,atY+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(DARK).font('Helvetica').fontSize(7.5).text('ja', nx + sz + 2, atY + 0.5, { lineBreak: false });
+      nx += sz + 2 + doc.widthOfString('ja', { font: 'Helvetica', fontSize: 7.5 }) + 4;
+      doc.rect(nx, atY, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (!isJa) { doc.moveTo(nx+1.5,atY+3.5).lineTo(nx+3,atY+5.5).lineTo(nx+5.5,atY+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(DARK).font('Helvetica').fontSize(7.5).text('nein', nx + sz + 2, atY + 0.5, { lineBreak: false });
+      nx += sz + 2 + doc.widthOfString('nein', { font: 'Helvetica', fontSize: 7.5 }) + 4;
+      return nx;
     }
 
-    // ── FOTODOKUMENTATION ─────────────────────────────────────────────────
-    sectionHeader('FOTODOKUMENTATION');
+    const fmtDate = iso => { if (!iso) return ''; const [yr,mo,da] = iso.split('-'); return `${da}.${mo}.${yr}`; };
+
+    // ══ HEADER ═══════════════════════════════════════════════════════════
+    doc.rect(0, 0, PW, 58).fill('#FFFFFF');
+    doc.moveTo(L, 58).lineTo(PW - 20, 58).strokeColor(LINE).lineWidth(0.5).stroke();
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(17).text('IMD', L, 10, { lineBreak: false });
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(6.5).text('FLEET SERVICES', L, 29, { lineBreak: false, characterSpacing: 1.2 });
+    doc.fillColor(NAVY).font('Helvetica-Bold').fontSize(24)
+       .text('SCHADENMELDUNG', 0, 15, { align: 'right', width: PW - 22, lineBreak: false });
+    doc.fillColor(LGRAY).font('Helvetica').fontSize(7.5)
+       .text(`Fall-Nr.: ${d.fall_nr}   ·   ${new Date().toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' })}`,
+             0, 44, { align: 'right', width: PW - 22, lineBreak: false });
+    y = 63;
+
+    // ══ INSTRUCTION BANNER ═══════════════════════════════════════════════
+    doc.rect(L, y, CW, 14).fill(NAVY);
+    doc.fillColor('#FFFFFF').font('Helvetica-Bold').fontSize(8)
+       .text('BITTE AM RECHNER / NOTEBOOK AUSFÜLLEN!', L, y + 3.5, { align: 'center', width: CW, lineBreak: false });
+    y += 18;
+
+    // ══ SCHULDFRAGE ══════════════════════════════════════════════════════
+    doc.fillColor(DARK).font('Helvetica').fontSize(7.5)
+       .text('Die Schuld liegt meines Erachtens bei mir:', L, y + 1, { lineBreak: false });
+    let sx = L + 143;
+    sx = cb('bei mir', false, sx, y);
+    sx = cb('beim Gegner', false, sx, y);
+    cb('unklar', false, sx, y);
+    const ftX = L + CW * 0.57;
+    let ftx = cb('Dienstfahrt', false, ftX, y);
+    ftx = cb('Fahrt Wohnung-Arbeitsstätte', false, ftx, y);
+    cb('Privatfahrt', false, ftx, y);
+    y += 12;
+    doc.moveTo(L, y).lineTo(L + CW, y).strokeColor(LINE).lineWidth(0.4).stroke();
+    y += 5;
+
+    // ══ FAHRERDATEN FIELD ROWS ════════════════════════════════════════════
+    fRow([
+      { label: 'Kennzeichen:',   value: d.kennzeichen },
+      { label: 'Unfalldatum:',  value: fmtDate(d.unfall_datum) },
+      { label: 'Uhrzeit:',      value: d.unfall_uhrzeit },
+    ]);
+    fRow([
+      { label: 'Fahrername:',   value: d.fahrer_name },
+      { label: 'Vorname:',      value: '' },
+      { label: 'Geburtsdatum:', value: '' },
+    ]);
+    fRow([{ label: 'Privatadresse:', value: '' }]);
+
+    // Telefon + Fahrerlaubnis ja/nein (mixed row)
+    {
+      const h = 21, telW = CW * 0.48;
+      fld('Telefon für Rückfragen:', d.fahrer_telefon, L, y, telW, h);
+      const rx = L + telW + 4;
+      doc.fillColor(GRAY).font('Helvetica').fontSize(6.5)
+         .text('Erforderliche Fahrerlaubnis:', rx, y, { lineBreak: false });
+      jn('', false, rx + 102, y + 7, 0);
+      doc.moveTo(rx, y + h - 2).lineTo(L + CW - 1, y + h - 2).strokeColor(LINE).lineWidth(0.5).stroke();
+      y += h;
+    }
+    fRow([
+      { label: 'Ausstellungsdatum Fahrerlaubnis:', value: '' },
+      { label: 'Ausstellende Behörde:',            value: '' },
+    ]);
+    fRow([
+      { label: 'Führerschein-Nr.:',    value: '' },
+      { label: 'Führerscheinklassen:', value: '' },
+    ]);
+
+    // ══ ALKOHOL / DROGEN / BLUTPROBE ═════════════════════════════════════
+    secBar('ALKOHOL / DROGEN / BLUTPROBE');
+    {
+      const h = 18;
+      let ax = L;
+      ax = jn('Alkoholkonsum',  false, ax, y, 62); ax += 3;
+      ax = jn('Drogenkonsum',   false, ax, y, 60); ax += 3;
+      ax = jn('Blutprobe',      false, ax, y, 48); ax += 3;
+      fld('Ergebnis:', '', ax, y, L + CW - ax - 1, h);
+      y += h;
+    }
+    {
+      const h = 18;
+      let ax = L;
+      ax = jn('Wurde eine Blutprobe entnommen?', false, ax, y, 130); ax += 3;
+      fld('Wenn ja, mit welchem Ergebnis:', '', ax, y, L + CW - ax - 1, h);
+      y += h;
+    }
+
+    // ══ UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG ════════════════════════
+    secBar('UNFALLORT UND SCHADEN AM EIGENEN FAHRZEUG');
+    fRow([{ label: 'Unfallort mit PLZ:', value: d.unfall_ort }]);
+    fRow([{ label: 'Schaden am eigenen Fahrzeug (z.B. Frontschaden, Heckschaden o.ä.):', value: d.schadenart || '' }]);
+    {
+      const h = 18;
+      let ax = L;
+      ax = jn('Fahrzeug fahrbereit', d.fahrbereit === 'ja', ax, y, 84); ax += 8;
+      ax = jn('Personenschaden',     d.personenschaden === 'ja', ax, y, 68); ax += 8;
+      fld('Zu besichtigen bei:', '', ax, y, L + CW - ax - 1, h);
+      y += h;
+    }
+
+    // ══ POLIZEI / DIENSTSTELLE / ZEUGEN ══════════════════════════════════
+    secBar('POLIZEI / DIENSTSTELLE / ZEUGEN');
+    {
+      const h = 18;
+      let ax = L;
+      ax = jn('Polizeilich aufgenommen', d.polizei_aufgenommen === 'ja', ax, y, 100); ax += 6;
+      const tabW = (L + CW - ax - 1) * 0.48;
+      fld('Tagebuch-Nr.:', d.polizei_aktenzeichen || '', ax, y, tabW, h);
+      ax += tabW + 4;
+      fld('Dienststelle / Id.:', '', ax, y, L + CW - ax - 1, h);
+      y += h;
+    }
+    fRow([{ label: 'Polizei-Dienststelle mit Adresse und Tel.Nr.:', value: '' }]);
+    fRow([{ label: 'Zeugen mit Adresse:', value: '' }]);
+
+    // ══ UNFALLHERGANG ════════════════════════════════════════════════════
+    secBar('UNFALLHERGANG');
+    doc.fillColor(GRAY).font('Helvetica').fontSize(6.5)
+       .text(
+         'Bitte so ausführlich wie möglich. Sollte der Platz nicht ausreichen, fügen Sie bitte ein weiteres Blatt/Datei hinzu.\n' +
+         'In strittigen Fällen bitte Endstellung der Fahrzeuge skizzieren, nach Möglichkeit Unfall fotografieren.',
+         L, y, { width: CW, lineBreak: true }
+       );
+    y = doc.y + 3;
+    if (d.beschreibung) {
+      doc.fillColor(DARK).font('Helvetica').fontSize(8.5)
+         .text(d.beschreibung, L + 1, y, { width: CW - 2, lineBreak: true });
+      y = doc.y + 2;
+    }
+    const hEnd = y + 52;
+    for (let ly = y + 13; ly < hEnd; ly += 13) {
+      doc.moveTo(L, ly).lineTo(L + CW, ly).strokeColor(LINE).lineWidth(0.3).stroke();
+    }
+    y = hEnd;
+
+    // ══ UNFALLGEGNER ═════════════════════════════════════════════════════
+    secBar('UNFALLGEGNER');
+    fRow([
+      { label: 'Fahrzeughalter:', value: d.opponent_holder || '' },
+      { label: 'Adresse:',        value: d.opponent_address || '' },
+    ]);
+    fRow([
+      { label: 'Fahrername:', value: d.opponent_lastname || '' },
+      { label: 'Vorname:',    value: d.opponent_firstname || '' },
+    ]);
+    fRow([{ label: 'Adresse:', value: '' }]);
+    fRow([
+      { label: 'Telefon tagsüber:',  value: d.opponent_phone || '' },
+      { label: 'Mobilfunknummer:',   value: d.opponent_mobile || '' },
+    ]);
+    fRow([
+      { label: 'Kennzeichen:',  value: d.opponent_plate || '' },
+      { label: 'Fahrzeugtyp:',  value: d.opponent_type || '' },
+    ]);
+    fRow([
+      { label: 'Versichert bei:',          value: d.opponent_insurance || '' },
+      { label: 'Versicherungsschein-Nr.:', value: d.opponent_insurance_nr || '' },
+    ]);
+    fRow([{ label: 'Welcher Schaden (z.B. Frontschaden, Heckschaden o.ä.):', value: d.opponent_damage || '' }]);
+
+    // ══ DOKUMENTE / FOTOS  +  VERSAND / UNTERSCHRIFT ════════════════════
+    checkPage(110);
+    const botY  = y;
+    const leftW = Math.floor(CW * 0.56) - 3;
+    const rW    = CW - leftW - 4;
+    const rX    = L + leftW + 4;
+
+    // Left header
+    doc.rect(L, botY, leftW, 15).fill(NAVY);
+    doc.circle(L + 10, botY + 7.5, 5.5).strokeColor('rgba(255,255,255,0.55)').lineWidth(0.9).stroke();
+    doc.fillColor('#FFFFFF').font('Helvetica-Bold').fontSize(7)
+       .text('DOKUMENTE / FOTOS UND DATENSCHUTZ', L + 22, botY + 4.5, { lineBreak: false });
+    // Right header
+    doc.rect(rX, botY, rW, 15).fill(NAVY);
+    doc.circle(rX + 10, botY + 7.5, 5.5).strokeColor('rgba(255,255,255,0.55)').lineWidth(0.9).stroke();
+    doc.fillColor('#FFFFFF').font('Helvetica-Bold').fontSize(7)
+       .text('VERSAND / UNTERSCHRIFT', rX + 22, botY + 4.5, { lineBreak: false });
+
+    // Photo checkboxes (left)
     const photos = Array.isArray(d.photoLabels) ? d.photoLabels : [];
     const hasPhoto = key => photos.some(p => p && p.toLowerCase().includes(key.toLowerCase()));
-    const photoItems = [
-      { label: 'Kennzeichen',              key: 'Kennzeichen' },
-      { label: 'Gesamtansicht',            key: 'Gesamtansicht' },
-      { label: 'Schaden Detail',           key: 'Schaden' },
-      { label: 'Unfallstelle',             key: 'Unfallstelle' },
-      { label: 'Unfallgegner / geg. Fz.', key: 'Unfallgegner' },
-      { label: 'Dokumente / Polizei',      key: 'Dokumente' },
+    const pItems = [
+      { label: 'Gesamtansicht', key: 'Gesamtansicht' },
+      { label: 'Schaden Detail', key: 'Schaden' },
+      { label: 'Kennzeichen',   key: 'Kennzeichen' },
+      { label: 'Unfallstelle',  key: 'Unfallstelle' },
+      { label: 'Unfallgegner',  key: 'Unfallgegner' },
+      { label: 'Polizei',       key: 'Dokumente' },
     ];
-    const cbSz = 7, colW = CW / 3;
-    photoItems.forEach((item, i) => {
-      const col = i % 3;
-      if (col === 0 && i > 0) y += 16;
-      const cx = ML + col * colW;
+    let cbx = L, cby = botY + 18;
+    pItems.forEach((item, i) => {
+      if (i === 3) { cbx = L; cby += 13; }
       const checked = hasPhoto(item.key);
-      doc.rect(cx, y, cbSz, cbSz).strokeColor(DARK).lineWidth(0.4).stroke();
-      if (checked) { doc.moveTo(cx+1,y+3.5).lineTo(cx+3,y+6).lineTo(cx+6.5,y+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
-      doc.fillColor(checked ? DARK : LTEXT).font('Helvetica').fontSize(8)
-         .text(item.label, cx + 10, y + 0.5, { lineBreak: false, width: colW - 14 });
+      const sz = 7;
+      doc.rect(cbx, cby, sz, sz).strokeColor(DARK).lineWidth(0.4).stroke();
+      if (checked) { doc.moveTo(cbx+1.5,cby+3.5).lineTo(cbx+3,cby+5.5).lineTo(cbx+5.5,cby+1).strokeColor(DARK).lineWidth(1.2).stroke(); }
+      doc.fillColor(checked ? DARK : GRAY).font('Helvetica').fontSize(7.5)
+         .text(item.label, cbx + sz + 2, cby + 0.5, { lineBreak: false });
+      cbx += sz + 2 + doc.widthOfString(item.label, { font: 'Helvetica', fontSize: 7.5 }) + 8;
     });
-    y += 20;
-
-    if (d.werkstatt_name) {
-      checkPage(60);
-      sectionHeader('GEWÜNSCHTE WERKSTATT (WUNSCH DES FAHRERS)');
-      f2('Werkstatt', d.werkstatt_name, 'E-Mail Werkstatt', d.werkstatt_email || '—');
-    }
-
-    // ── VERSAND / UNTERSCHRIFT ────────────────────────────────────────────
-    checkPage(130);
-    sectionHeader('VERSAND / UNTERSCHRIFT');
-    const sigColW = Math.floor(CW * 0.52) - 4;
-    const sigX    = ML + sigColW + 8;
-    const sigW    = CW - sigColW - 8;
-    const sigTopY = y;
-
-    doc.fillColor(GRAY).font('Helvetica').fontSize(7.5)
+    cby += 15;
+    doc.fillColor(GRAY).font('Helvetica').fontSize(5.5)
        .text(
-         'Ich bestätige die Richtigkeit und Vollständigkeit meiner Angaben. Die Datenverarbeitung erfolgt ausschließlich durch IMD Fleet Services. Eine Reparaturfreigabe darf ausschließlich durch IMD Fleet Services erfolgen. Datenschutz gemäß DSGVO/DSG.',
-         ML, y, { width: sigColW - 4, lineBreak: true }
+         'Ich bestätige die Richtigkeit und Vollständigkeit meiner Angaben.\n' +
+         'Ich habe kein Schuldanerkenntnis abgegeben. Reparaturfreigaben erfolgen\n' +
+         'ausschließlich durch IMD Fleet Services. Die Datenverarbeitung erfolgt\n' +
+         'gemäß DSGVO/DSG zur Schadensbearbeitung.',
+         L, cby, { width: leftW - 2, lineBreak: true }
        );
+    const leftEndY = doc.y + 4;
 
+    // Right: email + signature
+    let ry = botY + 18;
+    doc.fillColor(GRAY).font('Helvetica').fontSize(7)
+       .text('Senden an: schaden@imd-fleet-services.de', rX, ry, { lineBreak: false });
+    ry += 11;
+    const sigH = Math.max(leftEndY - ry - 22, 46);
+    doc.rect(rX, ry, rW - 1, sigH).strokeColor(LINE).lineWidth(0.5).stroke();
     if (d.signatureBase64 && d.signatureBase64.startsWith('data:image/png;base64,')) {
       try {
         const sigBuf = Buffer.from(d.signatureBase64.slice(22), 'base64');
-        doc.image(sigBuf, sigX, sigTopY, { width: sigW, height: 55 });
+        doc.image(sigBuf, rX + 3, ry + 3, { width: rW - 8, height: sigH - 6 });
       } catch (_) { /* skip */ }
     }
-
-    y = sigTopY + 64;
+    ry += sigH + 4;
     const dateStr = new Date().toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin' });
-    doc.moveTo(sigX, y).lineTo(sigX + 65, y).strokeColor(DARK).lineWidth(0.5).stroke();
-    doc.moveTo(sigX + 75, y).lineTo(sigX + sigW - 2, y).strokeColor(DARK).lineWidth(0.5).stroke();
-    doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text('Datum', sigX, y + 3, { lineBreak: false });
-    doc.fillColor(DARK).font('Helvetica').fontSize(8).text(dateStr, sigX + 30, y + 3, { lineBreak: false });
-    doc.fillColor(LTEXT).font('Helvetica').fontSize(7).text('Unterschrift Fahrer', sigX + 75, y + 3, { lineBreak: false });
-    y += 20;
+    const dW = rW * 0.44;
+    doc.moveTo(rX, ry).lineTo(rX + dW - 2, ry).strokeColor(DARK).lineWidth(0.5).stroke();
+    doc.moveTo(rX + dW + 2, ry).lineTo(rX + rW - 1, ry).strokeColor(DARK).lineWidth(0.5).stroke();
+    doc.fillColor(GRAY).font('Helvetica').fontSize(6.5).text('Datum', rX, ry + 2, { lineBreak: false });
+    doc.fillColor(DARK).font('Helvetica').fontSize(8).text(dateStr, rX + 28, ry + 2, { lineBreak: false });
+    doc.fillColor(GRAY).font('Helvetica').fontSize(6.5).text('Unterschrift Fahrer', rX + dW + 2, ry + 2, { lineBreak: false });
 
-    // ── FOOTER ────────────────────────────────────────────────────────────
-    const footY = PH - 20;
-    doc.moveTo(ML, footY - 5).lineTo(PW - MR, footY - 5).strokeColor(LINE).lineWidth(0.4).stroke();
-    doc.fillColor(LTEXT).font('Helvetica').fontSize(6.5)
-       .text('IMD intern:   Eingang  |  Prüfung  |  Werkstattzuweisung  |  Freigabe  |  Versicherung', 0, footY, { align: 'center', width: PW, lineBreak: false });
+    if (d.werkstatt_name) {
+      y = Math.max(leftEndY, ry + 14) + 4;
+      doc.fillColor(GRAY).font('Helvetica').fontSize(7)
+         .text(`Gewünschte Werkstatt: ${d.werkstatt_name}` + (d.werkstatt_email ? ` · ${d.werkstatt_email}` : ''),
+               L, y, { lineBreak: false, width: CW });
+    }
+
+    // ══ FOOTER ═══════════════════════════════════════════════════════════
+    const footY = PH - 18;
+    doc.moveTo(L, footY - 4).lineTo(PW - 20, footY - 4).strokeColor(LINE).lineWidth(0.4).stroke();
+    doc.fillColor(LGRAY).font('Helvetica').fontSize(7)
+       .text('IMD intern:   Eingang  |  Prüfung  |  Werkstattzuweisung  |  Freigabe  |  Versicherung',
+             0, footY, { align: 'center', width: PW, lineBreak: false });
 
     doc.end();
   });
