@@ -484,7 +484,7 @@ app.use(express.json());
 
 // ── Maintenance Gate (session-based, works on iOS Safari) ─────────────────────
 if (process.env.MAINTENANCE_PASS) {
-  const MAINTENANCE_PUBLIC = ['/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png', '/logo_dark.png', '/logo_light.png', '/maintenance', '/api/login', '/api/logout', '/api/check-auth'];
+  const MAINTENANCE_PUBLIC = ['/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png', '/logo_dark.png', '/logo_light.png', '/maintenance', '/api/login', '/api/logout', '/api/check-auth', '/api/werkstaetten', '/api/schaden'];
 
   app.get('/maintenance', (req, res) => {
     const err = req.query.err ? 'Falsches Passwort. Bitte erneut versuchen.' : '';
