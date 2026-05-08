@@ -483,7 +483,7 @@ app.use(express.json());
 
 // ── Maintenance Gate (session-based, works on iOS Safari) ─────────────────────
 if (process.env.MAINTENANCE_PASS) {
-  const MAINTENANCE_PUBLIC = ['/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png', '/logo_dark.png', '/logo_light.png', '/maintenance', '/api/login', '/api/logout', '/api/check-auth', '/api/werkstaetten', '/api/schaden'];
+  const MAINTENANCE_PUBLIC = ['/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png', '/logo_dark.png', '/logo_light.png', '/maintenance', '/api/login', '/api/logout', '/api/check-auth', '/api/werkstaetten', '/api/schaden', '/api/chat'];
 
   app.get('/maintenance', (req, res) => {
     const err = req.query.err ? 'Falsches Passwort. Bitte erneut versuchen.' : '';
@@ -1075,6 +1075,62 @@ app.delete('/api/werkstaetten/:id', requireAuth, async (req, res) => {
     await pool.query('DELETE FROM werkstaetten WHERE id=$1', [req.params.id]);
     res.json({ success: true });
   } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── Groq AI Chat ──────────────────────────────────────────────────────────────
+const CHAT_SYSTEM_PROMPT = `Du bist der IMD Fleet Services Schadenassistent. Du hilfst Dienstwagenfahrern bei Fragen rund um Kfz-Schäden, Schadenabwicklung, Versicherungsrecht und Verhalten nach einem Unfall in Deutschland.
+
+Grundsätze:
+- Antworte immer auf Deutsch, präzise und hilfreich
+- Gib niemals ein Schuldanerkenntnis am Unfallort – das ist Aufgabe der Versicherungen
+- Bei komplexen Rechtsfragen empfiehl einen Rechtsanwalt oder die zuständige Versicherung
+- Halte Antworten kurz und praktisch (max. 4–5 Sätze für einfache Fragen)
+
+Dein Fachwissen umfasst:
+- Kfz-Haftpflichtversicherung, Teilkasko, Vollkasko
+- Schadensmeldung und Unfallprotokoll
+- Verhalten direkt nach einem Unfall (Sicherung, Notruf, Beweise sichern)
+- Wildschaden, Glasschaden, Parkschaden, Vandalismus, Diebstahl
+- Dienstwagenregelungen, Haftung des Fahrers, Selbstbeteiligung
+- Fuhrparkmanagement, Schadenquote, Schadensfreiheitsrabatt
+- Mietwagen, Wertminderung, Nutzungsausfall nach Unfall
+- Fristen bei der Schadensmeldung`;
+
+app.post('/api/chat', express.json(), async (req, res) => {
+  const { messages } = req.body;
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return res.json({ reply: 'Ungültige Anfrage.' });
+  }
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    return res.json({ reply: 'KI-Assistent ist nicht konfiguriert. Bitte GROQ_API_KEY setzen.' });
+  }
+  const stripHtml = s => s.replace(/<[^>]*>/g, '').replace(/&lt;/g, '<').replace(/&amp;/g, '&').trim();
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: CHAT_SYSTEM_PROMPT },
+          ...messages.slice(-12).map(m => ({
+            role: m.from === 'user' ? 'user' : 'assistant',
+            content: stripHtml(m.text),
+          })),
+        ],
+        max_tokens: 512,
+        temperature: 0.6,
+      }),
+    });
+    if (!response.ok) throw new Error(`Groq ${response.status}`);
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content || 'Keine Antwort erhalten.';
+    res.json({ reply });
+  } catch (err) {
+    console.error('Chat error:', err.message);
+    res.json({ reply: 'Der Assistent ist momentan nicht erreichbar. Bitte versuchen Sie es in wenigen Sekunden erneut.' });
+  }
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────

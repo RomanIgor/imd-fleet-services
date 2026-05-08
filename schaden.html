@@ -1778,7 +1778,7 @@ const FAQ_CATEGORIES = [
   { title:"Haftung & Pflichten", items:[{q:"Bin ich persönlich haftbar?",k:5},{q:"Wildschaden — was beachten?",k:6}]},
 ];
 
-let chatState = { open:false, tab:'chat', messages:[], faqOpen:{} };
+let chatState = { open:false, tab:'chat', messages:[], faqOpen:{}, loading:false };
 
 function toggleChat() {
   chatState.open = !chatState.open;
@@ -1844,21 +1844,30 @@ function findAnswer(query) {
   return `Ich habe keine direkte Antwort gefunden. Versuchen Sie eine andere Formulierung — oder schauen Sie im Tab <b>📖 Verhaltensregeln</b> nach.`;
 }
 
-function sendMsg() {
+async function sendMsg() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
-  if (!text) return;
+  if (!text || chatState.loading) return;
   chatState.messages.push({ from:'user', text:text.replace(/</g,'&lt;') });
-  input.value = ''; autoGrow(input); renderChat();
-  setTimeout(() => {
-    chatState.messages.push({ from:'bot', text:'<i style="opacity:0.6">KI denkt nach…</i>' });
-    renderChat();
-    setTimeout(() => {
-      chatState.messages.pop();
-      chatState.messages.push({ from:'bot', text:findAnswer(text) });
-      renderChat();
-    }, 600);
-  }, 200);
+  input.value = ''; autoGrow(input);
+  chatState.loading = true;
+  chatState.messages.push({ from:'bot', text:'<i style="opacity:0.6">KI denkt nach…</i>' });
+  renderChat();
+  try {
+    const r = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: chatState.messages.slice(0, -1) }),
+    });
+    const data = await r.json();
+    chatState.messages.pop();
+    chatState.messages.push({ from:'bot', text: data.reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>') });
+  } catch(_) {
+    chatState.messages.pop();
+    chatState.messages.push({ from:'bot', text:'Verbindungsfehler. Bitte versuchen Sie es erneut.' });
+  }
+  chatState.loading = false;
+  renderChat();
 }
 
 function autoGrow(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
