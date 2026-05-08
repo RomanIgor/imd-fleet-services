@@ -610,6 +610,14 @@
     background: #eef2ff; color: #4f46e5;
     font-size: 9px; font-weight: 800; border-radius: 999px; padding: 3px 8px; letter-spacing: 0.02em;
   }
+  .mod-icon-app {
+    width: 40px; height: 40px; border-radius: 11px; object-fit: cover; display: block;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  [data-theme="dark"] .mod-icon-app {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.55);
+  }
+
   [data-theme="dark"] .mod-tile { background: var(--card); border-color: var(--border); }
   [data-theme="dark"] .mod-tile:hover { border-color: var(--border-2); }
   [data-theme="dark"] .mod-tile-label { color: var(--text); }
@@ -759,7 +767,9 @@
   <div class="modules-label">Module</div>
   <div class="modules-grid">
       <div class="mod-tile active-mod">
-        <div class="mod-tile-ico c1"><svg width="20" height="20"><use href="#i-alert"/></svg></div>
+        <div class="mod-tile-ico" style="background:transparent;">
+          <img src="/schadenmanagement_icon.png" alt="" class="mod-icon-app">
+        </div>
         <div class="mod-tile-label">Schadenmanagement</div>
         <div class="mod-tile-sub">Aktiv verfügbar</div>
       </div>
