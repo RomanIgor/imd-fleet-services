@@ -80,6 +80,41 @@ style.css       — Global styles
 2. Row inserted into `schaeden`, fall number generated: `SCH-{year}-{0001}`
 3. Two emails sent via Resend: one to IMD (with photos attached), one confirmation to the driver
 
+## Icon System
+
+Toate iconițele modulelor folosesc **IMD Icon System** — CSS-only, fără CDN, fără AI, consistent automat.
+
+### Cum funcționează
+
+- **Container**: `<div class="imd-icon">` — navy 3D glossy, CSS radial gradient + glass shine
+- **Simboluri**: Phosphor Icons Fill (viewBox `0 0 256 256`), definite ca `<symbol id="ic-*">` în SVG defs din `schaden.html`
+- **Utilizare**: `<svg width="28" height="28" viewBox="0 0 256 256"><use href="#ic-schaden"/></svg>`
+
+### Simboluri existente
+
+| ID | Modul |
+|---|---|
+| `#ic-schaden` | Schadenmanagement (shield-warning) |
+| `#ic-fahrzeug` | Fahrzeugakte (car) |
+| `#ic-leasing` | Leasingdaten (receipt) |
+| `#ic-service` | HU / UVV / Service (calendar-check) |
+| `#ic-fahrer` | Fahrerdaten (user) |
+
+### Adăugare icoană nouă
+
+1. Caută path-ul pe [phosphoricons.com](https://phosphoricons.com) → style **Fill**
+2. Adaugă în SVG defs din `schaden.html`:
+   ```html
+   <symbol id="ic-nou" viewBox="0 0 256 256">
+     <path fill="currentColor" d="...path..."/>
+   </symbol>
+   ```
+3. Folosește: `<div class="imd-icon"><svg width="28" height="28" viewBox="0 0 256 256"><use href="#ic-nou"/></svg></div>`
+
+### Preview
+
+`icon_preview.html` — fișier local pentru vizualizare și testare icon-uri noi (toggle light/dark).
+
 ## Deployment (Render)
 
 Currently hosted on Render. The DOCX template secret is mounted at `/etc/secrets/rahmenvertrag.b64` (base64-encoded). Falls back to local `Rahmenvertrag_Version1.docx` if not found.
