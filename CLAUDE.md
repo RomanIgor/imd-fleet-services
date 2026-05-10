@@ -95,10 +95,13 @@ Toate iconițele modulelor folosesc **IMD Icon System** — CSS-only, fără CDN
 | ID | Modul |
 |---|---|
 | `#ic-schaden` | Schadenmanagement (shield-warning) |
-| `#ic-fahrzeug` | Fahrzeugakte (car) |
+| `#ic-fahrzeug` | car — basis path, reused in composite icons |
+| `#ic-fahrzeugakte` | Fahrzeugakte module tile (car + folder badge) |
+| `#ic-fahrzeugdaten` | Fahrzeugdaten form section (car + gauge badge) |
 | `#ic-leasing` | Leasingdaten (receipt) |
 | `#ic-service` | HU / UVV / Service (calendar-check) |
 | `#ic-fahrer` | Fahrerdaten (user) |
+| `#ic-fuehrerschein` | Führerschein & Adresse (identification-card) |
 
 ### Adăugare icoană nouă
 
