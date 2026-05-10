@@ -102,6 +102,13 @@ Toate iconițele modulelor folosesc **IMD Icon System** — CSS-only, fără CDN
 | `#ic-service` | HU / UVV / Service (calendar-check) |
 | `#ic-fahrer` | Fahrerdaten (user) |
 | `#ic-fuehrerschein` | Führerschein & Adresse (identification-card) |
+| `#ic-schadendaten` | Schadendaten — Wann/Wo/Wie (clipboard-text) |
+| `#ic-blutprobe` | Alkohol / Drogen / Blutprobe (drop/liquid) |
+| `#ic-polizei` | Polizei & Unfallgegner (shield-star) |
+| `#ic-kamera` | Bilder & Dokumente (camera) |
+| `#ic-werkstatt` | Partnerwerkstatt finden (wrench) |
+| `#ic-zusammenfassung` | Zusammenfassung / Review (list-checks) |
+| `#ic-standort` | Ausgewählte Werkstatt (map-pin) |
 
 ### Adăugare icoană nouă
 
