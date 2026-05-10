@@ -115,6 +115,6 @@ Toate iconițele modulelor folosesc **IMD Icon System** — CSS-only, fără CDN
 
 `icon_preview.html` — fișier local pentru vizualizare și testare icon-uri noi (toggle light/dark).
 
-## Deployment (Render)
+## Deployment (Hetzner)
 
-Currently hosted on Render. The DOCX template secret is mounted at `/etc/secrets/rahmenvertrag.b64` (base64-encoded). Falls back to local `Rahmenvertrag_Version1.docx` if not found.
+Currently hosted on Hetzner. The DOCX template secret is mounted at `/etc/secrets/rahmenvertrag.b64` (base64-encoded). Falls back to local `Rahmenvertrag_Version1.docx` if not found.
