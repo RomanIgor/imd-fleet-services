@@ -15,7 +15,7 @@
 | Passwort vergessen | Magic Link Reset (kein klassischer Flow) |
 | `/schaden` Auth | Nur noch mit Fahrer-Session zugänglich |
 | Fahrer deaktivieren | Soft-delete (`aktiv=false`) + sofortige Session-Invalidierung |
-| Fahrer löschen (DSGVO) | Anonimisierung: Name/E-Mail/Hash entfernt, `fahrer_id` in `schaeden` bleibt |
+| Fahrer löschen (DSGVO) | Anonimisierung: Vorname/Nachname/Telefon/E-Mail/Hash entfernt, `fahrer_id` in `schaeden` bleibt |
 
 ---
 
@@ -56,7 +56,9 @@ CREATE TABLE fuhrpark_users (
 CREATE TABLE fahrer (
   id                 SERIAL PRIMARY KEY,
   fuhrpark_id        INTEGER NOT NULL REFERENCES fuhrparks(id),
-  name               TEXT NOT NULL,
+  vorname            TEXT NOT NULL,
+  nachname           TEXT NOT NULL,
+  telefon            TEXT,
   email              TEXT UNIQUE,
   password_hash      TEXT,
   invite_token       TEXT,
@@ -68,7 +70,8 @@ CREATE TABLE fahrer (
 );
 ```
 
-`email` ist nullable (wird bei DSGVO-Löschung auf NULL gesetzt). `UNIQUE` greift nur auf non-NULL Werte (PostgreSQL-Standard).
+`email` ist nullable (wird bei DSGVO-Löschung auf NULL gesetzt). `UNIQUE` greift nur auf non-NULL Werte (PostgreSQL-Standard).  
+Bei DSGVO-Löschung: `vorname = 'Gelöscht'`, `nachname = 'Gelöscht'`, `telefon = NULL`, `email = NULL`.
 
 ### Erweiterte Tabelle: `schaeden`
 
@@ -86,7 +89,7 @@ ALTER TABLE schaeden
 
 ### Schritt 1 — IMD legt Fahrer an
 
-- IMD Admin wählt Name, E-Mail und Fuhrpark im Dashboard
+- IMD Admin gibt Vorname, Nachname, E-Mail, Telefon (optional) und Fuhrpark im Dashboard ein
 - System erzeugt `invite_token` via `crypto.randomBytes(32).toString('hex')`
 - `invite_expires_at = NOW() + 72h`
 - `aktiv = false`
@@ -141,7 +144,7 @@ Token: 72 Stunden gültig, einmalig verwendbar (wird nach Aktivierung gelöscht)
 ### Löschen / Anonymisieren (DSGVO Art. 17)
 
 - `DELETE /api/fahrer/:id` — Auth: IMD Admin
-- Setzt `name = 'Gelöschter Fahrer'`, `email = NULL`, `password_hash = NULL`, `invite_token = NULL`, `reset_token = NULL`
+- Setzt `vorname = 'Gelöscht'`, `nachname = 'Gelöscht'`, `telefon = NULL`, `email = NULL`, `password_hash = NULL`, `invite_token = NULL`, `reset_token = NULL`
 - `fahrer_id` bleibt in `schaeden` für historische Integrität
 - Keine echte DB-Löschung — verhindert FK-Verletzungen
 
