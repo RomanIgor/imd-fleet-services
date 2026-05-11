@@ -813,6 +813,192 @@
 
 </div>
 
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCHEMA 3 — UMSETZUNGSSTAND & ROADMAP
+     ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Schema 3</div>
+  <div class="section-title">Umsetzungsstand &amp; Realisierbarkeit als SaaS</div>
+
+  <!-- Intro box -->
+  <div style="background:white;border:1.5px solid #dde6f0;border-radius:14px;padding:24px 28px;margin-bottom:32px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+    <div style="font-size:13px;font-weight:800;color:#0c2461;margin-bottom:10px;">Ehrliche Standortbestimmung</div>
+    <p style="font-size:13px;color:#334155;line-height:1.7;margin:0;">
+      Die Plattform befindet sich aktuell bei ca. <strong style="color:#0c2461;">8–10 % der Gesamtspezifikation</strong>.
+      Das klingt wenig — ist aber ein solides, produktionsreifes Fundament. Das Schadenmanagement-Modul
+      ist bereits voll funktionsfähig und für erste Kunden lieferbar. Die Architektur (Node.js · PostgreSQL · REST API · EU-Hosting)
+      ist korrekt gewählt und skalierbar auf alle weiteren Module.
+    </p>
+  </div>
+
+  <!-- Module status table -->
+  <div style="font-size:11px;font-weight:800;color:#546e8a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;">Modulübersicht — aktueller Umsetzungsgrad</div>
+  <table class="matrix-table" style="margin-bottom:32px;">
+    <thead>
+      <tr>
+        <th style="width:32%">Modul</th>
+        <th style="width:14%">Status</th>
+        <th style="width:14%">Fortschritt</th>
+        <th>Bemerkung</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700">Schadenmanagement</td>
+        <td><span style="background:#d1fae5;color:#065f46;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">✓ Aktiv</span></td>
+        <td style="font-weight:700;color:#166534">~70 %</td>
+        <td style="font-size:12px;color:#546e8a">Formular, DB, E-Mail, PDF, Statusverwaltung — produktionsbereit</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Benutzer- &amp; Rollenverwaltung</td>
+        <td><span style="background:#fef3c7;color:#92400e;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Teilweise</span></td>
+        <td style="font-weight:700;color:#92400e">~15 %</td>
+        <td style="font-size:12px;color:#546e8a">IMD-Admin vorhanden; Fahrer-Rollen, Fuhrpark-Ebene noch ausstehend</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Mandantenfähigkeit (Fuhrpark / Fahrer)</td>
+        <td><span style="background:#fef3c7;color:#92400e;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Geplant</span></td>
+        <td style="font-weight:700;color:#92400e">~10 %</td>
+        <td style="font-size:12px;color:#546e8a">Architektur definiert (Schema 1 &amp; 2); DB-Tabellen noch nicht angelegt</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Fahrzeug (zentrales Objekt)</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">Kein eigenes Fahrzeugobjekt — Voraussetzung für alle weiteren Module</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Reporting / KPI-Dashboard</td>
+        <td><span style="background:#fef3c7;color:#92400e;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Minimal</span></td>
+        <td style="font-weight:700;color:#92400e">~5 %</td>
+        <td style="font-size:12px;color:#546e8a">Einfache Statistiken vorhanden; kein Export, kein Deckungsbeitrag</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Eingangsrechnung</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">100 %-Kostenverteilung, SB-Logik, GoBD-Konformität erforderlich</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Ausgangsrechnung</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">Nummernkreise, §25a UStG, Storno mit Gegenbeleg, GoBD-Archivierung</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Provisionssystem</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">Automatische Berechnung, konfigurierbare Logik</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Sammelabrechnung</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Mahnwesen</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">—</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Remarketing</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">Prozess-Tracking, 120tkm/3,5-Jahre-Trigger, Margenberechnung</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Geschäftspartner</td>
+        <td><span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700">Ausstehend</span></td>
+        <td style="font-weight:700;color:#991b1b">0 %</td>
+        <td style="font-size:12px;color:#546e8a">Partnerverwaltung, Werkstattnetz (Grundstruktur vorhanden)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Realisierbarkeit -->
+  <div style="font-size:11px;font-weight:800;color:#546e8a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;">Realisierbarkeit als SaaS — Einschätzung</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px;">
+
+    <div style="background:white;border:1.5px solid #dde6f0;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+      <div style="font-size:12px;font-weight:800;color:#0c2461;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <span style="width:24px;height:24px;border-radius:6px;background:#0c2461;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">✓</span>
+        Technisch 100 % realisierbar
+      </div>
+      <ul style="list-style:none;font-size:12px;color:#334155;line-height:1.9;">
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> Stack (Node.js · PostgreSQL) ist korrekt gewählt</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> Architektur ist skalierbar auf 1.000+ Fahrzeuge</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> Mandantentrennung via <code>fuhrpark_id</code> ist Standard</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> EU-Hosting (Hetzner) bereits vorhanden</li>
+      </ul>
+    </div>
+
+    <div style="background:white;border:1.5px solid #dde6f0;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+      <div style="font-size:12px;font-weight:800;color:#0c2461;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <span style="width:24px;height:24px;border-radius:6px;background:#92400e;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">!</span>
+        Komplexe Module — realistisch einschätzen
+      </div>
+      <ul style="list-style:none;font-size:12px;color:#334155;line-height:1.9;">
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;font-weight:800">→</span> Rechnungslogik (GoBD, §25a UStG) = mehrere Monate</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;font-weight:800">→</span> Workflow-Engine (konfigurierbar) = anspruchsvolle Architektur</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;font-weight:800">→</span> Revisionssichere Archivierung = gesetzliche Anforderung</li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#92400e;font-weight:800">→</span> Differenzbesteuerung §25a UStG = Steuerexperte erforderlich</li>
+      </ul>
+    </div>
+
+    <div style="background:white;border:1.5px solid #dde6f0;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+      <div style="font-size:12px;font-weight:800;color:#0c2461;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <span style="width:24px;height:24px;border-radius:6px;background:#166534;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;">→</span>
+        Zeitrahmen (realistisch)
+      </div>
+      <ul style="list-style:none;font-size:12px;color:#334155;line-height:1.9;">
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> 1 Entwickler Vollzeit: <strong>18–24 Monate</strong></li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> 2–3 Entwickler: <strong>8–12 Monate</strong></li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> Fremdvergabe Gesamtprojekt: <strong>€ 100k–300k</strong></li>
+        <li style="padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:#166534;font-weight:800">→</span> Schadenmodul heute bereits vermarktbar</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Empfehlung -->
+  <div style="font-size:11px;font-weight:800;color:#546e8a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;">Empfohlene Reihenfolge (inkrementeller Aufbau)</div>
+  <div style="background:white;border:1.5px solid #dde6f0;border-radius:12px;padding:20px 24px;box-shadow:0 2px 6px rgba(0,0,0,0.04);margin-bottom:16px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#0c2461;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+        <div><strong style="font-size:13px;color:#0c2461">Fahrzeug + Mandantenfähigkeit</strong><br><span style="font-size:12px;color:#546e8a">Zentrales Objekt anlegen · Fuhrpark- und Fahrer-Tabellen · Login-Flow</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#1a4c96;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+        <div><strong style="font-size:13px;color:#0c2461">Eingangsrechnung (vereinfacht)</strong><br><span style="font-size:12px;color:#546e8a">Erstes Modul mit realem Geldfluss · SB-Logik · Fahrzeugverknüpfung</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#0e7490;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+        <div><strong style="font-size:13px;color:#0c2461">Reporting &amp; KPI-Dashboard</strong><br><span style="font-size:12px;color:#546e8a">Sichtbarkeit für Kunden · Fahrzeugkosten · Export PDF/Excel</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#166534;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
+        <div><strong style="font-size:13px;color:#0c2461">Ausgangsrechnung + Provisionen</strong><br><span style="font-size:12px;color:#546e8a">GoBD-konform · §25a UStG · automatische Provisionslogik</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:14px;">
+        <span style="width:26px;height:26px;border-radius:50%;background:#546e8a;color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+        <div><strong style="font-size:13px;color:#0c2461">Sammelabrechnung · Mahnwesen · Remarketing</strong><br><span style="font-size:12px;color:#546e8a">Weitere Module sequenziell aufbauen</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="avv-box">
+    💡 <strong>Kernaussage:</strong> Das aktuelle System ist kein Prototyp — es ist ein produktionsreifes Fundament. Das Schadenmanagement-Modul ist heute schon vermarktbar. Es muss nicht auf das vollständige System gewartet werden, um erste Kunden zu gewinnen. Jedes neue Modul baut auf demselben Stack auf und kann inkrementell hinzugefügt werden.
+  </div>
+
+</div>
+
 <div style="text-align:center;color:#8899aa;font-size:11px;margin-top:32px;">
   IMD Fleet Services — Internes Konzeptdokument · Stand: Mai 2026
 </div>
