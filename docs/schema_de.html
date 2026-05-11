@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMD Fleet Services — Systemarchitektur</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f4fa;
+    color: #1a2644;
+    padding: 40px 24px 80px;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .page-header .logo {
+    font-size: 13px; font-weight: 800; letter-spacing: 0.18em;
+    color: #0c2461; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .page-header h1 {
+    font-size: 28px; font-weight: 800; color: #0c2461; margin-bottom: 8px;
+  }
+  .page-header p {
+    font-size: 14px; color: #546e8a;
+  }
+
+  .section {
+    max-width: 960px;
+    margin: 0 auto 64px;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #546e8a;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 800; color: #0c2461;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #dde6f0;
+  }
+
+  /* ── ENTITY BOXES ── */
+  .entities {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .entity {
+    background: white;
+    border: 1.5px solid #dde6f0;
+    border-radius: 14px;
+    padding: 20px;
+    flex: 1;
+    min-width: 220px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .entity-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eef2f8;
+  }
+  .entity-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .entity-icon.navy  { background: #0c2461; }
+  .entity-icon.blue  { background: #1a4c96; }
+  .entity-icon.teal  { background: #0e7490; }
+  .entity-icon.green { background: #166534; }
+  .entity-icon svg   { color: white; fill: white; width: 18px; height: 18px; }
+
+  .entity-name {
+    font-size: 13px; font-weight: 800; color: #0c2461;
+    line-height: 1.2;
+  }
+  .entity-table {
+    font-size: 11px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #546e8a;
+  }
+  .entity-field {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #f4f6fa;
+    gap: 12px;
+  }
+  .entity-field:last-child { border-bottom: none; }
+  .field-name { color: #1a2644; font-weight: 600; }
+  .field-type { color: #8899aa; }
+  .field-pk   { color: #0c2461; font-weight: 800; }
+  .field-fk   { color: #7c3aed; font-weight: 600; }
+  .field-key  {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.06em;
+    padding: 1px 5px; border-radius: 4px;
+    margin-left: 4px;
+  }
+  .pk  { background: #eff6ff; color: #0c2461; }
+  .fk  { background: #f3e8ff; color: #7c3aed; }
+  .idx { background: #f0fdf4; color: #166534; }
+
+  /* ── TREE DIAGRAM ── */
+  .tree-wrap {
+    background: white;
+    border: 1.5px solid #dde6f0;
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  .tree {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    min-width: 560px;
+  }
+  .tree-level {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .tree-node-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .tree-indent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 48px;
+    border-left: 2.5px solid #dde6f0;
+    margin-left: 22px;
+    margin-top: 4px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+    gap: 8px;
+  }
+  .tree-connector {
+    width: 26px; height: 2px;
+    background: #dde6f0;
+    flex-shrink: 0;
+  }
+  .tree-node {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 13px; font-weight: 700;
+    white-space: nowrap;
+    border: 2px solid transparent;
+  }
+  .tree-node .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    flex-shrink: 0;
+  }
+  .node-imd   { background: #0c2461; color: white; }
+  .node-fp    { background: #1a4c96; color: white; }
+  .node-fr    { background: #0e7490; color: white; }
+  .node-sc    { background: #166534; color: white; }
+  .node-more  { background: #f1f5f9; color: #546e8a; border-color: #dde6f0; font-style: italic; }
+
+  .tree-rel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0 4px 12px;
+    margin-left: 22px;
+  }
+  .tree-rel-line {
+    width: 2px; height: 18px;
+    background: #dde6f0;
+    margin-left: 20px;
+  }
+  .tree-rel-label {
+    font-size: 10px; font-weight: 700; color: #8899aa;
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 20px; padding: 2px 9px;
+    letter-spacing: 0.04em;
+  }
+  .tree-children-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    padding-left: 44px;
+    flex-wrap: wrap;
+  }
+  .tree-child-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .tree-branch {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .tree-branch-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* ── DATA ACCESS ── */
+  .access-card {
+    border-radius: 12px;
+    padding: 18px 20px;
+    border: 1.5px solid;
+    margin-bottom: 12px;
+  }
+  .access-card.imd  { background: #eff6ff; border-color: #bfdbfe; }
+  .access-card.fp   { background: #f0f9ff; border-color: #bae6fd; }
+  .access-card.fr   { background: #f0fdfa; border-color: #99f6e4; }
+  .access-card-title {
+    font-size: 13px; font-weight: 800; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .role-pill {
+    font-size: 10px; font-weight: 800; padding: 2px 8px;
+    border-radius: 20px; color: white;
+  }
+  .pill-imd { background: #0c2461; }
+  .pill-fp  { background: #1a4c96; }
+  .pill-fr  { background: #0e7490; }
+  .access-list { font-size: 12px; color: #334155; line-height: 1.8; }
+  .access-list li { list-style: none; padding-left: 14px; position: relative; }
+  .access-list li::before { content: '✓'; position: absolute; left: 0; color: #166534; font-weight: 800; }
+  .avv-box {
+    background: #fffbeb; border: 1.5px solid #fcd34d;
+    border-radius: 12px; padding: 16px 20px;
+    font-size: 12px; color: #78350f; line-height: 1.6;
+    margin-top: 16px;
+  }
+  .avv-box strong { color: #92400e; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+  }
+  .flow-step::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: -20px;
+    width: 2px;
+    background: #dde6f0;
+    z-index: 0;
+  }
+  .flow-step:last-child::before { display: none; }
+  .step-dot {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 800; color: white;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+  }
+  .step-dot.navy  { background: #0c2461; }
+  .step-dot.blue  { background: #1a4c96; }
+  .step-dot.teal  { background: #0e7490; }
+  .step-dot.green { background: #166534; }
+  .step-dot.amber { background: #92400e; }
+  .step-dot.check { background: #166534; font-size: 18px; }
+
+  .step-content {
+    background: white;
+    border: 1.5px solid #dde6f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex: 1;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .step-title {
+    font-size: 14px; font-weight: 800; color: #0c2461;
+    margin-bottom: 4px;
+  }
+  .step-sub {
+    font-size: 12px; color: #546e8a; line-height: 1.5;
+  }
+  .step-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    margin-top: 6px;
+    margin-right: 4px;
+  }
+  .badge-route  { background: #eff6ff; color: #0c2461; border: 1px solid #bfdbfe; }
+  .badge-db     { background: #f3e8ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+  .badge-email  { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .badge-action { background: #fefce8; color: #854d0e; border: 1px solid #fef08a; }
+
+  /* ── ACCESS MATRIX ── */
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .matrix-table th {
+    background: #0c2461;
+    color: white;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .matrix-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #eef2f8;
+    vertical-align: middle;
+  }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table tr:hover td { background: #f8fafc; }
+  .access-yes { color: #166534; font-weight: 700; }
+  .access-no  { color: #9ca3af; }
+  .access-own { color: #0e7490; font-weight: 700; }
+
+  /* ── INVITE FLOW ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  .info-box {
+    background: white;
+    border: 1.5px solid #dde6f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+  .info-box-title {
+    font-size: 13px; font-weight: 800; color: #0c2461;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-box-title span {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: #0c2461; color: white;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-list { list-style: none; }
+  .info-list li {
+    font-size: 12px; color: #334155;
+    padding: 5px 0;
+    border-bottom: 1px solid #f4f6fa;
+    display: flex; gap: 8px;
+  }
+  .info-list li:last-child { border-bottom: none; }
+  .info-list li::before { content: '→'; color: #0c2461; font-weight: 800; flex-shrink: 0; }
+
+  /* ── URL TABLE ── */
+  .url-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-top: 16px;
+  }
+  .url-table th {
+    background: #1a4c96;
+    color: white;
+    font-weight: 700;
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 11px;
+  }
+  .url-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #eef2f8;
+    vertical-align: middle;
+  }
+  .url-table tr:last-child td { border-bottom: none; }
+  code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    background: #f0f4fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #1a2644;
+  }
+
+  .divider {
+    height: 1px; background: #dde6f0;
+    max-width: 960px; margin: 0 auto 48px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="logo">IMD Fleet Services</div>
+  <h1>Systemarchitektur &amp; Benutzerkonzept</h1>
+  <p>Internes Konzeptdokument — Mehrmanantenfähige Fuhrparkverwaltung</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SCHEMA 1 — FUHRPARKVERWALTUNG
+     ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Schema 1</div>
+  <div class="section-title">Fuhrparkverwaltung — Datenmodell &amp; Beziehungen</div>
+
+  <!-- Tree Hierarchy — SVG Org Chart -->
+  <div class="tree-wrap">
+    <div style="font-size:11px;font-weight:800;color:#546e8a;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.12em;">Hierarchie &amp; Beziehungen</div>
+
+    <svg viewBox="0 0 760 450" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;max-width:760px;display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+
+      <!-- ── CONNECTOR LINES ── -->
+      <!-- IMD → horizontal bar L1 -->
+      <line x1="380" y1="68" x2="380" y2="100" stroke="#93c5fd" stroke-width="2.5"/>
+      <line x1="160" y1="100" x2="602" y2="100" stroke="#93c5fd" stroke-width="2.5"/>
+      <line x1="160" y1="100" x2="160" y2="122" stroke="#93c5fd" stroke-width="2.5"/>
+      <line x1="380" y1="100" x2="380" y2="122" stroke="#93c5fd" stroke-width="2.5"/>
+      <line x1="602" y1="100" x2="602" y2="122" stroke="#c7d8f0" stroke-width="2" stroke-dasharray="5,4"/>
+
+      <!-- FP A → horizontal bar L2 -->
+      <line x1="160" y1="168" x2="160" y2="218" stroke="#67e8f9" stroke-width="2.5"/>
+      <line x1="120" y1="218" x2="405" y2="218" stroke="#67e8f9" stroke-width="2.5"/>
+      <line x1="120" y1="218" x2="120" y2="240" stroke="#67e8f9" stroke-width="2.5"/>
+      <line x1="265" y1="218" x2="265" y2="240" stroke="#67e8f9" stroke-width="2.5"/>
+      <line x1="405" y1="218" x2="405" y2="240" stroke="#c7d8f0" stroke-width="2" stroke-dasharray="5,4"/>
+
+      <!-- Fahrer 1 → horizontal bar L3 -->
+      <line x1="120" y1="282" x2="120" y2="336" stroke="#86efac" stroke-width="2.5"/>
+      <line x1="80"  y1="336" x2="350" y2="336" stroke="#86efac" stroke-width="2.5"/>
+      <line x1="80"  y1="336" x2="80"  y2="358" stroke="#86efac" stroke-width="2.5"/>
+      <line x1="215" y1="336" x2="215" y2="358" stroke="#86efac" stroke-width="2.5"/>
+      <line x1="350" y1="336" x2="350" y2="358" stroke="#c7d8f0" stroke-width="2" stroke-dasharray="5,4"/>
+
+      <!-- ── RELATIONSHIP PILLS ── -->
+      <rect x="305" y="74" width="150" height="22" rx="11" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+      <text x="380" y="89" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1a4c96">verwaltet (1 : N)</text>
+
+      <rect x="80" y="185" width="160" height="22" rx="11" fill="#ecfeff" stroke="#67e8f9" stroke-width="1.5"/>
+      <text x="160" y="200" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0e7490">hat Fahrer (1 : N)</text>
+
+      <rect x="48" y="300" width="144" height="22" rx="11" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+      <text x="120" y="315" text-anchor="middle" font-size="10.5" font-weight="700" fill="#166534">meldet (1 : N)</text>
+
+      <!-- ── LEVEL 0 — IMD Admin ── -->
+      <rect x="275" y="18" width="210" height="50" rx="12" fill="#0c2461"/>
+      <text x="380" y="39" text-anchor="middle" font-size="13" font-weight="800" fill="white" letter-spacing="0.5">IMD Admin</text>
+      <text x="380" y="57" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.6)">Plattformbetreiber · sieht alle Daten</text>
+
+      <!-- ── LEVEL 1 — Fuhrparks ── -->
+      <rect x="80"  y="122" width="160" height="46" rx="10" fill="#1a4c96"/>
+      <text x="160" y="141" text-anchor="middle" font-size="12" font-weight="800" fill="white">Fuhrpark A</text>
+      <text x="160" y="158" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.6)">z.B. Muster GmbH</text>
+
+      <rect x="300" y="122" width="160" height="46" rx="10" fill="#1a4c96"/>
+      <text x="380" y="141" text-anchor="middle" font-size="12" font-weight="800" fill="white">Fuhrpark B</text>
+      <text x="380" y="158" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.6)">z.B. Acme AG</text>
+
+      <rect x="517" y="122" width="170" height="46" rx="10" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <text x="602" y="141" text-anchor="middle" font-size="10.5" fill="#94a3b8" font-style="italic">weitere Fuhrparks</text>
+      <text x="602" y="158" text-anchor="middle" font-size="9" fill="#b0bec5">beliebig erweiterbar</text>
+
+      <!-- ── LEVEL 2 — Fahrer (under FP A) ── -->
+      <rect x="55"  y="240" width="130" height="42" rx="9" fill="#0e7490"/>
+      <text x="120" y="258" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">Fahrer 1</text>
+      <text x="120" y="274" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.6)">Max Mustermann</text>
+
+      <rect x="200" y="240" width="130" height="42" rx="9" fill="#0e7490"/>
+      <text x="265" y="258" text-anchor="middle" font-size="11.5" font-weight="800" fill="white">Fahrer 2</text>
+      <text x="265" y="274" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.6)">Anna Schmidt</text>
+
+      <rect x="345" y="240" width="120" height="42" rx="9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <text x="405" y="264" text-anchor="middle" font-size="10" fill="#94a3b8" font-style="italic">weitere Fahrer…</text>
+
+      <!-- ── LEVEL 3 — Schadensmeldungen (under Fahrer 1) ── -->
+      <rect x="20"  y="358" width="120" height="38" rx="8" fill="#166534"/>
+      <text x="80"  y="373" text-anchor="middle" font-size="9.5" font-weight="800" fill="white">SCH-2025-0001</text>
+      <text x="80"  y="387" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Parkschaden</text>
+
+      <rect x="155" y="358" width="120" height="38" rx="8" fill="#166534"/>
+      <text x="215" y="373" text-anchor="middle" font-size="9.5" font-weight="800" fill="white">SCH-2025-0002</text>
+      <text x="215" y="387" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.6)">Unfall</text>
+
+      <rect x="290" y="358" width="120" height="38" rx="8" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <text x="350" y="380" text-anchor="middle" font-size="10" fill="#94a3b8" font-style="italic">weitere Schäden…</text>
+
+    </svg>
+
+    <!-- Legend -->
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;padding-top:14px;border-top:1px solid #eef2f8;">
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#334155;">
+        <span style="width:14px;height:14px;border-radius:4px;background:#0c2461;display:inline-block;"></span>IMD Admin
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#334155;">
+        <span style="width:14px;height:14px;border-radius:4px;background:#1a4c96;display:inline-block;"></span>Fuhrpark (Mandant)
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#334155;">
+        <span style="width:14px;height:14px;border-radius:4px;background:#0e7490;display:inline-block;"></span>Fahrer
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#334155;">
+        <span style="width:14px;height:14px;border-radius:4px;background:#166534;display:inline-block;"></span>Schadenmeldung
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;color:#94a3b8;">
+        <span style="width:14px;height:14px;border-radius:4px;border:1.5px dashed #94a3b8;display:inline-block;"></span>erweiterbar (n Einträge)
+      </div>
+    </div>
+  </div>
+
+  <!-- Datenzugriff -->
+  <div style="font-size:11px;font-weight:800;color:#546e8a;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;">Wer sieht welche Daten? — Datenzugriff</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:32px;">
+    <div class="access-card imd">
+      <div class="access-card-title"><span class="role-pill pill-imd">IMD Admin</span> Sieht alles</div>
+      <ul class="access-list">
+        <li>Alle Fuhrparks und deren Daten</li>
+        <li>Alle Fahrer aller Mandanten</li>
+        <li>Alle Schadensmeldungen</li>
+        <li>Dashboard mit Gesamtstatistiken</li>
+      </ul>
+    </div>
+    <div class="access-card fp">
+      <div class="access-card-title"><span class="role-pill pill-fp">Fuhrpark</span> Nur eigene Daten <span style="font-size:10px;color:#546e8a;font-weight:600">(optional, Phase 2)</span></div>
+      <ul class="access-list">
+        <li>Nur eigene Fahrer verwalten</li>
+        <li>Nur eigene Schadensmeldungen sehen</li>
+        <li>Andere Fuhrparks: vollständig unsichtbar</li>
+      </ul>
+    </div>
+    <div class="access-card fr">
+      <div class="access-card-title"><span class="role-pill pill-fr">Fahrer</span> Nur eigene Meldungen</div>
+      <ul class="access-list">
+        <li>Schadenmeldung einreichen</li>
+        <li>Eigene Meldungen einsehen</li>
+        <li>Keine Daten anderer Fahrer sichtbar</li>
+      </ul>
+    </div>
+  </div>
+  <div class="avv-box">
+    ⚖️ <strong>DSGVO-Hinweis:</strong> IMD verarbeitet personenbezogene Daten (Fahrerdaten, Schäden) im Auftrag der Fuhrpark-Unternehmen. Laut DSGVO Art. 28 ist dafür ein <strong>Auftragsverarbeitungsvertrag (AVV)</strong> mit jedem Fuhrpark erforderlich — bevor dieser die App nutzt. Die gemeinsame Datenbank ist technisch korrekt und Standard in B2B-SaaS (Mandantentrennung auf Datenbankebene per <code>fuhrpark_id</code>).
+  </div>
+
+  <!-- DB Tables -->
+  <div class="entities">
+
+    <div class="entity">
+      <div class="entity-header">
+        <div class="entity-icon navy">
+          <svg viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></svg>
+        </div>
+        <div>
+          <div class="entity-name">users</div>
+          <div class="entity-table" style="font-size:10px">IMD-Administratoren</div>
+        </div>
+      </div>
+      <div class="entity-field"><span class="field-name">id <span class="field-key pk">PK</span></span><span class="field-type">serial</span></div>
+      <div class="entity-field"><span class="field-name">username</span><span class="field-type">text unique</span></div>
+      <div class="entity-field"><span class="field-name">password_hash</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="entity">
+      <div class="entity-header">
+        <div class="entity-icon blue">
+          <svg viewBox="0 0 256 256"><path d="M239.73,208H224V96a16,16,0,0,0-16-16H164a4,4,0,0,0-4,4V208H144V32.41a16.43,16.43,0,0,0-6.16-13,16,16,0,0,0-18.72-.69L39.12,72A16,16,0,0,0,32,85.34V208H16.27A8.18,8.18,0,0,0,8,215.47,8,8,0,0,0,16,224H240a8,8,0,0,0,8-8.53A8.18,8.18,0,0,0,239.73,208Z"/></svg>
+        </div>
+        <div>
+          <div class="entity-name">fuhrparks <span style="font-size:10px;background:#dbeafe;color:#0c2461;padding:1px 5px;border-radius:4px;font-weight:700">NEU</span></div>
+          <div class="entity-table" style="font-size:10px">Kundenfirmen (Mandanten)</div>
+        </div>
+      </div>
+      <div class="entity-field"><span class="field-name">id <span class="field-key pk">PK</span></span><span class="field-type">serial</span></div>
+      <div class="entity-field"><span class="field-name">name</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">email</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">aktiv</span><span class="field-type">boolean</span></div>
+      <div class="entity-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="entity">
+      <div class="entity-header">
+        <div class="entity-icon teal">
+          <svg viewBox="0 0 256 256"><path d="M112,120a16,16,0,1,1-16-16A16,16,0,0,1,112,120ZM232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM135.75,166a39.76,39.76,0,0,0-17.19-23.34,32,32,0,1,0-45.12,0A39.84,39.84,0,0,0,56.25,166a8,8,0,0,0,15.5,4c2.64-10.25,13.06-18,24.25-18s21.62,7.73,24.25,18a8,8,0,1,0,15.5-4ZM200,144a8,8,0,0,0-8-8H152a8,8,0,0,0,0,16h40A8,8,0,0,0,200,144Zm0-32a8,8,0,0,0-8-8H152a8,8,0,0,0,0,16h40A8,8,0,0,0,200,112Z"/></svg>
+        </div>
+        <div>
+          <div class="entity-name">fahrer <span style="font-size:10px;background:#dbeafe;color:#0c2461;padding:1px 5px;border-radius:4px;font-weight:700">NEU</span></div>
+          <div class="entity-table" style="font-size:10px">Fahrer-Accounts</div>
+        </div>
+      </div>
+      <div class="entity-field"><span class="field-name">id <span class="field-key pk">PK</span></span><span class="field-type">serial</span></div>
+      <div class="entity-field"><span class="field-name">fuhrpark_id <span class="field-key fk">FK</span></span><span class="field-type">→ fuhrparks</span></div>
+      <div class="entity-field"><span class="field-name">name</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">email <span class="field-key idx">UQ</span></span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">password_hash</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">invite_token</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">aktiv</span><span class="field-type">boolean</span></div>
+      <div class="entity-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+    </div>
+
+    <div class="entity">
+      <div class="entity-header">
+        <div class="entity-icon green">
+          <svg viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.27,47,25.53a8,8,0,0,0,4.2,0c1-.26,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40ZM120,96a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"/></svg>
+        </div>
+        <div>
+          <div class="entity-name">schaeden</div>
+          <div class="entity-table" style="font-size:10px">Schadensmeldungen — erweitert</div>
+        </div>
+      </div>
+      <div class="entity-field"><span class="field-name">id <span class="field-key pk">PK</span></span><span class="field-type">serial</span></div>
+      <div class="entity-field"><span class="field-name">fahrer_id <span class="field-key fk">FK</span></span><span class="field-type" style="color:#7c3aed">→ fahrer <span style="font-size:9px;background:#dbeafe;color:#0c2461;padding:1px 4px;border-radius:3px">NEU</span></span></div>
+      <div class="entity-field"><span class="field-name">fuhrpark_id <span class="field-key fk">FK</span></span><span class="field-type" style="color:#7c3aed">→ fuhrparks <span style="font-size:9px;background:#dbeafe;color:#0c2461;padding:1px 4px;border-radius:3px">NEU</span></span></div>
+      <div class="entity-field"><span class="field-name">fall_nr</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">status</span><span class="field-type">text</span></div>
+      <div class="entity-field"><span class="field-name">created_at</span><span class="field-type">timestamptz</span></div>
+      <div class="entity-field"><span class="field-name">… (alle Felder)</span><span class="field-type">— unverändert</span></div>
+    </div>
+
+  </div>
+
+  <!-- Zugriffsrechte -->
+  <div style="margin-bottom:8px;font-size:12px;font-weight:700;color:#0c2461;">Zugriffsrechte pro Rolle</div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th>Aktion</th>
+        <th>IMD Admin</th>
+        <th>Fahrer</th>
+        <th>Nicht eingeloggt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Fuhrparks anlegen / verwalten</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Fahrer anlegen / einladen</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Alle Schadensmeldungen sehen</td><td class="access-yes">✓ Alle</td><td class="access-own">Nur eigene</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Schadenmeldung einreichen</td><td class="access-yes">✓ Ja</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Status einer Meldung ändern</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Dashboard / Statistiken</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td><td class="access-no">✗ Nein</td></tr>
+      <tr><td>Werkstätten verwalten</td><td class="access-yes">✓ Ja</td><td class="access-no">✗ Nein</td><td class="access-no">✗ Nein</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     SCHEMA 2 — LOGIN & ACCOUNT-ERSTELLUNG
+     ═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Schema 2</div>
+  <div class="section-title">Fahrer-Login &amp; Account-Erstellung — Ablauf</div>
+
+  <div class="two-col" style="margin-bottom:32px;">
+    <div class="info-box">
+      <div class="info-box-title"><span>A</span> Warum Einladungsbasiert?</div>
+      <ul class="info-list">
+        <li>Kein Fahrer kann sich ohne IMD-Freigabe registrieren</li>
+        <li>Jeder Account ist einem verifizierten Fuhrpark zugeordnet</li>
+        <li>Kein Spam / unerwünschte Zugänge möglich</li>
+        <li>IMD behält volle Kontrolle über alle Zugänge</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title"><span>B</span> Zwei Einstiegswege</div>
+      <ul class="info-list">
+        <li>IMD legt Fahrer direkt im Admin-Dashboard an</li>
+        <li>Fuhrpark-Kontakt schickt eine Liste an IMD → Massenimport</li>
+        <li>System sendet automatisch den Einladungslink per E-Mail</li>
+        <li>Link ist 72 Stunden gültig, einmalig verwendbar</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Flow Steps -->
+  <div style="font-size:12px;font-weight:700;color:#546e8a;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Schritt-für-Schritt Ablauf</div>
+
+  <div class="flow">
+
+    <div class="flow-step">
+      <div class="step-dot navy">1</div>
+      <div class="step-content">
+        <div class="step-title">IMD legt Fahrer an</div>
+        <div class="step-sub">
+          Im IMD-Dashboard: Name, E-Mail und Fuhrpark-Zuordnung eingeben.<br>
+          System erstellt einen einmaligen <code>invite_token</code> und speichert <code>aktiv = false</code>.
+        </div>
+        <span class="step-badge badge-route">POST /api/fahrer</span>
+        <span class="step-badge badge-db">DB: fahrer INSERT</span>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="step-dot blue">2</div>
+      <div class="step-content">
+        <div class="step-title">Einladungs-E-Mail wird automatisch versendet</div>
+        <div class="step-sub">
+          System sendet eine E-Mail an den Fahrer via Resend:<br>
+          <em>„Sie wurden von [Fuhrpark GmbH] eingeladen. Klicken Sie hier, um Ihr Konto zu aktivieren."</em><br>
+          Link enthält den Token: <code>/fahrer/aktivieren?token=abc123…</code>
+        </div>
+        <span class="step-badge badge-email">E-Mail via Resend</span>
+        <span class="step-badge badge-action">Token: 72h gültig</span>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="step-dot teal">3</div>
+      <div class="step-content">
+        <div class="step-title">Fahrer aktiviert Konto &amp; setzt Passwort</div>
+        <div class="step-sub">
+          Fahrer öffnet Link → Seite <code>/fahrer/aktivieren</code> → gibt Passwort ein.<br>
+          System prüft Token-Gültigkeit, setzt Passwort (bcrypt), markiert <code>aktiv = true</code>, löscht Token.
+        </div>
+        <span class="step-badge badge-route">GET /fahrer/aktivieren?token=…</span>
+        <span class="step-badge badge-db">DB: fahrer UPDATE</span>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="step-dot amber">4</div>
+      <div class="step-content">
+        <div class="step-title">Fahrer loggt sich ein</div>
+        <div class="step-sub">
+          Seite: <code>/fahrer/login</code> — E-Mail + Passwort.<br>
+          Bei Erfolg: Session wird erstellt (<code>req.session.fahrerId</code>), Weiterleitung zu <code>/schaden</code>.<br>
+          Das Formular wird mit den Fahrerdaten <strong>vorausgefüllt</strong> (Name, E-Mail, Fuhrpark).
+        </div>
+        <span class="step-badge badge-route">POST /api/fahrer/login</span>
+        <span class="step-badge badge-db">Session: fahrerId</span>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="step-dot check">✓</div>
+      <div class="step-content">
+        <div class="step-title">Fahrer reicht Schadenmeldung ein</div>
+        <div class="step-sub">
+          Formular ist vorausgefüllt. Fahrer ergänzt Schaden-Details und sendet ab.<br>
+          Meldung wird <code>fahrer_id</code> und <code>fuhrpark_id</code> zugeordnet.<br>
+          IMD und Fahrer erhalten Bestätigungs-E-Mail mit Schadennummer.
+        </div>
+        <span class="step-badge badge-route">POST /api/schaden</span>
+        <span class="step-badge badge-db">DB: schaeden INSERT</span>
+        <span class="step-badge badge-email">E-Mail → IMD + Fahrer</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- URL Übersicht -->
+  <div style="margin-top:32px;">
+    <div style="font-size:12px;font-weight:700;color:#546e8a;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Neue URLs (Fahrer-Bereich)</div>
+    <table class="url-table">
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>Methode</th>
+          <th>Zweck</th>
+          <th>Auth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>/fahrer/login</code></td><td>GET</td><td>Login-Seite für Fahrer</td><td>—</td></tr>
+        <tr><td><code>/api/fahrer/login</code></td><td>POST</td><td>Login verarbeiten → Session</td><td>—</td></tr>
+        <tr><td><code>/fahrer/aktivieren</code></td><td>GET</td><td>Konto aktivieren (Token-Link)</td><td>Token</td></tr>
+        <tr><td><code>/api/fahrer/aktivieren</code></td><td>POST</td><td>Passwort setzen + aktivieren</td><td>Token</td></tr>
+        <tr><td><code>/api/fahrer/logout</code></td><td>POST</td><td>Session beenden</td><td>Fahrer</td></tr>
+        <tr><td><code>/api/fahrer</code></td><td>GET</td><td>Alle Fahrer (gefiltert nach Fuhrpark)</td><td>IMD Admin</td></tr>
+        <tr><td><code>/api/fahrer</code></td><td>POST</td><td>Neuen Fahrer anlegen + Einladung senden</td><td>IMD Admin</td></tr>
+        <tr><td><code>/api/fuhrparks</code></td><td>GET / POST</td><td>Fuhrparks verwalten</td><td>IMD Admin</td></tr>
+        <tr><td><code>/schaden</code></td><td>GET</td><td>Schadenmeldungsformular (vorausgefüllt)</td><td>Fahrer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#8899aa;font-size:11px;margin-top:32px;">
+  IMD Fleet Services — Internes Konzeptdokument · Stand: Mai 2026
+</div>
+
+</body>
+</html>
