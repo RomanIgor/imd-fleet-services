@@ -70,6 +70,51 @@ async function initDB() {
     )
   `);
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS fuhrparks (
+      id            SERIAL PRIMARY KEY,
+      name          TEXT NOT NULL,
+      kontakt_email TEXT,
+      telefon       TEXT,
+      aktiv         BOOLEAN NOT NULL DEFAULT true,
+      created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS fuhrpark_users (
+      id            SERIAL PRIMARY KEY,
+      fuhrpark_id   INTEGER NOT NULL REFERENCES fuhrparks(id),
+      name          TEXT NOT NULL,
+      email         TEXT NOT NULL UNIQUE,
+      password_hash TEXT,
+      aktiv         BOOLEAN NOT NULL DEFAULT false,
+      created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS fahrer (
+      id                 SERIAL PRIMARY KEY,
+      fuhrpark_id        INTEGER NOT NULL REFERENCES fuhrparks(id),
+      vorname            TEXT NOT NULL,
+      nachname           TEXT NOT NULL,
+      telefon            TEXT,
+      email              TEXT UNIQUE,
+      password_hash      TEXT,
+      salt               TEXT,
+      invite_token       TEXT,
+      invite_expires_at  TIMESTAMPTZ,
+      reset_token        TEXT,
+      reset_expires_at   TIMESTAMPTZ,
+      aktiv              BOOLEAN NOT NULL DEFAULT false,
+      created_at         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `);
+  await pool.query(`
+    ALTER TABLE schaeden
+      ADD COLUMN IF NOT EXISTS fahrer_id   INTEGER REFERENCES fahrer(id),
+      ADD COLUMN IF NOT EXISTS fuhrpark_id INTEGER REFERENCES fuhrparks(id)
+  `);
+
   const { rows } = await pool.query('SELECT COUNT(*) FROM users');
   if (parseInt(rows[0].count) === 0) {
     const u = process.env.DASH_USER || 'admin';
