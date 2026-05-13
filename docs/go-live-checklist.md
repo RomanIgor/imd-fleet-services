@@ -23,3 +23,20 @@
 
 - [ ] Solicită indexare manuală în Google Search Console
 - [ ] Testează site-ul pe mobil și desktop
+
+## Infrastructură — după go-live
+
+- [ ] **Migrează la Hetzner Managed PostgreSQL** (~15€/lună)
+  - `pg_dump $DATABASE_URL > backup_pre_migration.sql` pe serverul actual
+  - Creează Managed DB în Hetzner Console
+  - `pg_restore` pe noul DB
+  - Actualizează `DATABASE_URL` în `.env`
+  - `pm2 restart imd-fleet`
+  - Șterge DB-ul local de pe server
+  - Beneficii: backup-uri automate zilnice, failover, fără administrare manuală
+
+## Costuri infrastructură (până la go-live)
+
+- **Hetzner Snapshot**: 0,017017 €/GB/lună (inkl. 19% USt.)
+  - Fă snapshot manual săptămânal în Hetzner Console până la go-live
+  - După go-live: Managed DB include backup-uri automate, snapshot-urile devin opționale
