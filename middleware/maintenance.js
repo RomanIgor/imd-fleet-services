@@ -5,6 +5,9 @@ const MAINTENANCE_PUBLIC = [
   '/logo_dark.png', '/logo_light.png', '/maintenance',
   '/api/login', '/api/logout', '/api/check-auth',
   '/api/werkstaetten', '/api/schaden', '/api/chat',
+  '/fahrer/login', '/fahrer/aktivieren', '/fahrer/passwort-vergessen', '/fahrer/passwort-reset',
+  '/api/fahrer/login', '/api/fahrer/aktivieren', '/api/fahrer/logout',
+  '/api/fahrer/passwort-vergessen', '/api/fahrer/passwort-reset',
 ];
 
 function setupMaintenance(app) {
