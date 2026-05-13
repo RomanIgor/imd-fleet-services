@@ -381,37 +381,45 @@ async function createFahrer() {
     msg.textContent = 'Alle Pflichtfelder ausfüllen.';
     return;
   }
-  const res = await fetch('/api/fahrer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ vorname, nachname, email, telefon: telefon || null, fuhrpark_id: parseInt(fuhrpark_id) })
-  }).then(r => r.json());
-  if (res.success) {
-    msg.style.cssText = 'display:block;color:var(--green)';
-    msg.textContent = 'Fahrer angelegt — Einladung gesendet.';
-    document.getElementById('fVorname').value = '';
-    document.getElementById('fNachname').value = '';
-    document.getElementById('fEmail').value = '';
-    document.getElementById('fTel').value = '';
-    document.getElementById('fFuhrpark').value = '';
-    loadFahrer();
-    setTimeout(() => { msg.style.display = 'none'; }, 4000);
-  } else {
+  try {
+    const res = await fetch('/api/fahrer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ vorname, nachname, email, telefon: telefon || null, fuhrpark_id: parseInt(fuhrpark_id) })
+    }).then(r => r.json());
+    if (res.success) {
+      msg.style.cssText = 'display:block;color:var(--green)';
+      msg.textContent = 'Fahrer angelegt — Einladung gesendet.';
+      document.getElementById('fVorname').value = '';
+      document.getElementById('fNachname').value = '';
+      document.getElementById('fEmail').value = '';
+      document.getElementById('fTel').value = '';
+      document.getElementById('fFuhrpark').value = '';
+      loadFahrer();
+      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    } else {
+      msg.style.cssText = 'display:block;color:var(--red)';
+      msg.textContent = res.error === 'E-Mail bereits vergeben'
+        ? 'Diese E-Mail ist bereits registriert.'
+        : (res.error || 'Fehler');
+    }
+  } catch(e) {
+    console.error(e);
     msg.style.cssText = 'display:block;color:var(--red)';
-    msg.textContent = res.error === 'E-Mail bereits vergeben'
-      ? 'Diese E-Mail ist bereits registriert.'
-      : (res.error || 'Fehler');
+    msg.textContent = 'Netzwerkfehler. Bitte erneut versuchen.';
   }
 }
 
 async function toggleFahrerStatus(id, aktiv) {
-  const res = await fetch(`/api/fahrer/${id}/status`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ aktiv })
-  }).then(r => r.json());
-  if (res.success) loadFahrer();
-  else showToast('⚠ ' + (res.error || 'Fehler'));
+  try {
+    const res = await fetch(`/api/fahrer/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ aktiv })
+    }).then(r => r.json());
+    if (res.success) loadFahrer();
+    else showToast('⚠ ' + (res.error || 'Fehler'));
+  } catch(e) { console.error(e); showToast('⚠ Netzwerkfehler'); }
 }
 
 function deleteFahrer(id) {
