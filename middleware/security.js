@@ -65,7 +65,7 @@ const authLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Zu viele Versuche. Bitte später erneut versuchen.' },
+  message: { error: 'Zu viele Versuche. Bitte versuchen Sie es in 15 Minuten erneut.' },
 });
 
 const resetLimiter = rateLimit({
@@ -73,7 +73,7 @@ const resetLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Zu viele Anfragen. Bitte später erneut versuchen.' },
+  message: { error: 'Zu viele Anfragen. Bitte versuchen Sie es in 60 Minuten erneut.' },
 });
 
 const formLimiter = rateLimit({
@@ -81,7 +81,7 @@ const formLimiter = rateLimit({
   limit: 20,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { success: false, error: 'Zu viele Anfragen. Bitte später erneut versuchen.' },
+  message: { success: false, error: 'Zu viele Anfragen. Bitte versuchen Sie es in 15 Minuten erneut.' },
 });
 
 const chatLimiter = rateLimit({
@@ -89,7 +89,7 @@ const chatLimiter = rateLimit({
   limit: 30,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { reply: 'Zu viele Anfragen. Bitte versuchen Sie es später erneut.' },
+  message: { reply: 'Zu viele Anfragen. Bitte versuchen Sie es in 5 Minuten erneut.' },
 });
 
 module.exports = {
