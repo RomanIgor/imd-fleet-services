@@ -270,12 +270,16 @@ async function deleteWerkstatt(id, name) {
 // ─── FUHRPARKS ───
 let _fuhrparksCache = [];
 
-async function loadFuhrparks() {
+async function loadFuhrparks(showRefreshToast = false) {
   try {
     const rows = await fetch('/api/fuhrparks').then(r => r.json());
-    _fuhrparksCache = rows;
     const tbody = document.getElementById('tblFuhrparks');
     if (!tbody) return;
+    if (!Array.isArray(rows)) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden — bitte Seite neu laden.</td></tr>';
+      return;
+    }
+    _fuhrparksCache = rows;
     if (!rows.length) {
       tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:24px">Keine Fuhrparks angelegt</td></tr>';
       return;
@@ -286,13 +290,14 @@ async function loadFuhrparks() {
         <td>${fp.kontakt_email || '—'}</td>
         <td>${fp.telefon || '—'}</td>
         <td>${fmtDate(fp.created_at)}</td>
-        <td><button class="tbl-sel" style="cursor:pointer" onclick="editFuhrparkById(${fp.id})">✏ Bearbeiten</button></td>
+        <td><button class="td-btn" onclick="editFuhrparkById(${fp.id})">Bearbeiten</button></td>
       </tr>
     `).join('');
+    if (showRefreshToast) showToast('✓ Aktualisiert');
   } catch(e) {
     console.error(e);
     const tbody = document.getElementById('tblFuhrparks');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden. Bitte neu laden.</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden — bitte Seite neu laden.</td></tr>';
   }
 }
 
@@ -365,11 +370,15 @@ async function loadFuhrparkDropdown() {
   } catch(e) { console.error(e); }
 }
 
-async function loadFahrer() {
+async function loadFahrer(showRefreshToast = false) {
   try {
     const rows = await fetch('/api/fahrer').then(r => r.json());
     const tbody = document.getElementById('tblFahrer');
     if (!tbody) return;
+    if (!Array.isArray(rows)) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden — bitte Seite neu laden.</td></tr>';
+      return;
+    }
     if (!rows.length) {
       tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:24px">Keine Fahrer angelegt</td></tr>';
       return;
@@ -377,29 +386,34 @@ async function loadFahrer() {
     tbody.innerHTML = rows.map(f => {
       let badge;
       if (f.aktiv) {
-        badge = '<span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Aktiv</span>';
+        badge = '<span style="background:#dcfce7;color:#166534;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700">Aktiv</span>';
       } else if (f.has_invite_token) {
-        badge = '<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Einladung offen</span>';
+        badge = '<span style="background:#fef3c7;color:#92400e;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700">Einladung offen</span>';
       } else {
-        badge = '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Inaktiv</span>';
+        badge = '<span style="background:#fee2e2;color:#991b1b;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:700">Inaktiv</span>';
       }
       const toggleBtn = f.aktiv
-        ? `<button class="tbl-sel" style="cursor:pointer" onclick="toggleFahrerStatus(${f.id},false)" title="Deaktivieren">⏸</button>`
+        ? `<button class="td-btn" onclick="toggleFahrerStatus(${f.id},false)">Pause</button>`
         : (!f.has_invite_token
-            ? `<button class="tbl-sel" style="cursor:pointer" onclick="toggleFahrerStatus(${f.id},true)" title="Reaktivieren">▶</button>`
+            ? `<button class="td-btn" onclick="toggleFahrerStatus(${f.id},true)">Aktivieren</button>`
             : '');
       return `<tr>
         <td><strong>${f.vorname} ${f.nachname}</strong></td>
-        <td style="color:var(--t2)">${f.fuhrpark_name}</td>
-        <td style="font-size:12px;color:var(--t2)">${f.email || '—'}</td>
+        <td>${f.fuhrpark_name}</td>
+        <td>${f.email || '—'}</td>
         <td>${badge}</td>
-        <td id="fAkt${f.id}" style="white-space:nowrap;display:flex;gap:4px;align-items:center">
+        <td id="fAkt${f.id}"><div style="display:flex;gap:6px;align-items:center">
           ${toggleBtn}
-          <button class="tbl-sel" style="cursor:pointer;color:var(--red)" onclick="deleteFahrer(${f.id})" title="DSGVO löschen">🗑</button>
-        </td>
+          <button class="td-btn" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="deleteFahrer(${f.id})">Löschen</button>
+        </div></td>
       </tr>`;
     }).join('');
-  } catch(e) { console.error(e); }
+    if (showRefreshToast) showToast('✓ Aktualisiert');
+  } catch(e) {
+    console.error(e);
+    const tbody = document.getElementById('tblFahrer');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden — bitte Seite neu laden.</td></tr>';
+  }
 }
 
 async function createFahrer() {
@@ -457,11 +471,11 @@ async function toggleFahrerStatus(id, aktiv) {
 function deleteFahrer(id) {
   const cell = document.getElementById('fAkt' + id);
   if (!cell) return;
-  cell.innerHTML = `
-    <span style="font-size:11px;color:var(--red);font-weight:600">Wirklich anonymisieren?</span>
-    <button class="tbl-sel" style="cursor:pointer;color:var(--red)" onclick="confirmDeleteFahrer(${id})">Ja</button>
-    <button class="tbl-sel" style="cursor:pointer" onclick="loadFahrer()">Nein</button>
-  `;
+  cell.innerHTML = `<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <span style="font-size:13px;color:var(--red);font-weight:600">Wirklich anonymisieren?</span>
+    <button class="td-btn" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="confirmDeleteFahrer(${id})">Ja, löschen</button>
+    <button class="td-btn" onclick="loadFahrer()">Abbrechen</button>
+  </div>`;
 }
 
 async function confirmDeleteFahrer(id) {

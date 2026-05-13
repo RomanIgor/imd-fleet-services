@@ -1,8 +1,8 @@
 const express = require('express');
 
 const MAINTENANCE_PUBLIC = [
-  '/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/logo_dark.png', '/logo_light.png', '/maintenance',
+  '/', '/intern', '/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png',
+  '/logo_dark.png', '/logo_light.png', '/maintenance', '/main.js', '/style.css',
   '/api/login', '/api/logout', '/api/check-auth',
   '/api/werkstaetten', '/api/schaden', '/api/chat',
   '/fahrer/login', '/fahrer/aktivieren', '/fahrer/passwort-vergessen', '/fahrer/passwort-reset',
