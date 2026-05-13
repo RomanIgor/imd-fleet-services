@@ -40,9 +40,11 @@ router.get('/api/fahrer', requireAdmin, async (req, res) => {
   try {
     const { rows } = await pool.query(`
       SELECT f.id, f.vorname, f.nachname, f.telefon, f.email, f.aktiv, f.created_at,
-             fp.name AS fuhrpark_name, fp.id AS fuhrpark_id
+             fp.name AS fuhrpark_name, fp.id AS fuhrpark_id,
+             (f.invite_token IS NOT NULL) AS has_invite_token
       FROM fahrer f
       JOIN fuhrparks fp ON fp.id = f.fuhrpark_id
+      WHERE f.vorname != 'Gelöscht'
       ORDER BY f.created_at DESC
     `);
     res.json(rows);
