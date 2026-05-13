@@ -8,7 +8,7 @@ const { Resend }     = require('resend');
 const { pool, hashPassword, verifyPassword } = require('../db');
 const requireAdmin      = require('../middleware/requireAdmin');
 const requireFahrerAuth = require('../middleware/requireFahrerAuth');
-const { authLimiter, escapeHtml, fahrerAuthLimiter, resetLimiter } = require('../middleware/security');
+const { authLimiter, escapeHtml, fahrerAuthLimiter, passwordResetLimiter, resetRequestLimiter } = require('../middleware/security');
 
 // ── FUHRPARKS ─────────────────────────────────────────────────────────────────
 
@@ -272,24 +272,28 @@ router.get('/fahrer/passwort-vergessen', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'fahrer-passwort.html'));
 });
 
-router.post('/api/fahrer/reset-anfragen', resetLimiter, async (req, res) => {
+router.post('/api/fahrer/reset-anfragen', resetRequestLimiter, async (req, res) => {
   // Respond immediately regardless — prevents email enumeration
   res.json({ success: true, message: 'Wenn die E-Mail bekannt ist, wurde ein Link gesendet.' });
   const { email } = req.body;
   if (!email) return;
   try {
     const { rows } = await pool.query(
-      'SELECT id, vorname FROM fahrer WHERE email=$1 AND aktiv=true',
+      'SELECT id, vorname, reset_token, reset_expires_at FROM fahrer WHERE email=$1 AND aktiv=true',
       [email.trim().toLowerCase()]
     );
     if (!rows.length) return;
     const { id, vorname } = rows[0];
-    const reset_token      = crypto.randomBytes(32).toString('hex');
-    const reset_expires_at = new Date(Date.now() + 15 * 60 * 1000);
-    await pool.query(
-      'UPDATE fahrer SET reset_token=$1, reset_expires_at=$2 WHERE id=$3',
-      [reset_token, reset_expires_at, id]
-    );
+    let reset_token = rows[0].reset_token;
+    let reset_expires_at = rows[0].reset_expires_at;
+    if (!reset_token || !reset_expires_at || new Date(reset_expires_at).getTime() <= Date.now()) {
+      reset_token      = crypto.randomBytes(32).toString('hex');
+      reset_expires_at = new Date(Date.now() + 15 * 60 * 1000);
+      await pool.query(
+        'UPDATE fahrer SET reset_token=$1, reset_expires_at=$2 WHERE id=$3',
+        [reset_token, reset_expires_at, id]
+      );
+    }
     const BASE_URL  = process.env.BASE_URL || `http://localhost:${process.env.PORT || 8000}`;
     const resetLink = `${BASE_URL}/fahrer/passwort-reset?token=${reset_token}`;
     const resend    = new Resend(process.env.RESEND_API_KEY);
@@ -329,7 +333,7 @@ router.get('/fahrer/passwort-reset', async (req, res) => {
   }
 });
 
-router.post('/api/fahrer/reset', resetLimiter, async (req, res) => {
+router.post('/api/fahrer/reset', passwordResetLimiter, async (req, res) => {
   const { token, password } = req.body;
   if (!token || !password || password.length < 8) {
     return res.status(400).json({ error: 'Token und Passwort (mind. 8 Zeichen) erforderlich' });

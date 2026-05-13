@@ -76,12 +76,20 @@ const fahrerAuthLimiter = rateLimit({
   message: { error: 'Zu viele falsche Anmeldeversuche. Bitte nutzen Sie "Passwort vergessen", um ein neues Passwort zu setzen.' },
 });
 
-const resetLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  limit: 5,
+const resetRequestLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Zu viele Anfragen. Bitte versuchen Sie es in 60 Minuten erneut.' },
+  message: { error: 'Zu viele Anfragen. Bitte versuchen Sie es in 15 Minuten erneut.' },
+});
+
+const passwordResetLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Zu viele Versuche. Bitte fordern Sie einen neuen Passwort-Link an.' },
 });
 
 const formLimiter = rateLimit({
@@ -108,7 +116,8 @@ module.exports = {
   fahrerAuthLimiter,
   formLimiter,
   logError,
+  passwordResetLimiter,
   requireCsrf,
-  resetLimiter,
+  resetRequestLimiter,
   sendError,
 };
