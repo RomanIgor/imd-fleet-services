@@ -230,6 +230,21 @@ router.get('/api/fahrer/me', requireFahrerAuth, async (req, res) => {
   }
 });
 
+router.get('/api/fahrer/meine-schaeden', requireFahrerAuth, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT fall_nr, kennzeichen, status, created_at
+       FROM schaeden
+       WHERE fahrer_id = $1
+       ORDER BY created_at DESC`,
+      [req.session.fahrerId]
+    );
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── Schaden form — requires Fahrer session ────────────────────────────────────
 // Mounted BEFORE express.static in server.js so this route takes priority
 
