@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passwort — IMD Fleet Services</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: #fff; border-radius: 16px; padding: 40px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .logo { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; color: #0c2461; text-transform: uppercase; margin-bottom: 24px; }
+    h1 { font-size: 22px; font-weight: 800; color: #0c2461; margin-bottom: 8px; }
+    .sub { font-size: 14px; color: #546e8a; margin-bottom: 32px; line-height: 1.5; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #0c2461; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px 14px; border: 1.5px solid #dde6f0; border-radius: 8px; font-size: 15px; color: #1a2644; outline: none; margin-bottom: 20px; }
+    input:focus { border-color: #0c2461; }
+    button { width: 100%; padding: 14px; background: #0c2461; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 16px; }
+    button:hover { background: #1a4c96; }
+    .back { text-align: center; font-size: 13px; }
+    .back a { color: #546e8a; text-decoration: none; }
+    .error { background: #fee2e2; color: #991b1b; border-radius: 8px; padding: 12px; font-size: 13px; margin-bottom: 16px; display: none; }
+    .success { background: #dcfce7; color: #166534; border-radius: 8px; padding: 12px; font-size: 13px; margin-bottom: 16px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">IMD Fleet Services</div>
+    <div id="error" class="error"></div>
+    <div id="success" class="success"></div>
+
+    <!-- View A: forgot password (no token in URL) -->
+    <div id="view-forgot">
+      <h1>Passwort vergessen?</h1>
+      <p class="sub">Geben Sie Ihre E-Mail-Adresse ein. Sie erhalten einen Link zum Zurücksetzen des Passworts.</p>
+      <form id="forgot-form">
+        <label>E-Mail-Adresse</label>
+        <input type="email" id="forgot-email" required placeholder="ihre@email.de">
+        <button type="submit">Link senden →</button>
+      </form>
+      <div class="back"><a href="/fahrer/login">← Zurück zur Anmeldung</a></div>
+    </div>
+
+    <!-- View B: set new password (token in URL) -->
+    <div id="view-reset" style="display:none">
+      <h1>Neues Passwort</h1>
+      <p class="sub">Wählen Sie ein neues Passwort für Ihr Konto.</p>
+      <form id="reset-form">
+        <input type="hidden" id="reset-token">
+        <label>Neues Passwort <span style="color:#888;font-weight:400">(mind. 8 Zeichen)</span></label>
+        <input type="password" id="reset-password" minlength="8" required placeholder="Neues Passwort">
+        <label>Passwort bestätigen</label>
+        <input type="password" id="reset-password2" required placeholder="Passwort wiederholen">
+        <button type="submit">Passwort speichern →</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const token  = params.get('token');
+
+    if (token) {
+      document.getElementById('view-forgot').style.display = 'none';
+      document.getElementById('view-reset').style.display  = 'block';
+      document.getElementById('reset-token').value = token;
+    }
+
+    document.getElementById('forgot-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const err = document.getElementById('error');
+      const ok  = document.getElementById('success');
+      err.style.display = 'none';
+      const res  = await fetch('/api/fahrer/reset-anfragen', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: document.getElementById('forgot-email').value.trim() }),
+      });
+      const data = await res.json();
+      ok.textContent   = data.message || 'Link wurde gesendet.';
+      ok.style.display = 'block';
+      document.getElementById('forgot-form').style.display = 'none';
+    });
+
+    document.getElementById('reset-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pw  = document.getElementById('reset-password').value;
+      const pw2 = document.getElementById('reset-password2').value;
+      const err = document.getElementById('error');
+      if (pw !== pw2) { err.textContent = 'Passwörter stimmen nicht überein.'; err.style.display = 'block'; return; }
+      err.style.display = 'none';
+      const res  = await fetch('/api/fahrer/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: document.getElementById('reset-token').value, password: pw }),
+      });
+      const data = await res.json();
+      if (data.success) { location.href = data.redirect; }
+      else { err.textContent = data.error || 'Fehler.'; err.style.display = 'block'; }
+    });
+  </script>
+</body>
+</html>

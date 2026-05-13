@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmelden — IMD Fleet Services</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { background: #fff; border-radius: 16px; padding: 40px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .logo { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; color: #0c2461; text-transform: uppercase; margin-bottom: 24px; }
+    h1 { font-size: 22px; font-weight: 800; color: #0c2461; margin-bottom: 8px; }
+    .sub { font-size: 14px; color: #546e8a; margin-bottom: 32px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #0c2461; margin-bottom: 6px; }
+    input { width: 100%; padding: 12px 14px; border: 1.5px solid #dde6f0; border-radius: 8px; font-size: 15px; color: #1a2644; outline: none; margin-bottom: 20px; }
+    input:focus { border-color: #0c2461; }
+    button { width: 100%; padding: 14px; background: #0c2461; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 16px; }
+    button:hover { background: #1a4c96; }
+    .forgot { text-align: center; font-size: 13px; }
+    .forgot a { color: #546e8a; text-decoration: none; }
+    .forgot a:hover { color: #0c2461; }
+    .error { background: #fee2e2; color: #991b1b; border-radius: 8px; padding: 12px; font-size: 13px; margin-bottom: 16px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">IMD Fleet Services</div>
+    <h1>Anmelden</h1>
+    <p class="sub">Schadenmeldung einreichen</p>
+    <div class="error" id="error"></div>
+    <form id="form">
+      <label>E-Mail-Adresse</label>
+      <input type="email" id="email" required placeholder="ihre@email.de" autocomplete="email">
+      <label>Passwort</label>
+      <input type="password" id="password" required placeholder="Passwort" autocomplete="current-password">
+      <button type="submit">Anmelden →</button>
+    </form>
+    <div class="forgot"><a href="/fahrer/passwort-vergessen">Passwort vergessen?</a></div>
+  </div>
+  <script>
+    document.getElementById('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const err = document.getElementById('error');
+      err.style.display = 'none';
+      const res = await fetch('/api/fahrer/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email:    document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) { location.href = data.redirect; }
+      else { err.textContent = data.error || 'Anmeldung fehlgeschlagen.'; err.style.display = 'block'; }
+    });
+  </script>
+</body>
+</html>
