@@ -268,9 +268,12 @@ async function deleteWerkstatt(id, name) {
 }
 
 // ─── FUHRPARKS ───
+let _fuhrparksCache = [];
+
 async function loadFuhrparks() {
   try {
     const rows = await fetch('/api/fuhrparks').then(r => r.json());
+    _fuhrparksCache = rows;
     const tbody = document.getElementById('tblFuhrparks');
     if (!tbody) return;
     if (!rows.length) {
@@ -283,7 +286,7 @@ async function loadFuhrparks() {
         <td>${fp.kontakt_email || '—'}</td>
         <td>${fp.telefon || '—'}</td>
         <td>${fmtDate(fp.created_at)}</td>
-        <td><button class="tbl-sel" style="cursor:pointer" onclick="editFuhrpark(${fp.id},${JSON.stringify(fp.name)},${JSON.stringify(fp.kontakt_email||'')},${JSON.stringify(fp.telefon||'')})">✏ Bearbeiten</button></td>
+        <td><button class="tbl-sel" style="cursor:pointer" onclick="editFuhrparkById(${fp.id})">✏ Bearbeiten</button></td>
       </tr>
     `).join('');
   } catch(e) {
@@ -321,6 +324,11 @@ async function createFuhrpark() {
     msg.style.cssText = 'display:block;color:var(--red)';
     msg.textContent = res.error || 'Fehler';
   }
+}
+
+function editFuhrparkById(id) {
+  const fp = _fuhrparksCache.find(f => f.id === id);
+  if (fp) editFuhrpark(fp.id, fp.name, fp.kontakt_email || '', fp.telefon || '');
 }
 
 function editFuhrpark(id, name, email, tel) {
