@@ -1,8 +1,8 @@
 const express = require('express');
 
 const MAINTENANCE_PUBLIC = [
-  '/', '/intern', '/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/logo_dark.png', '/logo_light.png', '/maintenance', '/main.js', '/style.css',
+  '/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png',
+  '/logo_dark.png', '/logo_light.png', '/maintenance',
   '/api/login', '/api/logout', '/api/check-auth',
   '/api/werkstaetten', '/api/schaden', '/api/chat',
   '/fahrer/login', '/fahrer/aktivieren', '/fahrer/passwort-vergessen', '/fahrer/passwort-reset',
@@ -62,7 +62,7 @@ function setupMaintenance(app) {
     if (MAINTENANCE_PUBLIC.includes(req.path)) return next();
     if (req.path.startsWith('/api/schaden')) return next();
     if (req.path.startsWith('/api/maintenance')) return next();
-    if (req.session && (req.session.maintenanceAuth || req.session.loggedIn)) return next();
+    if (req.session && (req.session.maintenanceAuth || req.session.user)) return next();
     if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Maintenance' });
     req.session.maintenanceRedirect = req.path;
     res.redirect('/maintenance');
