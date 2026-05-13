@@ -285,7 +285,11 @@ async function loadFuhrparks() {
         <td>${fmtDate(fp.created_at)}</td>
       </tr>
     `).join('');
-  } catch(e) { console.error(e); }
+  } catch(e) {
+    console.error(e);
+    const tbody = document.getElementById('tblFuhrparks');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden. Bitte neu laden.</td></tr>';
+  }
 }
 
 async function createFuhrpark() {
