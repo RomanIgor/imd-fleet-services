@@ -593,7 +593,7 @@
   }
   .mod-tile:active { transform: scale(0.97); }
   .mod-tile:hover { box-shadow: var(--shadow); border-color: #c7dfe9; }
-  .mod-tile.active-mod { border-color: var(--imd-blue); background: linear-gradient(160deg, #f0fafd 0%, var(--card) 100%); cursor: default; }
+  .mod-tile.active-mod { border-color: var(--imd-blue); background: linear-gradient(160deg, #f0fafd 0%, var(--card) 100%); cursor: pointer; }
   [data-theme="dark"] .mod-tile.active-mod { background: linear-gradient(160deg, rgba(45,159,192,0.08) 0%, var(--card) 100%); }
   .mod-tile-ico {
     width: 40px; height: 40px; border-radius: 12px;
@@ -678,6 +678,52 @@
   }
   .bn-lbl { font-size: 10px; font-weight: 700; }
   [data-theme="dark"] .bottom-nav { background: var(--card); border-top-color: var(--border); box-shadow: 0 -4px 16px rgba(0,0,0,0.4); }
+
+  /* VIEW SYSTEM */
+  .app-view { display: none; }
+  .app-view.v-active { display: block; }
+
+  /* HOME GREETING */
+  .home-greeting {
+    background: linear-gradient(135deg, var(--imd-darker) 0%, var(--imd-dark) 60%, var(--imd-mid) 100%);
+    border-radius: var(--radius-lg); padding: 20px 20px 18px; margin-bottom: 16px;
+    color: white; position: relative; overflow: hidden;
+  }
+  .home-greeting::after {
+    content: ""; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(45,159,192,0.35) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .home-greeting > * { position: relative; z-index: 1; }
+  .home-greeting-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 3px; }
+  .home-greeting-name { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .home-greeting-fleet { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* VIEW HEADER */
+  .view-header { margin-bottom: 16px; }
+  .view-header-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+  .view-header-sub { font-size: 12px; color: var(--text-soft); margin-top: 3px; }
+
+  /* MEINE FÄLLE */
+  .fall-list { display: flex; flex-direction: column; gap: 10px; }
+  .fall-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow-sm); }
+  .fall-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .fall-nr { font-size: 13px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
+  .fall-meta { display: flex; gap: 12px; font-size: 11px; color: var(--text-mid); }
+  .fall-badge-neu  { background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .fall-badge-in   { background: var(--amber-bg); color: var(--amber); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .fall-badge-done { background: var(--green-bg); color: var(--green); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .fall-empty { text-align: center; padding: 40px 20px; color: var(--text-soft); font-size: 13px; line-height: 1.6; }
+
+  /* HILFE */
+  .hilfe-contact { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); margin-bottom: 16px; }
+  .hilfe-contact-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .hilfe-contact-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-mid); padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .hilfe-contact-row:last-child { border-bottom: none; }
+
+  /* NAV ABMELDEN */
+  .bn-item.bn-logout { color: var(--red); }
 </style>
 </head>
 <body>
@@ -747,6 +793,8 @@
     <symbol id="ic-home" viewBox="0 0 256 256"><path fill="currentColor" d="M224,120v96a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V164a4,4,0,0,0-4-4H108a4,4,0,0,0-4,4v52a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V120a16,16,0,0,1,4.69-11.31l80-80a16,16,0,0,1,22.62,0l80,80A16,16,0,0,1,224,120Z"/></symbol>
     <symbol id="ic-gebaeude" viewBox="0 0 256 256"><path fill="currentColor" d="M239.73,208H224V96a16,16,0,0,0-16-16H164a4,4,0,0,0-4,4V208H144V32.41a16.43,16.43,0,0,0-6.16-13,16,16,0,0,0-18.72-.69L39.12,72A16,16,0,0,0,32,85.34V208H16.27A8.18,8.18,0,0,0,8,215.47,8,8,0,0,0,16,224H240a8,8,0,0,0,8-8.53A8.18,8.18,0,0,0,239.73,208ZM76,184a8,8,0,0,1-8.53,8A8.18,8.18,0,0,1,60,183.72V168.27A8.19,8.19,0,0,1,67.47,160,8,8,0,0,1,76,168Zm0-56a8,8,0,0,1-8.53,8A8.19,8.19,0,0,1,60,127.72V112.27A8.19,8.19,0,0,1,67.47,104,8,8,0,0,1,76,112Zm40,56a8,8,0,0,1-8.53,8,8.18,8.18,0,0,1-7.47-8.26V168.27a8.19,8.19,0,0,1,7.47-8.26,8,8,0,0,1,8.53,8Zm0-56a8,8,0,0,1-8.53,8,8.19,8.19,0,0,1-7.47-8.26V112.27a8.19,8.19,0,0,1,7.47-8.26,8,8,0,0,1,8.53,8Z"/></symbol>
     <symbol id="ic-anhaenge" viewBox="0 0 256 256"><path fill="currentColor" d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm37.66,50.34a8,8,0,0,0-11.32,0L87.09,143A24,24,0,1,0,121,177l49.32-50.32a8,8,0,1,1,11.42,11.2l-49.37,50.38a40,40,0,1,1-56.62-56.51L143,63.09A24,24,0,1,1,177,97L109.71,165.6a8,8,0,1,1-11.42-11.2L165.6,85.71a8,8,0,0,0,.06-11.37Z"/></symbol>
+    <symbol id="ic-hilfe" viewBox="0 0 256 256"><path fill="currentColor" d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-4,48a12,12,0,1,1,12,12A12,12,0,0,1,124,72Zm12,112H120a8,8,0,0,1,0-16h4V128h-4a8,8,0,0,1,0-16h12a8,8,0,0,1,8,8v52h4a8,8,0,0,1,0,16Z"/></symbol>
+    <symbol id="ic-abmelden" viewBox="0 0 256 256"><path fill="currentColor" d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,24h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L196.69,120H104a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,221.66,122.34Z"/></symbol>
   </defs>
 </svg>
 
