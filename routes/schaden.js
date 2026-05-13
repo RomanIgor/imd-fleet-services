@@ -402,18 +402,21 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   const resend    = new Resend(process.env.RESEND_API_KEY);
 
   try {
+    const fahrerId   = req.session && req.session.fahrerId   ? req.session.fahrerId   : null;
+    const fuhrparkId = req.session && req.session.fuhrparkId ? req.session.fuhrparkId : null;
+
     const insertResult = await pool.query(
       `INSERT INTO schaeden
         (firma, fahrer_name, fahrer_email, fahrer_telefon, kennzeichen, fahrzeugtyp,
          baujahr, unfall_datum, unfall_uhrzeit, unfall_ort, fahrbereit, polizei_gerufen,
-         unfallgegner, beschreibung, ip)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+         unfallgegner, beschreibung, ip, fahrer_id, fuhrpark_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)
        RETURNING id`,
       [
         firma, fahrer_name, fahrer_email, fahrer_telefon, kennzeichen, fahrzeugtyp,
         baujahr, unfall_datum, unfall_uhrzeit, unfall_ort,
         fahrbereit === 'ja', polizei_gerufen === 'ja', unfallgegner === 'ja',
-        beschreibung, ip
+        beschreibung, ip, fahrerId, fuhrparkId
       ]
     );
     const id      = insertResult.rows[0].id;
