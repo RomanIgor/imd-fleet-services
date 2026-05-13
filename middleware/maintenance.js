@@ -8,6 +8,7 @@ const MAINTENANCE_PUBLIC = [
   '/fahrer/login', '/fahrer/aktivieren', '/fahrer/passwort-vergessen', '/fahrer/passwort-reset',
   '/api/fahrer/login', '/api/fahrer/aktivieren', '/api/fahrer/logout',
   '/api/fahrer/passwort-vergessen', '/api/fahrer/passwort-reset',
+  '/api/fahrer/reset-anfragen', '/api/fahrer/reset',
 ];
 
 function setupMaintenance(app) {
