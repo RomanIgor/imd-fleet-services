@@ -65,6 +65,7 @@ const authLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
+  skipSuccessfulRequests: true,
   message: { error: 'Zu viele Versuche. Bitte versuchen Sie es in 15 Minuten erneut.' },
 });
 
@@ -73,6 +74,7 @@ const fahrerAuthLimiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
+  skipSuccessfulRequests: true,
   message: { error: 'Zu viele falsche Anmeldeversuche. Bitte nutzen Sie "Passwort vergessen", um ein neues Passwort zu setzen.' },
 });
 
