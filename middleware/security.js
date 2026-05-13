@@ -40,6 +40,13 @@ function requireCsrf(req, res, next) {
 
   const exempt = new Set([
     '/api/maintenance-auth',
+    '/api/login',
+    '/api/fahrer/login',
+    '/api/fahrer/aktivieren',
+    '/api/fahrer/reset-anfragen',
+    '/api/fahrer/reset',
+    '/submit',
+    '/api/chat',
   ]);
   if (exempt.has(req.path)) return next();
 
