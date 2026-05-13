@@ -1957,12 +1957,15 @@ function showView(name) {
   }
   if (name === 'faelle') loadMeineFaelle();
   if (name === 'hilfe') renderFaq('hilfe-faq-content');
+  if (name === 'home') loadFahrerMe();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 async function loadFahrerMe() {
   try {
-    const r = await fetch('/api/fahrer/me').then(r => r.json());
+    const res = await fetch('/api/fahrer/me');
+    if (!res.ok) return;
+    const r = await res.json();
     const nameEl  = document.getElementById('home-fahrer-name');
     const fleetEl = document.getElementById('home-fuhrpark-name');
     if (nameEl)  nameEl.textContent  = r.vorname || '';
@@ -1975,8 +1978,10 @@ async function loadMeineFaelle() {
   if (!list) return;
   list.innerHTML = '<div class="fall-empty">Lade …</div>';
   try {
-    const rows = await fetch('/api/fahrer/meine-schaeden').then(r => r.json());
-    if (!rows.length) {
+    const res = await fetch('/api/fahrer/meine-schaeden');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const rows = await res.json();
+    if (!Array.isArray(rows) || !rows.length) {
       list.innerHTML = '<div class="fall-empty">Noch keine Schadensmeldung.<br>Nutzen Sie „Schadenmanagement" um eine neue anzulegen.</div>';
       return;
     }

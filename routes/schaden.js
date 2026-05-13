@@ -346,6 +346,9 @@ function generateSchadenPDF(d) {
 
 // ── POST /api/schaden ─────────────────────────────────────────────────────────
 router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
+  if (!req.session || !req.session.fahrerId) {
+    return res.status(401).json({ success: false, error: 'Sitzung abgelaufen. Bitte erneut einloggen.' });
+  }
   const {
     firma = '', fahrer_name = '', fahrer_email = '', fahrer_telefon = '',
     kennzeichen = '', fahrzeugtyp = '', baujahr = '',
@@ -402,8 +405,8 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
   const resend    = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    const fahrerId   = req.session && req.session.fahrerId   ? req.session.fahrerId   : null;
-    const fuhrparkId = req.session && req.session.fuhrparkId ? req.session.fuhrparkId : null;
+    const fahrerId   = req.session.fahrerId;
+    const fuhrparkId = req.session.fuhrparkId || null;
 
     const insertResult = await pool.query(
       `INSERT INTO schaeden
