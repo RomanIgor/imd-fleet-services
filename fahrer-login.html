@@ -12,9 +12,6 @@
     body.dark .card { background: #1a2644; box-shadow: 0 4px 32px rgba(0,0,0,0.4); }
     .logo-wrap { margin-bottom: 24px; }
     .logo-wrap img { height: 44px; width: auto; display: block; }
-    .logo-light { display: none; }
-    body.dark .logo-dark { display: none; }
-    body.dark .logo-light { display: block; }
     .toggle { position: absolute; top: 20px; right: 20px; background: none; border: 1.5px solid #dde6f0; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 17px; color: #546e8a; transition: border-color .2s; }
     body.dark .toggle { border-color: #2d3f5e; color: #aab8cc; }
     h1 { font-size: 22px; font-weight: 800; color: #0c2461; margin-bottom: 8px; }
@@ -40,8 +37,7 @@
   <div class="card">
     <button class="toggle" onclick="toggleDark()" title="Hell / Dunkel">☀️</button>
     <div class="logo-wrap">
-      <img class="logo-dark" src="/logo_dark.png" alt="IMD Fleet Services">
-      <img class="logo-light" src="/logo_light.png" alt="IMD Fleet Services">
+      <img id="loginLogo" src="/logo_light.png" alt="IMD Fleet Services">
     </div>
     <h1>Anmelden</h1>
     <p class="sub">Schadenmeldung einreichen</p>
@@ -60,10 +56,12 @@
       const dark = document.body.classList.toggle('dark');
       localStorage.setItem('imd-theme', dark ? 'dark' : 'light');
       document.querySelector('.toggle').textContent = dark ? '🌙' : '☀️';
+      document.getElementById('loginLogo').src = dark ? '/logo_dark.png' : '/logo_light.png';
     }
     if (localStorage.getItem('imd-theme') === 'dark') {
       document.body.classList.add('dark');
       document.querySelector('.toggle').textContent = '🌙';
+      document.getElementById('loginLogo').src = '/logo_dark.png';
     }
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
