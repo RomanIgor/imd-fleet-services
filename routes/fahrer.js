@@ -8,7 +8,7 @@ const { Resend }     = require('resend');
 const { pool, hashPassword, verifyPassword } = require('../db');
 const requireAdmin      = require('../middleware/requireAdmin');
 const requireFahrerAuth = require('../middleware/requireFahrerAuth');
-const { authLimiter, escapeHtml, resetLimiter } = require('../middleware/security');
+const { authLimiter, escapeHtml, fahrerAuthLimiter, resetLimiter } = require('../middleware/security');
 
 // ── FUHRPARKS ─────────────────────────────────────────────────────────────────
 
@@ -198,7 +198,7 @@ router.get('/fahrer/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'fahrer-login.html'));
 });
 
-router.post('/api/fahrer/login', authLimiter, async (req, res) => {
+router.post('/api/fahrer/login', fahrerAuthLimiter, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'E-Mail und Passwort erforderlich' });
   try {
