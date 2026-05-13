@@ -6,25 +6,43 @@
   <title>Anmelden — IMD Fleet Services</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .card { background: #fff; border-radius: 16px; padding: 40px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
-    .logo { font-size: 11px; font-weight: 800; letter-spacing: 0.18em; color: #0c2461; text-transform: uppercase; margin-bottom: 24px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; transition: background .3s; }
+    body.dark { background: #0d1b2e; }
+    .card { background: #fff; border-radius: 16px; padding: 40px; max-width: 420px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); position: relative; transition: background .3s, border-color .3s; }
+    body.dark .card { background: #1a2644; box-shadow: 0 4px 32px rgba(0,0,0,0.4); }
+    .logo-wrap { margin-bottom: 24px; }
+    .logo-wrap img { height: 36px; width: auto; display: block; }
+    .logo-wrap img.logo-light { display: none; }
+    body.dark .logo-wrap img.logo-dark { display: none; }
+    body.dark .logo-wrap img.logo-light { display: block; }
+    .toggle { position: absolute; top: 20px; right: 20px; background: none; border: 1.5px solid #dde6f0; border-radius: 8px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 17px; color: #546e8a; transition: border-color .2s; }
+    body.dark .toggle { border-color: #2d3f5e; color: #aab8cc; }
     h1 { font-size: 22px; font-weight: 800; color: #0c2461; margin-bottom: 8px; }
+    body.dark h1 { color: #e8edf5; }
     .sub { font-size: 14px; color: #546e8a; margin-bottom: 32px; }
+    body.dark .sub { color: #7a8fa8; }
     label { display: block; font-size: 12px; font-weight: 700; color: #0c2461; margin-bottom: 6px; }
-    input { width: 100%; padding: 12px 14px; border: 1.5px solid #dde6f0; border-radius: 8px; font-size: 15px; color: #1a2644; outline: none; margin-bottom: 20px; }
+    body.dark label { color: #aab8cc; }
+    input { width: 100%; padding: 12px 14px; border: 1.5px solid #dde6f0; border-radius: 8px; font-size: 15px; color: #1a2644; outline: none; margin-bottom: 20px; background: #fff; transition: border-color .2s, background .3s; }
+    body.dark input { background: #0d1b2e; border-color: #2d3f5e; color: #e8edf5; }
     input:focus { border-color: #0c2461; }
-    button { width: 100%; padding: 14px; background: #0c2461; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 16px; }
-    button:hover { background: #1a4c96; }
+    body.dark input:focus { border-color: #4a7fd4; }
+    button[type="submit"] { width: 100%; padding: 14px; background: #0c2461; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 16px; }
+    button[type="submit"]:hover { background: #1a4c96; }
     .forgot { text-align: center; font-size: 13px; }
     .forgot a { color: #546e8a; text-decoration: none; }
     .forgot a:hover { color: #0c2461; }
     .error { background: #fee2e2; color: #991b1b; border-radius: 8px; padding: 12px; font-size: 13px; margin-bottom: 16px; display: none; }
+    body.dark .error { background: #3b1111; color: #fca5a5; }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="logo">IMD Fleet Services</div>
+    <button class="toggle" onclick="toggleDark()" title="Hell / Dunkel">☀️</button>
+    <div class="logo-wrap">
+      <img class="logo-dark" src="/logo_dark.png" alt="IMD Fleet Services">
+      <img class="logo-light" src="/logo_light.png" alt="IMD Fleet Services">
+    </div>
     <h1>Anmelden</h1>
     <p class="sub">Schadenmeldung einreichen</p>
     <div class="error" id="error"></div>
@@ -38,6 +56,15 @@
     <div class="forgot"><a href="/fahrer/passwort-vergessen">Passwort vergessen?</a></div>
   </div>
   <script>
+    function toggleDark() {
+      const dark = document.body.classList.toggle('dark');
+      localStorage.setItem('imd-theme', dark ? 'dark' : 'light');
+      document.querySelector('.toggle').textContent = dark ? '🌙' : '☀️';
+    }
+    if (localStorage.getItem('imd-theme') === 'dark') {
+      document.body.classList.add('dark');
+      document.querySelector('.toggle').textContent = '🌙';
+    }
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const err = document.getElementById('error');

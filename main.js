@@ -376,11 +376,10 @@ async function createFahrer() {
   const telefon     = document.getElementById('fTel').value.trim();
   const fuhrpark_id = document.getElementById('fFuhrpark').value;
   const msg         = document.getElementById('fMsg');
-  if (!vorname || !nachname || !email || !fuhrpark_id) {
-    msg.style.cssText = 'display:block;color:var(--red)';
-    msg.textContent = 'Alle Pflichtfelder ausfüllen.';
-    return;
-  }
+  if (!vorname) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Vorname fehlt.'; return; }
+  if (!nachname) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Nachname fehlt.'; return; }
+  if (!email) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='E-Mail fehlt.'; return; }
+  if (!fuhrpark_id) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Bitte Fuhrpark auswählen.'; return; }
   try {
     const res = await fetch('/api/fahrer', {
       method: 'POST',
