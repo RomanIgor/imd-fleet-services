@@ -250,6 +250,7 @@ router.get('/api/fahrer/meine-schaeden', requireFahrerAuth, async (req, res) => 
 // Mounted BEFORE express.static in server.js so this route takes priority
 
 router.get('/schaden', requireFahrerAuth, (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
   res.sendFile(path.join(__dirname, '..', 'schaden.html'));
 });
 
