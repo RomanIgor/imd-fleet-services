@@ -908,7 +908,6 @@
         <span class="badge-soon">Bald</span>
       </div>
     </div>
-  </div>
 </div><!-- /view-home -->
 
 <div id="view-form" class="app-view">
@@ -2243,7 +2242,7 @@ function renderFaq(targetId) {
     </div>`;
 }
 
-function toggleFaq(key) { chatState.faqOpen[key] = !chatState.faqOpen[key]; renderFaq(); }
+function toggleFaq(key) { chatState.faqOpen[key] = !chatState.faqOpen[key]; renderFaq(); renderFaq('hilfe-faq-content'); }
 
 // ═══════════════════════════════════════════════════════════════════════════
 // THEME
