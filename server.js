@@ -24,6 +24,8 @@ app.use(session({
 }));
 app.use(express.json());
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 setupMaintenance(app);
 
 app.use(fahrerRoutes);
