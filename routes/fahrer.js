@@ -8,6 +8,7 @@ const { Resend }     = require('resend');
 const { pool, hashPassword, verifyPassword } = require('../db');
 const requireAdmin      = require('../middleware/requireAdmin');
 const requireFahrerAuth = require('../middleware/requireFahrerAuth');
+const { authLimiter, escapeHtml, resetLimiter } = require('../middleware/security');
 
 // ── FUHRPARKS ─────────────────────────────────────────────────────────────────
 
@@ -16,7 +17,8 @@ router.get('/api/fuhrparks', requireAdmin, async (req, res) => {
     const { rows } = await pool.query('SELECT * FROM fuhrparks ORDER BY name');
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -30,7 +32,8 @@ router.post('/api/fuhrparks', requireAdmin, async (req, res) => {
     );
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -45,7 +48,8 @@ router.patch('/api/fuhrparks/:id', requireAdmin, async (req, res) => {
     if (!rows.length) return res.status(404).json({ error: 'Nicht gefunden' });
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -64,7 +68,8 @@ router.get('/api/fahrer', requireAdmin, async (req, res) => {
     `);
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -91,7 +96,7 @@ router.post('/api/fahrer', requireAdmin, async (req, res) => {
       html: `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;background:#f4f7fb;padding:20px">
         <div style="background:#fff;border-radius:8px;padding:32px;max-width:500px;margin:0 auto">
           <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
-          <p>Hallo ${vorname},</p>
+          <p>Hallo ${escapeHtml(vorname)},</p>
           <p>Sie wurden eingeladen, die IMD Fleet Services Plattform zu nutzen. Klicken Sie auf den folgenden Link, um Ihr Konto zu aktivieren und ein Passwort zu setzen:</p>
           <p style="margin:24px 0">
             <a href="${activationLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Konto aktivieren →</a>
@@ -103,7 +108,8 @@ router.post('/api/fahrer', requireAdmin, async (req, res) => {
     res.json({ success: true, id: rows[0].id });
   } catch (err) {
     if (err.code === '23505') return res.status(409).json({ error: 'E-Mail bereits vergeben' });
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -118,7 +124,8 @@ router.patch('/api/fahrer/:id/status', requireAdmin, async (req, res) => {
     }
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -135,7 +142,8 @@ router.delete('/api/fahrer/:id', requireAdmin, async (req, res) => {
     await pool.query(`DELETE FROM session WHERE sess::jsonb->>'fahrerId' = $1`, [String(id)]);
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -156,7 +164,7 @@ router.get('/fahrer/aktivieren', async (req, res) => {
   }
 });
 
-router.post('/api/fahrer/aktivieren', async (req, res) => {
+router.post('/api/fahrer/aktivieren', authLimiter, async (req, res) => {
   const { token, password } = req.body;
   if (!token || !password || password.length < 8) {
     return res.status(400).json({ error: 'Token und Passwort (mind. 8 Zeichen) erforderlich' });
@@ -178,7 +186,8 @@ router.post('/api/fahrer/aktivieren', async (req, res) => {
     req.session.fuhrparkId = fuhrpark_id;
     res.json({ success: true, redirect: '/schaden' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -189,7 +198,7 @@ router.get('/fahrer/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'fahrer-login.html'));
 });
 
-router.post('/api/fahrer/login', async (req, res) => {
+router.post('/api/fahrer/login', authLimiter, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: 'E-Mail und Passwort erforderlich' });
   try {
@@ -207,7 +216,8 @@ router.post('/api/fahrer/login', async (req, res) => {
     req.session.fuhrparkId = fuhrpark_id;
     res.json({ success: true, redirect: '/schaden' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -227,7 +237,8 @@ router.get('/api/fahrer/me', requireFahrerAuth, async (req, res) => {
     if (!rows.length) return res.status(404).json({ error: 'Fahrer nicht gefunden' });
     res.json(rows[0]);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -242,7 +253,8 @@ router.get('/api/fahrer/meine-schaeden', requireFahrerAuth, async (req, res) => 
     );
     res.json(rows);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -260,7 +272,7 @@ router.get('/fahrer/passwort-vergessen', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'fahrer-passwort.html'));
 });
 
-router.post('/api/fahrer/reset-anfragen', async (req, res) => {
+router.post('/api/fahrer/reset-anfragen', resetLimiter, async (req, res) => {
   // Respond immediately regardless — prevents email enumeration
   res.json({ success: true, message: 'Wenn die E-Mail bekannt ist, wurde ein Link gesendet.' });
   const { email } = req.body;
@@ -288,7 +300,7 @@ router.post('/api/fahrer/reset-anfragen', async (req, res) => {
       html: `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;background:#f4f7fb;padding:20px">
         <div style="background:#fff;border-radius:8px;padding:32px;max-width:500px;margin:0 auto">
           <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
-          <p>Hallo ${vorname},</p>
+          <p>Hallo ${escapeHtml(vorname)},</p>
           <p>Sie haben eine Passwortzurücksetzung angefordert. Klicken Sie auf den folgenden Link:</p>
           <p style="margin:24px 0">
             <a href="${resetLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Neues Passwort setzen →</a>
@@ -317,7 +329,7 @@ router.get('/fahrer/passwort-reset', async (req, res) => {
   }
 });
 
-router.post('/api/fahrer/reset', async (req, res) => {
+router.post('/api/fahrer/reset', resetLimiter, async (req, res) => {
   const { token, password } = req.body;
   if (!token || !password || password.length < 8) {
     return res.status(400).json({ error: 'Token und Passwort (mind. 8 Zeichen) erforderlich' });
@@ -338,7 +350,8 @@ router.post('/api/fahrer/reset', async (req, res) => {
     req.session.fuhrparkId = fuhrpark_id;
     res.json({ success: true, redirect: '/schaden' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 

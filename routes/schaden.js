@@ -4,8 +4,17 @@ const multer       = require('multer');
 const path         = require('path');
 const { Resend }   = require('resend');
 const { pool }     = require('../db');
+const { escapeHtml, formLimiter } = require('../middleware/security');
 
-const upload = multer();
+const upload = multer({
+  limits: { fileSize: 5 * 1024 * 1024, files: 5, fields: 80, fieldSize: 300 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype || !file.mimetype.startsWith('image/')) {
+      return cb(new Error('Nur Bilddateien sind erlaubt'));
+    }
+    cb(null, true);
+  },
+});
 let PDFDocument; try { PDFDocument = require('pdfkit'); } catch(_) { console.warn('pdfkit not installed — PDF generation disabled'); }
 
 // ── PDF Generation ────────────────────────────────────────────────────────────
@@ -345,7 +354,7 @@ function generateSchadenPDF(d) {
 }
 
 // ── POST /api/schaden ─────────────────────────────────────────────────────────
-router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
+router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, res) => {
   if (!req.session || !req.session.fahrerId) {
     return res.status(401).json({ success: false, error: 'Sitzung abgelaufen. Bitte erneut einloggen.' });
   }
@@ -400,7 +409,7 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     return res.json({ success: false, error: 'Mindestens ein Foto erforderlich' });
   }
 
-  const ip        = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unbekannt';
+  const ip        = req.ip || 'unbekannt';
   const timestamp = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
   const resend    = new Resend(process.env.RESEND_API_KEY);
 
@@ -427,8 +436,8 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     const fall_nr = `SCH-${year}-${String(id).padStart(4, '0')}`;
     await pool.query('UPDATE schaeden SET fall_nr=$1 WHERE id=$2', [fall_nr, id]);
 
-    const attachments = req.files.map(f => ({
-      filename: f.originalname,
+    const attachments = req.files.map((f, i) => ({
+      filename: String(f.originalname || `foto-${i + 1}.jpg`).replace(/[^\w.\- äöüÄÖÜß]/g, '_'),
       content:  f.buffer.toString('base64'),
     }));
 
@@ -436,6 +445,7 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
       ? '<span style="background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:4px;font-weight:700">✓ Fahrbereit</span>'
       : '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700">✗ NICHT fahrbereit</span>';
 
+    const e = escapeHtml;
     const imdHtml = `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
   body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px}
@@ -451,42 +461,42 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
 </style></head><body>
 <div class="card">
   <h2>🚨 Neue Schadensmeldung</h2>
-  <div class="fall">${fall_nr}</div>
-  <p class="meta">Eingegangen am ${timestamp} &bull; IP: ${ip}</p>
+  <div class="fall">${e(fall_nr)}</div>
+  <p class="meta">Eingegangen am ${e(timestamp)} &bull; IP: ${e(ip)}</p>
   <div class="section">Fahrer &amp; Kontakt</div>
   <table>
-    <tr><td class="lbl">Fahrer</td><td>${fahrer_name}</td></tr>
-    <tr><td class="lbl">Firma</td><td>${firma || '—'}</td></tr>
-    <tr><td class="lbl">Telefon</td><td>${fahrer_telefon}</td></tr>
-    <tr><td class="lbl">E-Mail</td><td>${fahrer_email}</td></tr>
+    <tr><td class="lbl">Fahrer</td><td>${e(fahrer_name)}</td></tr>
+    <tr><td class="lbl">Firma</td><td>${e(firma || '—')}</td></tr>
+    <tr><td class="lbl">Telefon</td><td>${e(fahrer_telefon)}</td></tr>
+    <tr><td class="lbl">E-Mail</td><td>${e(fahrer_email)}</td></tr>
   </table>
   <div class="section">Fahrzeug</div>
   <table>
-    <tr><td class="lbl">Kennzeichen</td><td>${kennzeichen}</td></tr>
-    <tr><td class="lbl">Fahrzeugtyp</td><td>${fahrzeugtyp || '—'}</td></tr>
-    <tr><td class="lbl">Baujahr</td><td>${baujahr || '—'}</td></tr>
+    <tr><td class="lbl">Kennzeichen</td><td>${e(kennzeichen)}</td></tr>
+    <tr><td class="lbl">Fahrzeugtyp</td><td>${e(fahrzeugtyp || '—')}</td></tr>
+    <tr><td class="lbl">Baujahr</td><td>${e(baujahr || '—')}</td></tr>
     <tr><td class="lbl">Fahrbereit</td><td>${fahrbereitBadge}</td></tr>
   </table>
   <div class="section">Schadensdetails</div>
   <table>
-    <tr><td class="lbl">Datum</td><td>${unfall_datum}${unfall_uhrzeit ? ' · ' + unfall_uhrzeit : ''}</td></tr>
-    <tr><td class="lbl">Unfallort</td><td>${unfall_ort || '—'}</td></tr>
-    <tr><td class="lbl">Polizei aufgenommen</td><td>${polizei_aufgenommen === 'ja' ? 'Ja' : 'Nein'}${polizei_aktenzeichen ? ' — ' + polizei_aktenzeichen : ''}</td></tr>
+    <tr><td class="lbl">Datum</td><td>${e(unfall_datum)}${unfall_uhrzeit ? ' · ' + e(unfall_uhrzeit) : ''}</td></tr>
+    <tr><td class="lbl">Unfallort</td><td>${e(unfall_ort || '—')}</td></tr>
+    <tr><td class="lbl">Polizei aufgenommen</td><td>${polizei_aufgenommen === 'ja' ? 'Ja' : 'Nein'}${polizei_aktenzeichen ? ' — ' + e(polizei_aktenzeichen) : ''}</td></tr>
     <tr><td class="lbl">Personenschaden</td><td>${personenschaden === 'ja' ? '<span style="color:#991b1b;font-weight:700">Ja</span>' : 'Nein'}</td></tr>
     <tr><td class="lbl">Unfallgegner</td><td>${unfallgegner === 'ja' ? 'Ja' : 'Nein'}</td></tr>
-    <tr><td class="lbl">Beschreibung</td><td>${beschreibung}</td></tr>
+    <tr><td class="lbl">Beschreibung</td><td>${e(beschreibung)}</td></tr>
   </table>
   ${unfallgegner === 'ja' ? `
   <div class="section">Unfallgegner</div>
   <table>
-    ${opponent_holder     ? `<tr><td class="lbl">Fahrzeughalter</td><td>${opponent_holder}</td></tr>` : ''}
-    ${(opponent_lastname||opponent_firstname) ? `<tr><td class="lbl">Fahrername</td><td>${opponent_firstname} ${opponent_lastname}</td></tr>` : ''}
-    ${opponent_address    ? `<tr><td class="lbl">Adresse</td><td>${opponent_address}</td></tr>` : ''}
-    ${opponent_plate      ? `<tr><td class="lbl">Kennzeichen</td><td>${opponent_plate}</td></tr>` : ''}
-    ${opponent_type       ? `<tr><td class="lbl">Fahrzeugtyp</td><td>${opponent_type}</td></tr>` : ''}
-    ${opponent_insurance  ? `<tr><td class="lbl">Versichert bei</td><td>${opponent_insurance}</td></tr>` : ''}
-    ${opponent_insurance_nr ? `<tr><td class="lbl">Versicherungsschein-Nr.</td><td>${opponent_insurance_nr}</td></tr>` : ''}
-    ${opponent_damage     ? `<tr><td class="lbl">Schaden Gegner</td><td>${opponent_damage}</td></tr>` : ''}
+    ${opponent_holder     ? `<tr><td class="lbl">Fahrzeughalter</td><td>${e(opponent_holder)}</td></tr>` : ''}
+    ${(opponent_lastname||opponent_firstname) ? `<tr><td class="lbl">Fahrername</td><td>${e(opponent_firstname)} ${e(opponent_lastname)}</td></tr>` : ''}
+    ${opponent_address    ? `<tr><td class="lbl">Adresse</td><td>${e(opponent_address)}</td></tr>` : ''}
+    ${opponent_plate      ? `<tr><td class="lbl">Kennzeichen</td><td>${e(opponent_plate)}</td></tr>` : ''}
+    ${opponent_type       ? `<tr><td class="lbl">Fahrzeugtyp</td><td>${e(opponent_type)}</td></tr>` : ''}
+    ${opponent_insurance  ? `<tr><td class="lbl">Versichert bei</td><td>${e(opponent_insurance)}</td></tr>` : ''}
+    ${opponent_insurance_nr ? `<tr><td class="lbl">Versicherungsschein-Nr.</td><td>${e(opponent_insurance_nr)}</td></tr>` : ''}
+    ${opponent_damage     ? `<tr><td class="lbl">Schaden Gegner</td><td>${e(opponent_damage)}</td></tr>` : ''}
   </table>` : ''}
   <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang · PDF beigefügt</div>
 </div></body></html>`;
@@ -527,13 +537,13 @@ router.post('/api/schaden', upload.array('photos', 5), async (req, res) => {
     const { error: imdErr } = await resend.emails.send({
       from:    'IMD Fleet Services <schaden@imdfleet.de>',
       to:      process.env.RECIPIENT_EMAIL,
-      subject: `🚨 Neuer Schaden: ${fall_nr} — ${kennzeichen}${firma ? ' — ' + firma : ''}`,
+      subject: `Neuer Schaden: ${fall_nr} - ${kennzeichen}${firma ? ' - ' + firma : ''}`,
       html:    imdHtml,
       attachments,
     });
     if (imdErr) throw new Error(imdErr.message);
 
-    console.log(`[${timestamp}] ✓ Schaden ${fall_nr} — ${kennzeichen} saved + emails sent`);
+    console.log(`[${timestamp}] Schaden ${fall_nr} saved + emails sent`);
     res.json({ success: true, fall_nr });
   } catch (err) {
     console.error('Schaden error:', err.message);

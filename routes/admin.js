@@ -18,7 +18,8 @@ router.get('/api/stats', requireAdmin, async (req, res) => {
       today: parseInt(today.rows[0].count),
       neu:   parseInt(neu.rows[0].count)
     });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 // ── Submissions ───────────────────────────────────────────────────────────────
@@ -26,7 +27,8 @@ router.get('/api/submissions', requireAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM submissions ORDER BY created_at DESC');
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 router.patch('/api/submissions/:id', requireAdmin, async (req, res) => {
@@ -38,7 +40,8 @@ router.patch('/api/submissions/:id', requireAdmin, async (req, res) => {
     const vals = [...fields.map(f => req.body[f]), req.params.id];
     await pool.query(`UPDATE submissions SET ${set} WHERE id=$${vals.length}`, vals);
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 // ── Users ─────────────────────────────────────────────────────────────────────
@@ -46,7 +49,8 @@ router.get('/api/users', requireAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT username, created_at FROM users ORDER BY created_at');
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 router.post('/api/users', requireAdmin, async (req, res) => {
@@ -58,7 +62,8 @@ router.post('/api/users', requireAdmin, async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     if (err.code === '23505') return res.json({ success: false, error: 'Benutzername bereits vergeben' });
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 
@@ -68,7 +73,8 @@ router.delete('/api/users/:username', requireAdmin, async (req, res) => {
   try {
     await pool.query('DELETE FROM users WHERE username=$1', [req.params.username]);
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 // ── Schaeden (admin view) ─────────────────────────────────────────────────────
@@ -76,7 +82,8 @@ router.get('/api/schaeden', requireAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM schaeden ORDER BY created_at DESC');
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 router.patch('/api/schaeden/:id/status', requireAdmin, async (req, res) => {
@@ -86,7 +93,8 @@ router.patch('/api/schaeden/:id/status', requireAdmin, async (req, res) => {
   try {
     await pool.query('UPDATE schaeden SET status=$1 WHERE id=$2', [status, req.params.id]);
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 // ── Werkstaetten (write — admin only) ────────────────────────────────────────
@@ -99,7 +107,8 @@ router.post('/api/werkstaetten', requireAdmin, async (req, res) => {
       [name, city || '', plz || '', email, services || '', rating || 5.0]
     );
     res.json({ success: true, werkstatt: r.rows[0] });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 router.patch('/api/werkstaetten/:id', requireAdmin, async (req, res) => {
@@ -111,14 +120,16 @@ router.patch('/api/werkstaetten/:id', requireAdmin, async (req, res) => {
       [name, city || '', plz || '', email, services || '', rating || 5.0, req.params.id]
     );
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 router.delete('/api/werkstaetten/:id', requireAdmin, async (req, res) => {
   try {
     await pool.query('DELETE FROM werkstaetten WHERE id=$1', [req.params.id]);
     res.json({ success: true });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) { console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' }); }
 });
 
 // ── Vertrag export ────────────────────────────────────────────────────────────
@@ -157,7 +168,8 @@ router.post('/api/vertrag/export', requireAdmin, (req, res) => {
     res.send(output);
   } catch (err) {
     console.error('Vertrag export error:', err.message);
-    res.status(500).json({ error: err.message });
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
   }
 });
 

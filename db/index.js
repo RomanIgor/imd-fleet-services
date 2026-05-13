@@ -3,7 +3,7 @@ const crypto   = require('crypto');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 async function initDB() {
@@ -118,7 +118,8 @@ async function initDB() {
   const { rows } = await pool.query('SELECT COUNT(*) FROM users');
   if (parseInt(rows[0].count) === 0) {
     const u = process.env.DASH_USER || 'admin';
-    const p = process.env.DASH_PASS || 'imd2024';
+    const p = process.env.DASH_PASS;
+    if (!p) throw new Error('DASH_PASS is required to seed the first admin user');
     const { hash, salt } = await hashPassword(p);
     await pool.query('INSERT INTO users (username, password_hash, salt) VALUES ($1,$2,$3)', [u, hash, salt]);
     console.log(`✓ Admin user "${u}" seeded`);

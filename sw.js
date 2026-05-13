@@ -1,5 +1,5 @@
-const CACHE = 'imd-schaden-v12';
-const PRECACHE = ['/manifest.json', '/logo_dark.png', '/logo_light.png', '/icon-192.png', '/icon-512.png', '/schadenmanagement_icon_version2.png'];
+const CACHE = 'imd-schaden-v13';
+const PRECACHE = ['/manifest.json', '/logo_dark.png', '/logo_light.png', '/icon-192.png', '/icon-512.png', '/csrf-client.js', '/schadenmanagement_icon_version2.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(

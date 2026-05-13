@@ -4,8 +4,11 @@ const multer     = require('multer');
 const path       = require('path');
 const { Resend } = require('resend');
 const { pool }   = require('../db');
+const { chatLimiter, escapeHtml, formLimiter, logError, sendError } = require('../middleware/security');
 
-const upload = multer();
+const upload = multer({
+  limits: { fields: 20, fieldSize: 20 * 1024 },
+});
 
 const CHAT_SYSTEM_PROMPT = `Du bist der offizielle KI-Schadenassistent von IMD Fleet Services. Du unterstützt Dienstwagenfahrer ausschließlich bei Themen rund um Kfz-Schäden, Pannenhilfe, Versicherungen und Dienstwagenregelungen in Deutschland.
 
@@ -58,7 +61,7 @@ router.get('/schaden', (req, res) => {
 });
 
 // ── POST /submit — Flottenankauf inquiry ──────────────────────────────────────
-router.post('/submit', upload.none(), async (req, res) => {
+router.post('/submit', formLimiter, upload.none(), async (req, res) => {
   const {
     firma = '', name = '', email = '', telefon = '',
     marke = '', modell = '', baujahr = '', km = '',
@@ -70,7 +73,7 @@ router.post('/submit', upload.none(), async (req, res) => {
   }
 
   const timestamp = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
-  const ip        = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unbekannt';
+  const ip        = req.ip || 'unbekannt';
   const resend    = new Resend(process.env.RESEND_API_KEY);
 
   try {
@@ -83,6 +86,7 @@ router.post('/submit', upload.none(), async (req, res) => {
     console.error('DB error:', dbErr.message);
   }
 
+  const e = escapeHtml;
   const html = `
 <!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <style>
@@ -98,25 +102,25 @@ router.post('/submit', upload.none(), async (req, res) => {
 </style></head><body>
 <div class="card">
   <h2>Neue Fahrzeuganmeldung</h2>
-  <p class="meta">Eingegangen am ${timestamp} &bull; IP: ${ip}</p>
+  <p class="meta">Eingegangen am ${e(timestamp)} &bull; IP: ${e(ip)}</p>
   <div class="section">Unternehmen &amp; Kontakt</div>
   <table>
-    <tr><td class="lbl">Firma</td><td>${firma}</td></tr>
-    <tr><td class="lbl">Ansprechpartner</td><td>${name}</td></tr>
-    <tr><td class="lbl">Telefon</td><td>${telefon}</td></tr>
-    <tr><td class="lbl">E-Mail</td><td>${email || '—'}</td></tr>
+    <tr><td class="lbl">Firma</td><td>${e(firma)}</td></tr>
+    <tr><td class="lbl">Ansprechpartner</td><td>${e(name)}</td></tr>
+    <tr><td class="lbl">Telefon</td><td>${e(telefon)}</td></tr>
+    <tr><td class="lbl">E-Mail</td><td>${e(email || '—')}</td></tr>
   </table>
   <div class="section">Fahrzeugdaten</div>
   <table>
-    <tr><td class="lbl">Marke</td><td>${marke || '—'}</td></tr>
-    <tr><td class="lbl">Modell</td><td>${modell || '—'}</td></tr>
-    <tr><td class="lbl">Baujahr</td><td>${baujahr || '—'}</td></tr>
-    <tr><td class="lbl">Kilometerstand</td><td>${km ? km + ' km' : '—'}</td></tr>
-    <tr><td class="lbl">Anzahl Fahrzeuge</td><td>${fahrzeuge || '—'}</td></tr>
+    <tr><td class="lbl">Marke</td><td>${e(marke || '—')}</td></tr>
+    <tr><td class="lbl">Modell</td><td>${e(modell || '—')}</td></tr>
+    <tr><td class="lbl">Baujahr</td><td>${e(baujahr || '—')}</td></tr>
+    <tr><td class="lbl">Kilometerstand</td><td>${e(km ? km + ' km' : '—')}</td></tr>
+    <tr><td class="lbl">Anzahl Fahrzeuge</td><td>${e(fahrzeuge || '—')}</td></tr>
   </table>
   <div class="section">Hinweise</div>
   <table>
-    <tr><td class="lbl">Anmerkung</td><td>${anmerkung || '—'}</td></tr>
+    <tr><td class="lbl">Anmerkung</td><td>${e(anmerkung || '—')}</td></tr>
     <tr><td class="lbl">Zustimmung</td><td>✓ Ja</td></tr>
   </table>
   <div class="footer">Automatisch generiert durch das Kontaktformular auf <a href="https://imdfleet.de" style="color:#8899B4">imdfleet.de</a></div>
@@ -133,7 +137,7 @@ router.post('/submit', upload.none(), async (req, res) => {
 </style></head><body>
 <div class="card">
   <h2>Vielen Dank für Ihre Anfrage</h2>
-  <p class="meta">Guten Tag ${name},<br><br>
+  <p class="meta">Guten Tag ${e(name)},<br><br>
   wir haben Ihre Fahrzeuganmeldung erfolgreich erhalten und werden uns so schnell wie möglich bei Ihnen melden.<br><br>
   Bei Fragen erreichen Sie uns jederzeit unter <a href="mailto:info@imdfleet.de">info@imdfleet.de</a>.
   </p>
@@ -160,7 +164,7 @@ router.post('/submit', upload.none(), async (req, res) => {
       if (clientErr) console.error(`[${timestamp}] ✗ Confirmation mail error:`, clientErr.message);
     }
 
-    console.log(`[${timestamp}] ✓ ${firma} / ${name} → saved + email sent`);
+    console.log(`[${timestamp}] Anfrage saved + email sent`);
     res.json({ success: true });
   } catch (err) {
     console.error(`[${timestamp}] ✗ Mail error:`, err.message);
@@ -173,11 +177,14 @@ router.get('/api/werkstaetten', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM werkstaetten WHERE aktiv=true ORDER BY name');
     res.json(result.rows);
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    logError('Werkstaetten list error', err);
+    sendError(res);
+  }
 });
 
 // ── POST /api/chat — Groq AI assistant ───────────────────────────────────────
-router.post('/api/chat', async (req, res) => {
+router.post('/api/chat', chatLimiter, async (req, res) => {
   const { messages } = req.body;
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.json({ reply: 'Ungültige Anfrage.' });

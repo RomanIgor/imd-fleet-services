@@ -1,8 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 const { pool, verifyPassword } = require('../db');
+const { authLimiter, logError, sendError } = require('../middleware/security');
 
-router.post('/api/login', async (req, res) => {
+router.post('/api/login', authLimiter, async (req, res) => {
   const { username, password } = req.body;
   try {
     const result = await pool.query('SELECT password_hash, salt FROM users WHERE username=$1', [username]);
@@ -11,7 +12,10 @@ router.post('/api/login', async (req, res) => {
     const valid = await verifyPassword(password, password_hash, salt);
     if (valid) { req.session.user = username; res.json({ success: true }); }
     else res.json({ success: false, error: 'Falscher Benutzername oder Passwort' });
-  } catch (err) { res.status(500).json({ error: err.message }); }
+  } catch (err) {
+    logError('Admin login error', err);
+    sendError(res);
+  }
 });
 
 router.post('/api/logout', (req, res) => {
