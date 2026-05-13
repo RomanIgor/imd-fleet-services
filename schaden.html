@@ -1514,8 +1514,7 @@ function resetForm() {
 function scrollToForm() {
   state.step = 1;
   render();
-  const fc = document.querySelector('[data-form-card]');
-  if (fc) fc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showView('form');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1937,6 +1936,70 @@ function clearSig() {
 
 loadWorkshops();
 render();
+loadFahrerMe();
+showView('home');
+
+// ─── HOME SCREEN ─────────────────────────────────────────────────────────────
+
+function showView(name) {
+  document.querySelectorAll('.app-view').forEach(v => v.classList.remove('v-active'));
+  const target = document.getElementById('view-' + name);
+  if (target) target.classList.add('v-active');
+  document.querySelectorAll('.bn-item[data-view]').forEach(btn => {
+    btn.classList.remove('bn-active');
+    const bar = btn.querySelector('.bn-bar');
+    if (bar) bar.style.display = 'none';
+  });
+  const activeBtn = document.querySelector(`.bn-item[data-view="${name}"]`);
+  if (activeBtn) {
+    activeBtn.classList.add('bn-active');
+    const bar = activeBtn.querySelector('.bn-bar');
+    if (bar) bar.style.display = 'block';
+  }
+  if (name === 'faelle') loadMeineFaelle();
+  if (name === 'hilfe') renderFaq('hilfe-faq-content');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadFahrerMe() {
+  try {
+    const r = await fetch('/api/fahrer/me').then(r => r.json());
+    const nameEl  = document.getElementById('home-fahrer-name');
+    const fleetEl = document.getElementById('home-fuhrpark-name');
+    if (nameEl)  nameEl.textContent  = r.vorname || '';
+    if (fleetEl) fleetEl.textContent = r.fuhrpark_name || '';
+  } catch (e) { console.error('loadFahrerMe', e); }
+}
+
+async function loadMeineFaelle() {
+  const list = document.getElementById('faelle-list');
+  if (!list) return;
+  list.innerHTML = '<div class="fall-empty">Lade …</div>';
+  try {
+    const rows = await fetch('/api/fahrer/meine-schaeden').then(r => r.json());
+    if (!rows.length) {
+      list.innerHTML = '<div class="fall-empty">Noch keine Schadensmeldung.<br>Nutzen Sie „Schadenmanagement" um eine neue anzulegen.</div>';
+      return;
+    }
+    const statusCls = { 'Neu': 'fall-badge-neu', 'In Bearbeitung': 'fall-badge-in', 'Abgeschlossen': 'fall-badge-done' };
+    list.innerHTML = rows.map(f => {
+      const date = new Date(f.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const cls  = statusCls[f.status] || 'fall-badge-neu';
+      return `<div class="fall-card">
+        <div class="fall-card-top">
+          <span class="fall-nr">${f.fall_nr || '—'}</span>
+          <span class="${cls}">${f.status || 'Neu'}</span>
+        </div>
+        <div class="fall-meta">
+          <span>🚗 ${f.kennzeichen || '—'}</span>
+          <span>📅 ${date}</span>
+        </div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="fall-empty">Fehler beim Laden.</div>';
+  }
+}
 </script>
 
 <!-- KI ASSISTANT — Floating Action Button -->
@@ -2157,8 +2220,10 @@ function toggleChatSpeech() {
 
 function autoGrow(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,100)+'px'; }
 
-function renderFaq() {
-  document.getElementById('faq-content').innerHTML = FAQ_CATEGORIES.map((cat, ci) => `
+function renderFaq(targetId) {
+  const el = document.getElementById(targetId || 'faq-content');
+  if (!el) return;
+  el.innerHTML = FAQ_CATEGORIES.map((cat, ci) => `
     <div class="faq-section">
       <div class="faq-section-title">${cat.title}</div>
       ${cat.items.map((item, ii) => {
