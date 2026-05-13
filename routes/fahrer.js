@@ -218,8 +218,9 @@ router.post('/api/fahrer/logout', requireFahrerAuth, (req, res) => {
 router.get('/api/fahrer/me', requireFahrerAuth, async (req, res) => {
   try {
     const { rows } = await pool.query(
-      `SELECT f.id, f.vorname, f.nachname, f.email, f.telefon, fp.name AS fuhrpark_name
-       FROM fahrer f JOIN fuhrparks fp ON fp.id = f.fuhrpark_id
+      `SELECT f.id, f.vorname, f.nachname, f.email, f.telefon,
+              COALESCE(fp.name, '') AS fuhrpark_name
+       FROM fahrer f LEFT JOIN fuhrparks fp ON fp.id = f.fuhrpark_id
        WHERE f.id = $1`,
       [req.session.fahrerId]
     );
