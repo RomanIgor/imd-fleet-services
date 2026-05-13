@@ -1858,6 +1858,33 @@
         </div>
       </div>
 
+      <div class="dp" id="dFuhrparks">
+        <div class="dh">Fuhrparks</div>
+        <div class="dsub">Alle Fuhrparks verwalten</div>
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;margin-top:20px">
+          <div class="tbl-wrap">
+            <div class="tbl-head">
+              <div class="tbl-title">Alle Fuhrparks</div>
+              <button class="tbl-sel" onclick="loadFuhrparks()" style="cursor:pointer">↻ Aktualisieren</button>
+            </div>
+            <table>
+              <thead><tr><th>Name</th><th>Kontakt-E-Mail</th><th>Telefon</th><th>Erstellt am</th></tr></thead>
+              <tbody id="tblFuhrparks"></tbody>
+            </table>
+          </div>
+          <div style="background:var(--f0);border-radius:12px;padding:20px">
+            <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Fuhrpark anlegen</div>
+            <div class="fg"><label class="fl">Name *</label><input type="text" id="fpName" class="fi" placeholder="Muster GmbH"></div>
+            <div class="fg"><label class="fl">Kontakt-E-Mail</label><input type="email" id="fpEmail" class="fi" placeholder="manager@muster.de"></div>
+            <div class="fg"><label class="fl">Telefon</label><input type="text" id="fpTel" class="fi" placeholder="030 123456"></div>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
+              <button class="btn btn-navy" onclick="createFuhrpark()">Fuhrpark anlegen →</button>
+              <span id="fpMsg" style="font-size:12px;display:none"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

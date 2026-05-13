@@ -267,6 +267,56 @@ async function deleteWerkstatt(id, name) {
   } catch(e) { showToast('⚠ Netzwerkfehler'); }
 }
 
+// ─── FUHRPARKS ───
+async function loadFuhrparks() {
+  try {
+    const rows = await fetch('/api/fuhrparks').then(r => r.json());
+    const tbody = document.getElementById('tblFuhrparks');
+    if (!tbody) return;
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:24px">Keine Fuhrparks angelegt</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(fp => `
+      <tr>
+        <td><strong>${fp.name}</strong></td>
+        <td>${fp.kontakt_email || '—'}</td>
+        <td>${fp.telefon || '—'}</td>
+        <td>${fmtDate(fp.created_at)}</td>
+      </tr>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+
+async function createFuhrpark() {
+  const name  = document.getElementById('fpName').value.trim();
+  const email = document.getElementById('fpEmail').value.trim();
+  const tel   = document.getElementById('fpTel').value.trim();
+  const msg   = document.getElementById('fpMsg');
+  if (!name) {
+    msg.style.cssText = 'display:block;color:var(--red)';
+    msg.textContent = 'Name ist Pflichtfeld.';
+    return;
+  }
+  const res = await fetch('/api/fuhrparks', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, kontakt_email: email || null, telefon: tel || null })
+  }).then(r => r.json());
+  if (res.id) {
+    msg.style.cssText = 'display:block;color:var(--green)';
+    msg.textContent = 'Fuhrpark angelegt.';
+    document.getElementById('fpName').value = '';
+    document.getElementById('fpEmail').value = '';
+    document.getElementById('fpTel').value = '';
+    loadFuhrparks();
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+  } else {
+    msg.style.cssText = 'display:block;color:var(--red)';
+    msg.textContent = res.error || 'Fehler';
+  }
+}
+
 // ─── EXCEL EXPORT ───
 function exportExcel(){
   if(typeof XLSX==='undefined'){showToast('⚠ XLSX-Bibliothek nicht geladen');return;}
