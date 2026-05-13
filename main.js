@@ -274,7 +274,7 @@ async function loadFuhrparks() {
     const tbody = document.getElementById('tblFuhrparks');
     if (!tbody) return;
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--t3);padding:24px">Keine Fuhrparks angelegt</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:24px">Keine Fuhrparks angelegt</td></tr>';
       return;
     }
     tbody.innerHTML = rows.map(fp => `
@@ -283,16 +283,18 @@ async function loadFuhrparks() {
         <td>${fp.kontakt_email || '—'}</td>
         <td>${fp.telefon || '—'}</td>
         <td>${fmtDate(fp.created_at)}</td>
+        <td><button class="tbl-sel" style="cursor:pointer" onclick="editFuhrpark(${fp.id},${JSON.stringify(fp.name)},${JSON.stringify(fp.kontakt_email||'')},${JSON.stringify(fp.telefon||'')})">✏ Bearbeiten</button></td>
       </tr>
     `).join('');
   } catch(e) {
     console.error(e);
     const tbody = document.getElementById('tblFuhrparks');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden. Bitte neu laden.</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--red);padding:24px">Fehler beim Laden. Bitte neu laden.</td></tr>';
   }
 }
 
 async function createFuhrpark() {
+  const fpId  = document.getElementById('fpId').value;
   const name  = document.getElementById('fpName').value.trim();
   const email = document.getElementById('fpEmail').value.trim();
   const tel   = document.getElementById('fpTel').value.trim();
@@ -302,23 +304,46 @@ async function createFuhrpark() {
     msg.textContent = 'Name ist Pflichtfeld.';
     return;
   }
-  const res = await fetch('/api/fuhrparks', {
-    method: 'POST',
+  const method = fpId ? 'PATCH' : 'POST';
+  const url    = fpId ? `/api/fuhrparks/${fpId}` : '/api/fuhrparks';
+  const res = await fetch(url, {
+    method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, kontakt_email: email || null, telefon: tel || null })
   }).then(r => r.json());
   if (res.id) {
     msg.style.cssText = 'display:block;color:var(--green)';
-    msg.textContent = 'Fuhrpark angelegt.';
-    document.getElementById('fpName').value = '';
-    document.getElementById('fpEmail').value = '';
-    document.getElementById('fpTel').value = '';
+    msg.textContent = fpId ? 'Fuhrpark gespeichert.' : 'Fuhrpark angelegt.';
+    cancelFuhrparkEdit();
     loadFuhrparks();
     setTimeout(() => { msg.style.display = 'none'; }, 3000);
   } else {
     msg.style.cssText = 'display:block;color:var(--red)';
     msg.textContent = res.error || 'Fehler';
   }
+}
+
+function editFuhrpark(id, name, email, tel) {
+  document.getElementById('fpId').value    = id;
+  document.getElementById('fpName').value  = name;
+  document.getElementById('fpEmail').value = email;
+  document.getElementById('fpTel').value   = tel;
+  document.getElementById('fpFormTitle').textContent = 'Fuhrpark bearbeiten';
+  document.getElementById('fpSubmitBtn').textContent = 'Änderungen speichern →';
+  document.getElementById('fpCancelBtn').style.display = 'inline-flex';
+  document.getElementById('fpMsg').style.display = 'none';
+  document.getElementById('fpName').focus();
+  document.getElementById('fpName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function cancelFuhrparkEdit() {
+  document.getElementById('fpId').value    = '';
+  document.getElementById('fpName').value  = '';
+  document.getElementById('fpEmail').value = '';
+  document.getElementById('fpTel').value   = '';
+  document.getElementById('fpFormTitle').textContent = 'Fuhrpark anlegen';
+  document.getElementById('fpSubmitBtn').textContent = 'Fuhrpark anlegen →';
+  document.getElementById('fpCancelBtn').style.display = 'none';
 }
 
 // ─── FAHRER ───

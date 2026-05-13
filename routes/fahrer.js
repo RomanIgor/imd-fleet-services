@@ -34,6 +34,21 @@ router.post('/api/fuhrparks', requireAdmin, async (req, res) => {
   }
 });
 
+router.patch('/api/fuhrparks/:id', requireAdmin, async (req, res) => {
+  const { name, kontakt_email, telefon } = req.body;
+  if (!name) return res.status(400).json({ error: 'name erforderlich' });
+  try {
+    const { rows } = await pool.query(
+      'UPDATE fuhrparks SET name=$1, kontakt_email=$2, telefon=$3 WHERE id=$4 RETURNING *',
+      [name, kontakt_email || null, telefon || null, req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Nicht gefunden' });
+    res.json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── FAHRER — IMD Admin CRUD ───────────────────────────────────────────────────
 
 router.get('/api/fahrer', requireAdmin, async (req, res) => {

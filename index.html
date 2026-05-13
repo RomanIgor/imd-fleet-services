@@ -1484,7 +1484,7 @@
   <div id="dashLogin" style="position:absolute;inset:0;z-index:100;background:var(--f0);display:flex;align-items:center;justify-content:center">
     <div style="background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-xl)">
       <div style="margin-bottom:28px">
-        <img src="logo_dark.png" alt="IMD Fleet Services" style="width:160px;height:auto;display:block">
+        <img src="logo_light.png" alt="IMD Fleet Services" style="width:160px;height:auto;display:block">
       </div>
       <div style="font-family:var(--fh);font-size:20px;font-weight:800;color:var(--t0);margin-bottom:6px">Anmelden</div>
       <div style="font-size:13px;color:var(--t2);margin-bottom:24px">Nur für IMD Fleet Services Team</div>
@@ -1862,26 +1862,28 @@
       <div class="dp" id="dFuhrparks">
         <div class="dh">Fuhrparks</div>
         <div class="dsub">Alle Fuhrparks verwalten</div>
-        <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;margin-top:20px">
-          <div class="tbl-wrap">
-            <div class="tbl-head">
-              <div class="tbl-title">Alle Fuhrparks</div>
-              <button class="tbl-sel" onclick="loadFuhrparks()" style="cursor:pointer">↻ Aktualisieren</button>
-            </div>
-            <table>
-              <thead><tr><th>Name</th><th>Kontakt-E-Mail</th><th>Telefon</th><th>Erstellt am</th></tr></thead>
-              <tbody id="tblFuhrparks"></tbody>
-            </table>
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Fuhrparks</div>
+            <button class="tbl-sel" onclick="loadFuhrparks()" style="cursor:pointer">↻ Aktualisieren</button>
           </div>
-          <div style="background:var(--f0);border-radius:12px;padding:20px">
-            <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Fuhrpark anlegen</div>
+          <table>
+            <thead><tr><th>Name</th><th>Kontakt-E-Mail</th><th>Telefon</th><th>Erstellt am</th><th style="width:110px">Aktion</th></tr></thead>
+            <tbody id="tblFuhrparks"></tbody>
+          </table>
+        </div>
+        <div style="background:var(--f0);border-radius:12px;padding:24px;margin-top:20px">
+          <input type="hidden" id="fpId">
+          <div id="fpFormTitle" style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t0);margin-bottom:16px">Fuhrpark anlegen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
             <div class="fg"><label class="fl">Name *</label><input type="text" id="fpName" class="fi" placeholder="Muster GmbH"></div>
             <div class="fg"><label class="fl">Kontakt-E-Mail</label><input type="email" id="fpEmail" class="fi" placeholder="manager@muster.de"></div>
             <div class="fg"><label class="fl">Telefon</label><input type="text" id="fpTel" class="fi" placeholder="030 123456"></div>
-            <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
-              <button class="btn btn-navy" onclick="createFuhrpark()">Fuhrpark anlegen →</button>
-              <span id="fpMsg" style="font-size:12px;display:none"></span>
-            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+            <button class="btn btn-navy" id="fpSubmitBtn" onclick="createFuhrpark()">Fuhrpark anlegen →</button>
+            <button class="btn" id="fpCancelBtn" onclick="cancelFuhrparkEdit()" style="display:none;background:var(--f2);color:var(--t1)">Abbrechen</button>
+            <span id="fpMsg" style="font-size:13px;display:none"></span>
           </div>
         </div>
       </div>
@@ -1889,24 +1891,24 @@
       <div class="dp" id="dFahrer">
         <div class="dh">Fahrer</div>
         <div class="dsub">Fahrerverwaltung — Einladungen · Zugänge · DSGVO</div>
-        <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;margin-top:20px">
-          <div class="tbl-wrap">
-            <div class="tbl-head">
-              <div class="tbl-title">Alle Fahrer</div>
-              <button class="tbl-sel" onclick="loadFahrer()" style="cursor:pointer">↻ Aktualisieren</button>
-            </div>
-            <table>
-              <thead><tr><th>Name</th><th>Fuhrpark</th><th>E-Mail</th><th>Status</th><th>Aktionen</th></tr></thead>
-              <tbody id="tblFahrer"></tbody>
-            </table>
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Fahrer</div>
+            <button class="tbl-sel" onclick="loadFahrer()" style="cursor:pointer">↻ Aktualisieren</button>
           </div>
-          <div style="background:var(--f0);border-radius:12px;padding:20px">
-            <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Fahrer anlegen</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-              <div class="fg"><label class="fl">Vorname *</label><input type="text" id="frVorname" class="fi" placeholder="Max"></div>
-              <div class="fg"><label class="fl">Nachname *</label><input type="text" id="frNachname" class="fi" placeholder="Mustermann"></div>
-            </div>
+          <table>
+            <thead><tr><th>Name</th><th>Fuhrpark</th><th>E-Mail</th><th>Status</th><th>Aktionen</th></tr></thead>
+            <tbody id="tblFahrer"></tbody>
+          </table>
+        </div>
+        <div style="background:var(--f0);border-radius:12px;padding:24px;margin-top:20px">
+          <div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t0);margin-bottom:16px">Fahrer anlegen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+            <div class="fg"><label class="fl">Vorname *</label><input type="text" id="frVorname" class="fi" placeholder="Max"></div>
+            <div class="fg"><label class="fl">Nachname *</label><input type="text" id="frNachname" class="fi" placeholder="Mustermann"></div>
             <div class="fg"><label class="fl">E-Mail *</label><input type="email" id="frEmail" class="fi" placeholder="max@muster.de"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
             <div class="fg"><label class="fl">Telefon</label><input type="text" id="frTel" class="fi" placeholder="0170 1234567"></div>
             <div class="fg">
               <label class="fl">Fuhrpark *</label>
@@ -1914,10 +1916,10 @@
                 <option value="">— Fuhrpark wählen —</option>
               </select>
             </div>
-            <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
-              <button class="btn btn-navy" onclick="createFahrer()">Anlegen + Einladung →</button>
-              <span id="frMsg" style="font-size:12px;display:none"></span>
-            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+            <button class="btn btn-navy" onclick="createFahrer()">Anlegen + Einladung →</button>
+            <span id="frMsg" style="font-size:13px;display:none"></span>
           </div>
         </div>
       </div>
