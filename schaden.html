@@ -2269,22 +2269,24 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <nav class="bottom-nav">
-  <button class="bn-item" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <button class="bn-item bn-active" data-view="home" onclick="showView('home')">
+    <div class="bn-bar"></div>
     <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-home"/></svg>
     <span class="bn-lbl">Start</span>
   </button>
-  <button class="bn-item bn-active">
-    <div class="bn-bar"></div>
-    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-schaden"/></svg>
-    <span class="bn-lbl">Schaden</span>
+  <button class="bn-item" data-view="faelle" onclick="showView('faelle')">
+    <div class="bn-bar" style="display:none"></div>
+    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-zusammenfassung"/></svg>
+    <span class="bn-lbl">Meine Fälle</span>
   </button>
-  <button class="bn-item">
-    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-fahrzeug"/></svg>
-    <span class="bn-lbl">Flotte</span>
+  <button class="bn-item" data-view="hilfe" onclick="showView('hilfe')">
+    <div class="bn-bar" style="display:none"></div>
+    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-hilfe"/></svg>
+    <span class="bn-lbl">Hilfe</span>
   </button>
-  <button class="bn-item">
-    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-fahrer"/></svg>
-    <span class="bn-lbl">Profil</span>
+  <button class="bn-item bn-logout" onclick="fahrerLogout()">
+    <svg width="22" height="22" viewBox="0 0 256 256"><use href="#ic-abmelden"/></svg>
+    <span class="bn-lbl">Abmelden</span>
   </button>
 </nav>
 
