@@ -273,16 +273,16 @@ router.get('/fahrer/passwort-vergessen', (req, res) => {
 });
 
 router.post('/api/fahrer/reset-anfragen', resetRequestLimiter, async (req, res) => {
-  // Respond immediately regardless — prevents email enumeration
-  res.json({ success: true, message: 'Wenn die E-Mail bekannt ist, wurde ein Link gesendet.' });
   const { email } = req.body;
-  if (!email) return;
+  if (!email) return res.status(400).json({ success: false, error: 'E-Mail-Adresse erforderlich' });
   try {
     const { rows } = await pool.query(
       'SELECT id, vorname, reset_token, reset_expires_at FROM fahrer WHERE email=$1 AND aktiv=true',
       [email.trim().toLowerCase()]
     );
-    if (!rows.length) return;
+    if (!rows.length) {
+      return res.status(404).json({ success: false, error: 'Diese E-Mail-Adresse ist nicht registriert oder noch nicht aktiviert.' });
+    }
     const { id, vorname } = rows[0];
     let reset_token = rows[0].reset_token;
     let reset_expires_at = rows[0].reset_expires_at;
@@ -313,8 +313,10 @@ router.post('/api/fahrer/reset-anfragen', resetRequestLimiter, async (req, res) 
         </div>
       </body></html>`,
     });
+    res.json({ success: true, message: 'Ein Link zum Zurücksetzen wurde gesendet.' });
   } catch (err) {
     console.error('Reset-Anfrage Fehler:', err.message);
+    res.status(500).json({ success: false, error: 'E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es erneut.' });
   }
 });
 

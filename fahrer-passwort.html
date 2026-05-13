@@ -77,9 +77,14 @@
         body: JSON.stringify({ email: document.getElementById('forgot-email').value.trim() }),
       });
       const data = await res.json();
-      ok.textContent   = data.message || 'Link wurde gesendet.';
-      ok.style.display = 'block';
-      document.getElementById('forgot-form').style.display = 'none';
+      if (data.success) {
+        ok.textContent   = data.message || 'Link wurde gesendet.';
+        ok.style.display = 'block';
+        document.getElementById('forgot-form').style.display = 'none';
+      } else {
+        err.textContent = data.error || 'E-Mail-Adresse nicht gefunden.';
+        err.style.display = 'block';
+      }
     });
 
     document.getElementById('reset-form').addEventListener('submit', async (e) => {
