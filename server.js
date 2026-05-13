@@ -10,6 +10,7 @@ const authRoutes             = require('./routes/auth');
 const adminRoutes            = require('./routes/admin');
 const schadenRoutes          = require('./routes/schaden');
 const publicRoutes           = require('./routes/public');
+const fahrerRoutes           = require('./routes/fahrer');
 
 const app  = express();
 const port = process.env.PORT || 8000;
@@ -24,6 +25,8 @@ app.use(session({
 app.use(express.json());
 
 setupMaintenance(app);
+
+app.use(fahrerRoutes);
 
 // Static files served after maintenance gate so protected assets require auth
 app.use(express.static(path.join(__dirname)));
