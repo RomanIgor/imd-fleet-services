@@ -1885,6 +1885,42 @@
         </div>
       </div>
 
+      <div class="dp" id="dFahrer">
+        <div class="dh">Fahrer</div>
+        <div class="dsub">Fahrerverwaltung — Einladungen · Zugänge · DSGVO</div>
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;margin-top:20px">
+          <div class="tbl-wrap">
+            <div class="tbl-head">
+              <div class="tbl-title">Alle Fahrer</div>
+              <button class="tbl-sel" onclick="loadFahrer()" style="cursor:pointer">↻ Aktualisieren</button>
+            </div>
+            <table>
+              <thead><tr><th>Name</th><th>Fuhrpark</th><th>E-Mail</th><th>Status</th><th>Aktionen</th></tr></thead>
+              <tbody id="tblFahrer"></tbody>
+            </table>
+          </div>
+          <div style="background:var(--f0);border-radius:12px;padding:20px">
+            <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Fahrer anlegen</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="fg"><label class="fl">Vorname *</label><input type="text" id="fVorname" class="fi" placeholder="Max"></div>
+              <div class="fg"><label class="fl">Nachname *</label><input type="text" id="fNachname" class="fi" placeholder="Mustermann"></div>
+            </div>
+            <div class="fg"><label class="fl">E-Mail *</label><input type="email" id="fEmail" class="fi" placeholder="max@muster.de"></div>
+            <div class="fg"><label class="fl">Telefon</label><input type="text" id="fTel" class="fi" placeholder="0170 1234567"></div>
+            <div class="fg">
+              <label class="fl">Fuhrpark *</label>
+              <select id="fFuhrpark" class="fi" style="appearance:auto">
+                <option value="">— Fuhrpark wählen —</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
+              <button class="btn btn-navy" onclick="createFahrer()">Anlegen + Einladung →</button>
+              <span id="fMsg" style="font-size:12px;display:none"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

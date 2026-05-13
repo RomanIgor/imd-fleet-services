@@ -321,6 +321,115 @@ async function createFuhrpark() {
   }
 }
 
+// ─── FAHRER ───
+async function loadFuhrparkDropdown() {
+  try {
+    const rows = await fetch('/api/fuhrparks').then(r => r.json());
+    const sel = document.getElementById('fFuhrpark');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">— Fuhrpark wählen —</option>' +
+      rows.map(fp => `<option value="${fp.id}">${fp.name}</option>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+async function loadFahrer() {
+  try {
+    const rows = await fetch('/api/fahrer').then(r => r.json());
+    const tbody = document.getElementById('tblFahrer');
+    if (!tbody) return;
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--t3);padding:24px">Keine Fahrer angelegt</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map(f => {
+      let badge;
+      if (f.aktiv) {
+        badge = '<span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Aktiv</span>';
+      } else if (f.has_invite_token) {
+        badge = '<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Einladung offen</span>';
+      } else {
+        badge = '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700">Inaktiv</span>';
+      }
+      const toggleBtn = f.aktiv
+        ? `<button class="tbl-sel" style="cursor:pointer" onclick="toggleFahrerStatus(${f.id},false)" title="Deaktivieren">⏸</button>`
+        : (!f.has_invite_token
+            ? `<button class="tbl-sel" style="cursor:pointer" onclick="toggleFahrerStatus(${f.id},true)" title="Reaktivieren">▶</button>`
+            : '');
+      return `<tr>
+        <td><strong>${f.vorname} ${f.nachname}</strong></td>
+        <td style="color:var(--t2)">${f.fuhrpark_name}</td>
+        <td style="font-size:12px;color:var(--t2)">${f.email || '—'}</td>
+        <td>${badge}</td>
+        <td id="fAkt${f.id}" style="white-space:nowrap;display:flex;gap:4px;align-items:center">
+          ${toggleBtn}
+          <button class="tbl-sel" style="cursor:pointer;color:var(--red)" onclick="deleteFahrer(${f.id})" title="DSGVO löschen">🗑</button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(e) { console.error(e); }
+}
+
+async function createFahrer() {
+  const vorname     = document.getElementById('fVorname').value.trim();
+  const nachname    = document.getElementById('fNachname').value.trim();
+  const email       = document.getElementById('fEmail').value.trim();
+  const telefon     = document.getElementById('fTel').value.trim();
+  const fuhrpark_id = document.getElementById('fFuhrpark').value;
+  const msg         = document.getElementById('fMsg');
+  if (!vorname || !nachname || !email || !fuhrpark_id) {
+    msg.style.cssText = 'display:block;color:var(--red)';
+    msg.textContent = 'Alle Pflichtfelder ausfüllen.';
+    return;
+  }
+  const res = await fetch('/api/fahrer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ vorname, nachname, email, telefon: telefon || null, fuhrpark_id: parseInt(fuhrpark_id) })
+  }).then(r => r.json());
+  if (res.success) {
+    msg.style.cssText = 'display:block;color:var(--green)';
+    msg.textContent = 'Fahrer angelegt — Einladung gesendet.';
+    document.getElementById('fVorname').value = '';
+    document.getElementById('fNachname').value = '';
+    document.getElementById('fEmail').value = '';
+    document.getElementById('fTel').value = '';
+    document.getElementById('fFuhrpark').value = '';
+    loadFahrer();
+    setTimeout(() => { msg.style.display = 'none'; }, 4000);
+  } else {
+    msg.style.cssText = 'display:block;color:var(--red)';
+    msg.textContent = res.error === 'E-Mail bereits vergeben'
+      ? 'Diese E-Mail ist bereits registriert.'
+      : (res.error || 'Fehler');
+  }
+}
+
+async function toggleFahrerStatus(id, aktiv) {
+  const res = await fetch(`/api/fahrer/${id}/status`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ aktiv })
+  }).then(r => r.json());
+  if (res.success) loadFahrer();
+  else showToast('⚠ ' + (res.error || 'Fehler'));
+}
+
+function deleteFahrer(id) {
+  const cell = document.getElementById('fAkt' + id);
+  if (!cell) return;
+  cell.innerHTML = `
+    <span style="font-size:11px;color:var(--red);font-weight:600">Wirklich anonymisieren?</span>
+    <button class="tbl-sel" style="cursor:pointer;color:var(--red)" onclick="confirmDeleteFahrer(${id})">Ja</button>
+    <button class="tbl-sel" style="cursor:pointer" onclick="loadFahrer()">Nein</button>
+  `;
+}
+
+async function confirmDeleteFahrer(id) {
+  const res = await fetch(`/api/fahrer/${id}`, { method: 'DELETE' }).then(r => r.json());
+  if (res.success) { showToast('✓ Fahrer anonymisiert (DSGVO Art. 17)'); loadFahrer(); }
+  else showToast('⚠ ' + (res.error || 'Fehler'));
+}
+
 // ─── EXCEL EXPORT ───
 function exportExcel(){
   if(typeof XLSX==='undefined'){showToast('⚠ XLSX-Bibliothek nicht geladen');return;}
