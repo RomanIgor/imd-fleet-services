@@ -325,7 +325,7 @@ async function createFuhrpark() {
 async function loadFuhrparkDropdown() {
   try {
     const rows = await fetch('/api/fuhrparks').then(r => r.json());
-    const sel = document.getElementById('fFuhrpark');
+    const sel = document.getElementById('frFuhrpark');
     if (!sel) return;
     sel.innerHTML = '<option value="">— Fuhrpark wählen —</option>' +
       rows.map(fp => `<option value="${fp.id}">${fp.name}</option>`).join('');
@@ -370,12 +370,12 @@ async function loadFahrer() {
 }
 
 async function createFahrer() {
-  const vorname     = document.getElementById('fVorname').value.trim();
-  const nachname    = document.getElementById('fNachname').value.trim();
-  const email       = document.getElementById('fEmail').value.trim();
-  const telefon     = document.getElementById('fTel').value.trim();
-  const fuhrpark_id = document.getElementById('fFuhrpark').value;
-  const msg         = document.getElementById('fMsg');
+  const vorname     = document.getElementById('frVorname').value.trim();
+  const nachname    = document.getElementById('frNachname').value.trim();
+  const email       = document.getElementById('frEmail').value.trim();
+  const telefon     = document.getElementById('frTel').value.trim();
+  const fuhrpark_id = document.getElementById('frFuhrpark').value;
+  const msg         = document.getElementById('frMsg');
   if (!vorname) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Vorname fehlt.'; return; }
   if (!nachname) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Nachname fehlt.'; return; }
   if (!email) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='E-Mail fehlt.'; return; }
@@ -389,11 +389,11 @@ async function createFahrer() {
     if (res.success) {
       msg.style.cssText = 'display:block;color:var(--green)';
       msg.textContent = 'Fahrer angelegt — Einladung gesendet.';
-      document.getElementById('fVorname').value = '';
-      document.getElementById('fNachname').value = '';
-      document.getElementById('fEmail').value = '';
-      document.getElementById('fTel').value = '';
-      document.getElementById('fFuhrpark').value = '';
+      document.getElementById('frVorname').value = '';
+      document.getElementById('frNachname').value = '';
+      document.getElementById('frEmail').value = '';
+      document.getElementById('frTel').value = '';
+      document.getElementById('frFuhrpark').value = '';
       loadFahrer();
       setTimeout(() => { msg.style.display = 'none'; }, 4000);
     } else {
