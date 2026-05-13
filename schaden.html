@@ -859,6 +859,12 @@
 </header>
 
 <main>
+<div id="view-home" class="app-view v-active">
+  <div class="home-greeting">
+    <div class="home-greeting-sub">Willkommen zurück</div>
+    <div class="home-greeting-name">Guten Tag, <span id="home-fahrer-name">…</span></div>
+    <div class="home-greeting-fleet" id="home-fuhrpark-name"></div>
+  </div>
   <section class="hero-grid">
     <div class="hero">
       <div class="hero-tag">
@@ -878,7 +884,7 @@
 
   <div class="modules-label">Module</div>
   <div class="modules-grid">
-      <div class="mod-tile active-mod">
+      <div class="mod-tile active-mod" onclick="scrollToForm()">
         <div class="imd-icon"><svg width="28" height="28" viewBox="0 0 256 256"><use href="#ic-schaden"/></svg></div>
         <div class="mod-tile-label">Schadenmanagement</div>
         <div class="mod-tile-sub">Aktiv verfügbar</div>
@@ -903,7 +909,9 @@
       </div>
     </div>
   </div>
+</div><!-- /view-home -->
 
+<div id="view-form" class="app-view">
   <div id="formular" class="form-card" data-form-card style="margin-bottom:20px;">
     <div class="stepbar">
       <div class="stepbar-inner" id="stepbar-inner"></div>
@@ -962,6 +970,37 @@
   <footer class="page-footer">
     IMD Fleet Services GmbH · Schadenmanagement-Modul · Stand 2026
   </footer>
+</div><!-- /view-form -->
+
+<div id="view-faelle" class="app-view">
+  <div class="view-header">
+    <div class="view-header-title">Meine Fälle</div>
+    <div class="view-header-sub">Ihre eingereichten Schadensmeldungen</div>
+  </div>
+  <div id="faelle-list" class="fall-list">
+    <div class="fall-empty">Lade …</div>
+  </div>
+</div><!-- /view-faelle -->
+
+<div id="view-hilfe" class="app-view">
+  <div class="view-header">
+    <div class="view-header-title">Hilfe &amp; Kontakt</div>
+    <div class="view-header-sub">Support &amp; FAQ</div>
+  </div>
+  <div class="hilfe-contact">
+    <div class="hilfe-contact-title">IMD Fleet Services GmbH</div>
+    <div class="hilfe-contact-row">
+      <svg width="14" height="14" viewBox="0 0 256 256"><use href="#ic-versand"/></svg>
+      schaden@imdfleet.de
+    </div>
+    <div class="hilfe-contact-row">
+      <svg width="14" height="14" viewBox="0 0 256 256"><use href="#ic-verlauf"/></svg>
+      Montag–Freitag &middot; 8:00–18:00 Uhr
+    </div>
+  </div>
+  <div id="hilfe-faq-content"></div>
+</div><!-- /view-hilfe -->
+
 </main>
 
 <script>
