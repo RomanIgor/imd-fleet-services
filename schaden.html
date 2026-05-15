@@ -579,17 +579,17 @@
   /* MODULE TILES */
   .modules-label {
     font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
-    font-weight: 800; color: var(--text-soft); margin: 4px 0 12px;
+    font-weight: 800; color: var(--text-soft); margin: 2px 0 10px;
   }
-  .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
   @media (min-width: 600px) { .modules-grid { grid-template-columns: repeat(4, 1fr); } }
   .mod-tile {
     background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 16px 14px 14px; position: relative; overflow: hidden;
+    border-radius: 16px; padding: 13px 13px 12px; position: relative; overflow: hidden;
     box-shadow: var(--shadow-sm); cursor: pointer;
     transition: box-shadow 0.15s, border-color 0.15s, transform 0.12s;
     -webkit-tap-highlight-color: transparent;
-    min-height: 108px;
+    min-height: 96px;
   }
   .mod-tile:active { transform: scale(0.97); }
   .mod-tile:hover { box-shadow: var(--shadow); border-color: #c7dfe9; }
@@ -604,8 +604,8 @@
   .c3 { background: #dbeafe; color: #1d4ed8; }
   .c4 { background: #ede9fe; color: #6d28d9; }
   .c-nav { background: #E8F1FB; color: #0052A3; }
-  .mod-tile-label { font-size: 12.5px; font-weight: 700; color: var(--text); line-height: 1.3; }
-  .mod-tile-sub { font-size: 11px; color: var(--text-soft); margin-top: 3px; line-height: 1.4; }
+  .mod-tile-label { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.25; }
+  .mod-tile-sub { font-size: 10.5px; color: var(--text-soft); margin-top: 2px; line-height: 1.3; }
   .badge-soon {
     position: absolute; top: 10px; right: 10px;
     background: #eef2ff; color: #4f46e5;
@@ -621,10 +621,10 @@
 
   /* ── IMD ICON SYSTEM ── navy 3D glossy, CSS-only, kein CDN */
   .imd-icon {
-    width: 52px; height: 52px; border-radius: 15px;
+    width: 46px; height: 46px; border-radius: 14px;
     flex-shrink: 0; position: relative;
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden; margin-bottom: 12px;
+    overflow: hidden; margin-bottom: 9px;
     background: radial-gradient(ellipse 90% 70% at 33% 22%,
       #1a4c96 0%, #0c2256 44%, #040b1c 100%);
     box-shadow:
@@ -659,7 +659,7 @@
   /* HOME GUIDE CARD */
   .home-guide {
     position: relative; display: block; width: 100%; text-align: left;
-    overflow: hidden; margin: 2px 0 20px; padding: 18px;
+    overflow: hidden; margin: 2px 0 14px; padding: 14px;
     border-radius: 18px; border: 1px solid rgba(45,159,192,0.18);
     box-shadow: 0 14px 34px rgba(37,48,72,0.10);
     background: linear-gradient(145deg, #FFFFFF 0%, #F6FAFD 100%);
@@ -670,18 +670,18 @@
   }
   .home-guide-top {
     position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
-    gap: 14px; margin-bottom: 18px;
+    gap: 12px; margin-bottom: 14px;
   }
-  .home-guide-main { display: flex; align-items: center; gap: 13px; min-width: 0; }
+  .home-guide-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .home-guide-hero {
-    width: 66px; height: 66px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    width: 54px; height: 54px; border-radius: 17px; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; color: #EAF6FF;
     background: radial-gradient(circle at 35% 22%, rgba(255,255,255,0.22), transparent 38%), linear-gradient(145deg, #123A70 0%, #071532 100%);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 12px 28px rgba(7,21,50,0.20);
   }
-  .home-guide-title { font-size: 15.5px; font-weight: 800; line-height: 1.2; color: var(--text); letter-spacing: -0.02em; }
-  .home-guide-copy { font-size: 12px; line-height: 1.55; color: var(--text-mid); margin-top: 5px; max-width: 440px; }
-  .home-guide-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; }
+  .home-guide-title { font-size: 15px; font-weight: 800; line-height: 1.18; color: var(--text); letter-spacing: -0.02em; }
+  .home-guide-copy { font-size: 11px; line-height: 1.35; color: var(--text-mid); margin-top: 4px; max-width: 440px; }
+  .home-guide-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px 8px; }
   .home-guide-step {
     position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center;
     animation: guideStepIn 0.55s cubic-bezier(.16,1,.3,1) both;
@@ -701,14 +701,14 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .home-guide-step-icon {
-    width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px; color: #DCEBFF;
+    width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 6px; color: #DCEBFF;
     background: radial-gradient(ellipse 90% 70% at 33% 22%, #1a4c96 0%, #0c2256 44%, #040b1c 100%);
     box-shadow: 0 0 0 1.5px rgba(100,160,255,0.20), inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 20px rgba(7,21,50,0.22);
   }
-  .home-guide-step-num { font-size: 11px; font-weight: 900; color: var(--text-mid); line-height: 1; margin-bottom: 5px; }
+  .home-guide-step-num { font-size: 10px; font-weight: 900; color: var(--text-mid); line-height: 1; margin-bottom: 4px; }
   .home-guide-step-label {
-    min-width: 0; font-size: 11.5px; font-weight: 800; line-height: 1.24;
+    min-width: 0; font-size: 10.5px; font-weight: 800; line-height: 1.18;
     color: var(--text);
   }
   [data-theme="dark"] .home-guide {
@@ -724,16 +724,28 @@
     .home-guide-step { animation: none; }
   }
   @media (max-width: 520px) {
-    .home-guide { padding: 16px; border-radius: 16px; }
-    .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 14px; }
-    .home-guide-main { gap: 12px; }
-    .home-guide-hero { width: 60px; height: 60px; border-radius: 18px; }
-    .home-guide-title { font-size: 15px; }
-    .home-guide-copy { font-size: 12px; }
-    .home-guide-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 8px; }
+    main { padding: 12px; }
+    .home-guide { padding: 12px; border-radius: 16px; margin-bottom: 12px; }
+    .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .home-guide-main { gap: 10px; }
+    .home-guide-hero { width: 46px; height: 46px; border-radius: 15px; }
+    .home-guide-hero svg { width: 34px; height: 34px; }
+    .home-guide-title { font-size: 14px; }
+    .home-guide-copy { font-size: 10.5px; line-height: 1.3; }
+    .home-guide-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 6px; }
     .home-guide-step:not(:nth-child(3n))::after { display: none; }
-    .home-guide-step-icon { width: 44px; height: 44px; border-radius: 13px; }
-    .home-guide-step-label { font-size: 10.8px; }
+    .home-guide-step-icon { width: 36px; height: 36px; border-radius: 11px; margin-bottom: 5px; }
+    .home-guide-step-icon svg { width: 18px; height: 18px; }
+    .home-guide-step-num { font-size: 9.5px; margin-bottom: 3px; }
+    .home-guide-step-label { font-size: 9.2px; line-height: 1.14; }
+    .modules-label { margin: 0 0 8px; font-size: 10px; }
+    .modules-grid { gap: 8px; margin-bottom: 8px; }
+    .mod-tile { min-height: 84px; padding: 11px 11px 10px; border-radius: 14px; }
+    .imd-icon { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 7px; }
+    .imd-icon svg { width: 23px; height: 23px; }
+    .mod-tile-label { font-size: 11.3px; }
+    .mod-tile-sub { font-size: 9.8px; line-height: 1.2; }
+    .badge-soon { top: 8px; right: 8px; font-size: 8.5px; padding: 2px 7px; }
   }
 
   /* BOTTOM NAV */
@@ -766,7 +778,7 @@
   /* HOME GREETING */
   .home-greeting {
     background: linear-gradient(135deg, var(--imd-darker) 0%, var(--imd-dark) 60%, var(--imd-mid) 100%);
-    border-radius: var(--radius-lg); padding: 20px 20px 18px; margin-bottom: 16px;
+    border-radius: var(--radius-lg); padding: 17px 18px 15px; margin-bottom: 12px;
     color: white; position: relative; overflow: hidden;
   }
   .home-greeting::after {
@@ -777,8 +789,14 @@
   }
   .home-greeting > * { position: relative; z-index: 1; }
   .home-greeting-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.5); font-weight: 700; margin-bottom: 3px; }
-  .home-greeting-name { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .home-greeting-name { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
   .home-greeting-fleet { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+  @media (max-width: 520px) {
+    .home-greeting { padding: 14px 15px 13px; margin-bottom: 10px; border-radius: 18px; }
+    .home-greeting-sub { font-size: 9px; margin-bottom: 2px; }
+    .home-greeting-name { font-size: 17px; }
+    .home-greeting-fleet { font-size: 11px; margin-top: 1px; }
+  }
 
   /* VIEW HEADER */
   .view-header { margin-bottom: 16px; }
