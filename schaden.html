@@ -680,76 +680,39 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 12px 28px rgba(7,21,50,0.20);
   }
   .home-guide-title { font-size: 15px; font-weight: 800; line-height: 1.18; color: var(--text); letter-spacing: -0.02em; }
-  .home-guide-copy { font-size: 11px; line-height: 1.35; color: var(--text-mid); margin-top: 4px; max-width: 440px; }
-  .home-guide-play {
-    position: relative; z-index: 1; width: 32px; height: 32px; border-radius: 11px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    border: 1px solid rgba(45,159,192,0.22); background: var(--imd-blue-bg); color: var(--imd-blue);
-    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  .home-guide-copy { font-size: 11.5px; line-height: 1.45; color: var(--text-mid); margin-top: 5px; max-width: 440px; }
+  .home-guide-action {
+    width: 34px; height: 34px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--imd-blue); background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.22);
   }
-  .home-guide-play svg { position: absolute; transition: opacity 0.16s ease, transform 0.16s ease; }
-  .home-guide-play .pause-icon { opacity: 1; }
-  .home-guide-play .play-icon { opacity: 0; transform: scale(0.82); }
-  .home-guide.is-paused .home-guide-play .pause-icon { opacity: 0; transform: scale(0.82); }
-  .home-guide.is-paused .home-guide-play .play-icon { opacity: 1; transform: scale(1); }
-  .guide-stage {
-    position: relative; z-index: 1; min-height: 108px; overflow: hidden; border-radius: 16px;
-    padding: 14px; margin-bottom: 10px; display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: center;
-    background: linear-gradient(135deg, rgba(8,21,50,0.96), rgba(17,58,112,0.92));
-    border: 1px solid rgba(80,147,185,0.24);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 28px rgba(7,21,50,0.14);
+  .home-guide-steps {
+    position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
   }
-  .guide-stage::before {
-    content: ""; position: absolute; inset: -70px -50px auto auto; width: 190px; height: 190px;
-    background: radial-gradient(circle, rgba(45,159,192,0.42), transparent 68%); pointer-events: none;
+  .home-guide-step {
+    position: relative; min-width: 0; padding: 0 10px; display: flex; flex-direction: column; align-items: center;
+    text-align: center; animation: guideStepIn 0.5s cubic-bezier(.16,1,.3,1) both;
   }
-  .guide-visual { position: relative; height: 78px; }
-  .guide-road {
-    position: absolute; left: 2px; right: 2px; bottom: 10px; height: 18px; border-radius: 999px;
-    background: rgba(255,255,255,0.08); overflow: hidden;
+  .home-guide-step:not(:last-child)::after {
+    content: ""; position: absolute; top: 27px; right: -4px; width: 7px; height: 12px;
+    background: currentColor; color: var(--text-soft); opacity: 0.42; clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
-  .guide-road::after {
-    content: ""; position: absolute; inset: 8px 10px auto; height: 2px;
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.52) 0 14px, transparent 14px 24px);
-    animation: guideRoad 1.6s linear infinite;
+  .home-guide-step:nth-child(1) { animation-delay: 0.04s; }
+  .home-guide-step:nth-child(2) { animation-delay: 0.10s; }
+  .home-guide-step:nth-child(3) { animation-delay: 0.16s; }
+  .home-guide-step:nth-child(4) { animation-delay: 0.22s; }
+  @keyframes guideStepIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes guideRoad { from { transform: translateX(0); } to { transform: translateX(-24px); } }
-  .guide-car {
-    position: absolute; left: 16px; bottom: 19px; width: 62px; height: 26px; border-radius: 8px 14px 7px 7px;
-    background: linear-gradient(145deg, #EAF6FF, #AFC8E8); box-shadow: 0 10px 24px rgba(0,0,0,0.34);
-    transform: translateX(var(--guide-car-offset, 0px));
-    transition: transform 0.38s cubic-bezier(.2,.8,.2,1);
-  }
-  .guide-car::before {
-    content: ""; position: absolute; left: 14px; top: -12px; width: 30px; height: 17px; border-radius: 12px 12px 3px 3px;
-    background: linear-gradient(145deg, #D8ECFF, #7FA7D6);
-  }
-  .guide-car::after {
-    content: ""; position: absolute; left: 9px; right: 9px; bottom: -6px; height: 10px;
-    background: radial-gradient(circle at 6px 5px, #071532 0 5px, transparent 6px), radial-gradient(circle at calc(100% - 6px) 5px, #071532 0 5px, transparent 6px);
-  }
-  .guide-marker {
-    position: absolute; right: 10px; top: 2px; width: 42px; height: 42px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center; color: #DCEBFF;
+  .home-guide-step-icon {
+    width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px; color: #DCEBFF;
     background: radial-gradient(ellipse 90% 70% at 33% 22%, #1a4c96 0%, #0c2256 48%, #040b1c 100%);
-    box-shadow: 0 0 0 1px rgba(100,160,255,0.20), inset 0 1px 0 rgba(255,255,255,0.16), 0 10px 22px rgba(0,0,0,0.34);
-    animation: guidePulse 1.7s ease-in-out infinite;
+    box-shadow: 0 0 0 1.5px rgba(100,160,255,0.20), inset 0 1px 0 rgba(255,255,255,0.18), 0 10px 22px rgba(7,21,50,0.22);
   }
-  @keyframes guidePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-  .guide-content { position: relative; z-index: 1; min-width: 0; }
-  .guide-kicker { font-size: 9px; line-height: 1; font-weight: 900; letter-spacing: 0.12em; color: #7ED7EF; margin-bottom: 6px; }
-  .guide-active-title { font-size: 14px; font-weight: 900; color: #FFFFFF; line-height: 1.15; }
-  .guide-active-copy { font-size: 11px; color: rgba(234,246,255,0.72); line-height: 1.35; margin-top: 4px; }
-  .guide-progress { position: relative; z-index: 1; height: 4px; border-radius: 999px; margin: 0 0 9px; background: rgba(45,159,192,0.16); overflow: hidden; }
-  .guide-progress-bar { height: 100%; width: var(--guide-progress, 16.66%); border-radius: inherit; background: linear-gradient(90deg, var(--imd-blue), #7ED7EF); transition: width 0.34s ease; }
-  .guide-timeline { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; }
-  .guide-dot {
-    min-width: 0; height: 30px; border-radius: 10px; border: 1px solid rgba(203,210,221,0.58);
-    background: rgba(255,255,255,0.68); color: var(--text-soft); font-size: 10px; font-weight: 900;
-    cursor: pointer; transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.12s ease;
-  }
-  .guide-dot:active { transform: scale(0.96); }
-  .guide-dot.active { color: #FFFFFF; background: linear-gradient(145deg, #1A7A9B, #123A70); border-color: rgba(45,159,192,0.65); }
+  .home-guide-step-num { font-size: 11px; font-weight: 900; color: var(--text-mid); line-height: 1; margin-bottom: 6px; }
+  .home-guide-step-label { font-size: 11.5px; font-weight: 900; line-height: 1.15; color: var(--text); }
+  .home-guide-step-sub { font-size: 9.8px; line-height: 1.32; color: var(--text-mid); margin-top: 5px; }
   [data-theme="dark"] .home-guide {
     background: linear-gradient(145deg, #151B28 0%, #0F1420 100%);
     border-color: rgba(80,147,185,0.28); box-shadow: 0 18px 42px rgba(0,0,0,0.34);
@@ -758,11 +721,10 @@
   [data-theme="dark"] .home-guide-hero { box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 14px 32px rgba(0,0,0,0.45); }
   [data-theme="dark"] .home-guide-title { color: var(--text); }
   [data-theme="dark"] .home-guide-copy { color: var(--text-mid); }
-  [data-theme="dark"] .home-guide-play { background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.22); color: #7ED7EF; }
-  [data-theme="dark"] .guide-dot { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.08); color: var(--text-mid); }
-  [data-theme="dark"] .guide-dot.active { color: #FFFFFF; border-color: rgba(126,215,239,0.44); }
+  [data-theme="dark"] .home-guide-action { background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.22); color: #7ED7EF; }
+  [data-theme="dark"] .home-guide-step-icon { box-shadow: 0 0 0 1.5px rgba(100,160,255,0.22), inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 24px rgba(0,0,0,0.40); }
   @media (prefers-reduced-motion: reduce) {
-    .guide-road::after, .guide-marker { animation: none; }
+    .home-guide-step { animation: none; }
   }
   @media (max-width: 520px) {
     main { padding: 12px; }
@@ -772,20 +734,16 @@
     .home-guide-hero { width: 46px; height: 46px; border-radius: 15px; }
     .home-guide-hero svg { width: 34px; height: 34px; }
     .home-guide-title { font-size: 14px; }
-    .home-guide-copy { font-size: 10.5px; line-height: 1.3; }
-    .home-guide-play { width: 30px; height: 30px; border-radius: 10px; }
-    .guide-stage { min-height: 92px; padding: 11px; margin-bottom: 8px; grid-template-columns: 86px 1fr; gap: 10px; border-radius: 14px; }
-    .guide-visual { height: 66px; }
-    .guide-car { width: 50px; height: 22px; left: 10px; bottom: 17px; }
-    .guide-car::before { left: 12px; top: -10px; width: 24px; height: 14px; }
-    .guide-marker { right: 4px; width: 34px; height: 34px; border-radius: 11px; }
-    .guide-marker svg { width: 18px; height: 18px; }
-    .guide-kicker { font-size: 8px; margin-bottom: 5px; }
-    .guide-active-title { font-size: 12.5px; }
-    .guide-active-copy { font-size: 9.8px; line-height: 1.25; margin-top: 3px; }
-    .guide-progress { margin-bottom: 7px; }
-    .guide-timeline { gap: 4px; }
-    .guide-dot { height: 26px; border-radius: 8px; font-size: 9px; }
+    .home-guide-copy { font-size: 10.5px; line-height: 1.35; }
+    .home-guide-action { width: 30px; height: 30px; border-radius: 10px; }
+    .home-guide-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .home-guide-step { padding: 0 4px; }
+    .home-guide-step:not(:last-child)::after { top: 22px; right: -3px; width: 5px; height: 9px; }
+    .home-guide-step-icon { width: 40px; height: 40px; border-radius: 13px; margin-bottom: 7px; }
+    .home-guide-step-icon svg { width: 19px; height: 19px; }
+    .home-guide-step-num { font-size: 9.5px; margin-bottom: 4px; }
+    .home-guide-step-label { font-size: 9.5px; line-height: 1.1; }
+    .home-guide-step-sub { font-size: 8.5px; line-height: 1.22; margin-top: 4px; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
@@ -1019,33 +977,35 @@
           <div class="home-guide-copy">Unfall sichern. Ruhe bewahren. Schaden dokumentieren. IMD übernimmt.</div>
         </div>
       </div>
-      <button class="home-guide-play" type="button" id="guide-play-toggle" aria-label="Animation pausieren">
-        <svg class="pause-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-        <svg class="play-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-    </div>
-    <div class="guide-stage" aria-live="polite">
-      <div class="guide-visual" aria-hidden="true">
-        <div class="guide-road"></div>
-        <div class="guide-car"></div>
-        <div class="guide-marker" id="guide-marker">
-          <svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-alert"></use></svg>
-        </div>
-      </div>
-      <div class="guide-content">
-        <div class="guide-kicker" id="guide-kicker">SCHRITT 01</div>
-        <div class="guide-active-title" id="guide-active-title">Unfallstelle sichern</div>
-        <div class="guide-active-copy" id="guide-active-copy">Warnblinker einschalten, Warnweste anziehen und Unfallstelle absichern.</div>
+      <div class="home-guide-action" aria-hidden="true">
+        <svg width="17" height="17" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg>
       </div>
     </div>
-    <div class="guide-progress" aria-hidden="true"><div class="guide-progress-bar"></div></div>
-    <div class="guide-timeline" role="tablist" aria-label="Schritte im Schadenfall">
-      <button class="guide-dot active" type="button" data-guide-step="0" aria-label="Schritt 1: Unfallstelle sichern">01</button>
-      <button class="guide-dot" type="button" data-guide-step="1" aria-label="Schritt 2: Rettungswagen und Polizei rufen">02</button>
-      <button class="guide-dot" type="button" data-guide-step="2" aria-label="Schritt 3: Schaden dokumentieren">03</button>
-      <button class="guide-dot" type="button" data-guide-step="3" aria-label="Schritt 4: Unfallprotokoll erstellen">04</button>
-      <button class="guide-dot" type="button" data-guide-step="4" aria-label="Schritt 5: Kontaktdaten austauschen">05</button>
-      <button class="guide-dot" type="button" data-guide-step="5" aria-label="Schritt 6: IMD übernimmt">06</button>
+    <div class="home-guide-steps">
+      <div class="home-guide-step">
+        <div class="home-guide-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg></div>
+        <div class="home-guide-step-num">1.</div>
+        <div class="home-guide-step-label">Unfallstelle<br>absichern</div>
+        <div class="home-guide-step-sub">Warnblinker, Warnweste, Warndreieck.</div>
+      </div>
+      <div class="home-guide-step">
+        <div class="home-guide-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"></use></svg></div>
+        <div class="home-guide-step-num">2.</div>
+        <div class="home-guide-step-label">Hilfe<br>rufen</div>
+        <div class="home-guide-step-sub">Falls nötig Rettung und Polizei verständigen.</div>
+      </div>
+      <div class="home-guide-step">
+        <div class="home-guide-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"></use></svg></div>
+        <div class="home-guide-step-num">3.</div>
+        <div class="home-guide-step-label">Schaden<br>dokumentieren</div>
+        <div class="home-guide-step-sub">Fotos, Kennzeichen und Unfallort sichern.</div>
+      </div>
+      <div class="home-guide-step">
+        <div class="home-guide-step-icon"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"></use></svg></div>
+        <div class="home-guide-step-num">4.</div>
+        <div class="home-guide-step-label">IMD<br>übernimmt</div>
+        <div class="home-guide-step-sub">Meldung senden, IMD steuert den Ablauf.</div>
+      </div>
     </div>
   </section>
   <div class="modules-label">Module</div>
@@ -1212,98 +1172,6 @@ let workshops = [];
 const $ = (sel) => document.querySelector(sel);
 const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-const DAMAGE_GUIDE_STEPS = [
-  {
-    icon: 'i-alert',
-    title: 'Unfallstelle sichern',
-    copy: 'Warnblinker einschalten, Warnweste anziehen und Unfallstelle absichern.',
-  },
-  {
-    icon: 'i-phone',
-    title: 'Hilfe rufen',
-    copy: 'Bei Bedarf Rettungswagen und Polizei verständigen.',
-  },
-  {
-    icon: 'i-camera',
-    title: 'Schaden dokumentieren',
-    copy: 'Fotos von Fahrzeug, Schaden, Kennzeichen und Unfallort machen.',
-  },
-  {
-    icon: 'i-file-text',
-    title: 'Unfallprotokoll erstellen',
-    copy: 'Ablauf, Uhrzeit, Ort und wichtige Informationen festhalten.',
-  },
-  {
-    icon: 'i-user',
-    title: 'Kontaktdaten austauschen',
-    copy: 'Daten von Beteiligten und Zeugen notieren.',
-  },
-  {
-    icon: 'i-shield',
-    title: 'IMD übernimmt',
-    copy: 'Schaden melden, Unterlagen senden und IMD steuert den weiteren Ablauf.',
-  },
-];
-
-let guideStepIndex = 0;
-let guideTimer = null;
-let guidePaused = false;
-
-function renderDamageGuideStep(index) {
-  guideStepIndex = (index + DAMAGE_GUIDE_STEPS.length) % DAMAGE_GUIDE_STEPS.length;
-  const step = DAMAGE_GUIDE_STEPS[guideStepIndex];
-  const guide = document.querySelector('.home-guide');
-  if (!guide || !step) return;
-  guide.style.setProperty('--guide-step', guideStepIndex);
-  guide.style.setProperty('--guide-car-offset', `${guideStepIndex * 4}px`);
-  guide.style.setProperty('--guide-progress', `${((guideStepIndex + 1) / DAMAGE_GUIDE_STEPS.length) * 100}%`);
-  const kicker = document.getElementById('guide-kicker');
-  const title = document.getElementById('guide-active-title');
-  const copy = document.getElementById('guide-active-copy');
-  const marker = document.getElementById('guide-marker');
-  if (kicker) kicker.textContent = `SCHRITT ${String(guideStepIndex + 1).padStart(2, '0')}`;
-  if (title) title.textContent = step.title;
-  if (copy) copy.textContent = step.copy;
-  if (marker) marker.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24"><use href="#${step.icon}"></use></svg>`;
-  document.querySelectorAll('.guide-dot').forEach((dot, dotIndex) => {
-    dot.classList.toggle('active', dotIndex === guideStepIndex);
-  });
-}
-
-function startDamageGuide() {
-  stopDamageGuide();
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  guideTimer = window.setInterval(() => renderDamageGuideStep(guideStepIndex + 1), 2600);
-}
-
-function stopDamageGuide() {
-  if (guideTimer) window.clearInterval(guideTimer);
-  guideTimer = null;
-}
-
-function setDamageGuidePaused(paused) {
-  guidePaused = paused;
-  const guide = document.querySelector('.home-guide');
-  const toggle = document.getElementById('guide-play-toggle');
-  if (guide) guide.classList.toggle('is-paused', paused);
-  if (toggle) toggle.setAttribute('aria-label', paused ? 'Animation starten' : 'Animation pausieren');
-  if (paused) stopDamageGuide(); else startDamageGuide();
-}
-
-function initDamageGuide() {
-  const guide = document.querySelector('.home-guide');
-  if (!guide) return;
-  renderDamageGuideStep(0);
-  document.querySelectorAll('.guide-dot').forEach((dot) => {
-    dot.addEventListener('click', () => {
-      renderDamageGuideStep(Number(dot.dataset.guideStep || 0));
-      setDamageGuidePaused(true);
-    });
-  });
-  const toggle = document.getElementById('guide-play-toggle');
-  if (toggle) toggle.addEventListener('click', () => setDamageGuidePaused(!guidePaused));
-  startDamageGuide();
-}
 function icon(name, size=16){ return `<svg class="icon" width="${size}" height="${size}"><use href="#${name}"/></svg>`; }
 
 function field(opts) {
@@ -2196,7 +2064,6 @@ function clearSig() {
 
 loadWorkshops();
 render();
-initDamageGuide();
 loadFahrerMe();
 showView('home');
 
