@@ -659,42 +659,45 @@
   /* HOME GUIDE CARD */
   .home-guide {
     position: relative; display: block; width: 100%; text-align: left;
-    overflow: hidden; margin: 2px 0 14px; padding: 14px;
-    border-radius: 18px; border: 1px solid rgba(45,159,192,0.18);
-    box-shadow: 0 14px 34px rgba(37,48,72,0.10);
-    background: linear-gradient(145deg, #FFFFFF 0%, #F6FAFD 100%);
+    overflow: hidden; margin: 2px 0 18px; padding: 22px 18px 20px;
+    border-radius: 22px; border: 1px solid rgba(45,159,192,0.34);
+    box-shadow: 0 18px 42px rgba(7,21,50,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+    background: linear-gradient(145deg, #111827 0%, #0B1220 100%);
+    color: #FFFFFF;
   }
   .home-guide::before {
-    content: ""; position: absolute; inset: -40% -20% auto auto; width: 220px; height: 220px; pointer-events: none;
-    background: radial-gradient(circle, rgba(45,159,192,0.16), transparent 68%);
+    content: ""; position: absolute; inset: -45% -18% auto auto; width: 260px; height: 260px; pointer-events: none;
+    background: radial-gradient(circle, rgba(45,159,192,0.22), transparent 66%);
   }
   .home-guide-top {
     position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; margin-bottom: 14px;
+    gap: 16px; margin-bottom: 22px;
   }
-  .home-guide-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .home-guide-main { display: flex; align-items: center; gap: 18px; min-width: 0; }
   .home-guide-hero {
-    width: 54px; height: 54px; border-radius: 17px; display: flex; align-items: center; justify-content: center;
+    width: 68px; height: 68px; border-radius: 22px; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; color: #EAF6FF;
     background: radial-gradient(circle at 35% 22%, rgba(255,255,255,0.22), transparent 38%), linear-gradient(145deg, #123A70 0%, #071532 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 12px 28px rgba(7,21,50,0.20);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 14px 32px rgba(0,0,0,0.45);
   }
-  .home-guide-title { font-size: 15px; font-weight: 800; line-height: 1.18; color: var(--text); letter-spacing: -0.02em; }
-  .home-guide-copy { font-size: 11.5px; line-height: 1.45; color: var(--text-mid); margin-top: 5px; max-width: 440px; }
+  .home-guide-title { font-size: 18px; font-weight: 900; line-height: 1.15; color: #FFFFFF; letter-spacing: -0.02em; }
+  .home-guide-copy { font-size: 14px; line-height: 1.45; color: rgba(234,246,255,0.72); margin-top: 8px; max-width: 440px; }
   .home-guide-action {
-    width: 34px; height: 34px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; color: var(--imd-blue); background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.22);
+    width: 44px; height: 44px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: #7ED7EF; background: rgba(45,159,192,0.10); border: 1px solid rgba(45,159,192,0.38);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .home-guide-steps {
     position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
   }
   .home-guide-step {
-    position: relative; min-width: 0; padding: 0 10px; display: flex; flex-direction: column; align-items: center;
+    position: relative; min-width: 0; padding: 0 13px; display: flex; flex-direction: column; align-items: center;
     text-align: center; animation: guideStepIn 0.5s cubic-bezier(.16,1,.3,1) both;
   }
+  .home-guide-step:not(:first-child) { border-left: 1px solid rgba(126,215,239,0.12); }
   .home-guide-step:not(:last-child)::after {
-    content: ""; position: absolute; top: 27px; right: -4px; width: 7px; height: 12px;
-    background: currentColor; color: var(--text-soft); opacity: 0.42; clip-path: polygon(0 0, 100% 50%, 0 100%);
+    content: ""; position: absolute; top: 33px; right: -5px; width: 8px; height: 13px;
+    background: currentColor; color: #7ED7EF; opacity: 0.45; clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
   .home-guide-step:nth-child(1) { animation-delay: 0.04s; }
   .home-guide-step:nth-child(2) { animation-delay: 0.10s; }
@@ -705,14 +708,14 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .home-guide-step-icon {
-    width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
-    margin-bottom: 10px; color: #DCEBFF;
+    width: 58px; height: 58px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 13px; color: #DCEBFF;
     background: radial-gradient(ellipse 90% 70% at 33% 22%, #1a4c96 0%, #0c2256 48%, #040b1c 100%);
-    box-shadow: 0 0 0 1.5px rgba(100,160,255,0.20), inset 0 1px 0 rgba(255,255,255,0.18), 0 10px 22px rgba(7,21,50,0.22);
+    box-shadow: 0 0 0 1.5px rgba(100,160,255,0.22), inset 0 1px 0 rgba(255,255,255,0.16), 0 12px 24px rgba(0,0,0,0.36);
   }
-  .home-guide-step-num { font-size: 11px; font-weight: 900; color: var(--text-mid); line-height: 1; margin-bottom: 6px; }
-  .home-guide-step-label { font-size: 11.5px; font-weight: 900; line-height: 1.15; color: var(--text); }
-  .home-guide-step-sub { font-size: 9.8px; line-height: 1.32; color: var(--text-mid); margin-top: 5px; }
+  .home-guide-step-num { font-size: 12px; font-weight: 900; color: rgba(234,246,255,0.80); line-height: 1; margin-bottom: 7px; }
+  .home-guide-step-label { font-size: 13px; font-weight: 900; line-height: 1.18; color: #FFFFFF; }
+  .home-guide-step-sub { font-size: 11px; line-height: 1.35; color: rgba(234,246,255,0.68); margin-top: 7px; }
   [data-theme="dark"] .home-guide {
     background: linear-gradient(145deg, #151B28 0%, #0F1420 100%);
     border-color: rgba(80,147,185,0.28); box-shadow: 0 18px 42px rgba(0,0,0,0.34);
@@ -728,22 +731,22 @@
   }
   @media (max-width: 520px) {
     main { padding: 12px; }
-    .home-guide { padding: 12px; border-radius: 16px; margin-bottom: 12px; }
-    .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-    .home-guide-main { gap: 10px; }
-    .home-guide-hero { width: 46px; height: 46px; border-radius: 15px; }
-    .home-guide-hero svg { width: 34px; height: 34px; }
-    .home-guide-title { font-size: 14px; }
-    .home-guide-copy { font-size: 10.5px; line-height: 1.35; }
-    .home-guide-action { width: 30px; height: 30px; border-radius: 10px; }
+    .home-guide { padding: 18px 14px 16px; border-radius: 20px; margin-bottom: 14px; }
+    .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 18px; }
+    .home-guide-main { gap: 13px; }
+    .home-guide-hero { width: 58px; height: 58px; border-radius: 19px; }
+    .home-guide-hero svg { width: 38px; height: 38px; }
+    .home-guide-title { font-size: 16px; }
+    .home-guide-copy { font-size: 12.5px; line-height: 1.45; margin-top: 6px; }
+    .home-guide-action { width: 36px; height: 36px; border-radius: 13px; }
     .home-guide-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .home-guide-step { padding: 0 4px; }
-    .home-guide-step:not(:last-child)::after { top: 22px; right: -3px; width: 5px; height: 9px; }
-    .home-guide-step-icon { width: 40px; height: 40px; border-radius: 13px; margin-bottom: 7px; }
-    .home-guide-step-icon svg { width: 19px; height: 19px; }
-    .home-guide-step-num { font-size: 9.5px; margin-bottom: 4px; }
-    .home-guide-step-label { font-size: 9.5px; line-height: 1.1; }
-    .home-guide-step-sub { font-size: 8.5px; line-height: 1.22; margin-top: 4px; }
+    .home-guide-step { padding: 0 5px; }
+    .home-guide-step:not(:last-child)::after { top: 24px; right: -4px; width: 6px; height: 10px; }
+    .home-guide-step-icon { width: 43px; height: 43px; border-radius: 14px; margin-bottom: 8px; }
+    .home-guide-step-icon svg { width: 21px; height: 21px; }
+    .home-guide-step-num { font-size: 10px; margin-bottom: 5px; }
+    .home-guide-step-label { font-size: 10px; line-height: 1.12; }
+    .home-guide-step-sub { font-size: 8.7px; line-height: 1.25; margin-top: 5px; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
