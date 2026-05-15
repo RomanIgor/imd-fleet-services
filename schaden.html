@@ -681,14 +681,13 @@
   }
   .home-guide-title { font-size: 15px; font-weight: 800; line-height: 1.18; color: var(--text); letter-spacing: -0.02em; }
   .home-guide-copy { font-size: 11px; line-height: 1.35; color: var(--text-mid); margin-top: 4px; max-width: 440px; }
-  .home-guide-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px 8px; }
+  .home-guide-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .home-guide-step {
-    position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center;
+    position: relative; min-width: 0; min-height: 46px; display: flex; align-items: center; gap: 8px;
+    padding: 8px 9px; border-radius: 12px; text-align: left;
+    background: rgba(255,255,255,0.72); border: 1px solid rgba(203,210,221,0.58);
+    box-shadow: 0 4px 12px rgba(37,48,72,0.045);
     animation: guideStepIn 0.55s cubic-bezier(.16,1,.3,1) both;
-  }
-  .home-guide-step:not(:nth-child(3n))::after {
-    content: ""; position: absolute; top: 22px; right: -8px; width: 6px; height: 11px;
-    background: currentColor; color: var(--text-soft); opacity: 0.35; clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
   .home-guide-step:nth-child(1) { animation-delay: 0.04s; }
   .home-guide-step:nth-child(2) { animation-delay: 0.10s; }
@@ -701,14 +700,15 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .home-guide-step-icon {
-    width: 42px; height: 42px; border-radius: 13px; display: flex; align-items: center; justify-content: center;
-    margin-bottom: 6px; color: #DCEBFF;
-    background: radial-gradient(ellipse 90% 70% at 33% 22%, #1a4c96 0%, #0c2256 44%, #040b1c 100%);
-    box-shadow: 0 0 0 1.5px rgba(100,160,255,0.20), inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 20px rgba(7,21,50,0.22);
+    width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: #DCEBFF;
+    background: radial-gradient(ellipse 90% 70% at 33% 22%, #1a4c96 0%, #0c2256 48%, #040b1c 100%);
+    box-shadow: 0 0 0 1px rgba(100,160,255,0.18), inset 0 1px 0 rgba(255,255,255,0.16), 0 5px 12px rgba(7,21,50,0.16);
   }
-  .home-guide-step-num { font-size: 10px; font-weight: 900; color: var(--text-mid); line-height: 1; margin-bottom: 4px; }
+  .home-guide-step-copy { min-width: 0; }
+  .home-guide-step-num { font-size: 9px; font-weight: 900; color: var(--imd-blue); line-height: 1; margin-bottom: 3px; letter-spacing: 0.08em; }
   .home-guide-step-label {
-    min-width: 0; font-size: 10.5px; font-weight: 800; line-height: 1.18;
+    min-width: 0; font-size: 10.8px; font-weight: 800; line-height: 1.16;
     color: var(--text);
   }
   [data-theme="dark"] .home-guide {
@@ -719,6 +719,7 @@
   [data-theme="dark"] .home-guide-hero { box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 14px 32px rgba(0,0,0,0.45); }
   [data-theme="dark"] .home-guide-title { color: var(--text); }
   [data-theme="dark"] .home-guide-copy { color: var(--text-mid); }
+  [data-theme="dark"] .home-guide-step { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.08); box-shadow: none; }
   [data-theme="dark"] .home-guide-step-icon { box-shadow: 0 0 0 1.5px rgba(100,160,255,0.22), inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 24px rgba(0,0,0,0.40); }
   @media (prefers-reduced-motion: reduce) {
     .home-guide-step { animation: none; }
@@ -732,19 +733,19 @@
     .home-guide-hero svg { width: 34px; height: 34px; }
     .home-guide-title { font-size: 14px; }
     .home-guide-copy { font-size: 10.5px; line-height: 1.3; }
-    .home-guide-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 6px; }
-    .home-guide-step:not(:nth-child(3n))::after { display: none; }
-    .home-guide-step-icon { width: 36px; height: 36px; border-radius: 11px; margin-bottom: 5px; }
-    .home-guide-step-icon svg { width: 18px; height: 18px; }
-    .home-guide-step-num { font-size: 9.5px; margin-bottom: 3px; }
-    .home-guide-step-label { font-size: 9.2px; line-height: 1.14; }
+    .home-guide-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .home-guide-step { min-height: 42px; padding: 7px 8px; gap: 7px; border-radius: 11px; }
+    .home-guide-step-icon { width: 27px; height: 27px; border-radius: 8px; }
+    .home-guide-step-icon svg { width: 15px; height: 15px; }
+    .home-guide-step-num { font-size: 8px; margin-bottom: 2px; }
+    .home-guide-step-label { font-size: 9.6px; line-height: 1.12; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
-    .mod-tile { min-height: 84px; padding: 11px 11px 10px; border-radius: 14px; }
+    .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
     .imd-icon { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 7px; }
     .imd-icon svg { width: 23px; height: 23px; }
     .mod-tile-label { font-size: 11.3px; }
-    .mod-tile-sub { font-size: 9.8px; line-height: 1.2; }
+    .mod-tile-sub { display: none; }
     .badge-soon { top: 8px; right: 8px; font-size: 8.5px; padding: 2px 7px; }
   }
 
@@ -975,33 +976,45 @@
     <div class="home-guide-steps">
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg></div>
-        <div class="home-guide-step-num">1.</div>
-        <div class="home-guide-step-label">Unfallstelle sichern</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">01</div>
+          <div class="home-guide-step-label">Unfallstelle sichern</div>
+        </div>
       </div>
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-phone"></use></svg></div>
-        <div class="home-guide-step-num">2.</div>
-        <div class="home-guide-step-label">ggf. Rettungswagen und Polizei rufen</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">02</div>
+          <div class="home-guide-step-label">ggf. Rettungswagen und Polizei rufen</div>
+        </div>
       </div>
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"></use></svg></div>
-        <div class="home-guide-step-num">3.</div>
-        <div class="home-guide-step-label">Schaden dokumentieren</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">03</div>
+          <div class="home-guide-step-label">Schaden dokumentieren</div>
+        </div>
       </div>
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file-text"></use></svg></div>
-        <div class="home-guide-step-num">4.</div>
-        <div class="home-guide-step-label">Unfallprotokoll erstellen</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">04</div>
+          <div class="home-guide-step-label">Unfallprotokoll erstellen</div>
+        </div>
       </div>
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-user"></use></svg></div>
-        <div class="home-guide-step-num">5.</div>
-        <div class="home-guide-step-label">Kontaktdaten austauschen</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">05</div>
+          <div class="home-guide-step-label">Kontaktdaten austauschen</div>
+        </div>
       </div>
       <div class="home-guide-step">
         <div class="home-guide-step-icon"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"></use></svg></div>
-        <div class="home-guide-step-num">6.</div>
-        <div class="home-guide-step-label">IMD übernimmt</div>
+        <div class="home-guide-step-copy">
+          <div class="home-guide-step-num">06</div>
+          <div class="home-guide-step-label">IMD übernimmt</div>
+        </div>
       </div>
     </div>
   </section>
