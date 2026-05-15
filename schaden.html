@@ -658,7 +658,7 @@
 
   /* HOME GUIDE CARD */
   .home-guide {
-    position: relative; display: block; width: 100%; text-align: left; cursor: pointer;
+    position: relative; display: block; width: 100%; text-align: left;
     overflow: hidden; margin: 2px 0 20px; padding: 18px;
     border-radius: 18px; border: 1px solid rgba(45,159,192,0.18);
     box-shadow: 0 14px 34px rgba(37,48,72,0.10);
@@ -681,27 +681,32 @@
   }
   .home-guide-title { font-size: 15.5px; font-weight: 800; line-height: 1.2; color: var(--text); letter-spacing: -0.02em; }
   .home-guide-copy { font-size: 12px; line-height: 1.55; color: var(--text-mid); margin-top: 5px; max-width: 440px; }
-  .home-guide-action {
-    width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; color: var(--imd-blue); background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.18);
-    transition: transform 0.14s ease, border-color 0.14s ease;
-  }
-  .home-guide:active .home-guide-action, .home-guide:hover .home-guide-action { transform: translateX(2px); border-color: var(--imd-blue); }
-  .home-guide-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .home-guide-steps { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 8px; }
   .home-guide-step {
-    position: relative; min-width: 0; padding: 0 8px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    position: relative; min-width: 0; min-height: 48px; display: flex; align-items: center; gap: 12px;
+    animation: guideStepIn 0.55s cubic-bezier(.16,1,.3,1) both;
   }
-  .home-guide-step:not(:last-child)::after {
-    content: ""; position: absolute; top: 18px; right: -3px; width: 6px; height: 10px;
-    background: currentColor; color: var(--text-soft); opacity: 0.42; clip-path: polygon(0 0, 100% 50%, 0 100%);
+  .home-guide-step:nth-child(1) { animation-delay: 0.04s; }
+  .home-guide-step:nth-child(2) { animation-delay: 0.10s; }
+  .home-guide-step:nth-child(3) { animation-delay: 0.16s; }
+  .home-guide-step:nth-child(4) { animation-delay: 0.22s; }
+  .home-guide-step:nth-child(5) { animation-delay: 0.28s; }
+  .home-guide-step:nth-child(6) { animation-delay: 0.34s; }
+  @keyframes guideStepIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .home-guide-step-icon {
-    width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    margin-bottom: 8px; color: var(--imd-blue); background: var(--imd-blue-bg);
+  .home-guide-step-num {
+    width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 14px; font-weight: 900; color: #FFFFFF;
+    background: linear-gradient(145deg, #FF7A00 0%, #E85E00 100%);
+    box-shadow: 0 8px 18px rgba(232,94,0,0.22);
   }
-  .home-guide-step:last-child .home-guide-step-icon { color: var(--green); background: var(--green-bg); }
-  .home-guide-step-label { font-size: 10px; font-weight: 800; line-height: 1.25; color: var(--text); }
-  .home-guide-step-label span { display: block; color: var(--text-soft); font-size: 9px; font-weight: 700; margin-bottom: 2px; }
+  .home-guide-step-label {
+    flex: 1; min-width: 0; background: rgba(255,255,255,0.88); border: 1px solid rgba(203,210,221,0.68);
+    border-radius: 2px; padding: 12px 14px; font-size: 13.5px; font-weight: 800; line-height: 1.25;
+    color: var(--text); box-shadow: 0 3px 10px rgba(37,48,72,0.04);
+  }
   [data-theme="dark"] .home-guide {
     background: linear-gradient(145deg, #151B28 0%, #0F1420 100%);
     border-color: rgba(80,147,185,0.28); box-shadow: 0 18px 42px rgba(0,0,0,0.34);
@@ -710,9 +715,13 @@
   [data-theme="dark"] .home-guide-hero { box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 14px 32px rgba(0,0,0,0.45); }
   [data-theme="dark"] .home-guide-title { color: var(--text); }
   [data-theme="dark"] .home-guide-copy { color: var(--text-mid); }
-  [data-theme="dark"] .home-guide-action { color: #7ED7EF; background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.22); }
-  [data-theme="dark"] .home-guide-step-icon { color: #7ED7EF; background: rgba(45,159,192,0.12); }
-  [data-theme="dark"] .home-guide-step:last-child .home-guide-step-icon { color: #7EE0A5; background: rgba(74,222,128,0.11); }
+  [data-theme="dark"] .home-guide-step-label {
+    background: rgba(255,255,255,0.055); border-color: rgba(255,255,255,0.09); color: var(--text);
+    box-shadow: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-guide-step { animation: none; }
+  }
   @media (max-width: 520px) {
     .home-guide { padding: 16px; border-radius: 16px; }
     .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 14px; }
@@ -720,9 +729,9 @@
     .home-guide-hero { width: 60px; height: 60px; border-radius: 18px; }
     .home-guide-title { font-size: 15px; }
     .home-guide-copy { font-size: 12px; }
-    .home-guide-step { padding: 0 5px; }
-    .home-guide-step-icon { width: 34px; height: 34px; border-radius: 11px; }
-    .home-guide-step-label { font-size: 9.5px; }
+    .home-guide-step { min-height: 44px; gap: 10px; }
+    .home-guide-step-num { width: 40px; height: 40px; font-size: 13px; }
+    .home-guide-step-label { padding: 10px 12px; font-size: 12.5px; }
   }
 
   /* BOTTOM NAV */
@@ -929,7 +938,7 @@
     <div class="home-greeting-name">Guten Tag, <span id="home-fahrer-name">…</span></div>
     <div class="home-greeting-fleet" id="home-fuhrpark-name"></div>
   </div>
-  <button class="home-guide" type="button" onclick="scrollToForm()" aria-label="Schadenmeldung starten">
+  <section class="home-guide" aria-label="Was tun im Schadenfall">
     <div class="home-guide-top">
       <div class="home-guide-main">
         <div class="home-guide-hero">
@@ -942,29 +951,34 @@
           <div class="home-guide-copy">Wir helfen Schritt für Schritt. So bleibt alles schnell und unkompliziert.</div>
         </div>
       </div>
-      <div class="home-guide-action">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-      </div>
     </div>
     <div class="home-guide-steps">
       <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-camera"></use></svg></div>
-        <div class="home-guide-step-label"><span>1.</span>Fotos machen</div>
+        <div class="home-guide-step-num">1.</div>
+        <div class="home-guide-step-label">Unfallstelle sichern</div>
       </div>
       <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-file-text"></use></svg></div>
-        <div class="home-guide-step-label"><span>2.</span>Daten erfassen</div>
+        <div class="home-guide-step-num">2.</div>
+        <div class="home-guide-step-label">ggf. Rettungswagen und Polizei rufen</div>
       </div>
       <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-send"></use></svg></div>
-        <div class="home-guide-step-label"><span>3.</span>Absenden</div>
+        <div class="home-guide-step-num">3.</div>
+        <div class="home-guide-step-label">Schaden dokumentieren</div>
       </div>
       <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="18" height="18" viewBox="0 0 24 24"><use href="#i-shield"></use></svg></div>
-        <div class="home-guide-step-label"><span>4.</span>IMD übernimmt</div>
+        <div class="home-guide-step-num">4.</div>
+        <div class="home-guide-step-label">Unfallprotokoll erstellen</div>
+      </div>
+      <div class="home-guide-step">
+        <div class="home-guide-step-num">5.</div>
+        <div class="home-guide-step-label">Kontaktdaten austauschen</div>
+      </div>
+      <div class="home-guide-step">
+        <div class="home-guide-step-num">6.</div>
+        <div class="home-guide-step-label">IMD übernimmt</div>
       </div>
     </div>
-  </button>
+  </section>
   <div class="modules-label">Module</div>
   <div class="modules-grid">
       <div class="mod-tile active-mod" onclick="scrollToForm()">
