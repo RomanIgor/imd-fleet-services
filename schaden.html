@@ -661,13 +661,14 @@
     position: relative;
     overflow: hidden;
     background:
-      radial-gradient(circle at 20% 0%, rgba(45,159,192,0.12), transparent 38%),
-      var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 16px;
+      radial-gradient(circle at 18% 0%, rgba(45,159,192,0.18), transparent 34%),
+      linear-gradient(145deg, #0E1728 0%, #07111F 100%);
+    border: 1px solid rgba(91,126,180,0.35);
+    border-radius: 20px;
+    padding: 20px 18px 22px;
     margin: 2px 0 16px;
-    box-shadow: 0 16px 36px rgba(15,23,42,0.08);
+    box-shadow: 0 18px 42px rgba(7,17,31,0.30), inset 0 1px 0 rgba(255,255,255,0.05);
+    color: #FFFFFF;
   }
   .process-header {
     position: relative;
@@ -675,84 +676,87 @@
     gap: 14px;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 13px;
+    margin-bottom: 22px;
   }
   .process-title { min-width: 0; }
   .process-eyebrow {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--imd-blue);
-    margin-bottom: 5px;
+    color: rgba(190,211,255,0.82);
+    margin-bottom: 12px;
   }
   .process-header h2 {
     margin: 0;
-    font-size: 15.5px;
-    line-height: 1.16;
-    color: var(--text);
+    font-size: 23px;
+    line-height: 1.1;
+    color: #FFFFFF;
     font-weight: 900;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
   }
   .process-header p {
-    margin: 5px 0 0;
-    color: var(--text-mid);
-    font-size: 11.5px;
-    line-height: 1.38;
+    margin: 12px 0 0;
+    color: rgba(218,234,255,0.74);
+    font-size: 15px;
+    line-height: 1.35;
   }
   .process-badge {
-    white-space: nowrap;
-    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    display: flex;
     align-items: center;
-    min-height: 26px;
-    padding: 5px 9px;
-    border-radius: 999px;
-    border: 1px solid rgba(45,159,192,0.20);
-    background: var(--imd-blue-bg);
-    color: var(--imd-blue);
-    font-size: 9.5px;
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(91,126,180,0.38);
+    background: rgba(91,126,180,0.12);
+    color: #FFFFFF;
   }
   .process-steps {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
     position: relative;
     z-index: 1;
   }
   .process-step {
     position: relative;
     min-width: 0;
-    min-height: 132px;
-    padding: 12px 12px 11px;
+    min-height: 180px;
+    padding: 0 10px;
     overflow: hidden;
-    border-radius: 16px;
-    border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.48)),
-      var(--card);
-    box-shadow: 0 8px 20px rgba(15,23,42,0.06);
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+  }
+  .process-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 52px;
+    right: -10px;
+    width: 9px;
+    height: 14px;
+    background: rgba(112,148,210,0.62);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
   .step-index {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-    color: color-mix(in srgb, var(--imd-blue) 70%, var(--text));
+    position: static;
+    color: rgba(234,246,255,0.86);
     font-size: 16px;
     font-weight: 900;
-    letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
+    margin: 0 0 8px;
   }
   .process-icon-art {
     display: block;
-    width: 46px;
-    height: 46px;
+    width: 74px;
+    height: 74px;
     object-fit: contain;
-    margin: 14px auto 9px;
-    filter: drop-shadow(0 4px 9px rgba(14,116,144,0.14));
+    margin: 0 auto 16px;
+    filter: drop-shadow(0 12px 22px rgba(45,159,192,0.24));
   }
   .step-content {
     min-width: 0;
@@ -762,26 +766,18 @@
     display: none;
   }
   .step-title {
-    font-size: 13px;
-    font-weight: 850;
-    margin: 0 0 5px;
-    color: var(--text);
-    line-height: 1.18;
+    font-size: 14px;
+    font-weight: 900;
+    margin: 0 0 8px;
+    color: #FFFFFF;
+    line-height: 1.2;
   }
-  .step-text { font-size: 10.5px; color: var(--text-mid); margin: 0; line-height: 1.32; }
+  .step-text { font-size: 12px; color: rgba(218,234,255,0.72); margin: 0; line-height: 1.45; }
   [data-theme="dark"] .process-card {
     background:
-      radial-gradient(circle at 20% 0%, rgba(45,159,192,0.10), transparent 38%),
-      var(--card);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.28);
-  }
-  [data-theme="dark"] .process-step {
-    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
-    border-color: rgba(255,255,255,0.08);
-    box-shadow: none;
-  }
-  [data-theme="dark"] .step-index {
-    color: #7ED7EF;
+      radial-gradient(circle at 18% 0%, rgba(45,159,192,0.18), transparent 34%),
+      linear-gradient(145deg, #0E1728 0%, #07111F 100%);
+    box-shadow: 0 18px 42px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .process-card.is-compact .step-label {
     display: inline-flex;
@@ -793,17 +789,20 @@
   }
   @media (max-width: 520px) {
     main { padding: 12px; }
-    .process-card { padding: 13px; border-radius: 16px; margin-bottom: 12px; }
-    .process-header { margin-bottom: 11px; gap: 10px; }
-    .process-header h2 { font-size: 14.5px; }
-    .process-header p { font-size: 10.8px; }
-    .process-badge { font-size: 8.8px; padding: 4px 8px; min-height: 24px; }
-    .process-steps { gap: 8px; }
-    .process-step { min-height: 116px; padding: 10px 9px 9px; border-radius: 14px; }
-    .step-index { top: 8px; left: 8px; font-size: 13px; }
-    .process-icon-art { width: 38px; height: 38px; margin-top: 13px; margin-bottom: 8px; }
-    .step-title { font-size: 12.2px; }
-    .step-text { font-size: 10px; line-height: 1.3; }
+    .process-card { padding: 16px 13px 15px; border-radius: 17px; margin-bottom: 12px; }
+    .process-header { margin-bottom: 16px; gap: 10px; }
+    .process-eyebrow { font-size: 8.8px; margin-bottom: 8px; }
+    .process-header h2 { font-size: 18px; }
+    .process-header p { font-size: 12px; margin-top: 7px; }
+    .process-badge { width: 36px; height: 36px; }
+    .process-badge svg { width: 17px; height: 17px; }
+    .process-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+    .process-step { min-height: 130px; padding: 0 5px; }
+    .process-step:not(:last-child)::after { top: 31px; right: -3px; width: 5px; height: 9px; }
+    .step-index { font-size: 11px; margin-bottom: 5px; }
+    .process-icon-art { width: 42px; height: 42px; margin-bottom: 8px; }
+    .step-title { font-size: 10px; line-height: 1.15; margin-bottom: 6px; }
+    .step-text { font-size: 8.8px; line-height: 1.32; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
@@ -1031,7 +1030,9 @@
         <h2>Unfall oder Schaden?</h2>
         <p>Standardablauf für eine schnelle und vollständige Bearbeitung.</p>
       </div>
-      <div class="process-badge">4 Schritte</div>
+      <div class="process-badge" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg>
+      </div>
     </div>
 
     <div class="process-steps">
@@ -1039,8 +1040,8 @@
         <div class="step-index">01</div>
         <img class="process-icon-art" src="/process-icon-secure.png" alt="" aria-hidden="true">
         <div class="step-content">
-          <p class="step-title">Unfallstelle absichern</p>
-          <p class="step-text">Warnblinker, Warnweste und Warndreieck.</p>
+          <p class="step-title">Unfallstelle<br>absichern</p>
+          <p class="step-text">Warnblinker,<br>Warnweste,<br>Warndreieck.</p>
         </div>
       </div>
 
@@ -1048,8 +1049,8 @@
         <div class="step-index">02</div>
         <img class="process-icon-art" src="/process-icon-photos.png" alt="" aria-hidden="true">
         <div class="step-content">
-          <p class="step-title">Fotos aufnehmen</p>
-          <p class="step-text">Fahrzeuge, Schaden, Kennzeichen und Unfallort.</p>
+          <p class="step-title">Fotos machen</p>
+          <p class="step-text">Fahrzeuge, Schaden,<br>Kennzeichen &<br>Unfallort.</p>
         </div>
       </div>
 
@@ -1057,8 +1058,8 @@
         <div class="step-index">03</div>
         <img class="process-icon-art" src="/process-icon-data.png" alt="" aria-hidden="true">
         <div class="step-content">
-          <p class="step-title">Daten eingeben</p>
-          <p class="step-text">Gegnerdaten und wichtige Details erfassen.</p>
+          <p class="step-title">Daten erfassen</p>
+          <p class="step-text">Gegnerdaten &<br>wichtige Infos<br>eingeben.</p>
         </div>
       </div>
 
@@ -1066,8 +1067,8 @@
         <div class="step-index">04</div>
         <img class="process-icon-art" src="/process-icon-send.png" alt="" aria-hidden="true">
         <div class="step-content">
-          <p class="step-title">Schaden absenden</p>
-          <p class="step-text">IMD steuert den weiteren Ablauf.</p>
+          <p class="step-title">Schaden senden</p>
+          <p class="step-text">IMD übernimmt<br>den gesamten<br>Ablauf.</p>
         </div>
       </div>
     </div>
