@@ -59,6 +59,10 @@ const publicAssets = new Set([
   '/logo_light.png',
   '/icon-192.png',
   '/icon-512.png',
+  '/process-icon-secure.png',
+  '/process-icon-photos.png',
+  '/process-icon-data.png',
+  '/process-icon-send.png',
   '/gruender.webp',
   '/image.jpg',
 ]);
