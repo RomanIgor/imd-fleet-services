@@ -656,90 +656,82 @@
   [data-theme="dark"] .mod-tile-label { color: var(--text); }
   [data-theme="dark"] .badge-soon { background: rgba(99,102,241,0.18); color: #a5b4fc; }
 
-  /* HOME GUIDE CARD */
-  .home-guide {
-    position: relative; display: block; width: 100%; text-align: left;
-    overflow: hidden; margin: 2px 0 16px; padding: 16px;
-    border-radius: 16px; border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm); background: var(--card); color: var(--text);
+  /* DAMAGE PROCESS CARD */
+  .process-card {
+    --process-surface: var(--card);
+    --process-border: var(--border);
+    --process-text: var(--text);
+    --process-muted: var(--text-mid);
+    --process-accent: var(--imd-blue);
+    --process-accent-dark: #0E7490;
+    --process-shadow: var(--shadow-sm);
+    background: var(--process-surface);
+    border: 1px solid var(--process-border);
+    border-radius: 18px;
+    padding: 16px 15px;
+    margin: 2px 0 16px;
+    box-shadow: var(--process-shadow);
   }
-  .home-guide::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; pointer-events: none;
-    background: linear-gradient(90deg, var(--imd-blue), rgba(45,159,192,0));
+  .process-header {
+    display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; margin-bottom: 15px;
   }
-  .home-guide-top {
-    position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; margin-bottom: 14px;
+  .process-title { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+  .shield, .step-icon {
+    color: var(--process-accent-dark);
+    background: linear-gradient(135deg, rgba(56,189,248,.20), rgba(56,189,248,.08));
+    border: 1px solid rgba(56,189,248,.28);
   }
-  .home-guide-main { display: flex; align-items: center; gap: 11px; min-width: 0; }
-  .home-guide-hero {
-    width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; color: var(--imd-blue); background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.16);
-    box-shadow: none;
+  .shield {
+    width: 35px; height: 35px; flex: 0 0 auto; border-radius: 12px; display: grid; place-items: center;
   }
-  .home-guide-title { font-size: 15px; font-weight: 850; line-height: 1.2; color: var(--text); letter-spacing: -0.01em; }
-  .home-guide-copy { font-size: 11.5px; line-height: 1.4; color: var(--text-mid); margin-top: 3px; max-width: 440px; }
-  .home-guide-action {
-    display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
-    padding: 6px 9px; border-radius: 999px; color: var(--imd-blue);
-    background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.16);
-    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+  .process-header h2 {
+    margin: 0; font-size: 15px; line-height: 1.15; color: var(--process-text); font-weight: 850;
   }
-  .home-guide-steps {
-    position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  .process-header p {
+    margin: 4px 0 0; color: var(--process-muted); font-size: 11.5px; line-height: 1.35;
   }
-  .home-guide-step {
-    position: relative; min-width: 0; min-height: 58px; padding: 10px 11px;
-    display: grid; grid-template-columns: 30px 1fr; gap: 9px; align-items: start;
-    text-align: left; border-radius: 12px; border: 1px solid rgba(203,210,221,0.72);
-    background: rgba(248,250,252,0.82);
-    animation: guideStepIn 0.42s cubic-bezier(.16,1,.3,1) both;
+  .process-badge {
+    white-space: nowrap; font-size: 10px; color: var(--process-accent-dark);
+    background: rgba(56,189,248,.10); border: 1px solid rgba(56,189,248,.22);
+    border-radius: 999px; padding: 6px 9px; font-weight: 800;
   }
-  .home-guide-step:nth-child(1) { animation-delay: 0.04s; }
-  .home-guide-step:nth-child(2) { animation-delay: 0.10s; }
-  .home-guide-step:nth-child(3) { animation-delay: 0.16s; }
-  .home-guide-step:nth-child(4) { animation-delay: 0.22s; }
-  @keyframes guideStepIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+  .process-steps { display: grid; gap: 0; }
+  .process-step { display: grid; grid-template-columns: 36px 1fr; gap: 8px; min-height: 58px; position: relative; }
+  .process-step:not(:last-child)::before {
+    content: ""; position: absolute; left: 17px; top: 36px; bottom: 2px; width: 2px;
+    background: linear-gradient(var(--process-accent), var(--process-border)); opacity: .55; border-radius: 99px;
   }
-  .home-guide-step-icon {
-    grid-row: span 3; width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
-    color: var(--imd-blue); background: var(--imd-blue-bg); border: 1px solid rgba(45,159,192,0.18);
-    box-shadow: none;
+  .step-icon {
+    width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; z-index: 1;
   }
-  .home-guide-step-num { font-size: 9px; font-weight: 900; color: var(--text-soft); line-height: 1; margin-bottom: 2px; letter-spacing: 0.08em; }
-  .home-guide-step-label { font-size: 12px; font-weight: 850; line-height: 1.2; color: var(--text); }
-  .home-guide-step-sub { font-size: 10px; line-height: 1.35; color: var(--text-mid); margin-top: 3px; }
-  [data-theme="dark"] .home-guide {
-    background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm);
+  .step-content { padding: 1px 0 13px; border-bottom: 1px solid color-mix(in srgb, var(--process-border) 65%, transparent); }
+  .process-step:last-child .step-content { border-bottom: none; padding-bottom: 2px; }
+  .step-label {
+    font-size: 9px; font-weight: 900; letter-spacing: 1.1px; color: var(--process-muted);
+    text-transform: uppercase; margin-bottom: 3px;
   }
-  [data-theme="dark"] .home-guide-hero { background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.18); color: #7ED7EF; }
-  [data-theme="dark"] .home-guide-title { color: var(--text); }
-  [data-theme="dark"] .home-guide-copy { color: var(--text-mid); }
-  [data-theme="dark"] .home-guide-action { background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.22); color: #7ED7EF; }
-  [data-theme="dark"] .home-guide-step { background: rgba(255,255,255,0.035); border-color: rgba(255,255,255,0.075); }
-  [data-theme="dark"] .home-guide-step-icon { background: rgba(45,159,192,0.10); border-color: rgba(45,159,192,0.18); color: #7ED7EF; }
-  @media (prefers-reduced-motion: reduce) {
-    .home-guide-step { animation: none; }
+  .step-title {
+    font-size: 13px; font-weight: 800; margin: 0 0 4px; color: var(--process-text); line-height: 1.2;
+  }
+  .step-text { font-size: 11px; color: var(--process-muted); margin: 0; line-height: 1.35; }
+  .process-card svg { width: 17px; height: 17px; }
+  [data-theme="dark"] .process-card {
+    --process-surface: var(--card);
+    --process-border: var(--border);
+    --process-text: var(--text);
+    --process-muted: var(--text-mid);
+    --process-accent-dark: #67E8F9;
+    --process-shadow: var(--shadow-sm);
   }
   @media (max-width: 520px) {
     main { padding: 12px; }
-    .home-guide { padding: 14px; border-radius: 15px; margin-bottom: 12px; }
-    .home-guide-top { align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-    .home-guide-main { gap: 10px; }
-    .home-guide-hero { width: 34px; height: 34px; border-radius: 10px; }
-    .home-guide-hero svg { width: 22px; height: 22px; }
-    .home-guide-title { font-size: 14px; }
-    .home-guide-copy { font-size: 10.8px; line-height: 1.35; }
-    .home-guide-action { padding: 5px 8px; font-size: 9px; }
-    .home-guide-steps { grid-template-columns: 1fr; gap: 7px; }
-    .home-guide-step { min-height: 50px; padding: 9px 10px; grid-template-columns: 28px 1fr; gap: 8px; }
-    .home-guide-step-icon { width: 28px; height: 28px; border-radius: 8px; }
-    .home-guide-step-icon svg { width: 15px; height: 15px; }
-    .home-guide-step-num { font-size: 8px; }
-    .home-guide-step-label { font-size: 11.2px; }
-    .home-guide-step-sub { font-size: 9.5px; line-height: 1.25; }
+    .process-card { padding: 14px; border-radius: 16px; margin-bottom: 12px; }
+    .process-header { margin-bottom: 13px; }
+    .process-header h2 { font-size: 14px; }
+    .process-header p { font-size: 10.8px; }
+    .process-badge { font-size: 9px; padding: 5px 8px; }
+    .process-step { min-height: 54px; }
+    .step-content { padding-bottom: 11px; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
@@ -960,51 +952,83 @@
     <div class="home-greeting-name">Guten Tag, <span id="home-fahrer-name">…</span></div>
     <div class="home-greeting-fleet" id="home-fuhrpark-name"></div>
   </div>
-  <section class="home-guide" aria-label="Was tun im Schadenfall">
-    <div class="home-guide-top">
-      <div class="home-guide-main">
-        <div class="home-guide-hero">
-          <svg width="44" height="44" viewBox="0 0 256 256" aria-hidden="true">
-            <use href="#ic-schaden"></use>
+  <section class="process-card" aria-label="Unfall oder Schaden">
+    <div class="process-header">
+      <div class="process-title">
+        <div class="shield">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
           </svg>
         </div>
         <div>
-          <div class="home-guide-title">Was tun im Schadenfall?</div>
-          <div class="home-guide-copy">Unfall sichern. Ruhe bewahren. Schaden dokumentieren. IMD übernimmt.</div>
+          <h2>Unfall oder Schaden?</h2>
+          <p>Folge diesen Schritten zur schnellen Bearbeitung.</p>
         </div>
       </div>
-      <div class="home-guide-action" aria-hidden="true">
-        Ablauf
-      </div>
+      <div class="process-badge">4 Schritte</div>
     </div>
-    <div class="home-guide-steps">
-      <div class="home-guide-step">
-        <div class="home-guide-step-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"></use></svg>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m21 16-4-7H7l-4 7"/>
+            <path d="M7 16v3"/>
+            <path d="M17 16v3"/>
+            <path d="M6 13h12"/>
+          </svg>
         </div>
-        <div class="home-guide-step-num">SCHRITT 01</div>
-        <div class="home-guide-step-label">Unfallstelle absichern</div>
-        <div class="home-guide-step-sub">Warnblinker an, Warnweste, Warndreieck.</div>
-      </div>
-      <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"></use></svg></div>
-        <div class="home-guide-step-num">SCHRITT 02</div>
-        <div class="home-guide-step-label">Fotos machen</div>
-        <div class="home-guide-step-sub">Fahrzeuge, Schaden, Kennzeichen & Unfallort.</div>
-      </div>
-      <div class="home-guide-step">
-        <div class="home-guide-step-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file-text"></use></svg>
+        <div class="step-content">
+          <div class="step-label">Schritt 01</div>
+          <p class="step-title">Unfallstelle absichern</p>
+          <p class="step-text">Warnblinker, Warnweste und Warndreieck.</p>
         </div>
-        <div class="home-guide-step-num">SCHRITT 03</div>
-        <div class="home-guide-step-label">Daten erfassen</div>
-        <div class="home-guide-step-sub">Gegnerdaten & wichtige Infos eingeben.</div>
       </div>
-      <div class="home-guide-step">
-        <div class="home-guide-step-icon"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"></use></svg></div>
-        <div class="home-guide-step-num">SCHRITT 04</div>
-        <div class="home-guide-step-label">Schaden absenden</div>
-        <div class="home-guide-step-sub">IMD steuert den weiteren Ablauf.</div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/>
+            <circle cx="12" cy="13" r="3"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Schritt 02</div>
+          <p class="step-title">Fotos aufnehmen</p>
+          <p class="step-text">Fahrzeuge, Schäden, Kennzeichen und Unfallort.</p>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M8 13h8"/>
+            <path d="M8 17h5"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Schritt 03</div>
+          <p class="step-title">Daten eingeben</p>
+          <p class="step-text">Gegnerdaten und wichtige Details erfassen.</p>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M22 2 11 13"/>
+            <path d="m22 2-7 20-4-9-9-4Z"/>
+          </svg>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Schritt 04</div>
+          <p class="step-title">Schaden absenden</p>
+          <p class="step-text">IMD steuert den weiteren Ablauf.</p>
+        </div>
       </div>
     </div>
   </section>
