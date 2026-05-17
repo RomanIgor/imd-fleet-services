@@ -722,14 +722,7 @@
     text-align: center;
   }
   .process-step:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    top: 52px;
-    right: -10px;
-    width: 9px;
-    height: 14px;
-    background: rgba(45,159,192,0.58);
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    display: none;
   }
   .step-index {
     display: none;
@@ -766,7 +759,7 @@
     color: var(--text);
     line-height: 1.2;
   }
-  .step-text { font-size: 12px; color: var(--text-mid); margin: 0; line-height: 1.45; }
+  .step-text { display: none; }
   [data-theme="dark"] .process-card {
     background:
       radial-gradient(circle at 92% 0%, rgba(45,159,192,0.16), transparent 34%),
@@ -780,7 +773,6 @@
   [data-theme="dark"] .process-header p { color: rgba(218,234,255,0.74); }
   [data-theme="dark"] .step-index { color: rgba(126,215,239,0.92); }
   [data-theme="dark"] .step-title { color: #FFFFFF; }
-  [data-theme="dark"] .step-text { color: rgba(218,234,255,0.72); }
   .process-card.is-compact .step-label {
     display: inline-flex;
     color: var(--text-soft);
@@ -798,11 +790,9 @@
     .process-header p { font-size: 12px; margin-top: 7px; }
     .process-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
     .process-step { min-height: 130px; padding: 0 5px; }
-    .process-step:not(:last-child)::after { top: 31px; right: -3px; width: 5px; height: 9px; }
     .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin-top: 4px; margin-bottom: 8px; }
     .process-icon-art svg { width: 23px; height: 23px; }
     .step-title { font-size: 10px; line-height: 1.15; margin-bottom: 6px; }
-    .step-text { font-size: 8.8px; line-height: 1.32; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
