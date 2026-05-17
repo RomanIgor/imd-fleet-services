@@ -720,6 +720,7 @@
     background: transparent;
     box-shadow: none;
     text-align: center;
+    overflow: visible;
   }
   .process-step:not(:last-child)::after {
     content: "";
@@ -799,7 +800,7 @@
     .process-header p { font-size: 12px; margin-top: 7px; }
     .process-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
     .process-step { min-height: 130px; padding: 0 5px; }
-    .process-step:not(:last-child)::after { display: block; top: 28px; right: -3px; width: 5px; height: 9px; }
+    .process-step:not(:last-child)::after { display: block; top: 28px; right: -5px; width: 7px; height: 11px; }
     .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin-top: 4px; margin-bottom: 8px; }
     .process-icon-art svg { width: 23px; height: 23px; }
     .step-title { font-size: 10px; line-height: 1.15; margin-bottom: 6px; }
