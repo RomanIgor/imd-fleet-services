@@ -722,7 +722,15 @@
     text-align: center;
   }
   .process-step:not(:last-child)::after {
+    content: "";
     display: none;
+    position: absolute;
+    top: 38px;
+    right: -8px;
+    width: 7px;
+    height: 12px;
+    background: rgba(45,159,192,0.52);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
   .step-index {
     display: none;
@@ -773,6 +781,7 @@
   [data-theme="dark"] .process-header p { color: rgba(218,234,255,0.74); }
   [data-theme="dark"] .step-index { color: rgba(126,215,239,0.92); }
   [data-theme="dark"] .step-title { color: #FFFFFF; }
+  [data-theme="dark"] .process-step:not(:last-child)::after { background: rgba(126,215,239,0.54); }
   .process-card.is-compact .step-label {
     display: inline-flex;
     color: var(--text-soft);
@@ -790,6 +799,7 @@
     .process-header p { font-size: 12px; margin-top: 7px; }
     .process-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
     .process-step { min-height: 130px; padding: 0 5px; }
+    .process-step:not(:last-child)::after { display: block; top: 28px; right: -3px; width: 5px; height: 9px; }
     .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin-top: 4px; margin-bottom: 8px; }
     .process-icon-art svg { width: 23px; height: 23px; }
     .step-title { font-size: 10px; line-height: 1.15; margin-bottom: 6px; }
@@ -1057,7 +1067,7 @@
         <div class="step-index">04</div>
         <div class="process-icon-art imd-icon"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></div>
         <div class="step-content">
-          <p class="step-title">Schaden senden</p>
+          <p class="step-title">Schaden melden</p>
           <p class="step-text">IMD übernimmt<br>den gesamten<br>Ablauf.</p>
         </div>
       </div>
