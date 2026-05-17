@@ -582,7 +582,7 @@
     font-weight: 800; color: var(--text-soft); margin: 2px 0 10px;
   }
   .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-  @media (min-width: 600px) { .modules-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 768px) { .modules-grid { grid-template-columns: repeat(4, 1fr); } }
   .mod-tile {
     background: var(--card); border: 1px solid var(--border);
     border-radius: 16px; padding: 13px 13px 12px; position: relative; overflow: hidden;
@@ -791,19 +791,29 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-  @media (max-width: 520px) {
+  @media (max-width: 767px) {
     main { padding: 12px; }
-    .process-card { padding: 16px 13px 15px; border-radius: 17px; margin-bottom: 12px; }
-    .process-header { margin-bottom: 16px; gap: 10px; }
+    .process-card { padding: 15px 13px 14px; border-radius: 17px; margin-bottom: 12px; }
+    .process-header { margin-bottom: 14px; gap: 10px; }
     .process-eyebrow { font-size: 8.8px; margin-bottom: 8px; }
     .process-header h2 { font-size: 18px; }
     .process-header p { font-size: 12px; margin-top: 7px; }
-    .process-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
-    .process-step { min-height: 130px; padding: 0 5px; }
-    .process-step:not(:last-child)::after { display: block; top: 28px; right: -5px; width: 7px; height: 11px; }
-    .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin-top: 4px; margin-bottom: 8px; }
+    .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .process-step {
+      min-height: 78px;
+      padding: 10px 9px;
+      border: 1px solid rgba(45,159,192,0.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.34);
+    }
+    [data-theme="dark"] .process-step {
+      border-color: rgba(126,215,239,0.12);
+      background: rgba(10,18,32,0.26);
+    }
+    .process-step:not(:last-child)::after { display: none; }
+    .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin: 0 auto 8px; }
     .process-icon-art svg { width: 23px; height: 23px; }
-    .step-title { font-size: 10px; line-height: 1.15; margin-bottom: 6px; }
+    .step-title { font-size: 11px; line-height: 1.18; margin-bottom: 0; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
