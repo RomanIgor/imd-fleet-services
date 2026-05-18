@@ -1155,7 +1155,7 @@
         <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </button>
 
-      <div class="process-step">
+      <button type="button" class="process-step process-step-link" onclick="showView('fotos')" aria-label="Tipps zum Fotografieren des Schadens öffnen">
         <div class="step-index">2</div>
         <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg></div>
         <div class="step-content">
@@ -1163,7 +1163,7 @@
           <p class="step-text">Beweismaterial erfassen</p>
         </div>
         <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
-      </div>
+      </button>
 
       <div class="process-step">
         <div class="step-index">3</div>
@@ -1272,6 +1272,71 @@
     </div>
   </section>
 </div><!-- /view-unfallort -->
+
+<div id="view-fotos" class="app-view">
+  <section class="tips-shell" aria-label="Tipps zum Fotografieren des Schadens">
+    <button type="button" class="tips-back" onclick="showView('home')">
+      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-right"></use></svg>
+      Zurück
+    </button>
+
+    <div class="tips-card">
+      <div class="tips-eyebrow">Tipps</div>
+      <h2 class="tips-title">Fotos machen</h2>
+      <p class="tips-lead">Beweismaterial erfassen. Schäden klar dokumentieren. IMD helfen, schneller zu prüfen.</p>
+
+      <div class="tips-list">
+        <div class="tip-item">
+          <div class="tip-num">1</div>
+          <div>
+            <p class="tip-title">Übersicht vom Unfallort</p>
+            <p class="tip-text">Fotografieren Sie die gesamte Unfallstelle aus mehreren Blickwinkeln, inklusive Fahrbahn, Position der Fahrzeuge und Umgebung.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">2</div>
+          <div>
+            <p class="tip-title">Schäden an allen Fahrzeugen</p>
+            <p class="tip-text">Machen Sie klare Fotos von allen sichtbaren Schäden, auch an beteiligten Fremdfahrzeugen.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">3</div>
+          <div>
+            <p class="tip-title">Kennzeichen &amp; Fahrzeugdaten</p>
+            <p class="tip-text">Fotografieren Sie Kennzeichen aller beteiligten Fahrzeuge sowie, wenn möglich, Fahrzeugschein oder relevante Fahrzeugdaten.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">4</div>
+          <div>
+            <p class="tip-title">Details &amp; Spuren</p>
+            <p class="tip-text">Dokumentieren Sie Bremsspuren, Glassplitter, Fahrzeugteile, Verkehrszeichen, Ampeln oder andere wichtige Hinweise.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">5</div>
+          <div>
+            <p class="tip-title">Wetter, Straße &amp; Sichtverhältnisse</p>
+            <p class="tip-text">Wenn relevant: fotografieren Sie Nässe, Schnee, schlechte Sicht, Baustellen oder besondere Verkehrssituationen.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">6</div>
+          <div>
+            <p class="tip-title">Keine Personen ohne Zustimmung</p>
+            <p class="tip-text">Fotografieren Sie keine verletzten Personen oder Gesichter unnötig. Datenschutz beachten.</p>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="tips-action" onclick="scrollToForm()">
+        Weiter zu Schaden melden
+        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </button>
+    </div>
+  </section>
+</div><!-- /view-fotos -->
 
 <div id="view-form" class="app-view">
   <div id="formular" class="form-card" data-form-card style="margin-bottom:20px;">
@@ -2314,7 +2379,7 @@ function showView(name) {
     const bar = btn.querySelector('.bn-bar');
     if (bar) bar.style.display = 'none';
   });
-  const activeView = name === 'unfallort' ? 'home' : name;
+  const activeView = (name === 'unfallort' || name === 'fotos') ? 'home' : name;
   const activeBtn = document.querySelector(`.bn-item[data-view="${activeView}"]`);
   if (activeBtn) {
     activeBtn.classList.add('bn-active');
