@@ -665,7 +665,7 @@
       linear-gradient(145deg, #FFFFFF 0%, #F6FAFD 100%);
     border: 1px solid rgba(45,159,192,0.24);
     border-radius: 20px;
-    padding: 20px 18px 22px;
+    padding: 20px 18px 18px;
     margin: 2px 0 16px;
     box-shadow: 0 14px 34px rgba(37,48,72,0.10);
     color: var(--text);
@@ -676,7 +676,7 @@
     gap: 14px;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
   .process-title { min-width: 0; }
   .process-eyebrow {
@@ -685,61 +685,79 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--imd-blue);
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   .process-header h2 {
     margin: 0;
-    font-size: 23px;
+    font-size: 20px;
     line-height: 1.1;
     color: var(--text);
     font-weight: 900;
     letter-spacing: -0.03em;
   }
   .process-header p {
-    margin: 12px 0 0;
+    margin: 8px 0 0;
     color: var(--text-mid);
-    font-size: 15px;
+    font-size: 12px;
     line-height: 1.35;
   }
   .process-badge { display: none; }
   .process-steps {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     position: relative;
     z-index: 1;
   }
   .process-step {
     position: relative;
     min-width: 0;
-    min-height: 180px;
-    padding: 0 10px;
-    overflow: hidden;
-    border-radius: 0;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    text-align: center;
-    overflow: visible;
+    min-height: 64px;
+    display: grid;
+    grid-template-columns: 28px 48px minmax(0, 1fr) 16px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px 8px 0;
+    isolation: isolate;
+  }
+  .process-step::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 34px;
+    border-radius: 12px;
+    border: 1px solid rgba(45,159,192,0.16);
+    background: rgba(255,255,255,0.54);
+    box-shadow: 0 8px 20px rgba(37,48,72,0.06);
+    z-index: -1;
   }
   .process-step:not(:last-child)::after {
     content: "";
-    display: none;
     position: absolute;
-    top: 38px;
-    right: -8px;
-    width: 7px;
-    height: 12px;
-    background: rgba(45,159,192,0.52);
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    top: 41px;
+    bottom: -15px;
+    left: 10px;
+    width: 1px;
+    border-left: 1px dashed rgba(45,159,192,0.36);
   }
   .step-index {
-    display: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--imd-blue);
+    background: rgba(45,159,192,0.08);
+    border: 2px solid rgba(45,159,192,0.75);
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
   }
   .process-icon-art {
-    width: 74px;
-    height: 74px;
-    margin: 8px auto 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    margin: 0;
   }
   .process-card .imd-icon {
     background: linear-gradient(145deg, #123A70 0%, #071532 100%);
@@ -756,19 +774,31 @@
   }
   .step-content {
     min-width: 0;
-    text-align: center;
+    text-align: left;
   }
   .step-label {
     display: none;
   }
   .step-title {
-    font-size: 14px;
+    font-size: 12.5px;
     font-weight: 900;
-    margin: 0 0 8px;
+    margin: 0 0 3px;
     color: var(--text);
     line-height: 1.2;
   }
-  .step-text { display: none; }
+  .step-text {
+    display: block;
+    margin: 0;
+    color: var(--text-mid);
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  .process-chevron {
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   [data-theme="dark"] .process-card {
     background:
       radial-gradient(circle at 92% 0%, rgba(45,159,192,0.16), transparent 34%),
@@ -782,7 +812,14 @@
   [data-theme="dark"] .process-header p { color: rgba(218,234,255,0.74); }
   [data-theme="dark"] .step-index { color: rgba(126,215,239,0.92); }
   [data-theme="dark"] .step-title { color: #FFFFFF; }
-  [data-theme="dark"] .process-step:not(:last-child)::after { background: rgba(126,215,239,0.54); }
+  [data-theme="dark"] .step-text { color: rgba(218,234,255,0.64); }
+  [data-theme="dark"] .process-step::before {
+    border-color: rgba(126,215,239,0.12);
+    background: rgba(15,27,45,0.78);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 22px rgba(0,0,0,0.18);
+  }
+  [data-theme="dark"] .process-step:not(:last-child)::after { border-left-color: rgba(126,215,239,0.28); }
+  [data-theme="dark"] .process-chevron { color: rgba(218,234,255,0.72); }
   .process-card.is-compact .step-label {
     display: inline-flex;
     color: var(--text-soft);
@@ -793,27 +830,24 @@
   }
   @media (max-width: 767px) {
     main { padding: 12px; }
-    .process-card { padding: 15px 13px 14px; border-radius: 17px; margin-bottom: 12px; }
-    .process-header { margin-bottom: 14px; gap: 10px; }
+    .process-card { padding: 16px 13px 13px; border-radius: 17px; margin-bottom: 12px; }
+    .process-header { margin-bottom: 13px; gap: 10px; }
     .process-eyebrow { font-size: 8.8px; margin-bottom: 8px; }
     .process-header h2 { font-size: 18px; }
     .process-header p { font-size: 12px; margin-top: 7px; }
-    .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .process-steps { gap: 7px; }
     .process-step {
-      min-height: 78px;
-      padding: 10px 9px;
-      border: 1px solid rgba(45,159,192,0.12);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.34);
+      min-height: 64px;
+      grid-template-columns: 28px 44px minmax(0, 1fr) 16px;
+      gap: 9px;
+      padding: 7px 13px 7px 0;
     }
-    [data-theme="dark"] .process-step {
-      border-color: rgba(126,215,239,0.12);
-      background: rgba(10,18,32,0.26);
-    }
-    .process-step:not(:last-child)::after { display: none; }
-    .process-icon-art { width: 38px; height: 38px; border-radius: 11px; margin: 0 auto 8px; }
+    .process-step::before { left: 34px; border-radius: 11px; }
+    .process-step:not(:last-child)::after { top: 40px; bottom: -14px; }
+    .process-icon-art { width: 40px; height: 40px; border-radius: 11px; margin: 0; }
     .process-icon-art svg { width: 23px; height: 23px; }
-    .step-title { font-size: 11px; line-height: 1.18; margin-bottom: 0; }
+    .step-title { font-size: 12px; line-height: 1.18; margin-bottom: 2px; }
+    .step-text { font-size: 10.5px; line-height: 1.2; }
     .modules-label { margin: 0 0 8px; font-size: 10px; }
     .modules-grid { gap: 8px; margin-bottom: 8px; }
     .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
@@ -1048,39 +1082,43 @@
 
     <div class="process-steps">
       <div class="process-step">
-        <div class="step-index">01</div>
-        <div class="process-icon-art imd-icon"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <div class="step-index">1</div>
+        <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield"/></svg></div>
         <div class="step-content">
-          <p class="step-title">Unfallstelle<br>absichern</p>
-          <p class="step-text">Warnblinker,<br>Warnweste,<br>Warndreieck.</p>
+          <p class="step-title">Unfallstelle absichern</p>
+          <p class="step-text">Sicherheit gewährleisten</p>
         </div>
+        <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </div>
 
       <div class="process-step">
-        <div class="step-index">02</div>
-        <div class="process-icon-art imd-icon"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg></div>
+        <div class="step-index">2</div>
+        <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg></div>
         <div class="step-content">
           <p class="step-title">Fotos machen</p>
-          <p class="step-text">Fahrzeuge, Schaden,<br>Kennzeichen &<br>Unfallort.</p>
+          <p class="step-text">Beweismaterial erfassen</p>
         </div>
+        <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </div>
 
       <div class="process-step">
-        <div class="step-index">03</div>
-        <div class="process-icon-art imd-icon"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file-text"/></svg></div>
+        <div class="step-index">3</div>
+        <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file-text"/></svg></div>
         <div class="step-content">
           <p class="step-title">Daten erfassen</p>
-          <p class="step-text">Gegnerdaten &<br>wichtige Infos<br>eingeben.</p>
+          <p class="step-text">Angaben zum Schaden</p>
         </div>
+        <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </div>
 
       <div class="process-step">
-        <div class="step-index">04</div>
-        <div class="process-icon-art imd-icon"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></div>
+        <div class="step-index">4</div>
+        <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></div>
         <div class="step-content">
           <p class="step-title">Schaden melden</p>
-          <p class="step-text">IMD übernimmt<br>den gesamten<br>Ablauf.</p>
+          <p class="step-text">Meldung abschließen</p>
         </div>
+        <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </div>
     </div>
   </section>
