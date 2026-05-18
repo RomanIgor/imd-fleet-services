@@ -1165,7 +1165,7 @@
         <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
       </button>
 
-      <div class="process-step">
+      <button type="button" class="process-step process-step-link" onclick="showView('daten')" aria-label="Tipps zum Erfassen der Schadendaten öffnen">
         <div class="step-index">3</div>
         <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-file-text"/></svg></div>
         <div class="step-content">
@@ -1173,9 +1173,9 @@
           <p class="step-text">Angaben zum Schaden</p>
         </div>
         <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
-      </div>
+      </button>
 
-      <div class="process-step">
+      <button type="button" class="process-step process-step-link" onclick="showView('melden')" aria-label="Informationen zum Melden des Schadens öffnen">
         <div class="step-index">4</div>
         <div class="process-icon-art imd-icon"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-send"/></svg></div>
         <div class="step-content">
@@ -1183,7 +1183,7 @@
           <p class="step-text">Meldung abschließen</p>
         </div>
         <div class="process-chevron" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-arrow-right"></use></svg></div>
-      </div>
+      </button>
     </div>
   </section>
   <div class="modules-label">Module</div>
@@ -1337,6 +1337,122 @@
     </div>
   </section>
 </div><!-- /view-fotos -->
+
+<div id="view-daten" class="app-view">
+  <section class="tips-shell" aria-label="Tipps zum Erfassen der Schadendaten">
+    <button type="button" class="tips-back" onclick="showView('home')">
+      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-right"></use></svg>
+      Zurück
+    </button>
+
+    <div class="tips-card">
+      <div class="tips-eyebrow">Tipps</div>
+      <h2 class="tips-title">Daten erfassen</h2>
+      <p class="tips-lead">Alle wichtigen Angaben bereithalten. Je vollständiger die Daten, desto schneller kann IMD den Schaden bearbeiten.</p>
+
+      <div class="tips-list">
+        <div class="tip-item">
+          <div class="tip-num">1</div>
+          <div>
+            <p class="tip-title">Fahrer- und Kontaktdaten prüfen</p>
+            <p class="tip-text">Name, Telefonnummer und E-Mail sollten korrekt sein, damit Rückfragen schnell geklärt werden können.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">2</div>
+          <div>
+            <p class="tip-title">Fahrzeugdaten angeben</p>
+            <p class="tip-text">Kennzeichen, Fahrzeugmodell und falls vorhanden die FIN oder weitere Fahrzeugdaten erfassen.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">3</div>
+          <div>
+            <p class="tip-title">Unfallort und Zeitpunkt</p>
+            <p class="tip-text">Ort, Datum, Uhrzeit und kurze Beschreibung der Situation möglichst genau eintragen.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">4</div>
+          <div>
+            <p class="tip-title">Beteiligte und Zeugen</p>
+            <p class="tip-text">Daten anderer Beteiligter, Versicherungsinformationen, Kennzeichen und Zeugen notieren.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">5</div>
+          <div>
+            <p class="tip-title">Schaden kurz beschreiben</p>
+            <p class="tip-text">Beschreiben Sie, was passiert ist und welche Bereiche am Fahrzeug betroffen sind.</p>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="tips-action" onclick="scrollToForm()">
+        Daten im Formular erfassen
+        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </button>
+    </div>
+  </section>
+</div><!-- /view-daten -->
+
+<div id="view-melden" class="app-view">
+  <section class="tips-shell" aria-label="Informationen zum Melden des Schadens">
+    <button type="button" class="tips-back" onclick="showView('home')">
+      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-right"></use></svg>
+      Zurück
+    </button>
+
+    <div class="tips-card">
+      <div class="tips-eyebrow">Tipps</div>
+      <h2 class="tips-title">Schaden melden</h2>
+      <p class="tips-lead">Meldung abschließen. Unterlagen übermitteln. IMD übernimmt den weiteren Ablauf.</p>
+
+      <div class="tips-list">
+        <div class="tip-item">
+          <div class="tip-num">1</div>
+          <div>
+            <p class="tip-title">Angaben vor dem Absenden prüfen</p>
+            <p class="tip-text">Kontrollieren Sie Fahrzeugdaten, Unfallort, Beschreibung und hochgeladene Fotos auf Vollständigkeit.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">2</div>
+          <div>
+            <p class="tip-title">Schadenmeldung senden</p>
+            <p class="tip-text">Nach dem Absenden werden Schadenprotokoll, Fotos und strukturierte Daten an IMD Fleet Services übermittelt.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">3</div>
+          <div>
+            <p class="tip-title">IMD prüft den Vorgang</p>
+            <p class="tip-text">IMD bewertet die Meldung, klärt Rückfragen und steuert den nächsten Schritt im Schadenprozess.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">4</div>
+          <div>
+            <p class="tip-title">Werkstatt und Freigabe</p>
+            <p class="tip-text">Falls erforderlich koordiniert IMD Werkstatt, Reparaturfreigabe und weitere Abstimmungen.</p>
+          </div>
+        </div>
+        <div class="tip-item">
+          <div class="tip-num">5</div>
+          <div>
+            <p class="tip-title">Status verfolgen</p>
+            <p class="tip-text">Ihre eingereichten Meldungen finden Sie anschließend unter „Meine Fälle“.</p>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="tips-action" onclick="scrollToForm()">
+        Schadenmeldung starten
+        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </button>
+    </div>
+  </section>
+</div><!-- /view-melden -->
 
 <div id="view-form" class="app-view">
   <div id="formular" class="form-card" data-form-card style="margin-bottom:20px;">
@@ -2379,7 +2495,7 @@ function showView(name) {
     const bar = btn.querySelector('.bn-bar');
     if (bar) bar.style.display = 'none';
   });
-  const activeView = (name === 'unfallort' || name === 'fotos') ? 'home' : name;
+  const activeView = ['unfallort', 'fotos', 'daten', 'melden'].includes(name) ? 'home' : name;
   const activeBtn = document.querySelector(`.bn-item[data-view="${activeView}"]`);
   if (activeBtn) {
     activeBtn.classList.add('bn-active');
