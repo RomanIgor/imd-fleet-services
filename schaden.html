@@ -1554,14 +1554,12 @@
 </div><!-- /view-faelle -->
 
 <div id="view-fall-detail" class="app-view">
-  <button type="button" class="fall-back" onclick="showView('faelle')">&larr; Zurueck</button>
+  <button type="button" class="fall-back" onclick="showView('faelle')">&larr; Zurück</button>
   <div class="view-header">
     <div class="view-header-title" id="fall-detail-title">Schadenmeldung</div>
     <div class="view-header-sub" id="fall-detail-sub">Read-only Ansicht</div>
   </div>
-  <div class="fall-detail-note">
-    Das unterschriebene PDF und die Fotos wurden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese E-Mail auf.
-  </div>
+  <div class="fall-detail-note" id="fall-detail-note" style="display:none"></div>
   <div id="fall-detail-content">
     <div class="fall-empty">Lade ...</div>
   </div>
@@ -2723,9 +2721,11 @@ async function openFallDetail(fallNr) {
   const title = document.getElementById('fall-detail-title');
   const sub = document.getElementById('fall-detail-sub');
   const box = document.getElementById('fall-detail-content');
+  const note = document.getElementById('fall-detail-note');
   if (title) title.textContent = fallNr;
   if (sub) sub.textContent = 'Schadenmeldung wird geladen';
   if (box) box.innerHTML = '<div class="fall-empty">Lade ...</div>';
+  if (note) { note.style.display = 'none'; note.textContent = ''; }
   showView('fall-detail');
   try {
     const res = await fetch(`/api/fahrer/meine-schaeden/${encodeURIComponent(fallNr)}`);
@@ -2733,6 +2733,15 @@ async function openFallDetail(fallNr) {
     const f = await res.json();
     if (title) title.textContent = f.fall_nr || fallNr;
     if (sub) sub.textContent = `${formatFallDate(f.created_at, true)} · Status: ${f.status || 'Neu'}`;
+    if (note) {
+      if (f.fahrer_confirmation_sent_at) {
+        note.textContent = 'Das unterschriebene PDF und die Fotos wurden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese E-Mail auf.';
+        note.style.display = 'block';
+      } else {
+        note.style.display = 'none';
+        note.textContent = '';
+      }
+    }
     if (box) box.innerHTML = renderFallDetail(f);
   } catch (e) {
     if (sub) sub.textContent = 'Fehler beim Laden';
