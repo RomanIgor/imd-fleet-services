@@ -428,6 +428,7 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
   const werkstatt_name            = (req.body.werkstatt_name  || '').trim();
   const werkstatt_email           = (req.body.werkstatt_email || '').trim();
   const signatureBase64           = (req.body.signature       || '').trim();
+  const sendFahrerCopy            = req.body.send_fahrer_copy === 'ja';
   let photoLabels = [];
   try { photoLabels = JSON.parse(req.body.photo_labels || '[]'); } catch(_) {}
 
@@ -474,8 +475,9 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
         fahrer_adresse=$22, fahrerlaubnis=$23, fahrerlaubnis_datum=$24, fahrerlaubnis_behoerde=$25,
         fuehrerschein_nr=$26, fuehrerschein_klassen=$27, alkohol=$28, drogen=$29,
         blutprobe_feld=$30, blutprobe_ergebnis=$31, blutprobe_entnommen=$32,
-        blutprobe_ergebnis_detail=$33, werkstatt_name=$34, werkstatt_email=$35, photo_labels=$36::jsonb
-       WHERE id=$37`,
+        blutprobe_ergebnis_detail=$33, werkstatt_name=$34, werkstatt_email=$35,
+        photo_labels=$36::jsonb, fahrer_confirmation_requested=$37
+       WHERE id=$38`,
       [
         schuldfrage, fahrtart, unfall_strasse, unfall_plz, unfall_ort_name,
         personenschaden, polizei_aufgenommen, polizei_aktenzeichen, schadenart, km,
@@ -486,6 +488,7 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
         fuehrerschein_nr, fuehrerschein_klassen, alkohol, drogen,
         blutprobe_feld, blutprobe_ergebnis, blutprobe_entnommen,
         blutprobe_ergebnis_detail, werkstatt_name, werkstatt_email, JSON.stringify(photoLabels || []),
+        sendFahrerCopy,
         id
       ]
     );
@@ -594,7 +597,7 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
     if (imdErr) throw new Error(imdErr.message);
 
     let fahrerEmailSent = false;
-    if (fahrer_email) {
+    if (sendFahrerCopy && fahrer_email) {
       try {
         const { error: fahrerErr } = await resend.emails.send({
           from:    'IMD Fleet Services <schaden@imdfleet.de>',

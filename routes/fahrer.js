@@ -345,7 +345,8 @@ router.get('/api/fahrer/meine-schaeden/:fallNr', requireFahrerAuth, async (req, 
          fahrer_adresse, fahrerlaubnis, fahrerlaubnis_datum, fahrerlaubnis_behoerde,
          fuehrerschein_nr, fuehrerschein_klassen, alkohol, drogen,
          blutprobe_feld, blutprobe_ergebnis, blutprobe_entnommen, blutprobe_ergebnis_detail,
-         werkstatt_name, werkstatt_email, photo_labels, fahrer_confirmation_sent_at
+         werkstatt_name, werkstatt_email, photo_labels,
+         fahrer_confirmation_requested, fahrer_confirmation_sent_at
        FROM schaeden
        WHERE fahrer_id = $1 AND fall_nr = $2
        LIMIT 1`,

@@ -152,6 +152,7 @@ async function initDB() {
       ADD COLUMN IF NOT EXISTS werkstatt_name TEXT,
       ADD COLUMN IF NOT EXISTS werkstatt_email TEXT,
       ADD COLUMN IF NOT EXISTS photo_labels JSONB DEFAULT '[]'::jsonb,
+      ADD COLUMN IF NOT EXISTS fahrer_confirmation_requested BOOLEAN NOT NULL DEFAULT false,
       ADD COLUMN IF NOT EXISTS fahrer_confirmation_sent_at TIMESTAMPTZ
   `);
 

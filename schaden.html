@@ -240,6 +240,10 @@
   .review-item { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
   .review-item-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--text-soft); margin-bottom: 4px; }
   .review-item-value { font-size: 14px; font-weight: 600; color: var(--imd-dark); word-break: break-word; }
+  .copy-option { display: flex; align-items: flex-start; gap: 10px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; }
+  .copy-option input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--imd-blue); flex: 0 0 auto; }
+  .copy-option-title { display: block; color: var(--imd-dark); font-size: 13px; font-weight: 800; line-height: 1.35; }
+  .copy-option-text { display: block; color: var(--text-mid); font-size: 12px; line-height: 1.45; margin-top: 3px; }
 
   /* FORM NAV */
   .form-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 20px; margin-top: 24px; border-top: 1px solid var(--border); flex-wrap: wrap; }
@@ -535,6 +539,8 @@
   [data-theme="dark"] .ac-item { border-bottom-color: var(--border); }
   [data-theme="dark"] .ac-item:hover { background: rgba(45,159,192,0.12); }
   [data-theme="dark"] .review-item { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .copy-option { background: var(--card); border-color: var(--border); }
+  [data-theme="dark"] .copy-option-title { color: var(--text); }
   [data-theme="dark"] .status-item { background: #12161F; border-color: var(--border); }
   [data-theme="dark"] .status-item.active { background: rgba(45,159,192,0.12); }
   [data-theme="dark"] .status-item.active .status-item-dot { background: var(--imd-blue); }
@@ -1593,6 +1599,7 @@ let state = {
   selectedWorkshop: null,
   uploadFiles: {},     // label -> File object
   signatureData: null,
+  sendFahrerCopy: true,
   status: 'Entwurf',
   fallNr: null,
   submitting: false,
@@ -2053,6 +2060,7 @@ async function submitClaim() {
   fd.append('werkstatt_name',  state.selectedWorkshop?.name  || '');
   fd.append('werkstatt_email', state.selectedWorkshop?.email || '');
   fd.append('signature', state.signatureData || '');
+  fd.append('send_fahrer_copy', state.sendFahrerCopy ? 'ja' : 'nein');
 
   let photoCount = 0;
   for (const file of Object.values(state.uploadFiles)) {
@@ -2086,7 +2094,7 @@ async function submitClaim() {
 function resetForm() {
   state = {
     step: 1, formData: {}, selectedWorkshop: null,
-    uploadFiles: {}, signatureData: null, status: 'Entwurf',
+    uploadFiles: {}, signatureData: null, sendFahrerCopy: true, status: 'Entwurf',
     fallNr: null, submitting: false, stepError: null, submitError: null,
   };
   render();
@@ -2323,6 +2331,18 @@ function renderStep5() {
           </div>` : `
           <div style="font-size:13px;color:var(--text-soft);padding:8px 0;">Keine Werkstatt ausgewählt — IMD wählt die geeignete Werkstatt aus.</div>`
       }</div>`
+    })}
+    ${inputBlock({
+      iconHtml: '<div class="imd-icon imd-icon--sm"><svg width="20" height="20" viewBox="0 0 256 256"><use href="#ic-versand"/></svg></div>',
+      title: 'Kopie per E-Mail',
+      subtitle: 'Optional fuer Ihre Unterlagen',
+      content: `<label class="copy-option full">
+        <input type="checkbox" ${state.sendFahrerCopy ? 'checked' : ''} onchange="state.sendFahrerCopy=this.checked">
+        <span>
+          <span class="copy-option-title">Ich moechte das unterschriebene PDF und die Fotos per E-Mail erhalten.</span>
+          <span class="copy-option-text">IMD Fleet Services erhaelt die Schadenmeldung immer. Diese Kopie ist nur fuer Ihre eigenen Unterlagen.</span>
+        </span>
+      </label>`
     })}
     <div class="input-block" style="margin-top:14px">
       <div class="input-block-head">
@@ -2630,7 +2650,7 @@ function renderFallDetail(f) {
   const accidentPlace = firstFilled(f.unfall_strasse, f.unfall_plz, f.unfall_ort_name) || f.unfall_ort;
   const emailSent = f.fahrer_confirmation_sent_at
     ? `Ja, am ${formatFallDate(f.fahrer_confirmation_sent_at, true)}`
-    : 'Bei neuen Meldungen direkt nach dem Absenden';
+    : (f.fahrer_confirmation_requested ? 'Angefordert, aber Versand nicht bestaetigt' : 'Nicht angefordert');
 
   return `<div class="fall-detail-card">
     ${fallSection('Fahrer & Fahrzeug', [
