@@ -11,14 +11,17 @@
     return !['GET', 'HEAD', 'OPTIONS'].includes(method.toUpperCase());
   }
 
-  function getCsrfToken() {
+  function getCsrfToken(forceRefresh) {
+    if (forceRefresh) csrfTokenPromise = null;
     if (!csrfTokenPromise) {
-      csrfTokenPromise = originalFetch('/api/csrf-token', { credentials: 'same-origin' })
+      csrfTokenPromise = originalFetch('/api/csrf-token', { credentials: 'same-origin', cache: 'no-store' })
         .then(res => res.json())
         .then(data => data.csrfToken);
     }
     return csrfTokenPromise;
   }
+
+  window.getCsrfToken = getCsrfToken;
 
   window.fetch = async function (input, init) {
     const request = input instanceof Request ? input : null;
@@ -29,7 +32,7 @@
     if (url && isSameOrigin(url) && isMutating(method)) {
       const headers = new Headers(options.headers || (request && request.headers) || {});
       if (!headers.has('x-csrf-token')) {
-        headers.set('x-csrf-token', await getCsrfToken());
+        headers.set('x-csrf-token', await getCsrfToken(false));
       }
       options.headers = headers;
       options.credentials = options.credentials || 'same-origin';

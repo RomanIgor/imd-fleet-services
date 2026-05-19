@@ -32,6 +32,7 @@ function safeCompare(a, b) {
 }
 
 function csrfTokenRoute(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
   res.json({ csrfToken: ensureCsrfToken(req) });
 }
 
