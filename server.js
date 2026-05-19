@@ -61,6 +61,7 @@ const publicAssets = new Set([
   '/icon-512.png',
   '/gruender.webp',
   '/image.jpg',
+  '/upload-guides.png',
 ]);
 app.use((req, res, next) => {
   if ((req.method === 'GET' || req.method === 'HEAD') && publicAssets.has(req.path)) {

@@ -213,7 +213,9 @@
   .upload-tile-status { font-size: 10px; color: var(--text-soft); margin-top: 4px; word-break: break-all; }
   .upload-tile.uploaded .upload-tile-status { color: var(--green); font-weight: 700; }
   .upload-preview { width: 100%; aspect-ratio: 4 / 3; border-radius: 9px; object-fit: cover; margin-bottom: 8px; border: 1px solid rgba(26,122,74,0.22); display: block; }
+  .upload-guide { width: 100%; aspect-ratio: 4 / 3; border-radius: 9px; margin-bottom: 8px; border: 1px solid rgba(45,159,192,0.24); background-image: url('/upload-guides.png'); background-size: 300% 200%; background-repeat: no-repeat; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); }
   .upload-tile.uploaded .upload-tile-icon { display: none; }
+  .upload-tile-desc { font-size: 10.5px; color: var(--text-mid); line-height: 1.25; margin-top: 4px; }
 
   /* WORKSHOP */
   .search-box { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border-2); border-radius: 10px; padding: 0 14px; margin-bottom: 16px; transition: all 0.15s; }
@@ -1618,12 +1620,12 @@ const STEPS = [
 ];
 
 const UPLOAD_DEFS = [
-  { label: 'Gesamtansicht Fahrzeug', required: true  },
-  { label: 'Schaden Nahaufnahme',    required: true  },
-  { label: 'Kennzeichen',            required: true  },
-  { label: 'Unfallstelle',           required: false },
-  { label: 'Unfallgegner',           required: false },
-  { label: 'Dokumente / Polizei',    required: false },
+  { label: 'Gesamtansicht Fahrzeug', required: true,  desc: 'Fahrzeug komplett aus etwas Abstand.', guidePos: '0% 0%' },
+  { label: 'Schaden Nahaufnahme',    required: true,  desc: 'Beschädigung nah und scharf.', guidePos: '50% 0%' },
+  { label: 'Kennzeichen',            required: true,  desc: 'Kennzeichen gut lesbar fotografieren.', guidePos: '100% 0%' },
+  { label: 'Unfallstelle',           required: false, desc: 'Straße, Umgebung und Absicherung zeigen.', guidePos: '0% 100%' },
+  { label: 'Unfallgegner',           required: false, desc: 'Gegnerfahrzeug und Position dokumentieren.', guidePos: '50% 100%' },
+  { label: 'Dokumente / Polizei',    required: false, desc: 'Dokumente, Aktenzeichen oder Nachweise.', guidePos: '100% 100%' },
 ];
 
 let workshops = [];
@@ -2274,13 +2276,16 @@ function renderStep3() {
       <div>
         <button type="button" class="upload-tile ${hasFile ? 'uploaded' : ''}"
                 onclick="document.getElementById('${inputId}').click()">
-          ${previewUrl ? `<img class="upload-preview" src="${previewUrl}" alt="">` : ''}
+          ${previewUrl
+            ? `<img class="upload-preview" src="${previewUrl}" alt="">`
+            : `<div class="upload-guide" style="background-position:${u.guidePos}" aria-hidden="true"></div>`}
           <div class="upload-tile-icon">
             ${icon(hasFile ? 'i-check-mark' : 'i-camera', 18)}
           </div>
           <div class="upload-tile-label">
             ${escapeHtml(u.label)}${u.required ? '<span class="req">*</span>' : ''}
           </div>
+          <div class="upload-tile-desc">${escapeHtml(u.desc)}</div>
           <div class="upload-tile-status">${escapeHtml(displayName)}</div>
         </button>
         <input type="file" id="${inputId}" accept="image/*" style="display:none"
