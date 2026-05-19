@@ -831,33 +831,43 @@
     text-transform: uppercase;
   }
   @media (max-width: 767px) {
-    main { padding: 12px; }
-    .process-card { padding: 16px 13px 13px; border-radius: 17px; margin-bottom: 12px; }
-    .process-header { margin-bottom: 13px; gap: 10px; }
-    .process-eyebrow { font-size: 8.8px; margin-bottom: 8px; }
-    .process-header h2 { font-size: 18px; }
-    .process-header p { font-size: 12px; margin-top: 7px; }
-    .process-steps { gap: 7px; }
+    main { padding: 10px 12px; }
+    .process-card { padding: 13px 12px 12px; border-radius: 17px; margin-bottom: 10px; }
+    .process-header { margin-bottom: 10px; gap: 10px; }
+    .process-eyebrow { font-size: 8.4px; margin-bottom: 6px; letter-spacing: 0.18em; }
+    .process-header h2 { font-size: 17px; }
+    .process-header p { font-size: 11px; margin-top: 5px; line-height: 1.25; }
+    .process-steps { gap: 6px; }
     .process-step {
-      min-height: 64px;
-      grid-template-columns: 28px 44px minmax(0, 1fr) 16px;
-      gap: 9px;
-      padding: 7px 13px 7px 0;
+      min-height: 55px;
+      grid-template-columns: 26px 39px minmax(0, 1fr) 14px;
+      gap: 8px;
+      padding: 6px 11px 6px 0;
     }
-    .process-step::before { left: 34px; border-radius: 11px; }
-    .process-step:not(:last-child)::after { top: 40px; bottom: -14px; }
-    .process-icon-art { width: 40px; height: 40px; border-radius: 11px; margin: 0; }
-    .process-icon-art svg { width: 23px; height: 23px; }
-    .step-title { font-size: 12px; line-height: 1.18; margin-bottom: 2px; }
-    .step-text { font-size: 10.5px; line-height: 1.2; }
-    .modules-label { margin: 0 0 8px; font-size: 10px; }
-    .modules-grid { gap: 8px; margin-bottom: 8px; }
-    .mod-tile { min-height: 76px; padding: 10px 11px 9px; border-radius: 14px; }
-    .imd-icon { width: 38px; height: 38px; border-radius: 11px; margin-bottom: 7px; }
-    .imd-icon svg { width: 23px; height: 23px; }
-    .mod-tile-label { font-size: 11.3px; }
+    .process-step::before { left: 32px; border-radius: 11px; }
+    .process-step:not(:last-child)::after { top: 35px; bottom: -12px; left: 10px; }
+    .step-index { width: 21px; height: 21px; font-size: 10px; }
+    .process-icon-art { width: 36px; height: 36px; border-radius: 11px; margin: 0; }
+    .process-icon-art svg { width: 21px; height: 21px; }
+    .step-title { font-size: 11.4px; line-height: 1.16; margin-bottom: 1px; }
+    .step-text { font-size: 10px; line-height: 1.15; }
+    .modules-label { margin: 0 0 6px; font-size: 9.5px; }
+    .modules-grid { gap: 7px; margin-bottom: 6px; }
+    .mod-tile { min-height: 68px; padding: 9px 10px 8px; border-radius: 13px; }
+    .imd-icon { width: 34px; height: 34px; border-radius: 10px; margin-bottom: 6px; }
+    .imd-icon svg { width: 21px; height: 21px; }
+    .mod-tile-label { font-size: 10.8px; line-height: 1.18; }
     .mod-tile-sub { display: none; }
     .badge-soon { top: 8px; right: 8px; font-size: 8.5px; padding: 2px 7px; }
+  }
+  @media (max-width: 767px) and (max-height: 740px) {
+    .process-header p { display: none; }
+    .process-card { padding-top: 12px; }
+    .process-step { min-height: 50px; }
+    .step-text { display: none; }
+    .mod-tile { min-height: 58px; display: grid; grid-template-columns: 30px minmax(0,1fr); align-items: center; column-gap: 8px; }
+    .mod-tile .imd-icon { width: 30px; height: 30px; margin-bottom: 0; }
+    .mod-tile .imd-icon svg { width: 18px; height: 18px; }
   }
 
   /* BOTTOM NAV */
@@ -904,10 +914,16 @@
   .home-greeting-name { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
   .home-greeting-fleet { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
   @media (max-width: 520px) {
-    .home-greeting { padding: 14px 15px 13px; margin-bottom: 10px; border-radius: 18px; }
+    .home-greeting { padding: 12px 14px 11px; margin-bottom: 9px; border-radius: 17px; }
     .home-greeting-sub { font-size: 9px; margin-bottom: 2px; }
-    .home-greeting-name { font-size: 17px; }
-    .home-greeting-fleet { font-size: 11px; margin-top: 1px; }
+    .home-greeting-name { font-size: 16.5px; }
+    .home-greeting-fleet { font-size: 10.5px; margin-top: 1px; }
+  }
+  @media (max-width: 520px) and (max-height: 740px) {
+    .home-greeting { padding: 10px 13px 9px; margin-bottom: 8px; }
+    .home-greeting-sub { font-size: 8px; }
+    .home-greeting-name { font-size: 15.5px; }
+    .home-greeting-fleet { display: none; }
   }
 
   /* VIEW HEADER */
