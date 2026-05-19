@@ -114,6 +114,46 @@ async function initDB() {
       ADD COLUMN IF NOT EXISTS fahrer_id   INTEGER REFERENCES fahrer(id),
       ADD COLUMN IF NOT EXISTS fuhrpark_id INTEGER REFERENCES fuhrparks(id)
   `);
+  await pool.query(`
+    ALTER TABLE schaeden
+      ADD COLUMN IF NOT EXISTS schuldfrage TEXT,
+      ADD COLUMN IF NOT EXISTS fahrtart TEXT,
+      ADD COLUMN IF NOT EXISTS unfall_strasse TEXT,
+      ADD COLUMN IF NOT EXISTS unfall_plz TEXT,
+      ADD COLUMN IF NOT EXISTS unfall_ort_name TEXT,
+      ADD COLUMN IF NOT EXISTS personenschaden TEXT,
+      ADD COLUMN IF NOT EXISTS polizei_aufgenommen TEXT,
+      ADD COLUMN IF NOT EXISTS polizei_aktenzeichen TEXT,
+      ADD COLUMN IF NOT EXISTS schadenart TEXT,
+      ADD COLUMN IF NOT EXISTS km TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_holder TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_address TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_lastname TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_firstname TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_plate TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_type TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_phone TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_mobile TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_insurance TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_insurance_nr TEXT,
+      ADD COLUMN IF NOT EXISTS opponent_damage TEXT,
+      ADD COLUMN IF NOT EXISTS fahrer_adresse TEXT,
+      ADD COLUMN IF NOT EXISTS fahrerlaubnis TEXT,
+      ADD COLUMN IF NOT EXISTS fahrerlaubnis_datum TEXT,
+      ADD COLUMN IF NOT EXISTS fahrerlaubnis_behoerde TEXT,
+      ADD COLUMN IF NOT EXISTS fuehrerschein_nr TEXT,
+      ADD COLUMN IF NOT EXISTS fuehrerschein_klassen TEXT,
+      ADD COLUMN IF NOT EXISTS alkohol TEXT,
+      ADD COLUMN IF NOT EXISTS drogen TEXT,
+      ADD COLUMN IF NOT EXISTS blutprobe_feld TEXT,
+      ADD COLUMN IF NOT EXISTS blutprobe_ergebnis TEXT,
+      ADD COLUMN IF NOT EXISTS blutprobe_entnommen TEXT,
+      ADD COLUMN IF NOT EXISTS blutprobe_ergebnis_detail TEXT,
+      ADD COLUMN IF NOT EXISTS werkstatt_name TEXT,
+      ADD COLUMN IF NOT EXISTS werkstatt_email TEXT,
+      ADD COLUMN IF NOT EXISTS photo_labels JSONB DEFAULT '[]'::jsonb,
+      ADD COLUMN IF NOT EXISTS fahrer_confirmation_sent_at TIMESTAMPTZ
+  `);
 
   const { rows } = await pool.query('SELECT COUNT(*) FROM users');
   if (parseInt(rows[0].count) === 0) {

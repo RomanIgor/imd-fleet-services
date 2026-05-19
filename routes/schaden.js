@@ -354,6 +354,32 @@ function generateSchadenPDF(d) {
 }
 
 // ── POST /api/schaden ─────────────────────────────────────────────────────────
+function buildFahrerConfirmationEmail({ fall_nr, kennzeichen, firma, timestamp, photoCount, hasPdf }) {
+  const e = escapeHtml;
+  return `<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"></head>
+  <body style="font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:20px">
+    <div style="background:#fff;border-radius:10px;padding:28px;max-width:560px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)">
+      <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
+      <h2 style="color:#09152A;margin:0 0 8px;font-size:22px">Ihre Schadenmeldung ist eingegangen</h2>
+      <p style="color:#536E94;font-size:14px;line-height:1.55;margin:0 0 20px">
+        Wir haben Ihre Schadenmeldung erhalten. IMD Fleet Services uebernimmt den weiteren Ablauf.
+      </p>
+      <table style="width:100%;border-collapse:collapse;margin:0 0 20px">
+        <tr><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;color:#536E94">Fallnummer</td><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;text-align:right;font-weight:700;color:#09152A">${e(fall_nr)}</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;color:#536E94">Kennzeichen</td><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;text-align:right;font-weight:700;color:#09152A">${e(kennzeichen || '-')}</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;color:#536E94">Firma</td><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;text-align:right;color:#09152A">${e(firma || '-')}</td></tr>
+        <tr><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;color:#536E94">Eingang</td><td style="padding:10px 0;border-bottom:1px solid #ECF1F8;text-align:right;color:#09152A">${e(timestamp)}</td></tr>
+      </table>
+      <p style="background:#eef6ff;border:1px solid #cfe4ff;border-radius:8px;padding:12px 14px;color:#0c2461;font-size:13px;line-height:1.5;margin:0 0 16px">
+        ${hasPdf ? 'Das unterschriebene PDF' : 'Die Schadenmeldung'} und ${photoCount} Foto(s) finden Sie im Anhang dieser E-Mail.
+      </p>
+      <p style="color:#536E94;font-size:13px;line-height:1.55;margin:0">
+        Bitte bewahren Sie diese E-Mail auf. Den Status Ihrer Meldung koennen Sie jederzeit in der App unter "Meine Faelle" einsehen.
+      </p>
+    </div>
+  </body></html>`;
+}
+
 router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, res) => {
   if (!req.session || !req.session.fahrerId) {
     return res.status(401).json({ success: false, error: 'Sitzung abgelaufen. Bitte erneut einloggen.' });
@@ -399,6 +425,9 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
   const blutprobe_ergebnis        = (req.body.blutprobe_ergebnis        || '').trim();
   const blutprobe_entnommen       = (req.body.blutprobe_entnommen       || '').trim();
   const blutprobe_ergebnis_detail = (req.body.blutprobe_ergebnis_detail || '').trim();
+  const werkstatt_name            = (req.body.werkstatt_name  || '').trim();
+  const werkstatt_email           = (req.body.werkstatt_email || '').trim();
+  const signatureBase64           = (req.body.signature       || '').trim();
   let photoLabels = [];
   try { photoLabels = JSON.parse(req.body.photo_labels || '[]'); } catch(_) {}
 
@@ -435,6 +464,31 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
     const year    = new Date().getFullYear();
     const fall_nr = `SCH-${year}-${String(id).padStart(4, '0')}`;
     await pool.query('UPDATE schaeden SET fall_nr=$1 WHERE id=$2', [fall_nr, id]);
+    await pool.query(
+      `UPDATE schaeden SET
+        schuldfrage=$1, fahrtart=$2, unfall_strasse=$3, unfall_plz=$4, unfall_ort_name=$5,
+        personenschaden=$6, polizei_aufgenommen=$7, polizei_aktenzeichen=$8, schadenart=$9, km=$10,
+        opponent_holder=$11, opponent_address=$12, opponent_lastname=$13, opponent_firstname=$14,
+        opponent_plate=$15, opponent_type=$16, opponent_phone=$17, opponent_mobile=$18,
+        opponent_insurance=$19, opponent_insurance_nr=$20, opponent_damage=$21,
+        fahrer_adresse=$22, fahrerlaubnis=$23, fahrerlaubnis_datum=$24, fahrerlaubnis_behoerde=$25,
+        fuehrerschein_nr=$26, fuehrerschein_klassen=$27, alkohol=$28, drogen=$29,
+        blutprobe_feld=$30, blutprobe_ergebnis=$31, blutprobe_entnommen=$32,
+        blutprobe_ergebnis_detail=$33, werkstatt_name=$34, werkstatt_email=$35, photo_labels=$36::jsonb
+       WHERE id=$37`,
+      [
+        schuldfrage, fahrtart, unfall_strasse, unfall_plz, unfall_ort_name,
+        personenschaden, polizei_aufgenommen, polizei_aktenzeichen, schadenart, km,
+        opponent_holder, opponent_address, opponent_lastname, opponent_firstname,
+        opponent_plate, opponent_type, opponent_phone, opponent_mobile,
+        opponent_insurance, opponent_insurance_nr, opponent_damage,
+        fahrer_adresse, fahrerlaubnis, fahrerlaubnis_datum, fahrerlaubnis_behoerde,
+        fuehrerschein_nr, fuehrerschein_klassen, alkohol, drogen,
+        blutprobe_feld, blutprobe_ergebnis, blutprobe_entnommen,
+        blutprobe_ergebnis_detail, werkstatt_name, werkstatt_email, JSON.stringify(photoLabels || []),
+        id
+      ]
+    );
 
     const attachments = req.files.map((f, i) => ({
       filename: String(f.originalname || `foto-${i + 1}.jpg`).replace(/[^\w.\- äöüÄÖÜß]/g, '_'),
@@ -501,10 +555,6 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
   <div class="footer">Automatisch generiert · ${req.files.length} Foto(s) im Anhang · PDF beigefügt</div>
 </div></body></html>`;
 
-    const werkstatt_name  = (req.body.werkstatt_name  || '').trim();
-    const werkstatt_email = (req.body.werkstatt_email || '').trim();
-    const signatureBase64 = (req.body.signature       || '').trim();
-
     let pdfBuffer = null;
     try {
       pdfBuffer = await generateSchadenPDF({
@@ -543,8 +593,33 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
     });
     if (imdErr) throw new Error(imdErr.message);
 
+    let fahrerEmailSent = false;
+    if (fahrer_email) {
+      try {
+        const { error: fahrerErr } = await resend.emails.send({
+          from:    'IMD Fleet Services <schaden@imdfleet.de>',
+          to:      fahrer_email,
+          subject: `Ihre Schadenmeldung ${fall_nr} - IMD Fleet Services`,
+          html:    buildFahrerConfirmationEmail({
+            fall_nr,
+            kennzeichen,
+            firma,
+            timestamp,
+            photoCount: req.files.length,
+            hasPdf: Boolean(pdfBuffer),
+          }),
+          attachments,
+        });
+        if (fahrerErr) throw new Error(fahrerErr.message);
+        fahrerEmailSent = true;
+        await pool.query('UPDATE schaeden SET fahrer_confirmation_sent_at=NOW() WHERE id=$1', [id]);
+      } catch (mailErr) {
+        console.warn(`[${timestamp}] Fahrer confirmation email skipped:`, mailErr.message);
+      }
+    }
+
     console.log(`[${timestamp}] Schaden ${fall_nr} saved + emails sent`);
-    res.json({ success: true, fall_nr });
+    res.json({ success: true, fall_nr, fahrer_email_sent: fahrerEmailSent });
   } catch (err) {
     console.error('Schaden error:', err.message);
     res.status(500).json({ success: false, error: 'Fehler bei der Verarbeitung. Bitte versuchen Sie es erneut.' });

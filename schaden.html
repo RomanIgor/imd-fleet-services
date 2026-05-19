@@ -1006,14 +1006,30 @@
 
   /* MEINE FÄLLE */
   .fall-list { display: flex; flex-direction: column; gap: 10px; }
-  .fall-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow-sm); }
+  .fall-card { width: 100%; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow-sm); cursor: pointer; font: inherit; transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
+  .fall-card:active { transform: scale(.99); }
+  .fall-card:hover { border-color: rgba(45,159,192,.45); box-shadow: var(--shadow); }
   .fall-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
   .fall-nr { font-size: 13px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
   .fall-meta { display: flex; gap: 12px; font-size: 11px; color: var(--text-mid); }
+  .fall-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .fall-arrow { color: var(--imd-blue); font-size: 18px; font-weight: 800; line-height: 1; }
   .fall-badge-neu  { background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
   .fall-badge-in   { background: var(--amber-bg); color: var(--amber); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
   .fall-badge-done { background: var(--green-bg); color: var(--green); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
   .fall-empty { text-align: center; padding: 40px 20px; color: var(--text-soft); font-size: 13px; line-height: 1.6; }
+  .fall-back { border: 1px solid var(--border); background: var(--card); color: var(--text-mid); border-radius: 999px; padding: 9px 12px; font: inherit; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+  .fall-detail-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 12px; }
+  .fall-detail-note { background: rgba(45,159,192,.09); border: 1px solid rgba(45,159,192,.22); border-radius: var(--radius); padding: 13px 14px; color: var(--text-mid); font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
+  .fall-section { padding: 14px; border-bottom: 1px solid var(--border); }
+  .fall-section:last-child { border-bottom: 0; }
+  .fall-section-title { font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--imd-blue); margin-bottom: 10px; }
+  .fall-field { display: grid; grid-template-columns: 42% 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(142,160,185,.18); font-size: 12px; }
+  .fall-field:last-child { border-bottom: 0; }
+  .fall-field-label { color: var(--text-soft); font-weight: 800; }
+  .fall-field-value { color: var(--text); line-height: 1.35; word-break: break-word; white-space: pre-wrap; }
+  .fall-photo-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .fall-photo-chip { padding: 7px 9px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); color: var(--text-mid); font-size: 11px; font-weight: 800; }
 
   /* HILFE */
   .hilfe-contact { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); margin-bottom: 16px; }
@@ -1530,6 +1546,20 @@
     <div class="fall-empty">Lade …</div>
   </div>
 </div><!-- /view-faelle -->
+
+<div id="view-fall-detail" class="app-view">
+  <button type="button" class="fall-back" onclick="showView('faelle')">&larr; Zurueck</button>
+  <div class="view-header">
+    <div class="view-header-title" id="fall-detail-title">Schadenmeldung</div>
+    <div class="view-header-sub" id="fall-detail-sub">Read-only Ansicht</div>
+  </div>
+  <div class="fall-detail-note">
+    Das unterschriebene PDF und die Fotos wurden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese E-Mail auf.
+  </div>
+  <div id="fall-detail-content">
+    <div class="fall-empty">Lade ...</div>
+  </div>
+</div><!-- /view-fall-detail -->
 
 <div id="view-hilfe" class="app-view">
   <div class="view-header">
@@ -2501,7 +2531,7 @@ function showView(name) {
     const bar = btn.querySelector('.bn-bar');
     if (bar) bar.style.display = 'none';
   });
-  const activeView = ['unfallort', 'fotos', 'daten', 'melden'].includes(name) ? 'home' : name;
+  const activeView = ['unfallort', 'fotos', 'daten', 'melden'].includes(name) ? 'home' : (name === 'fall-detail' ? 'faelle' : name);
   const activeBtn = document.querySelector(`.bn-item[data-view="${activeView}"]`);
   if (activeBtn) {
     activeBtn.classList.add('bn-active');
@@ -2529,32 +2559,157 @@ async function loadFahrerMe() {
 async function loadMeineFaelle() {
   const list = document.getElementById('faelle-list');
   if (!list) return;
-  list.innerHTML = '<div class="fall-empty">Lade …</div>';
+  list.innerHTML = '<div class="fall-empty">Lade ...</div>';
   try {
     const res = await fetch('/api/fahrer/meine-schaeden');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const rows = await res.json();
     if (!Array.isArray(rows) || !rows.length) {
-      list.innerHTML = '<div class="fall-empty">Noch keine Schadensmeldung.<br>Nutzen Sie „Schadenmanagement" um eine neue anzulegen.</div>';
+      list.innerHTML = '<div class="fall-empty">Noch keine Schadensmeldung.<br>Nutzen Sie Schadenmanagement, um eine neue anzulegen.</div>';
       return;
     }
     const statusCls = { 'Neu': 'fall-badge-neu', 'In Bearbeitung': 'fall-badge-in', 'Abgeschlossen': 'fall-badge-done' };
     list.innerHTML = rows.map(f => {
-      const date = new Date(f.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const date = formatFallDate(f.created_at);
       const cls  = statusCls[f.status] || 'fall-badge-neu';
-      return `<div class="fall-card">
+      const fallNr = escapeHtml(f.fall_nr || '');
+      return `<button type="button" class="fall-card" onclick="openFallDetail('${fallNr}')">
         <div class="fall-card-top">
-          <span class="fall-nr">${f.fall_nr || '—'}</span>
-          <span class="${cls}">${f.status || 'Neu'}</span>
+          <span class="fall-nr">${fallNr || '-'}</span>
+          <span class="${cls}">${escapeHtml(f.status || 'Neu')}</span>
         </div>
-        <div class="fall-meta">
-          <span>🚗 ${f.kennzeichen || '—'}</span>
-          <span>📅 ${date}</span>
+        <div class="fall-card-bottom">
+          <div class="fall-meta">
+            <span>${escapeHtml(f.kennzeichen || '-')}</span>
+            <span>${escapeHtml(date || '-')}</span>
+          </div>
+          <span class="fall-arrow">&rsaquo;</span>
         </div>
-      </div>`;
+      </button>`;
     }).join('');
   } catch (e) {
     list.innerHTML = '<div class="fall-empty">Fehler beim Laden.</div>';
+  }
+}
+
+function formatFallDate(value, withTime=false) {
+  if (!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return String(value);
+  const opts = withTime
+    ? { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }
+    : { day: '2-digit', month: '2-digit', year: 'numeric' };
+  return d.toLocaleString('de-DE', opts);
+}
+
+function boolText(value) {
+  if (value === true || value === 'ja') return 'Ja';
+  if (value === false || value === 'nein') return 'Nein';
+  return value || '';
+}
+
+function firstFilled(...values) {
+  return values.map(v => String(v || '').trim()).filter(Boolean).join(', ');
+}
+
+function fallField(label, value) {
+  const text = value === true || value === false ? boolText(value) : String(value || '').trim();
+  if (!text) return '';
+  return `<div class="fall-field"><div class="fall-field-label">${escapeHtml(label)}</div><div class="fall-field-value">${escapeHtml(text)}</div></div>`;
+}
+
+function fallSection(title, rows) {
+  const html = rows.filter(Boolean).join('');
+  if (!html) return '';
+  return `<section class="fall-section"><div class="fall-section-title">${escapeHtml(title)}</div>${html}</section>`;
+}
+
+function renderFallDetail(f) {
+  const photos = Array.isArray(f.photo_labels) ? f.photo_labels : [];
+  const opponentName = firstFilled(f.opponent_firstname, f.opponent_lastname);
+  const accidentPlace = firstFilled(f.unfall_strasse, f.unfall_plz, f.unfall_ort_name) || f.unfall_ort;
+  const emailSent = f.fahrer_confirmation_sent_at
+    ? `Ja, am ${formatFallDate(f.fahrer_confirmation_sent_at, true)}`
+    : 'Bei neuen Meldungen direkt nach dem Absenden';
+
+  return `<div class="fall-detail-card">
+    ${fallSection('Fahrer & Fahrzeug', [
+      fallField('Firma', f.firma),
+      fallField('Fahrer', f.fahrer_name),
+      fallField('E-Mail', f.fahrer_email),
+      fallField('Telefon', f.fahrer_telefon),
+      fallField('Adresse', f.fahrer_adresse),
+      fallField('Kennzeichen', f.kennzeichen),
+      fallField('Fahrzeugtyp', f.fahrzeugtyp),
+      fallField('Baujahr', f.baujahr),
+      fallField('KM-Stand', f.km),
+    ])}
+    ${fallSection('Unfall & Schaden', [
+      fallField('Datum', f.unfall_datum),
+      fallField('Uhrzeit', f.unfall_uhrzeit),
+      fallField('Ort', accidentPlace),
+      fallField('Schadenart', f.schadenart),
+      fallField('Fahrtart', f.fahrtart),
+      fallField('Schuldfrage', f.schuldfrage),
+      fallField('Fahrbereit', f.fahrbereit),
+      fallField('Personenschaden', f.personenschaden),
+      fallField('Beschreibung', f.beschreibung),
+    ])}
+    ${fallSection('Polizei & Unfallgegner', [
+      fallField('Polizei gerufen', f.polizei_gerufen),
+      fallField('Polizei aufgenommen', f.polizei_aufgenommen),
+      fallField('Aktenzeichen', f.polizei_aktenzeichen),
+      fallField('Unfallgegner vorhanden', f.unfallgegner),
+      fallField('Gegner Name', opponentName),
+      fallField('Gegner Halter', f.opponent_holder),
+      fallField('Gegner Adresse', f.opponent_address),
+      fallField('Gegner Kennzeichen', f.opponent_plate),
+      fallField('Gegner Fahrzeug', f.opponent_type),
+      fallField('Gegner Telefon', firstFilled(f.opponent_phone, f.opponent_mobile)),
+      fallField('Gegner Versicherung', f.opponent_insurance),
+      fallField('Versicherungsnummer', f.opponent_insurance_nr),
+      fallField('Schaden Gegner', f.opponent_damage),
+    ])}
+    ${fallSection('Fuehrerschein & Kontrolle', [
+      fallField('Fahrerlaubnis', f.fahrerlaubnis),
+      fallField('Ausgestellt am', f.fahrerlaubnis_datum),
+      fallField('Behoerde', f.fahrerlaubnis_behoerde),
+      fallField('Fuehrerschein-Nr.', f.fuehrerschein_nr),
+      fallField('Klassen', f.fuehrerschein_klassen),
+      fallField('Alkohol', f.alkohol),
+      fallField('Drogen', f.drogen),
+      fallField('Blutprobe', f.blutprobe_feld),
+      fallField('Blutprobe entnommen', f.blutprobe_entnommen),
+      fallField('Ergebnis', firstFilled(f.blutprobe_ergebnis, f.blutprobe_ergebnis_detail)),
+    ])}
+    ${fallSection('Werkstatt & Anlagen', [
+      fallField('Werkstatt', f.werkstatt_name),
+      fallField('Werkstatt E-Mail', f.werkstatt_email),
+      fallField('PDF/Fotos per E-Mail', emailSent),
+      photos.length ? `<div class="fall-field"><div class="fall-field-label">Fototypen</div><div class="fall-field-value"><div class="fall-photo-list">${photos.map(p => `<span class="fall-photo-chip">${escapeHtml(p)}</span>`).join('')}</div></div></div>` : '',
+    ])}
+  </div>`;
+}
+
+async function openFallDetail(fallNr) {
+  if (!fallNr) return;
+  const title = document.getElementById('fall-detail-title');
+  const sub = document.getElementById('fall-detail-sub');
+  const box = document.getElementById('fall-detail-content');
+  if (title) title.textContent = fallNr;
+  if (sub) sub.textContent = 'Schadenmeldung wird geladen';
+  if (box) box.innerHTML = '<div class="fall-empty">Lade ...</div>';
+  showView('fall-detail');
+  try {
+    const res = await fetch(`/api/fahrer/meine-schaeden/${encodeURIComponent(fallNr)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const f = await res.json();
+    if (title) title.textContent = f.fall_nr || fallNr;
+    if (sub) sub.textContent = `${formatFallDate(f.created_at, true)} · Status: ${f.status || 'Neu'}`;
+    if (box) box.innerHTML = renderFallDetail(f);
+  } catch (e) {
+    if (sub) sub.textContent = 'Fehler beim Laden';
+    if (box) box.innerHTML = '<div class="fall-empty">Diese Schadenmeldung konnte nicht geladen werden.</div>';
   }
 }
 </script>

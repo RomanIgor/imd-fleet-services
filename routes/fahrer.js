@@ -330,6 +330,35 @@ router.get('/api/fahrer/meine-schaeden', requireFahrerAuth, async (req, res) => 
   }
 });
 
+router.get('/api/fahrer/meine-schaeden/:fallNr', requireFahrerAuth, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT
+         fall_nr, created_at, status, firma, fahrer_name, fahrer_email, fahrer_telefon,
+         kennzeichen, fahrzeugtyp, baujahr, km, schuldfrage, fahrtart,
+         unfall_datum, unfall_uhrzeit, unfall_ort, unfall_strasse, unfall_plz, unfall_ort_name,
+         fahrbereit, personenschaden, unfallgegner, beschreibung,
+         polizei_gerufen, polizei_aufgenommen, polizei_aktenzeichen, schadenart,
+         opponent_holder, opponent_address, opponent_lastname, opponent_firstname,
+         opponent_plate, opponent_type, opponent_phone, opponent_mobile,
+         opponent_insurance, opponent_insurance_nr, opponent_damage,
+         fahrer_adresse, fahrerlaubnis, fahrerlaubnis_datum, fahrerlaubnis_behoerde,
+         fuehrerschein_nr, fuehrerschein_klassen, alkohol, drogen,
+         blutprobe_feld, blutprobe_ergebnis, blutprobe_entnommen, blutprobe_ergebnis_detail,
+         werkstatt_name, werkstatt_email, photo_labels, fahrer_confirmation_sent_at
+       FROM schaeden
+       WHERE fahrer_id = $1 AND fall_nr = $2
+       LIMIT 1`,
+      [req.session.fahrerId, req.params.fallNr]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Nicht gefunden' });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Interner Fehler' });
+  }
+});
+
 // Schaden form - requires Fahrer session
 // Mounted BEFORE express.static in server.js so this route takes priority
 
