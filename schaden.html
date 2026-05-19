@@ -52,7 +52,7 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-bottom: 72px;
+    padding-bottom: 62px;
   }
   button { font-family: inherit; cursor: pointer; border: 0; background: transparent; }
   input, select, textarea { font-family: inherit; }
@@ -202,7 +202,7 @@
     border: 2px dashed var(--border-2); background: white; border-radius: 12px;
     padding: 16px 12px; text-align: center; transition: all 0.15s;
     min-height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    width: 100%;
+    width: 100%; position: relative; overflow: hidden;
   }
   .upload-tile:active,.upload-tile:hover { border-color: var(--imd-blue); background: var(--imd-blue-bg); }
   .upload-tile.uploaded { border-color: var(--green); border-style: solid; background: var(--green-bg); }
@@ -212,6 +212,8 @@
   .upload-tile-label .req { color: var(--red); }
   .upload-tile-status { font-size: 10px; color: var(--text-soft); margin-top: 4px; word-break: break-all; }
   .upload-tile.uploaded .upload-tile-status { color: var(--green); font-weight: 700; }
+  .upload-preview { width: 100%; aspect-ratio: 4 / 3; border-radius: 9px; object-fit: cover; margin-bottom: 8px; border: 1px solid rgba(26,122,74,0.22); display: block; }
+  .upload-tile.uploaded .upload-tile-icon { display: none; }
 
   /* WORKSHOP */
   .search-box { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border-2); border-radius: 10px; padding: 0 14px; margin-bottom: 16px; transition: all 0.15s; }
@@ -837,6 +839,7 @@
     text-transform: uppercase;
   }
   @media (max-width: 767px) {
+    body { padding-bottom: 56px; }
     main { padding: 10px 12px; }
     .process-card { padding: 13px 12px 12px; border-radius: 17px; margin-bottom: 10px; }
     .process-header { margin-bottom: 10px; gap: 10px; }
@@ -1178,7 +1181,7 @@
 <div id="view-home" class="app-view v-active">
   <div class="home-greeting">
     <div class="home-greeting-sub">Willkommen zurück</div>
-    <div class="home-greeting-name">Guten Tag, <span id="home-fahrer-name">…</span></div>
+    <div class="home-greeting-name"><span id="home-greeting-text">Guten Tag</span>, <span id="home-fahrer-name">…</span></div>
     <div class="home-greeting-fleet" id="home-fuhrpark-name"></div>
   </div>
   <section class="process-card" aria-label="Unfall oder Schaden">
@@ -1596,6 +1599,7 @@ let state = {
   formData: {},
   selectedWorkshop: null,
   uploadFiles: {},     // label -> File object
+  uploadPreviews: {},   // label -> object URL
   signatureData: null,
   sendFahrerCopy: true,
   status: 'Entwurf',
@@ -1973,9 +1977,15 @@ function handleFileUpload(label, inputEl) {
     inputEl.value = '';
     return;
   }
+  if (state.uploadPreviews[label]) URL.revokeObjectURL(state.uploadPreviews[label]);
   state.uploadFiles[label] = file;
+  state.uploadPreviews[label] = URL.createObjectURL(file);
   state.stepError = null;
   renderFormOnly();
+}
+
+function resetUploadPreviews() {
+  Object.values(state.uploadPreviews || {}).forEach(url => URL.revokeObjectURL(url));
 }
 
 async function submitClaim() {
@@ -2081,6 +2091,8 @@ async function submitClaim() {
     if (data.success) {
       state.fallNr = data.fall_nr;
       state.status = 'Gesendet';
+      resetUploadPreviews();
+      state.uploadPreviews = {};
       state.step = 6;
       state.submitting = false;
       render();
@@ -2097,9 +2109,10 @@ async function submitClaim() {
 }
 
 function resetForm() {
+  resetUploadPreviews();
   state = {
     step: 1, formData: {}, selectedWorkshop: null,
-    uploadFiles: {}, signatureData: null, sendFahrerCopy: true, status: 'Entwurf',
+    uploadFiles: {}, uploadPreviews: {}, signatureData: null, sendFahrerCopy: true, status: 'Entwurf',
     fallNr: null, submitting: false, stepError: null, submitError: null,
   };
   render();
@@ -2206,6 +2219,7 @@ function renderStep3() {
   const tiles = UPLOAD_DEFS.map((u, idx) => {
     const hasFile = !!state.uploadFiles[u.label];
     const fileObj  = state.uploadFiles[u.label];
+    const previewUrl = state.uploadPreviews[u.label] || '';
     const inputId  = 'upinput-' + idx;
     const labelJson = JSON.stringify(u.label);
     const displayName = hasFile && fileObj
@@ -2215,6 +2229,7 @@ function renderStep3() {
       <div>
         <button type="button" class="upload-tile ${hasFile ? 'uploaded' : ''}"
                 onclick="document.getElementById('${inputId}').click()">
+          ${previewUrl ? `<img class="upload-preview" src="${previewUrl}" alt="">` : ''}
           <div class="upload-tile-icon">
             ${icon(hasFile ? 'i-check-mark' : 'i-camera', 18)}
           </div>
@@ -2569,13 +2584,22 @@ function showView(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function getTimeGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 11) return 'Guten Morgen';
+  if (hour < 18) return 'Guten Tag';
+  return 'Guten Abend';
+}
+
 async function loadFahrerMe() {
   try {
     const res = await fetch('/api/fahrer/me');
     if (!res.ok) return;
     const r = await res.json();
     const nameEl  = document.getElementById('home-fahrer-name');
+    const greetingEl = document.getElementById('home-greeting-text');
     const fleetEl = document.getElementById('home-fuhrpark-name');
+    if (greetingEl) greetingEl.textContent = getTimeGreeting();
     if (nameEl)  nameEl.textContent  = r.vorname || '';
     if (fleetEl) fleetEl.textContent = r.fuhrpark_name || '';
   } catch (e) { console.error('loadFahrerMe', e); }

@@ -471,7 +471,7 @@ router.post('/api/schaden', formLimiter, upload.array('photos', 5), async (req, 
     );
     const id      = insertResult.rows[0].id;
     const year    = new Date().getFullYear();
-    const fall_nr = `SCH-${year}-${String(id).padStart(4, '0')}`;
+    const fall_nr = `IMD-${year}-${String(id).padStart(4, '0')}`;
     await pool.query('UPDATE schaeden SET fall_nr=$1 WHERE id=$2', [fall_nr, id]);
     await pool.query(
       `UPDATE schaeden SET
