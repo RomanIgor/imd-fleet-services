@@ -89,7 +89,7 @@ async function openDash(){
 }
 
 function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
-function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();if(id==='dWerk')loadWerkstaetten();if(id==='dFuhrparks')loadFuhrparks();if(id==='dFahrer'){loadFahrer();loadFuhrparkDropdown();}}
+function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();if(id==='dWerk')loadWerkstaetten();if(id==='dFuhrparks')loadFuhrparks();if(id==='dFahrer'){loadFahrer();loadFuhrparkDropdown();ensureImportFuhrparks();}}
 
 async function doLogin(){
   const u=document.getElementById('loginUser').value;
@@ -453,6 +453,99 @@ async function createFahrer() {
     console.error(e);
     msg.style.cssText = 'display:block;color:var(--red)';
     msg.textContent = 'Netzwerkfehler. Bitte erneut versuchen.';
+  }
+}
+
+async function ensureImportFuhrparks() {
+  const sel = document.getElementById('frImportFuhrpark');
+  if (!sel || sel.options.length > 1) return;
+  try {
+    const rows = await fetch('/api/fuhrparks').then(r => r.json());
+    sel.innerHTML = '<option value="">-- Fuhrpark waehlen --</option>' +
+      rows.map(fp => `<option value="${fp.id}">${fp.name}</option>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+function normalizeImportHeader(value) {
+  return String(value || '').toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[-_]/g, '')
+    .replace(/[ä]/g, 'ae')
+    .replace(/[ö]/g, 'oe')
+    .replace(/[ü]/g, 'ue')
+    .replace(/[ß]/g, 'ss');
+}
+
+function pickImportValue(row, names) {
+  for (const [key, value] of Object.entries(row)) {
+    if (names.includes(normalizeImportHeader(key))) return String(value || '').trim();
+  }
+  return '';
+}
+
+function mapFahrerImportRows(rows) {
+  return rows.map(row => ({
+    vorname: pickImportValue(row, ['vorname', 'firstname', 'first']),
+    nachname: pickImportValue(row, ['nachname', 'lastname', 'name', 'surname']),
+    email: pickImportValue(row, ['email', 'emailadresse', 'emailaddress', 'emailaddress', 'mail']),
+    telefon: pickImportValue(row, ['telefon', 'phone', 'tel', 'mobil', 'mobile', 'handy']),
+  })).filter(f => f.vorname || f.nachname || f.email || f.telefon);
+}
+
+function downloadFahrerImportTemplate() {
+  if (typeof XLSX === 'undefined') { showToast('XLSX-Bibliothek nicht geladen'); return; }
+  const rows = [{ Vorname: 'Max', Nachname: 'Mustermann', 'E-Mail': 'max@muster.de', Telefon: '0170 1234567' }];
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Fahrer');
+  XLSX.writeFile(wb, 'fahrer-import-vorlage.xlsx');
+}
+
+async function importFahrerExcel() {
+  await ensureImportFuhrparks();
+  const fuhrparkId = document.getElementById('frImportFuhrpark').value;
+  const file = document.getElementById('frImportFile').files[0];
+  const msg = document.getElementById('frImportMsg');
+  const resultEl = document.getElementById('frImportResult');
+  const btn = document.getElementById('frImportBtn');
+  resultEl.style.display = 'none';
+  resultEl.innerHTML = '';
+  if (!fuhrparkId) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Bitte Fuhrpark auswählen.'; return; }
+  if (!file) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Bitte Excel- oder CSV-Datei auswählen.'; return; }
+  if (typeof XLSX === 'undefined') { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='XLSX-Bibliothek nicht geladen.'; return; }
+  try {
+    btn.disabled = true;
+    msg.style.cssText='display:block;color:var(--t2)';
+    msg.textContent='Datei wird gelesen ...';
+    const buffer = await file.arrayBuffer();
+    const wb = XLSX.read(buffer, { type: 'array' });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const fahrer = mapFahrerImportRows(XLSX.utils.sheet_to_json(ws, { defval: '' }));
+    if (!fahrer.length) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Keine Fahrer gefunden. Bitte Spalten prüfen.'; return; }
+    if (fahrer.length > 200) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Maximal 200 Fahrer pro Import erlaubt.'; return; }
+    msg.textContent=`${fahrer.length} Fahrer werden importiert ...`;
+    const res = await fetch('/api/fahrer/import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fuhrpark_id: parseInt(fuhrparkId, 10), fahrer })
+    }).then(r => r.json());
+    if (!res.success) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent = res.error || 'Import fehlgeschlagen.'; return; }
+    msg.style.cssText='display:block;color:var(--green)';
+    msg.textContent = `${res.created} Fahrer angelegt, ${res.failed} Fehler.`;
+    const failed = (res.results || []).filter(r => !r.success);
+    if (failed.length) {
+      resultEl.style.display = 'block';
+      resultEl.style.cssText = 'display:block;margin-top:14px;font-size:13px;line-height:1.55;color:var(--red);background:#fff0f0;border:1px solid #fecaca;border-radius:10px;padding:12px';
+      resultEl.innerHTML = '<strong>Nicht importiert:</strong><br>' + failed.slice(0, 20).map(r => `Zeile ${r.row}: ${r.email || 'ohne E-Mail'} - ${r.error}`).join('<br>');
+    }
+    document.getElementById('frImportFile').value = '';
+    loadFahrer();
+  } catch(e) {
+    console.error(e);
+    msg.style.cssText='display:block;color:var(--red)';
+    msg.textContent='Import fehlgeschlagen. Bitte Datei prüfen.';
+  } finally {
+    btn.disabled = false;
   }
 }
 

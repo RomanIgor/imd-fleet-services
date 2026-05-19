@@ -10,6 +10,50 @@ const requireAdmin      = require('../middleware/requireAdmin');
 const requireFahrerAuth = require('../middleware/requireFahrerAuth');
 const { authLimiter, escapeHtml, fahrerAuthLimiter, passwordResetLimiter, resetRequestLimiter } = require('../middleware/security');
 
+function normalizeFahrerInput(data = {}) {
+  return {
+    vorname: String(data.vorname || '').trim(),
+    nachname: String(data.nachname || '').trim(),
+    email: String(data.email || '').trim().toLowerCase(),
+    telefon: String(data.telefon || '').trim(),
+    fuhrpark_id: Number.parseInt(data.fuhrpark_id, 10),
+  };
+}
+
+function buildActivationEmail({ vorname, activationLink }) {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;background:#f4f7fb;padding:20px">
+    <div style="background:#fff;border-radius:8px;padding:32px;max-width:500px;margin:0 auto">
+      <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
+      <p>Hallo ${escapeHtml(vorname)},</p>
+      <p>Sie wurden eingeladen, die IMD Fleet Services Plattform zu nutzen. Klicken Sie auf den folgenden Link, um Ihr Konto zu aktivieren und ein Passwort zu setzen:</p>
+      <p style="margin:24px 0">
+        <a href="${activationLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Konto aktivieren &rarr;</a>
+      </p>
+      <p style="color:#888;font-size:13px">Der Link ist 72 Stunden gÃ¼ltig. Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
+    </div>
+  </body></html>`;
+}
+
+async function createFahrerAndSendInvite({ vorname, nachname, email, telefon, fuhrpark_id }) {
+  const invite_token = crypto.randomBytes(32).toString('hex');
+  const invite_expires_at = new Date(Date.now() + 72 * 60 * 60 * 1000);
+  const { rows } = await pool.query(
+    `INSERT INTO fahrer (fuhrpark_id, vorname, nachname, telefon, email, invite_token, invite_expires_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`,
+    [fuhrpark_id, vorname, nachname, telefon || null, email, invite_token, invite_expires_at]
+  );
+  const BASE_URL = process.env.BASE_URL || `http://localhost:${process.env.PORT || 8000}`;
+  const activationLink = `${BASE_URL}/fahrer/aktivieren?token=${invite_token}`;
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  await resend.emails.send({
+    from: 'IMD Fleet Services <schaden@imdfleet.de>',
+    to: email,
+    subject: 'Einladung: IMD Fleet Services â€” Konto aktivieren',
+    html: buildActivationEmail({ vorname, activationLink }),
+  });
+  return rows[0].id;
+}
+
 // ── FUHRPARKS ─────────────────────────────────────────────────────────────────
 
 router.get('/api/fuhrparks', requireAdmin, async (req, res) => {
@@ -111,6 +155,34 @@ router.post('/api/fahrer', requireAdmin, async (req, res) => {
     console.error(err.message);
     res.status(500).json({ error: 'Interner Fehler' });
   }
+});
+
+router.post('/api/fahrer/import', requireAdmin, async (req, res) => {
+  const items = Array.isArray(req.body?.fahrer) ? req.body.fahrer : [];
+  const fuhrparkId = Number.parseInt(req.body?.fuhrpark_id, 10);
+  if (!fuhrparkId) return res.status(400).json({ error: 'fuhrpark_id erforderlich' });
+  if (!items.length) return res.status(400).json({ error: 'Keine Fahrer im Import gefunden' });
+  if (items.length > 200) return res.status(400).json({ error: 'Maximal 200 Fahrer pro Import erlaubt' });
+
+  const results = [];
+  for (let i = 0; i < items.length; i += 1) {
+    const fahrer = normalizeFahrerInput({ ...items[i], fuhrpark_id: fuhrparkId });
+    const row = i + 2;
+    if (!fahrer.vorname || !fahrer.nachname || !fahrer.email) {
+      results.push({ row, email: fahrer.email || '', success: false, error: 'Vorname, Nachname und E-Mail erforderlich' });
+      continue;
+    }
+    try {
+      const id = await createFahrerAndSendInvite(fahrer);
+      results.push({ row, id, email: fahrer.email, success: true });
+    } catch (err) {
+      const error = err.code === '23505' ? 'E-Mail bereits vergeben' : 'Einladung konnte nicht gesendet werden';
+      console.error(`Fahrer-Import Zeile ${row}:`, err.message);
+      results.push({ row, email: fahrer.email, success: false, error });
+    }
+  }
+  const created = results.filter(r => r.success).length;
+  res.json({ success: true, created, failed: results.length - created, total: results.length, results });
 });
 
 router.patch('/api/fahrer/:id/status', requireAdmin, async (req, res) => {
