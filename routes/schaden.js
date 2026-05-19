@@ -6,8 +6,16 @@ const { Resend }   = require('resend');
 const { pool }     = require('../db');
 const { escapeHtml, formLimiter } = require('../middleware/security');
 
+const MAX_PHOTO_SIZE_MB = 15;
+const MAX_PHOTOS = 5;
+
 const upload = multer({
-  limits: { fileSize: 5 * 1024 * 1024, files: 5, fields: 80, fieldSize: 300 * 1024 },
+  limits: {
+    fileSize: MAX_PHOTO_SIZE_MB * 1024 * 1024,
+    files: MAX_PHOTOS,
+    fields: 100,
+    fieldSize: 1024 * 1024,
+  },
   fileFilter: (req, file, cb) => {
     if (!file.mimetype || !file.mimetype.startsWith('image/')) {
       return cb(new Error('Nur Bilddateien sind erlaubt'));

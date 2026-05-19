@@ -78,7 +78,16 @@ app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
   console.error('Request error:', err.message);
   if (err.code && err.code.startsWith('LIMIT_')) {
-    return res.status(400).json({ success: false, error: 'Upload zu groß oder zu viele Felder.' });
+    const messages = {
+      LIMIT_FILE_SIZE: 'Ein Foto ist zu gross. Bitte maximal 15 MB pro Foto hochladen.',
+      LIMIT_FILE_COUNT: 'Es koennen maximal 5 Fotos hochgeladen werden.',
+      LIMIT_FIELD_COUNT: 'Das Formular enthaelt zu viele Felder. Bitte laden Sie die Seite neu und versuchen Sie es erneut.',
+      LIMIT_FIELD_VALUE: 'Eine Formulareingabe ist zu gross. Bitte pruefen Sie die Angaben und versuchen Sie es erneut.',
+    };
+    return res.status(400).json({
+      success: false,
+      error: messages[err.code] || 'Upload zu gross oder zu viele Felder.',
+    });
   }
   if (err.message === 'Nur Bilddateien sind erlaubt') {
     return res.status(400).json({ success: false, error: err.message });
