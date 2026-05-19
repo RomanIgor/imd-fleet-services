@@ -29,7 +29,7 @@ function buildActivationEmail({ vorname, activationLink }) {
       <p style="margin:24px 0">
         <a href="${activationLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Konto aktivieren &rarr;</a>
       </p>
-      <p style="color:#888;font-size:13px">Der Link ist 72 Stunden gÃ¼ltig. Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
+      <p style="color:#888;font-size:13px">Der Link ist 72 Stunden g&uuml;ltig. Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
     </div>
   </body></html>`;
 }
@@ -48,13 +48,13 @@ async function createFahrerAndSendInvite({ vorname, nachname, email, telefon, fu
   await resend.emails.send({
     from: 'IMD Fleet Services <schaden@imdfleet.de>',
     to: email,
-    subject: 'Einladung: IMD Fleet Services â€” Konto aktivieren',
+    subject: 'Einladung: IMD Fleet Services - Konto aktivieren',
     html: buildActivationEmail({ vorname, activationLink }),
   });
   return rows[0].id;
 }
 
-// ── FUHRPARKS ─────────────────────────────────────────────────────────────────
+// FUHRPARKS
 
 router.get('/api/fuhrparks', requireAdmin, async (req, res) => {
   try {
@@ -97,7 +97,7 @@ router.patch('/api/fuhrparks/:id', requireAdmin, async (req, res) => {
   }
 });
 
-// ── FAHRER — IMD Admin CRUD ───────────────────────────────────────────────────
+// FAHRER - IMD Admin CRUD
 
 router.get('/api/fahrer', requireAdmin, async (req, res) => {
   try {
@@ -107,7 +107,7 @@ router.get('/api/fahrer', requireAdmin, async (req, res) => {
              (f.invite_token IS NOT NULL) AS has_invite_token
       FROM fahrer f
       JOIN fuhrparks fp ON fp.id = f.fuhrpark_id
-      WHERE f.vorname != 'Gelöscht'
+      WHERE f.vorname != 'Gel\u00f6scht'
       ORDER BY f.created_at DESC
     `);
     res.json(rows);
@@ -136,16 +136,16 @@ router.post('/api/fahrer', requireAdmin, async (req, res) => {
     await resend.emails.send({
       from:    'IMD Fleet Services <schaden@imdfleet.de>',
       to:      email,
-      subject: 'Einladung: IMD Fleet Services — Konto aktivieren',
+      subject: 'Einladung: IMD Fleet Services - Konto aktivieren',
       html: `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;background:#f4f7fb;padding:20px">
         <div style="background:#fff;border-radius:8px;padding:32px;max-width:500px;margin:0 auto">
           <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
           <p>Hallo ${escapeHtml(vorname)},</p>
           <p>Sie wurden eingeladen, die IMD Fleet Services Plattform zu nutzen. Klicken Sie auf den folgenden Link, um Ihr Konto zu aktivieren und ein Passwort zu setzen:</p>
           <p style="margin:24px 0">
-            <a href="${activationLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Konto aktivieren →</a>
+            <a href="${activationLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Konto aktivieren &rarr;</a>
           </p>
-          <p style="color:#888;font-size:13px">Der Link ist 72 Stunden gültig. Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
+          <p style="color:#888;font-size:13px">Der Link ist 72 Stunden g&uuml;ltig. Falls Sie diese E-Mail nicht angefordert haben, ignorieren Sie sie bitte.</p>
         </div>
       </body></html>`,
     });
@@ -205,7 +205,7 @@ router.delete('/api/fahrer/:id', requireAdmin, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
     await pool.query(
-      `UPDATE fahrer SET vorname='Gelöscht', nachname='Gelöscht', telefon=NULL,
+      `UPDATE fahrer SET vorname='Gel\u00f6scht', nachname='Gel\u00f6scht', telefon=NULL,
        email=NULL, password_hash=NULL, salt=NULL, invite_token=NULL,
        invite_expires_at=NULL, reset_token=NULL, reset_expires_at=NULL
        WHERE id=$1`,
@@ -219,7 +219,7 @@ router.delete('/api/fahrer/:id', requireAdmin, async (req, res) => {
   }
 });
 
-// ── FAHRER — Konto aktivieren ─────────────────────────────────────────────────
+// FAHRER - Konto aktivieren
 
 router.get('/fahrer/aktivieren', async (req, res) => {
   const { token } = req.query;
@@ -246,7 +246,7 @@ router.post('/api/fahrer/aktivieren', authLimiter, async (req, res) => {
       `SELECT id, fuhrpark_id FROM fahrer WHERE invite_token=$1 AND aktiv=false AND invite_expires_at > NOW()`,
       [token]
     );
-    if (!rows.length) return res.status(400).json({ error: 'Token ungültig oder abgelaufen' });
+    if (!rows.length) return res.status(400).json({ error: 'Token ungueltig oder abgelaufen' });
     const { id, fuhrpark_id } = rows[0];
     const { hash, salt } = await hashPassword(password);
     await pool.query(
@@ -263,7 +263,7 @@ router.post('/api/fahrer/aktivieren', authLimiter, async (req, res) => {
   }
 });
 
-// ── FAHRER — Login / Logout / Me ──────────────────────────────────────────────
+// FAHRER - Login / Logout / Me
 
 router.get('/fahrer/login', (req, res) => {
   if (req.session && req.session.fahrerId) return res.redirect('/schaden');
@@ -330,7 +330,7 @@ router.get('/api/fahrer/meine-schaeden', requireFahrerAuth, async (req, res) => 
   }
 });
 
-// ── Schaden form — requires Fahrer session ────────────────────────────────────
+// Schaden form - requires Fahrer session
 // Mounted BEFORE express.static in server.js so this route takes priority
 
 router.get('/schaden', requireFahrerAuth, (req, res) => {
@@ -338,7 +338,7 @@ router.get('/schaden', requireFahrerAuth, (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'schaden.html'));
 });
 
-// ── FAHRER — Passwort vergessen / Reset ───────────────────────────────────────
+// FAHRER - Passwort vergessen / Reset
 
 router.get('/fahrer/passwort-vergessen', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'fahrer-passwort.html'));
@@ -372,20 +372,20 @@ router.post('/api/fahrer/reset-anfragen', resetRequestLimiter, async (req, res) 
     await resend.emails.send({
       from:    'IMD Fleet Services <schaden@imdfleet.de>',
       to:      email,
-      subject: 'Passwort zurücksetzen — IMD Fleet Services',
+      subject: 'Passwort zuruecksetzen - IMD Fleet Services',
       html: `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;background:#f4f7fb;padding:20px">
         <div style="background:#fff;border-radius:8px;padding:32px;max-width:500px;margin:0 auto">
           <p style="color:#0c2461;font-size:20px;font-weight:800;margin:0 0 16px">IMD Fleet Services</p>
           <p>Hallo ${escapeHtml(vorname)},</p>
-          <p>Sie haben eine Passwortzurücksetzung angefordert. Klicken Sie auf den folgenden Link:</p>
+          <p>Sie haben eine Passwortzur&uuml;cksetzung angefordert. Klicken Sie auf den folgenden Link:</p>
           <p style="margin:24px 0">
-            <a href="${resetLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Neues Passwort setzen →</a>
+            <a href="${resetLink}" style="background:#0c2461;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700">Neues Passwort setzen &rarr;</a>
           </p>
-          <p style="color:#888;font-size:13px">Der Link ist 15 Minuten gültig. Falls Sie dies nicht angefordert haben, ignorieren Sie diese E-Mail.</p>
+          <p style="color:#888;font-size:13px">Der Link ist 15 Minuten g&uuml;ltig. Falls Sie dies nicht angefordert haben, ignorieren Sie diese E-Mail.</p>
         </div>
       </body></html>`,
     });
-    res.json({ success: true, message: 'Ein Link zum Zurücksetzen wurde gesendet.' });
+    res.json({ success: true, message: 'Ein Link zum Zuruecksetzen wurde gesendet.' });
   } catch (err) {
     console.error('Reset-Anfrage Fehler:', err.message);
     res.status(500).json({ success: false, error: 'E-Mail konnte nicht gesendet werden. Bitte versuchen Sie es erneut.' });
@@ -417,7 +417,7 @@ router.post('/api/fahrer/reset', passwordResetLimiter, async (req, res) => {
       'SELECT id, fuhrpark_id FROM fahrer WHERE reset_token=$1 AND reset_expires_at > NOW() AND aktiv=true',
       [token]
     );
-    if (!rows.length) return res.status(400).json({ error: 'Token ungültig oder abgelaufen' });
+    if (!rows.length) return res.status(400).json({ error: 'Token ungueltig oder abgelaufen' });
     const { id, fuhrpark_id } = rows[0];
     const { hash, salt } = await hashPassword(password);
     await pool.query(
