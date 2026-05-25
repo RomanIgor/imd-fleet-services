@@ -69,10 +69,8 @@ img{display:block;max-width:100%}
 .h2-white{color:#fff}.h2-white em{color:#90C8F0}
 .lead{font-size:17px;color:var(--t1);line-height:1.9;font-weight:400}
 .lead-white{color:rgba(255,255,255,.58)}
-.eyebrow{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
-.eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--navy);border-radius:1px;opacity:.6;flex-shrink:0}
+.eyebrow{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);display:inline-flex;align-items:center;margin-bottom:16px}
 .eyebrow-white{color:rgba(255,255,255,.5)}
-.eyebrow-white::before{background:rgba(255,255,255,.4)}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:9px;border:none;border-radius:var(--r-xl);font-family:var(--fh);font-size:14px;font-weight:700;cursor:pointer;transition:transform .2s var(--ease-spring),box-shadow .2s var(--ease),background .18s ease;white-space:nowrap;letter-spacing:-.012em}
@@ -232,12 +230,13 @@ nav.sc .burger span{background:var(--t0)}
 .ic-eyebrow{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
 .ic-h{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:6px;letter-spacing:-.02em}
 .ic-note{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.6}
+.ic-h sup{font-size:.46em;color:var(--green-l);vertical-align:super;margin-left:2px}
 .ic-items{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px}
 .ic-item{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,.06);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.07)}
 .ic-dot{width:6px;height:6px;border-radius:50%;background:var(--green-l);flex-shrink:0}
 .ic-item-text{font-size:13px;color:rgba(255,255,255,.78);font-weight:500}
-.ic-foot{position:relative;z-index:1;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.3);line-height:1.7}
-.ic-foot strong{color:rgba(255,255,255,.5)}
+.ic-foot{position:relative;z-index:1;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.42);line-height:1.7}
+.ic-foot strong{color:rgba(255,255,255,.68)}
 
 /* ══════════════ WORKFLOW ══════════════ */
 .wf-wrap{margin-top:56px;position:relative}
@@ -424,8 +423,7 @@ nav.sc .burger span{background:var(--t0)}
 .mgp-sub{font-size:clamp(13px,1.4vw,18px);color:rgba(255,255,255,.55);font-weight:300;line-height:1.7;margin-bottom:20px}
 .mgp-accent{color:#00C87A}
 .mgp-accent-white{color:#90C8F0}
-.mgp-step-eyebrow{font-family:var(--fh);font-size:clamp(10px,.95vw,12px);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.mgp-step-eyebrow::before{content:'';width:24px;height:2px;background:#0057A8;display:inline-block;border-radius:1px}
+.mgp-step-eyebrow{font-family:var(--fh);font-size:clamp(10px,.95vw,12px);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center}
 
 /* Split layout */
 .mgp-split-left{flex:1.1;min-width:0}
@@ -1081,6 +1079,8 @@ footer{background:var(--ink2);padding:52px 0 30px}
 .f-col ul a{font-size:13px;color:rgba(255,255,255,.35);transition:color .2s;font-weight:300}
 .f-col ul a:hover{color:#fff}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-legal-note{border-top:1px solid rgba(255,255,255,.07);padding:16px 0 18px;margin-top:-18px;font-size:11px;line-height:1.7;color:rgba(255,255,255,.32);max-width:920px}
+.footer-legal-note strong{color:rgba(255,255,255,.58)}
 .f-copy{font-size:12px;color:rgba(255,255,255,.22)}
 .f-links{display:flex;gap:18px}
 .f-links a{font-size:11px;color:rgba(255,255,255,.25);transition:color .2s}
