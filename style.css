@@ -230,7 +230,9 @@ nav.sc .burger span{background:var(--t0)}
 .ic-eyebrow{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px}
 .ic-h{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:6px;letter-spacing:-.02em}
 .ic-note{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;line-height:1.6}
-.ic-h sup{font-size:.46em;color:var(--green-l);vertical-align:super;margin-left:2px}
+.ic-h sup{font-size:.46em;vertical-align:super;margin-left:2px}
+.ic-h sup a{color:var(--green-l);text-decoration:none;cursor:pointer}
+.ic-h sup a:hover{color:#fff}
 .ic-items{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px}
 .ic-item{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,.06);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.07)}
 .ic-dot{width:6px;height:6px;border-radius:50%;background:var(--green-l);flex-shrink:0}
