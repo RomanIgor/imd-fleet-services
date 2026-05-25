@@ -51,6 +51,10 @@ NOTRUF- UND PANNENNUMMERN:
 - Bei Wildunfall: Polizei (110) und Jagdpächter informieren, Tier nicht bewegen`;
 
 // ── Pages ─────────────────────────────────────────────────────────────────────
+router.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
 router.get('/intern', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
