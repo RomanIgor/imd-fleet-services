@@ -1,5 +1,9 @@
 const express = require('express');
 
+// Temporary: keep the public site open for external design analysis.
+// Set back to false to re-enable MAINTENANCE_PASS protection.
+const TEMP_DISABLE_MAINTENANCE_PASS = true;
+
 const MAINTENANCE_PUBLIC = [
   '/schaden', '/sw.js', '/manifest.json', '/icon-192.png', '/icon-512.png',
   '/logo_dark.png', '/logo_light.png', '/maintenance',
@@ -12,7 +16,7 @@ const MAINTENANCE_PUBLIC = [
 ];
 
 function setupMaintenance(app) {
-  if (!process.env.MAINTENANCE_PASS) return;
+  if (TEMP_DISABLE_MAINTENANCE_PASS || !process.env.MAINTENANCE_PASS) return;
 
   app.get('/maintenance', (req, res) => {
     const err = req.query.err ? 'Falsches Passwort. Bitte erneut versuchen.' : '';
