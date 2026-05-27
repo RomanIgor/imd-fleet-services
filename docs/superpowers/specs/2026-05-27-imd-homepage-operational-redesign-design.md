@@ -115,6 +115,7 @@ Three service columns:
    - Schadenaufnahme
    - Werkstatt-/Partnerkoordination
    - Statusuebersicht
+   - product proof with real PWA screenshots
 
 2. Fahrzeugaussteuerung & Ankauf
    - Abholung
@@ -129,6 +130,21 @@ Three service columns:
    - nachvollziehbarer Prozessstatus
 
 Use restrained icons or small labels. The content should feel like operational responsibilities, not marketing feature cards.
+
+For Schadenmanagement, include a hybrid product proof:
+
+- show 2-3 real screenshots from the Schaden PWA directly on the homepage
+- present them as a restrained product surface, not as decorative phone mockups
+- include a secondary action such as "Ablauf ansehen" or "PWA Demo ansehen"
+- the secondary action may open a lightweight video/modal or link to a separate demo page
+- do not autoplay video in the first viewport
+- keep static screenshots as the default visible proof for performance and B2B clarity
+
+The screenshots should show real workflow value, for example:
+
+- damage report start or vehicle data step
+- photo/document upload step
+- summary/status or partner workshop selection
 
 ### 4. Workflow
 
