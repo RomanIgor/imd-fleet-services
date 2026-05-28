@@ -51,6 +51,7 @@ app.use(fahrerRoutes);
 
 const publicAssets = new Set([
   '/style.css',
+  '/redesign.css',
   '/main.js',
   '/csrf-client.js',
   '/sw.js',
@@ -62,6 +63,11 @@ const publicAssets = new Set([
   '/gruender.webp',
   '/image.jpg',
   '/upload-guides.png',
+  '/design-assets/about-office.jpg',
+  '/design-assets/form-car.jpg',
+  '/design-assets/hero-office.jpg',
+  '/design-assets/pwa-phones.jpg',
+  '/design-assets/services-building.jpg',
 ]);
 app.use((req, res, next) => {
   if ((req.method === 'GET' || req.method === 'HEAD') && publicAssets.has(req.path)) {

@@ -59,6 +59,10 @@ router.get('/intern', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
+router.get('/preview', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'redesign.html'));
+});
+
 router.get('/schaden', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.sendFile(path.join(__dirname, '..', 'schaden.html'));

@@ -691,10 +691,16 @@ document.querySelectorAll('.stat-num[data-countup]').forEach(function(el) {
 
 // ─── CALCULATOR ───
 function calcUpdate(){
-  const n=+document.getElementById('cAnzahl').value||5;
-  const s=+document.getElementById('cStd').value||8;
-  const rate=+document.getElementById('cSatz').value||65;
-  const price=+document.getElementById('cPreis').value||22000;
+  const cAnzahl=document.getElementById('cAnzahl');
+  if(!cAnzahl)return;
+  const cStd=document.getElementById('cStd');
+  const cSatz=document.getElementById('cSatz');
+  const cPreis=document.getElementById('cPreis');
+  if(!cStd||!cSatz||!cPreis)return;
+  const n=+cAnzahl.value||5;
+  const s=+cStd.value||8;
+  const rate=+cSatz.value||65;
+  const price=+cPreis.value||22000;
   document.getElementById('cAnzahlLbl').textContent=n+(n===1?' Fahrzeug':' Fahrzeuge');
   document.getElementById('cStdLbl').textContent=s+' Std./Fzg.';
   const oldH=n*s,newH=n*0.3,saved=Math.round(oldH-newH);
@@ -792,6 +798,7 @@ function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'}
 // ─── ANIMATED EXPLAINER ───
 (function(){
   const SLIDES = document.querySelectorAll('.mgp-slide');
+  if(!SLIDES.length)return;
   const TICKS  = document.querySelectorAll('.mgp-tl-tick');
   const FILL   = document.getElementById('mgpTlFill');
   const TIMER  = document.getElementById('mgpTimer');
@@ -1018,6 +1025,22 @@ function goTo(id) {
   closeMob();
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth'});
+}
+
+function openPwaVideo() {
+  const modal = document.getElementById('pwa-videoModal');
+  if (!modal) return;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePwaVideo() {
+  const modal = document.getElementById('pwa-videoModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
 
 // Dashboard (employee only — triggered via Ctrl+Shift+D)
