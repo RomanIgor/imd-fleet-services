@@ -2180,11 +2180,11 @@ nav:not(.sc) {
 
 .hero-reference-img {
   display: block;
-  width: min(100vw, 1449px);
+  width: 100vw;
   height: auto;
-  max-width: 1449px;
+  max-width: none;
   flex: 0 1 auto;
-  filter: none;
+  filter: contrast(1.045) saturate(1.04) brightness(1.015);
   opacity: 1;
 }
 
