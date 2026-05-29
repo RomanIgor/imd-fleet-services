@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="/icon-192.png">
-<link rel="stylesheet" href="style.css?v=hero-reference-hq-1">
+<link rel="stylesheet" href="style.css?v=hero-live-professional-1">
 </head>
 
 <body>
@@ -43,23 +43,58 @@
 
 <!-- ═════════════════════ HERO ═════════════════════ -->
 <section class="hero" id="top">
-  <picture class="hero-reference-picture">
-    <source
-      type="image/webp"
-      srcset="design-assets/imd-hero-reference.webp 1449w, design-assets/imd-hero-reference-2x.webp 2898w"
-      sizes="100vw">
-    <img class="hero-reference-img" src="design-assets/imd-hero-reference.png" alt="IMD Fleet Services - Professioneller Flottenankauf für Ihr Unternehmen">
-  </picture>
-  <button class="hero-hotspot hs-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Zur Startseite"></button>
-  <button class="hero-hotspot hs-service" onclick="goTo('service')" aria-label="Für Fuhrparks"></button>
-  <button class="hero-hotspot hs-process" onclick="goTo('prozess')" aria-label="So funktioniert es"></button>
-  <button class="hero-hotspot hs-warun" onclick="goTo('warum')" aria-label="Warum wir"></button>
-  <button class="hero-hotspot hs-about" onclick="goTo('ueber-uns')" aria-label="Über uns"></button>
-  <button class="hero-hotspot hs-calc" onclick="goTo('rechner')" aria-label="Zeitrechner"></button>
-  <button class="hero-hotspot hs-contact" onclick="goTo('kontakt')" aria-label="Kontakt"></button>
-  <button class="hero-hotspot hs-nav-cta" onclick="goTo('anmelden')" aria-label="Fahrzeug anmelden"></button>
-  <button class="hero-hotspot hs-main-cta" onclick="goTo('anmelden')" aria-label="Fahrzeug anmelden"></button>
-  <button class="hero-hotspot hs-secondary-cta" onclick="goTo('prozess')" aria-label="So funktioniert es"></button>
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="wrap">
+    <div class="hero-live-grid">
+      <div class="hero-live-copy">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          <span class="hero-badge-text">IMD Fleet Services · <em>Flottenankauf</em> · <em>Bundesweit</em></span>
+        </div>
+        <h1 class="hero-h1">
+          Professioneller<br>
+          Flottenankauf für<br>
+          <span>Ihr Unternehmen.</span>
+        </h1>
+        <p class="hero-sub">IMD Fleet Services übernimmt Abholung, Vorbereitung, Gutachten und Auszahlung Ihrer Firmenfahrzeuge — vollständig digital und ohne Aufwand für Ihren Fuhrpark.</p>
+        <div class="hero-proof">
+          <div class="hero-proof-icon">✓</div>
+          <div class="hero-proof-text"><strong>Garantierter Mindestpreis durch unabhängiges Wertgutachten</strong> – häufig sogar mit zusätzlichem Bonus über dem HEK-Wert. Schriftlich zugesichert.</div>
+        </div>
+        <div class="hero-btns">
+          <button class="btn btn-green btn-lg" onclick="goTo('anmelden')">Fahrzeug anmelden</button>
+          <button class="btn btn-ghost-white btn-lg" onclick="goTo('prozess')">So funktioniert es →</button>
+        </div>
+        <div class="hero-kpi">
+          <div class="hkpi"><div class="hkpi-ico">◷</div><div><div class="hkpi-val">2 Min.</div><div class="hkpi-lbl">Anmeldung</div></div></div>
+          <div class="hkpi"><div class="hkpi-ico">◇</div><div><div class="hkpi-val">HEK+</div><div class="hkpi-lbl">Garantierter Mindestpreis</div></div></div>
+          <div class="hkpi"><div class="hkpi-ico">✓</div><div><div class="hkpi-val">100%</div><div class="hkpi-lbl">Digital & sicher</div></div></div>
+        </div>
+      </div>
+      <div class="hero-live-panel">
+        <div class="hero-pill hero-pill-top"><span></span> Gutachten erstellt · BMW 320d · 22.400 €</div>
+        <aside class="dash-preview hero-fleet-card" aria-label="Flottenübersicht">
+          <div class="dp-header">
+            <div class="dp-title">Flottenübersicht</div>
+          </div>
+          <div class="dp-kpis">
+            <div class="dp-kpi"><div class="dp-kpi-val">24</div><div class="dp-kpi-lbl">Aktiv</div><div class="dp-kpi-delta">Fahrzeuge</div></div>
+            <div class="dp-kpi"><div class="dp-kpi-val">€182k</div><div class="dp-kpi-lbl">Ausgezahlt (2025)</div><div class="dp-kpi-delta">Netto</div></div>
+            <div class="dp-kpi"><div class="dp-kpi-val">7</div><div class="dp-kpi-lbl">Gutachten offen</div><div class="dp-kpi-delta">In Bearbeitung</div></div>
+            <div class="dp-kpi"><div class="dp-kpi-val">+9.4%</div><div class="dp-kpi-lbl">Ø Bonus über HEK</div><div class="dp-kpi-delta">Ø</div></div>
+          </div>
+          <div class="dp-vehicles">
+            <div class="dp-veh"><div class="dp-brand">B</div><div><div class="dp-veh-name">BMW 320d xDrive</div><div class="dp-veh-sub">48.200 km · 2021</div></div><div class="dp-veh-badge b">Gutachten</div></div>
+            <div class="dp-veh dp-veh-gr"><div class="dp-brand">A</div><div><div class="dp-veh-name">Audi A4 Avant TDI</div><div class="dp-veh-sub">61.500 km · 2022</div></div><div class="dp-veh-badge g">Ausgezahlt</div></div>
+            <div class="dp-veh dp-veh-am"><div class="dp-brand">V</div><div><div class="dp-veh-name">VW Passat GTE</div><div class="dp-veh-sub">39.800 km · 2021</div></div><div class="dp-veh-badge a">Abholung</div></div>
+          </div>
+          <div class="dp-footer"><div class="dp-foot-lbl">Ø Auszahlung pro Fahrzeug</div><div class="dp-foot-val">+9.4%</div></div>
+        </aside>
+        <div class="hero-pill hero-pill-bottom"><span></span> Auszahlung 19.600 € · Mercedes C 220d</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- TRUST BAR -->
