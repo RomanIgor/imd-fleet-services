@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="/icon-192.png">
-<link rel="stylesheet" href="style.css?v=hero-reference-fullbleed-1">
+<link rel="stylesheet" href="style.css?v=hero-reference-hq-1">
 </head>
 
 <body>
@@ -43,7 +43,13 @@
 
 <!-- ═════════════════════ HERO ═════════════════════ -->
 <section class="hero" id="top">
-  <img class="hero-reference-img" src="design-assets/imd-hero-reference.png" alt="IMD Fleet Services - Professioneller Flottenankauf für Ihr Unternehmen">
+  <picture class="hero-reference-picture">
+    <source
+      type="image/webp"
+      srcset="design-assets/imd-hero-reference.webp 1449w, design-assets/imd-hero-reference-2x.webp 2898w"
+      sizes="100vw">
+    <img class="hero-reference-img" src="design-assets/imd-hero-reference.png" alt="IMD Fleet Services - Professioneller Flottenankauf für Ihr Unternehmen">
+  </picture>
   <button class="hero-hotspot hs-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Zur Startseite"></button>
   <button class="hero-hotspot hs-service" onclick="goTo('service')" aria-label="Für Fuhrparks"></button>
   <button class="hero-hotspot hs-process" onclick="goTo('prozess')" aria-label="So funktioniert es"></button>

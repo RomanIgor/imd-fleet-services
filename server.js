@@ -67,11 +67,14 @@ const publicAssets = new Set([
   '/design-assets/form-car.jpg',
   '/design-assets/hero-office.jpg',
   '/design-assets/imd-hero-reference.png',
+  '/design-assets/imd-hero-reference.webp',
+  '/design-assets/imd-hero-reference-2x.webp',
   '/design-assets/pwa-phones.jpg',
   '/design-assets/services-building.jpg',
 ]);
 app.use((req, res, next) => {
   if ((req.method === 'GET' || req.method === 'HEAD') && publicAssets.has(req.path)) {
+    if (req.path.endsWith('.webp')) res.type('image/webp');
     return res.sendFile(path.join(__dirname, req.path));
   }
   next();

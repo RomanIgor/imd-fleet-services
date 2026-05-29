@@ -2178,13 +2178,17 @@ nav:not(.sc) {
   overflow: hidden;
 }
 
+.hero-reference-picture,
 .hero-reference-img {
   display: block;
   width: 100vw;
   height: auto;
   max-width: none;
+}
+
+.hero-reference-img {
   flex: 0 1 auto;
-  filter: contrast(1.045) saturate(1.04) brightness(1.015);
+  filter: none;
   opacity: 1;
 }
 
