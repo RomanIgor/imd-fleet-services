@@ -2219,10 +2219,10 @@ nav:not(.sc) {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(3,11,22,.92) 0%, rgba(6,16,31,.78) 44%, rgba(7,18,34,.66) 100%),
-    linear-gradient(180deg, rgba(5,14,27,.34), rgba(5,14,27,.48)),
-    url('design-assets/imd-hero-reference.webp') center top / cover no-repeat !important;
-  filter: saturate(.9) contrast(1.06) brightness(.76);
+    linear-gradient(90deg, rgba(3,11,22,.84) 0%, rgba(6,16,31,.68) 44%, rgba(7,18,34,.56) 100%),
+    linear-gradient(180deg, rgba(5,14,27,.22), rgba(5,14,27,.42)),
+    url('design-assets/imd-hero-reference-2x.webp') center top / cover no-repeat !important;
+  filter: saturate(.96) contrast(1.04) brightness(.82);
 }
 
 .hero-noise {
