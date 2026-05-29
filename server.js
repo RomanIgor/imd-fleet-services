@@ -66,6 +66,7 @@ const publicAssets = new Set([
   '/design-assets/about-office.jpg',
   '/design-assets/form-car.jpg',
   '/design-assets/hero-office.jpg',
+  '/design-assets/imd-hero-reference.png',
   '/design-assets/pwa-phones.jpg',
   '/design-assets/services-building.jpg',
 ]);
