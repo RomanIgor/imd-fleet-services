@@ -2214,15 +2214,15 @@ nav:not(.sc) {
   padding: 0 clamp(28px, 6vw, 84px);
 }
 
-.hero-bg {
+.hero .hero-bg {
   display: block !important;
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(3,11,22,.84) 0%, rgba(6,16,31,.68) 44%, rgba(7,18,34,.56) 100%),
-    linear-gradient(180deg, rgba(5,14,27,.22), rgba(5,14,27,.42)),
-    url('design-assets/imd-hero-reference-2x.webp') center top / cover no-repeat !important;
-  filter: saturate(.96) contrast(1.04) brightness(.82);
+    linear-gradient(90deg, rgba(3,11,22,.88) 0%, rgba(6,16,31,.72) 45%, rgba(7,18,34,.58) 100%),
+    linear-gradient(180deg, rgba(5,14,27,.1), rgba(5,14,27,.32)),
+    url('design-assets/hero-fleet-office-blue.png') center center / cover no-repeat !important;
+  filter: saturate(.98) contrast(1.04) brightness(.9);
 }
 
 .hero-noise {
@@ -2650,3 +2650,297 @@ nav:not(.sc) {
 .scd-form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--f2)}
 .scd-fall-box{background:var(--sky);border:2px solid var(--blue);border-radius:12px;padding:20px 32px;display:inline-block}
 @media(max-width:600px){.scd-form-wrap{padding:24px 18px}}
+
+/* Office-blue hero refinement: clearer background and lighter fleet panel. */
+.hero .hero-bg {
+  background:
+    linear-gradient(90deg, rgba(3,11,22,.72) 0%, rgba(6,16,31,.52) 45%, rgba(7,18,34,.34) 100%),
+    linear-gradient(180deg, rgba(5,14,27,.02), rgba(5,14,27,.18)),
+    url('design-assets/hero-fleet-office-blue.png') center center / cover no-repeat !important;
+  filter: saturate(1.06) contrast(1.06) brightness(1.02) !important;
+}
+
+.hero .hero-bg::after {
+  background:
+    radial-gradient(circle at 75% 26%, rgba(122,158,184,.08), transparent 28%),
+    linear-gradient(180deg, transparent 0 72%, rgba(5,13,25,.18) 100%) !important;
+}
+
+.hero-noise {
+  opacity: .16 !important;
+}
+
+.hero-fleet-card {
+  background: rgba(72, 93, 112, .10) !important;
+  border-color: rgba(255,255,255,.24) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 24px 64px rgba(0,0,0,.22) !important;
+  backdrop-filter: blur(10px) saturate(1.05) !important;
+}
+
+.hero-fleet-card .dp-kpi {
+  background: rgba(8,18,34,.22) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+.hero-fleet-card .dp-veh {
+  background: rgba(8,18,34,.24) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+.hero-pill {
+  background: rgba(15,31,50,.42) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Remove fleet overview panel from hero. */
+.hero-live-grid {
+  grid-template-columns: minmax(520px, 760px) !important;
+  justify-content: start !important;
+}
+
+.hero-live-copy {
+  max-width: 760px !important;
+}
+
+.hero-live-panel,
+.hero-fleet-card,
+.hero-pill {
+  display: none !important;
+}
+
+/* Compact no-panel hero. */
+.hero {
+  min-height: 86vh !important;
+}
+
+.hero-live-grid {
+  min-height: calc(86vh - 118px) !important;
+  padding-top: clamp(34px, 5vh, 58px) !important;
+  padding-bottom: clamp(46px, 6vh, 72px) !important;
+}
+
+.hero-h1 {
+  font-size: clamp(42px, 4.4vw, 64px) !important;
+  line-height: 1.04 !important;
+  margin-bottom: 18px !important;
+}
+
+.hero-sub {
+  max-width: 560px !important;
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+  margin-bottom: 24px !important;
+}
+
+.hero-proof {
+  max-width: 560px !important;
+  padding: 14px 18px !important;
+  margin-bottom: 30px !important;
+}
+
+.hero-btns {
+  margin-bottom: 34px !important;
+}
+
+.hero-kpi {
+  max-width: 480px !important;
+}
+
+.hkpi {
+  padding: 16px 18px !important;
+}
+
+.hkpi-val {
+  font-size: 24px !important;
+}
+
+/* Show more of the foreground desk in the hero background. */
+.hero .hero-bg {
+  background:
+    linear-gradient(90deg, rgba(3,11,22,.74) 0%, rgba(6,16,31,.50) 43%, rgba(7,18,34,.28) 100%),
+    linear-gradient(180deg, rgba(5,14,27,.03), rgba(5,14,27,.16)),
+    url('design-assets/hero-fleet-office-blue.png') center bottom / 88% auto no-repeat !important;
+  background-color: #06111f !important;
+}
+
+@media (max-aspect-ratio: 16/10) {
+  .hero .hero-bg {
+    background-size: 100% auto !important;
+    background-position: center bottom !important;
+  }
+}
+
+@media (min-aspect-ratio: 17/9) {
+  .hero .hero-bg {
+    background-size: 82% auto !important;
+    background-position: center bottom !important;
+  }
+}
+
+@media (min-width: 1700px) {
+  .hero .hero-bg {
+    background-size: 78% auto !important;
+    background-position: center bottom !important;
+  }
+}
+
+/* Concrete exact hero test, imported from imd_hero_responsive_exact.html. */
+.nav-hidden-for-concrete {
+  display: none !important;
+}
+
+.nav-hidden-for-concrete.sc {
+  display: flex !important;
+  height: 72px !important;
+  background: rgba(255,255,255,.96) !important;
+  border-bottom: 1px solid #dfe6ee !important;
+  box-shadow: 0 10px 34px rgba(8,18,34,.08) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero {
+  background: rgba(28,31,33,.74) !important;
+  border-bottom: 1px solid rgba(255,255,255,.14) !important;
+  box-shadow: 0 16px 46px rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(14px) saturate(1.06) !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-in {
+  max-width: 1024px !important;
+  padding: 0 34px !important;
+  gap: 18px !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-logo img {
+  width: 128px !important;
+  max-height: 52px !important;
+  object-fit: contain !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero .logo-dark {
+  display: block !important;
+  filter: brightness(0) invert(1) contrast(1.04) !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero .logo-light {
+  display: none !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-links {
+  gap: 24px !important;
+  justify-content: center !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-links a {
+  color: #4c6284 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-links a:hover {
+  color: #071525 !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero .nav-links a {
+  color: rgba(255,255,255,.78) !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero .nav-links a:hover {
+  color: #fff !important;
+}
+
+.nav-hidden-for-concrete.sc .nav-cta {
+  min-height: 42px !important;
+  padding: 0 24px !important;
+  border-radius: 999px !important;
+  background: #58a95d !important;
+  box-shadow: 0 10px 28px rgba(88,169,93,.2) !important;
+  font-size: 13px !important;
+}
+
+.nav-hidden-for-concrete.sc.concrete-nav-over-hero .nav-cta {
+  background: #071525 !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  box-shadow: 0 14px 34px rgba(0,0,0,.22) !important;
+}
+
+.concrete-exact-active {
+  position: relative !important;
+  width: 100% !important;
+  max-width: min(100vw, 1360px) !important;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 1024 / 548 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #eef1f4 !important;
+  box-shadow: 0 0 0 100vmax #eef1f4 !important;
+  clip-path: inset(0 -100vmax) !important;
+  isolation: isolate !important;
+}
+
+.concrete-exact-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("design-assets/imd-hero-concrete-exact.png") center top / 100% 100% no-repeat;
+}
+
+.concrete-exact-active > .hero-bg,
+.concrete-exact-active > .hero-noise,
+.concrete-exact-active > .wrap {
+  display: none !important;
+}
+
+.concrete-hotspot {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  background: rgba(255,255,255,0);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(5, 20, 36, .18);
+}
+
+.concrete-hotspot:focus-visible {
+  outline: 2px solid rgba(5, 20, 36, .95);
+  outline-offset: 3px;
+  background: rgba(255,255,255,.08);
+}
+
+.concrete-hotspot:active {
+  background: rgba(255,255,255,.10);
+}
+
+.concrete-nav-fuhrparks { left: 34.4%; top: 6.0%; width: 10.3%; height: 5.2%; }
+.concrete-nav-funktion { left: 45.8%; top: 6.0%; width: 10.7%; height: 5.2%; }
+.concrete-nav-warum { left: 58.8%; top: 6.0%; width: 8.7%; height: 5.2%; }
+.concrete-nav-ueber { left: 68.7%; top: 6.0%; width: 8.5%; height: 5.2%; }
+.concrete-nav-kontakt { left: 78.3%; top: 6.0%; width: 7.0%; height: 5.2%; }
+.concrete-btn-header { left: 86.1%; top: 4.8%; width: 10.8%; height: 6.0%; }
+.concrete-btn-primary { left: 5.0%; top: 33.1%; width: 12.3%; height: 5.9%; }
+.concrete-btn-secondary { left: 20.0%; top: 33.8%; width: 14.5%; height: 4.8%; }
+.concrete-btn-gutachten-1 { left: 88.4%; top: 32.7%; width: 7.2%; height: 3.8%; }
+.concrete-btn-ausgezahlt-2 { left: 88.4%; top: 38.1%; width: 7.2%; height: 3.8%; }
+.concrete-btn-abholung-3 { left: 88.4%; top: 43.4%; width: 7.2%; height: 3.8%; }
+
+@media (max-width: 767px) {
+  .concrete-exact-active {
+    width: 100vw !important;
+    max-width: none !important;
+  }
+
+  .concrete-hotspot {
+    min-width: 32px;
+    min-height: 24px;
+  }
+}

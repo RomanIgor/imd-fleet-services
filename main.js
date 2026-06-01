@@ -790,7 +790,9 @@ function setMinDate(){
 }
 
 // ─── NAV ───
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>50),{passive:true});
+function updateNavState(){const nav=document.getElementById('nav');if(!nav)return;const hero=document.querySelector('.concrete-exact-active');const concrete=nav.classList.contains('nav-hidden-for-concrete')&&hero;if(concrete){const active=scrollY>6;nav.classList.toggle('sc',active);nav.classList.toggle('concrete-nav-over-hero',active&&scrollY<hero.offsetHeight-84);return;}nav.classList.toggle('sc',scrollY>50);nav.classList.remove('concrete-nav-over-hero');}
+window.addEventListener('scroll',updateNavState,{passive:true});
+window.addEventListener('load',updateNavState);
 function toggleMob(){const m=document.getElementById('mobMenu'),b=document.getElementById('burger');m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 function closeMob(){document.getElementById('mobMenu').classList.remove('open');document.getElementById('burger').classList.remove('open');document.body.style.overflow='';}
 function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
@@ -1006,9 +1008,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.wf-step, .rev, .pstep').forEach(el => io.observe(el));
 
 // Nav scroll behavior
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('sc', scrollY > 50);
-}, {passive: true});
+window.addEventListener('scroll', updateNavState, {passive: true});
 
 // Mob menu
 function toggleMob() {

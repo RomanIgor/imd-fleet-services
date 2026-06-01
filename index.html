@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="/icon-192.png">
-<link rel="stylesheet" href="style.css?v=hero-exact-ref-bg-1">
+<link rel="stylesheet" href="style.css?v=hero-concrete-system-3">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 </div>
 
 <!-- NAV -->
-<nav id="nav">
+<nav id="nav" class="nav-hidden-for-concrete">
   <div class="nav-in">
     <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="cursor:pointer"><img class="logo-dark" src="logo_dark.png" alt="IMD Fleet Services"/><img class="logo-light" src="logo_light.png" alt="IMD Fleet Services"/></div>
     <ul class="nav-links">
@@ -42,7 +42,18 @@
 </nav>
 
 <!-- ═════════════════════ HERO ═════════════════════ -->
-<section class="hero" id="top">
+<section class="hero concrete-exact-active" id="top">
+  <a class="concrete-hotspot concrete-nav-fuhrparks" href="#service" aria-label="Für Fuhrparks"></a>
+  <a class="concrete-hotspot concrete-nav-funktion" href="#prozess" aria-label="So funktioniert es"></a>
+  <a class="concrete-hotspot concrete-nav-warum" href="#warum" aria-label="Warum wir"></a>
+  <a class="concrete-hotspot concrete-nav-ueber" href="#ueber-uns" aria-label="Über uns"></a>
+  <a class="concrete-hotspot concrete-nav-kontakt" href="#kontakt" aria-label="Kontakt"></a>
+  <a class="concrete-hotspot concrete-btn-header" href="#anmelden" aria-label="Fahrzeug anmelden"></a>
+  <a class="concrete-hotspot concrete-btn-primary" href="#anmelden" aria-label="Fahrzeug anmelden"></a>
+  <a class="concrete-hotspot concrete-btn-secondary" href="#prozess" aria-label="So funktioniert es"></a>
+  <a class="concrete-hotspot concrete-btn-gutachten-1" href="#prozess" aria-label="Gutachten öffnen"></a>
+  <a class="concrete-hotspot concrete-btn-ausgezahlt-2" href="#warum" aria-label="Auszahlungsdetails öffnen"></a>
+  <a class="concrete-hotspot concrete-btn-abholung-3" href="#service" aria-label="Abholung öffnen"></a>
   <div class="hero-bg"></div>
   <div class="hero-noise"></div>
   <div class="wrap">
@@ -71,27 +82,6 @@
           <div class="hkpi"><div class="hkpi-ico">◇</div><div><div class="hkpi-val">HEK+</div><div class="hkpi-lbl">Garantierter Mindestpreis</div></div></div>
           <div class="hkpi"><div class="hkpi-ico">✓</div><div><div class="hkpi-val">100%</div><div class="hkpi-lbl">Digital & sicher</div></div></div>
         </div>
-      </div>
-      <div class="hero-live-panel">
-        <div class="hero-pill hero-pill-top"><span></span> Gutachten erstellt · BMW 320d · 22.400 €</div>
-        <aside class="dash-preview hero-fleet-card" aria-label="Flottenübersicht">
-          <div class="dp-header">
-            <div class="dp-title">Flottenübersicht</div>
-          </div>
-          <div class="dp-kpis">
-            <div class="dp-kpi"><div class="dp-kpi-val">24</div><div class="dp-kpi-lbl">Aktiv</div><div class="dp-kpi-delta">Fahrzeuge</div></div>
-            <div class="dp-kpi"><div class="dp-kpi-val">€182k</div><div class="dp-kpi-lbl">Ausgezahlt (2025)</div><div class="dp-kpi-delta">Netto</div></div>
-            <div class="dp-kpi"><div class="dp-kpi-val">7</div><div class="dp-kpi-lbl">Gutachten offen</div><div class="dp-kpi-delta">In Bearbeitung</div></div>
-            <div class="dp-kpi"><div class="dp-kpi-val">+9.4%</div><div class="dp-kpi-lbl">Ø Bonus über HEK</div><div class="dp-kpi-delta">Ø</div></div>
-          </div>
-          <div class="dp-vehicles">
-            <div class="dp-veh"><div class="dp-brand">B</div><div><div class="dp-veh-name">BMW 320d xDrive</div><div class="dp-veh-sub">48.200 km · 2021</div></div><div class="dp-veh-badge b">Gutachten</div></div>
-            <div class="dp-veh dp-veh-gr"><div class="dp-brand">A</div><div><div class="dp-veh-name">Audi A4 Avant TDI</div><div class="dp-veh-sub">61.500 km · 2022</div></div><div class="dp-veh-badge g">Ausgezahlt</div></div>
-            <div class="dp-veh dp-veh-am"><div class="dp-brand">V</div><div><div class="dp-veh-name">VW Passat GTE</div><div class="dp-veh-sub">39.800 km · 2021</div></div><div class="dp-veh-badge a">Abholung</div></div>
-          </div>
-          <div class="dp-footer"><div class="dp-foot-lbl">Ø Auszahlung pro Fahrzeug</div><div class="dp-foot-val">+9.4%</div></div>
-        </aside>
-        <div class="hero-pill hero-pill-bottom"><span></span> Auszahlung 19.600 € · Mercedes C 220d</div>
       </div>
     </div>
   </div>
@@ -1950,7 +1940,7 @@
 <div class="toast" id="toast"><span class="toast-ico">✓</span><span id="toastMsg"></span></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="main.js?v=hero-concrete-system-3"></script>
 
 
 </html>
