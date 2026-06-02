@@ -241,3 +241,36 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .wf-legend-you{background:var(--acc)}
 .wf-legend-us{background:var(--text-3)}
 .wf-legend-done{background:var(--text-2)}
+
+/* ══════════════ EXPLAINER (MGP) ══════════════ */
+.mgp-wrap{border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden;background:var(--bg-deep)}
+.mgp-stage{position:relative;height:340px;overflow:hidden}
+.mgp-slide{position:absolute;inset:0;display:none;animation:mgpIn .35s var(--ease-out)}
+.mgp-slide.active{display:flex}
+@keyframes mgpIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.mgp-bg{position:absolute;inset:0;z-index:0}
+.mgp-bg-intro{background:linear-gradient(135deg,var(--bg-deep) 0%,var(--bg-s) 100%)}
+.mgp-bg-step1{background:linear-gradient(135deg,#0f1c2a 0%,var(--bg-s) 100%)}
+.mgp-bg-step2{background:linear-gradient(135deg,#111820 0%,var(--bg-s) 100%)}
+.mgp-bg-step3{background:linear-gradient(135deg,#0d1822 0%,var(--bg-s) 100%)}
+.mgp-bg-step4{background:linear-gradient(135deg,#0f1e2c 0%,var(--bg-s) 100%)}
+.mgp-bg-end{background:linear-gradient(135deg,var(--bg-deep) 0%,var(--btn-bg) 100%)}
+.mgp-content{position:relative;z-index:1;display:flex;align-items:center;padding:32px 48px;gap:48px;width:100%;height:100%}
+.mgp-controls{display:flex;align-items:center;gap:12px;padding:14px 20px;border-top:1px solid var(--border);background:var(--bg-s)}
+.mgp-btn{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-1);padding:8px 14px;border-radius:var(--r-md);font-family:var(--fh);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s ease}
+.mgp-btn:hover{border-color:rgba(200,216,232,.2);background:rgba(238,242,246,.06)}
+.mgp-btn-play{background:var(--btn-bg);border-color:rgba(200,216,232,.2);color:var(--acc)}
+.mgp-btn-play:hover{background:#253d56;border-color:rgba(200,216,232,.4)}
+.mgp-btn-sm{padding:7px 10px}
+.mgp-timeline-bar{flex:1;position:relative;height:4px;background:var(--border);border-radius:2px;cursor:pointer}
+.mgp-tl-fill{position:absolute;left:0;top:0;bottom:0;background:var(--acc);border-radius:2px;transition:width .3s var(--ease-out)}
+.mgp-tl-dots{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.mgp-tl-tick{width:8px;height:8px;border-radius:50%;background:var(--border);border:1.5px solid var(--bg-s);cursor:pointer;transition:all .2s;position:relative;flex-shrink:0}
+.mgp-tl-tick.active,.mgp-tl-tick:hover{background:var(--acc)}
+.mgp-tl-tick span{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-family:var(--fh);font-size:9px;font-weight:700;color:var(--text-3);white-space:nowrap;letter-spacing:.08em;pointer-events:none}
+.mgp-timer{font-family:var(--fh);font-size:11px;font-weight:600;color:var(--text-3);white-space:nowrap;flex-shrink:0}
+/* Slide content classes used by existing HTML */
+.mgp-kicker{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.mgp-h2{font-family:var(--fh);font-size:clamp(22px,2.2vw,32px);font-weight:800;color:var(--text-1);line-height:1.1;letter-spacing:-.03em;margin-bottom:12px}
+.mgp-p{font-size:14px;color:var(--text-2);line-height:1.75}
+.mgp-icon-big{font-size:56px;opacity:.9}
