@@ -314,11 +314,11 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .mgp-bg-outro,.mgp-bg-end{background:linear-gradient(135deg,var(--bg-deep) 0%,var(--btn-bg) 100%)}
 .mgp-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:24px 48px;gap:14px;width:100%;height:100%;color:var(--text-1)}
 .mgp-content-split{flex-direction:row;align-items:center;gap:40px}
-.mgp-controls{display:flex;align-items:center;gap:12px;padding:14px 20px;border-top:1px solid var(--border);background:var(--bg-s)}
-.mgp-btn{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-1);padding:8px 14px;border-radius:var(--r-md);font-family:var(--fh);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s ease}
-.mgp-btn:hover{border-color:rgba(200,216,232,.2);background:rgba(238,242,246,.06)}
-.mgp-btn-play{background:var(--btn-bg);border-color:rgba(200,216,232,.2);color:var(--acc)}
-.mgp-btn-play:hover{background:#253d56;border-color:rgba(200,216,232,.4)}
+.mgp-controls{display:flex;align-items:center;gap:12px;padding:14px 20px;border-top:1px solid rgba(238,242,246,.12);background:var(--bg-deep)}
+.mgp-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(238,242,246,.08);border:1px solid rgba(238,242,246,.12);color:var(--text-1);padding:8px 14px;border-radius:var(--r-md);font-family:var(--fh);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s ease}
+.mgp-btn:hover{border-color:rgba(200,216,232,.25);background:rgba(238,242,246,.13)}
+.mgp-btn-play{background:rgba(200,216,232,.15);border-color:rgba(200,216,232,.4);color:var(--acc)}
+.mgp-btn-play:hover{background:rgba(200,216,232,.25);border-color:rgba(200,216,232,.6)}
 .mgp-btn-sm{padding:7px 10px}
 .mgp-timeline-bar{flex:1;position:relative;height:4px;background:var(--border);border-radius:2px;cursor:pointer}
 .mgp-tl-fill{position:absolute;left:0;top:0;bottom:0;background:var(--acc);border-radius:2px;transition:width .3s var(--ease-out)}
