@@ -752,15 +752,23 @@ tbody tr:hover td{background:var(--f0)}
   .faq-grid{grid-template-columns:1fr}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
+  /* Hero — mobile background recentrat */
+  .hero{min-height:100svh;background:linear-gradient(180deg,rgba(18,24,40,.72) 0%,rgba(18,24,40,.58) 60%,rgba(18,24,40,.72) 100%),url('new_background_header.jpeg') center 35%/cover}
+  .hero-grid{padding:36px 0 32px}
+  .hero-sub{font-size:15px}
 }
 @media(max-width:720px){
   .exp-grid{grid-template-columns:1fr}
 }
 @media(max-width:600px){
-  .hero-h1{font-size:36px}
-  .hero-kpi{flex-direction:column}
+  .hero-h1{font-size:clamp(30px,8vw,38px)}
+  .hero-kpi{grid-template-columns:1fr}
   .hkpi{border-bottom:1px solid var(--border)}
-  .hero-btns{flex-direction:column}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
+  .hero-proof{padding:11px 14px}
+  .hero-sub{font-size:14px;line-height:1.75}
+  .hero-eyebrow{margin-bottom:16px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
   .wf-steps{grid-template-columns:1fr}
@@ -781,6 +789,12 @@ tbody tr:hover td{background:var(--f0)}
   .nav-in{padding-left:20px;padding-right:20px}
   .hkpi{padding:14px 10px}
   .hkpi-val{font-size:20px}
+  .hero .wrap{padding-top:76px}
+  .hero-grid{padding:28px 0 24px;gap:24px}
+  .hero-h1{font-size:clamp(28px,9vw,36px);margin-bottom:14px}
+  .hero-sub{font-size:14px;margin-bottom:18px}
+  .hero-btns{margin-bottom:28px;gap:10px}
+  .trust-inner{padding-left:16px;padding-right:16px}
 }
 
 /* ══════════════════════════════════════════════════════════
