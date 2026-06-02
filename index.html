@@ -42,26 +42,13 @@
 </nav>
 
 <!-- ═════════════════════ HERO ═════════════════════ -->
-<section class="hero concrete-exact-active" id="top">
-  <a class="concrete-hotspot concrete-nav-fuhrparks" href="#service" aria-label="Für Fuhrparks"></a>
-  <a class="concrete-hotspot concrete-nav-funktion" href="#prozess" aria-label="So funktioniert es"></a>
-  <a class="concrete-hotspot concrete-nav-warum" href="#warum" aria-label="Warum wir"></a>
-  <a class="concrete-hotspot concrete-nav-ueber" href="#ueber-uns" aria-label="Über uns"></a>
-  <a class="concrete-hotspot concrete-nav-kontakt" href="#kontakt" aria-label="Kontakt"></a>
-  <a class="concrete-hotspot concrete-btn-header" href="#anmelden" aria-label="Fahrzeug anmelden"></a>
-  <a class="concrete-hotspot concrete-btn-primary" href="#anmelden" aria-label="Fahrzeug anmelden"></a>
-  <a class="concrete-hotspot concrete-btn-secondary" href="#prozess" aria-label="So funktioniert es"></a>
-  <a class="concrete-hotspot concrete-btn-gutachten-1" href="#prozess" aria-label="Gutachten öffnen"></a>
-  <a class="concrete-hotspot concrete-btn-ausgezahlt-2" href="#warum" aria-label="Auszahlungsdetails öffnen"></a>
-  <a class="concrete-hotspot concrete-btn-abholung-3" href="#service" aria-label="Abholung öffnen"></a>
-  <div class="hero-bg"></div>
-  <div class="hero-noise"></div>
+<section class="hero" id="top">
   <div class="wrap">
-    <div class="hero-live-grid">
-      <div class="hero-live-copy">
-        <div class="hero-badge">
-          <div class="hero-badge-dot"></div>
-          <span class="hero-badge-text">IMD Fleet Services · <em>Flottenankauf</em> · <em>Bundesweit</em></span>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          <span class="hero-eyebrow-text">IMD Fleet Services · Flottenankauf · Bundesweit</span>
         </div>
         <h1 class="hero-h1">
           Professioneller<br>
@@ -74,29 +61,61 @@
           <div class="hero-proof-text"><strong>Garantierter Mindestpreis durch unabhängiges Wertgutachten</strong> – häufig sogar mit zusätzlichem Bonus über dem HEK-Wert. Schriftlich zugesichert.</div>
         </div>
         <div class="hero-btns">
-          <button class="btn btn-green btn-lg" onclick="goTo('anmelden')">Fahrzeug anmelden</button>
-          <button class="btn btn-ghost-white btn-lg" onclick="goTo('prozess')">So funktioniert es →</button>
+          <button class="btn btn-primary btn-lg" onclick="goTo('anmelden')">Fahrzeug anmelden</button>
+          <button class="btn btn-ghost btn-lg" onclick="goTo('prozess')">So funktioniert es →</button>
         </div>
         <div class="hero-kpi">
-          <div class="hkpi"><div class="hkpi-ico">◷</div><div><div class="hkpi-val">2 Min.</div><div class="hkpi-lbl">Anmeldung</div></div></div>
-          <div class="hkpi"><div class="hkpi-ico">◇</div><div><div class="hkpi-val">HEK+</div><div class="hkpi-lbl">Garantierter Mindestpreis</div></div></div>
-          <div class="hkpi"><div class="hkpi-ico">✓</div><div><div class="hkpi-val">100%</div><div class="hkpi-lbl">Digital & sicher</div></div></div>
+          <div class="hkpi"><div class="hkpi-val">2 Min.</div><div class="hkpi-lbl">Anmeldung</div></div>
+          <div class="hkpi"><div class="hkpi-val hkpi-acc">HEK+</div><div class="hkpi-lbl">Garantierter Mindestpreis</div></div>
+          <div class="hkpi"><div class="hkpi-val">100%</div><div class="hkpi-lbl">Digital & sicher</div></div>
+        </div>
+      </div>
+      <div class="hero-dash">
+        <div class="hero-dash-card">
+          <div class="hdc-header">
+            <span class="hdc-title">Fleet Dashboard</span>
+            <span class="hdc-live"><span class="hdc-dot"></span>Live</span>
+          </div>
+          <div class="hdc-kpis">
+            <div class="hdc-kpi">
+              <div class="hdc-kpi-val">14</div>
+              <div class="hdc-kpi-lbl">Aktive Fahrzeuge</div>
+              <div class="hdc-kpi-note">↑ +3 diesen Monat</div>
+            </div>
+            <div class="hdc-kpi">
+              <div class="hdc-kpi-val hdc-acc">HEK+</div>
+              <div class="hdc-kpi-lbl">Mindestpreis</div>
+              <div class="hdc-kpi-note">Ø +9,4 % Bonus</div>
+            </div>
+          </div>
+          <div class="hdc-vehicles">
+            <div class="hdc-veh hdc-veh-acc">
+              <div class="hdc-veh-name">VW Crafter · 2021</div>
+              <div class="hdc-veh-status">✓ Ausgezahlt</div>
+            </div>
+            <div class="hdc-veh hdc-veh-amber">
+              <div class="hdc-veh-name">Mercedes Sprinter · 2022</div>
+              <div class="hdc-veh-status hdc-amber">⏳ Gutachten läuft</div>
+            </div>
+            <div class="hdc-veh hdc-veh-muted">
+              <div class="hdc-veh-name">Ford Transit · 2020</div>
+              <div class="hdc-veh-status hdc-muted">→ Abholung geplant</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="trust-inner">
-    <div class="ti rev d1"><div class="ti-check">✓</div><div><div class="ti-label">Wertgutachten<span class="ti-sub">Revisionssicher · GKK</span></div></div></div>
-    <div class="ti rev d2"><div class="ti-check">✓</div><div><div class="ti-label">HEK-Mindestpreis<span class="ti-sub">Zugesichert</span></div></div></div>
-    <div class="ti rev d3"><div class="ti-check">✓</div><div><div class="ti-label">Bonus möglich<span class="ti-sub">Je nach Marktsituation</span></div></div></div>
-    <div class="ti rev d4"><div class="ti-check">✓</div><div><div class="ti-label">Abholung bundesweit<span class="ti-sub">Wir kommen zu Ihnen</span></div></div></div>
-    <div class="ti rev d5"><div class="ti-check">✓</div><div><div class="ti-label">100% digital<span class="ti-sub">Kein Papierkram</span></div></div></div>
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="ti rev d1"><div class="ti-check">✓</div><div><div class="ti-label">Wertgutachten<span class="ti-sub">Revisionssicher · GKK</span></div></div></div>
+      <div class="ti rev d2"><div class="ti-check">✓</div><div><div class="ti-label">HEK-Mindestpreis<span class="ti-sub">Zugesichert</span></div></div></div>
+      <div class="ti rev d3"><div class="ti-check">✓</div><div><div class="ti-label">Bonus möglich<span class="ti-sub">Je nach Marktsituation</span></div></div></div>
+      <div class="ti rev d4"><div class="ti-check">✓</div><div><div class="ti-label">Abholung bundesweit<span class="ti-sub">Wir kommen zu Ihnen</span></div></div></div>
+      <div class="ti rev d5"><div class="ti-check">✓</div><div><div class="ti-label">100% digital<span class="ti-sub">Kein Papierkram</span></div></div></div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- ═════════ SERVICE ═════════ -->
 <!-- ═════════ SERVICE ═════════ -->
@@ -134,7 +153,7 @@
 </section>
 
 <!-- ═════════ PROZESS (Workflow) ═════════ -->
-<section class="section sec-light" id="prozess">
+<section class="section" id="prozess">
   <div class="wrap">
     <div class="sec-head sec-center">
       <span class="eyebrow" style="display:block;margin-bottom:12px">So funktioniert IMD Fleet Services</span>
@@ -1057,7 +1076,7 @@
 </section>
 
 <!-- ═════════ ZIELGRUPPE ═════════ -->
-<section class="section sec-light" id="zielgruppe">
+<section class="section" id="zielgruppe">
   <div class="wrap">
     <div class="ziel-grid">
       <div>
@@ -1090,7 +1109,7 @@
 </section>
 
 <!-- ═════════ ZEITRECHNER ═════════ -->
-<section class="section" id="rechner">
+<section class="section sec-light" id="rechner">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Zeitrechner</span>
@@ -1144,7 +1163,7 @@
 </section>
 
 <!-- ═════════ FAQ ═════════ -->
-<section class="section sec-light" id="faq">
+<section class="section" id="faq">
   <div class="wrap">
     <div class="sec-head sec-center">
       <span class="eyebrow" style="display:block;margin-bottom:12px">Häufige Fragen</span>
@@ -1188,7 +1207,7 @@
 </section>
 
 <!-- ═════════ FORMULAR ═════════ -->
-<section class="section" id="anmelden">
+<section class="section sec-light" id="anmelden">
   <div class="wrap">
     <div class="form-grid">
       <div class="form-sticky">
