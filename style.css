@@ -98,3 +98,29 @@ img{display:block;max-width:100%}
 .mob-menu.open{display:flex}
 .mob-menu a{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text-1)}
 .mob-menu a:hover{color:var(--acc)}
+
+/* ══════════════ NAV ══════════════ */
+nav{position:fixed;inset:0 0 auto;z-index:300;height:88px;display:flex;align-items:center;transition:all .35s var(--ease);background:transparent}
+nav.sc{background:var(--bg-deep);backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--border)}
+.nav-in{width:100%;max-width:1160px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0;background:transparent}
+.nav-logo img{width:clamp(138px,10vw,178px);height:auto;display:block;object-fit:contain}
+nav .logo-dark{display:none}
+nav .logo-light{display:block}
+nav.sc .logo-dark{display:block}
+nav.sc .logo-light{display:none}
+.nav-links{display:flex;gap:28px;list-style:none;flex:1;justify-content:center}
+.nav-links a{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--text-2);letter-spacing:.01em;transition:color .2s var(--ease);position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--acc);border-radius:1px;transition:width .22s var(--ease)}
+.nav-links a:hover{color:var(--text-1)}
+.nav-links a:hover::after{width:100%}
+nav.sc .nav-links a{color:var(--text-2)}
+nav.sc .nav-links a:hover{color:var(--text-1)}
+.nav-cta{background:var(--btn-bg);color:var(--acc);border:1.5px solid rgba(200,216,232,.2);padding:9px 20px;border-radius:var(--r-xl);font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s ease;flex-shrink:0;margin-left:auto}
+.nav-cta:hover{background:#253d56;border-color:rgba(200,216,232,.4);transform:translateY(-1px)}
+.nav-cta:active{transform:scale(.97)}
+.burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:4px;margin-left:auto}
+.burger span{display:block;width:20px;height:1.5px;background:var(--text-1);transition:all .3s}
+.burger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
