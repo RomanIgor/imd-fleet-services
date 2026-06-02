@@ -77,7 +77,7 @@ img{display:block;max-width:100%}
 
 /* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:9px;border:none;border-radius:var(--r);font-family:var(--fh);font-size:14px;font-weight:700;cursor:pointer;transition:transform .2s var(--ease-spring),box-shadow .2s var(--ease),background .18s ease,border-color .18s ease;white-space:nowrap;letter-spacing:-.012em}
-.btn:active{transform:scale(.97)!important}
+.btn:active{transform:scale(.97)}
 .btn-primary,.btn-green,.btn-navy{background:var(--btn-bg);color:var(--acc);border:1.5px solid rgba(200,216,232,.2);padding:14px 30px}
 .btn-primary:hover,.btn-green:hover,.btn-navy:hover{background:#253d56;border-color:rgba(200,216,232,.45);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .btn-ghost,.btn-ghost-white{background:transparent;color:var(--text-2);border:1.5px solid var(--border);padding:12px 28px}
