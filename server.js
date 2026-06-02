@@ -73,6 +73,7 @@ const publicAssets = new Set([
   '/design-assets/imd-hero-reference-2x.webp',
   '/design-assets/pwa-phones.jpg',
   '/design-assets/services-building.jpg',
+  '/new_background_header.jpeg',
 ]);
 app.use((req, res, next) => {
   if ((req.method === 'GET' || req.method === 'HEAD') && publicAssets.has(req.path)) {
