@@ -752,3 +752,5 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="light"] .tag-white{color:var(--text-2);background:var(--bg-card);border-color:var(--border)}
 /* h2 accent em */
 [data-theme="light"] .h2 em{color:var(--acc)}
+/* Player — always dark regardless of theme */
+[data-theme="light"] .mgp-wrap{--bg:#12161C;--bg-s:#161B22;--bg-deep:#0E1218;--bg-card:rgba(238,242,246,.04);--acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:#1E2E40;--text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28);--border:rgba(238,242,246,.08);--border-s:rgba(238,242,246,.05)}
