@@ -232,7 +232,7 @@ img{display:block;max-width:100%}
 
 /* ══════════════ NAV ══════════════ */
 nav{position:fixed;inset:0 0 auto;z-index:300;height:72px;display:flex;align-items:center;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(9,21,42,.04)}
-nav.sc{background:#fff;box-shadow:0 2px 12px rgba(9,21,42,.07)}
+nav.sc{box-shadow:0 2px 12px rgba(9,21,42,.07)}
 .nav-in{width:100%;max-width:1160px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:16px}
 .nav-logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0;background:transparent}
 .logo-img{width:clamp(120px,9vw,160px);height:auto;display:block;object-fit:contain}
@@ -860,17 +860,10 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="light"] body{background:var(--bg);color:var(--text-1)}
 /* Scrollbar */
 [data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(0,82,163,.2)}
-/* Nav */
-[data-theme="light"] nav.sc{background:var(--bg-deep);box-shadow:0 1px 0 var(--border)}
-/* Logo — in light mode show navy logo, hide white logo */
-[data-theme="light"] .logo-img-dark{display:none}
-[data-theme="light"] .logo-img-light{display:block}
 /* Nav links */
 [data-theme="light"] nav .nav-links a{color:var(--text-2)}
 [data-theme="light"] nav .nav-links a:hover{color:var(--text-1)}
-/* Nav CTA + primary buttons — white text on navy bg */
-[data-theme="light"] .nav-cta{color:#fff;border-color:rgba(0,82,163,.3)}
-[data-theme="light"] .nav-cta:hover{background:#003580;border-color:rgba(0,82,163,.5)}
+/* Primary buttons — white text on navy bg */
 [data-theme="light"] .btn-primary,[data-theme="light"] .btn-green,[data-theme="light"] .btn-navy{color:#fff;border-color:rgba(0,82,163,.25)}
 [data-theme="light"] .btn-primary:hover,[data-theme="light"] .btn-green:hover,[data-theme="light"] .btn-navy:hover{background:#003580;border-color:rgba(0,82,163,.45)}
 /* Ghost button in light mode */
@@ -893,7 +886,6 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="light"] .ti-label{color:var(--text-1)}
 [data-theme="light"] .ti-check{background:var(--acc-dim);border-color:rgba(0,82,163,.2);color:var(--acc)}
 /* Mobile menu */
-[data-theme="light"] .mob-menu{background:var(--bg-deep)}
 [data-theme="light"] .mob-menu a{color:var(--text-1)}
 /* Tags in light mode */
 [data-theme="light"] .tag-navy,[data-theme="light"] .tag-green{color:var(--acc);background:var(--acc-dim);border-color:rgba(0,82,163,.18)}
