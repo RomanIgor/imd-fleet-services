@@ -123,7 +123,7 @@ a{text-decoration:none;color:inherit}
 
 /* Right beton photo */
 .hero-photo{background:url('new_background_header.jpeg') center/cover;position:relative}
-.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,#edf2f8,transparent);pointer-events:none}
+.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,var(--bg-s),transparent 40px);pointer-events:none}
 
 /* Eyebrow badge */
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:100px;padding:5px 14px;align-self:flex-start}
@@ -136,7 +136,7 @@ a{text-decoration:none;color:inherit}
 .hero-h1 span{color:var(--blue)}
 
 /* Sub */
-.hero-sub{font-size:16px;color:var(--text-2);line-height:1.75;max-width:460px;margin-bottom:32px}
+.hero-sub{font-size:16px;font-weight:400;color:var(--text-2);line-height:1.75;max-width:460px;margin-bottom:32px}
 
 /* Buttons */
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
@@ -154,8 +154,8 @@ a{text-decoration:none;color:inherit}
 .ti{display:flex;align-items:center;gap:10px;padding:18px 16px;border-right:1px solid rgba(255,255,255,.08);transition:background .2s}
 .ti:last-child{border-right:none}
 .ti:hover{background:rgba(255,255,255,.03)}
-.ti-check{width:24px;height:24px;background:rgba(200,216,232,.15);border:1px solid rgba(200,216,232,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#c8d8e8;flex-shrink:0;line-height:1}
-.ti-label{font-family:var(--fh);font-size:11px;font-weight:700;color:#eef2f6;line-height:1.35}
+.ti-check{width:24px;height:24px;background:rgba(200,216,232,.20);border:1px solid rgba(200,216,232,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#c8d8e8;flex-shrink:0;line-height:1}
+.ti-label{font-family:var(--fh);font-size:11px;font-weight:700;color:#c8d8e8;line-height:1.35}
 .ti-sub{display:block;font-family:var(--fh);font-size:10px;font-weight:400;color:rgba(238,242,246,.5);margin-top:2px}
 button{font-family:var(--fh)}
 img{display:block;max-width:100%}
@@ -836,8 +836,6 @@ tbody tr:hover td{background:var(--f0)}
 /* Primary buttons — white text on navy bg */
 [data-theme="light"] .btn-primary,[data-theme="light"] .btn-green,[data-theme="light"] .btn-navy{color:#fff;border-color:rgba(0,82,163,.25)}
 [data-theme="light"] .btn-primary:hover,[data-theme="light"] .btn-green:hover,[data-theme="light"] .btn-navy:hover{background:#003580;border-color:rgba(0,82,163,.45)}
-/* Ghost button in light mode */
-[data-theme="light"] .btn-ghost,[data-theme="light"] .btn-ghost-white{color:var(--text-2);border-color:var(--border)}
 [data-theme="light"] .btn-ghost:hover,[data-theme="light"] .btn-ghost-white:hover{background:var(--bg-card);color:var(--text-1);border-color:rgba(9,21,42,.2);transform:translateY(-2px)}
 /* Theme pill in light mode — dark translucent on light bg */
 [data-theme="light"] .theme-pill{background:rgba(9,21,42,.07);border-color:rgba(9,21,42,.12)}
