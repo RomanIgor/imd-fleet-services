@@ -812,6 +812,9 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .btn-green,
 [data-theme="dark"] .btn-navy { color: var(--acc); }
 
+/* Player always renders with dark tokens */
+.mgp-wrap{--border:rgba(238,242,246,.10);--text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28)}
+
 /* ══════════════ LIGHT MODE ══════════════ */
 [data-theme="light"]{
   --bg:       #F5F8FC;
