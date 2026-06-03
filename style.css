@@ -244,7 +244,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .ic-h sup{font-size:.46em;vertical-align:super;margin-left:2px}
 .ic-h sup a{color:#c8d8e8;text-decoration:none;cursor:pointer;display:inline-flex}
 .ic-h sup a:hover{color:#fff}
-.ic-note{font-size:13px;color:var(--text-3);margin-bottom:24px;line-height:1.6}
+.ic-note{font-size:13px;color:rgba(238,242,246,.5);margin-bottom:24px;line-height:1.6}
 .ic-items{display:flex;flex-direction:column;gap:8px}
 .ic-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.06);border-radius:var(--r-md);border:1px solid rgba(255,255,255,.1)}
 .ic-dot{width:5px;height:5px;border-radius:50%;background:#c8d8e8;flex-shrink:0}
@@ -277,7 +277,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .wf-legend{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center}
 .wf-legend-item{display:flex;align-items:center;gap:6px;font-family:var(--fh);font-size:11px;color:var(--text-2);font-weight:500}
 .wf-legend-dot{width:8px;height:8px;border-radius:50%}
-.wf-legend-you{background:var(--acc)}
+.wf-legend-you{background:var(--navy)}
 .wf-legend-us{background:var(--text-3)}
 .wf-legend-done{background:var(--text-2)}
 
