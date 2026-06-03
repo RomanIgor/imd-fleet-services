@@ -80,6 +80,7 @@
   --text-2:    #475569;
   --text-3:    #94a3b8;
   --text-inv:  #ffffff;
+  --text-inv-2: rgba(255,255,255,0.65);
   --border:    #e2e8f0;
   --border-s:  rgba(255,255,255,0.15);
   --r:4px; --r-md:8px; --r-lg:14px; --r-xl:20px; --r-2xl:28px;
@@ -201,7 +202,7 @@ img{display:block;max-width:100%}
 .h2 em{font-style:normal;color:var(--blue)}
 .h2-white{color:#ffffff}.h2-white em{color:#c8d8e8}
 .lead{font-size:17px;color:var(--text-2);line-height:1.9;font-weight:300}
-.lead-white{color:var(--text-2)}
+.lead-white{color:var(--text-inv-2)}
 .eyebrow{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;margin-bottom:16px}
 .eyebrow-white{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,216,232,.7);display:inline-flex;align-items:center;margin-bottom:16px}
 
@@ -610,7 +611,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .cta-inner{max-width:800px;margin:0 auto;padding:80px 48px;text-align:center}
 
 /* ══════════════ FOOTER ══════════════ */
-footer{background:var(--bg-deep);border-top:1px solid var(--border);padding:64px 0 0}
+footer{background:var(--bg-footer);border-top:1px solid var(--border);padding:64px 0 0}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
 .f-col h5{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:16px}
 .f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -839,6 +840,9 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] body{background:var(--bg);color:var(--text-1)}
 [data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(200,216,232,.3)}
 [data-theme="dark"] .theme-opt.active{box-shadow:0 1px 4px rgba(0,0,0,.5)}
+[data-theme="dark"] .btn-primary,
+[data-theme="dark"] .btn-green,
+[data-theme="dark"] .btn-navy { color: var(--acc); }
 
 /* ══════════════ LIGHT MODE ══════════════ */
 [data-theme="light"]{
