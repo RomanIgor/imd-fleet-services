@@ -116,14 +116,14 @@ a{text-decoration:none;color:inherit}
 
 /* ══════════════ HERO ══════════════ */
 .hero{display:flex;flex-direction:column;min-height:100vh}
-.hero-split{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:calc(100vh - 64px)}
+.hero-split{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:calc(100vh - 72px)}
 
 /* Left copy panel */
-.hero-copy{background:linear-gradient(135deg,#f0f5fb 0%,#e8eef8 100%);padding:80px 64px 64px;display:flex;flex-direction:column;justify-content:center}
+.hero-copy{background:linear-gradient(135deg,#f0f5fb 0%,#e8eef8 100%);padding:96px 64px 64px;display:flex;flex-direction:column;justify-content:center}
 
 /* Right beton photo */
 .hero-photo{background:url('new_background_header.jpeg') center/cover;position:relative}
-.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,var(--bg-s),transparent 40px);pointer-events:none}
+.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,#e8eef8,transparent 40px);pointer-events:none}
 
 /* Eyebrow badge */
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:100px;padding:5px 14px;align-self:flex-start}
@@ -143,7 +143,7 @@ a{text-decoration:none;color:inherit}
 
 /* KPI strip */
 .hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);max-width:460px}
-.hkpi{background:#fff;padding:16px 20px;transition:background .22s}
+.hkpi{background:var(--bg);padding:16px 20px;transition:background .22s}
 .hkpi:hover{background:var(--bg-s)}
 .hkpi-val{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--text-1);letter-spacing:-.035em}
 .hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:var(--text-3);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
@@ -835,9 +835,7 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="light"] nav .nav-links a:hover{color:var(--text-1)}
 /* Primary buttons — white text on navy bg */
 [data-theme="light"] .btn-primary,[data-theme="light"] .btn-green,[data-theme="light"] .btn-navy{color:#fff;border-color:rgba(0,82,163,.25)}
-[data-theme="light"] .btn-primary:hover,[data-theme="light"] .btn-green:hover,[data-theme="light"] .btn-navy:hover{background:#003580;border-color:rgba(0,82,163,.45)}
-[data-theme="light"] .btn-ghost:hover,[data-theme="light"] .btn-ghost-white:hover{background:var(--bg-card);color:var(--text-1);border-color:rgba(9,21,42,.2);transform:translateY(-2px)}
-/* Theme pill in light mode — dark translucent on light bg */
+[data-theme="light"] .btn-primary:hover,[data-theme="light"] .btn-green:hover,[data-theme="light"] .btn-navy:hover{background:#003580;border-color:rgba(0,82,163,.45)}/* Theme pill in light mode — dark translucent on light bg */
 [data-theme="light"] .theme-pill{background:rgba(9,21,42,.07);border-color:rgba(9,21,42,.12)}
 [data-theme="light"] .theme-opt{color:rgba(9,21,42,.35)}
 [data-theme="light"] .theme-opt.active{background:rgba(9,21,42,.12);color:var(--text-1);box-shadow:0 1px 4px rgba(0,0,0,.12)}
