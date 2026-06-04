@@ -854,7 +854,7 @@ tbody tr:hover td{background:var(--f0)}
 .theme-opt.active{background:#fff;color:#1a2540;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 /* ── Dark mode override — photo background + neutral grey palette ── */
 [data-theme="dark"]{
-  --bg:rgba(22,24,30,0.86);--bg-s:rgba(30,32,40,0.88);--bg-deep:rgba(14,15,20,0.96);--bg-card:rgba(238,242,246,.05);
+  --bg:rgba(22,24,30,0.68);--bg-s:rgba(30,32,40,0.72);--bg-deep:rgba(14,15,20,0.94);--bg-card:rgba(22,24,30,0.60);
   --navy:#252830;--blue:#C8D8E8;--blue-bg:rgba(200,216,232,.18);--blue-bd:rgba(200,216,232,.2);
   --acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:#252830;
   --text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28);
@@ -876,8 +876,8 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
 [data-theme="dark"] .mob-menu{background:rgba(19,20,26,0.97)}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
-[data-theme="dark"] .hero-copy{background:linear-gradient(135deg,rgba(22,24,30,0.90) 0%,rgba(30,32,40,0.90) 100%)}
-[data-theme="dark"] .hero-photo::before{background:linear-gradient(to right,rgba(22,24,30,0.88),transparent)}
+[data-theme="dark"] .hero-copy{background:linear-gradient(135deg,rgba(22,24,30,0.75) 0%,rgba(30,32,40,0.78) 100%)}
+[data-theme="dark"] .hero-photo::before{background:linear-gradient(to right,rgba(22,24,30,0.75),transparent)}
 [data-theme="dark"] .hero-h1{color:#eef2f6}
 [data-theme="dark"] .hero-h1 span{color:#c8d8e8}
 [data-theme="dark"] .hero-sub{color:rgba(238,242,246,.55)}
