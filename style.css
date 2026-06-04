@@ -44,8 +44,7 @@
 
 /* ══════════════ ÜBER UNS ══════════════ */
 .ub-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:0}
-.ub-photo-col{flex-shrink:0}
-.ub-photo{width:100%;max-width:460px;border-radius:12px;object-fit:cover;display:block}
+.ub-photo{width:100%;max-width:460px;height:360px;border-radius:12px;object-fit:cover;display:block}
 /* Stat grid (inline styles in HTML — CSS support) */
 .stat-num{font-family:var(--fh);font-size:44px;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1}
 /* Gründer-Card */
