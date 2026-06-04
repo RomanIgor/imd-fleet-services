@@ -124,10 +124,9 @@ a{text-decoration:none;color:inherit}
 .hero-copy{background:linear-gradient(135deg,rgba(240,245,251,0.82) 0%,rgba(232,238,248,0.82) 100%);padding:96px 64px 64px;display:flex;flex-direction:column;justify-content:center}
 
 /* Right beton photo */
-.hero-photo{position:relative;overflow:hidden}
-.hero-photo::after{content:'';position:absolute;inset:-8%;z-index:0;background:url('new_images/1.jpeg') center/cover;animation:heroPan 22s ease-in-out infinite alternate}
-@keyframes heroPan{from{transform:scale(1.0) translate(0,0)}to{transform:scale(1.09) translate(-3%,1.5%)}}
-.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;z-index:1;background:linear-gradient(to right,rgba(240,245,251,0.96) 0%,rgba(240,245,251,0.72) 35%,rgba(240,245,251,0.28) 68%,transparent 100%);pointer-events:none}
+.hero-photo{position:relative;overflow:hidden;background:url('new_images/1.jpeg') 55% 45%/cover no-repeat;animation:heroPan 20s ease-in-out infinite alternate}
+@keyframes heroPan{0%{background-position:55% 45%}100%{background-position:45% 58%}}
+.hero-photo::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to right,rgba(240,245,251,0.96) 0%,rgba(240,245,251,0.72) 25%,rgba(240,245,251,0.28) 55%,transparent 100%);width:200px}
 
 /* Eyebrow badge */
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:100px;padding:5px 14px;align-self:flex-start}
@@ -883,7 +882,7 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .mob-menu{background:rgba(19,20,26,0.68)}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
 [data-theme="dark"] .hero-copy{background:linear-gradient(135deg,rgba(22,24,30,0.42) 0%,rgba(30,32,40,0.46) 100%)}
-[data-theme="dark"] .hero-photo::before{background:linear-gradient(to right,rgba(22,24,30,0.62) 0%,rgba(22,24,30,0.38) 40%,rgba(22,24,30,0.12) 70%,transparent 100%)}
+[data-theme="dark"] .hero-photo::before{background:linear-gradient(to right,rgba(22,24,30,0.65) 0%,rgba(22,24,30,0.38) 30%,rgba(22,24,30,0.12) 60%,transparent 100%)}
 [data-theme="dark"] .hero-h1{color:#eef2f6}
 [data-theme="dark"] .hero-h1 span{color:#c8d8e8}
 [data-theme="dark"] .hero-sub{color:rgba(238,242,246,.55)}
