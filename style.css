@@ -853,41 +853,25 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .btn-primary,
 [data-theme="dark"] .btn-green,
 [data-theme="dark"] .btn-navy { color: var(--acc); }
+[data-theme="dark"] nav{background:#1a2540;border-bottom-color:rgba(255,255,255,.08)}
+[data-theme="dark"] nav.sc{background:#1a2540}
+[data-theme="dark"] .nav-cta{background:#253048;color:#c8d8e8;border-color:rgba(200,216,232,.2)}
+[data-theme="dark"] .nav-links a{color:rgba(238,242,246,.55)}
+[data-theme="dark"] .nav-links a:hover{color:#eef2f6}
+[data-theme="dark"] .mob-menu{background:#1a2540}
+[data-theme="dark"] .mob-menu a{color:#eef2f6}
+[data-theme="dark"] .hero-copy{background:linear-gradient(135deg,#1e2840 0%,#243350 100%)}
+[data-theme="dark"] .hero-photo::before{background:linear-gradient(to right,#1e2840,transparent)}
+[data-theme="dark"] .hero-h1{color:#eef2f6}
+[data-theme="dark"] .hero-h1 span{color:#c8d8e8}
+[data-theme="dark"] .hero-sub{color:rgba(238,242,246,.55)}
+[data-theme="dark"] .hkpi{background:#243350}
+[data-theme="dark"] .hkpi:hover{background:rgba(238,242,246,.04)}
+[data-theme="dark"] .hero-eyebrow{background:rgba(200,216,232,.1);border-color:rgba(200,216,232,.2)}
+[data-theme="dark"] .hero-eyebrow-text{color:#c8d8e8}
+[data-theme="dark"] .hero-kpi{background:rgba(238,242,246,.1);border-color:rgba(238,242,246,.1)}
+[data-theme="dark"] .hkpi-val{color:#eef2f6}
 
 /* Player always renders with dark tokens */
 .mgp-wrap{--border:rgba(238,242,246,.10);--text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28)}
 
-/* ══════════════ LIGHT MODE ══════════════ */
-[data-theme="light"]{
-  --bg:       #F5F8FC;
-  --bg-s:     #ECF2F9;
-  --bg-deep:  #E2EBF4;
-  --bg-card:  rgba(9,21,42,.04);
-  --acc:      #0052A3;
-  --acc-dim:  rgba(0,82,163,.10);
-  --btn-bg:   #0052A3;
-  --text-1:   #09152A;
-  --text-2:   rgba(9,21,42,.62);
-  --text-3:   rgba(9,21,42,.38);
-  --border:   rgba(9,21,42,.10);
-  --border-s: rgba(9,21,42,.06);
-}
-[data-theme="light"] body{background:var(--bg);color:var(--text-1)}
-/* Scrollbar */
-[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(0,82,163,.2)}
-/* Nav links */
-[data-theme="light"] nav .nav-links a{color:var(--text-2)}
-[data-theme="light"] nav .nav-links a:hover{color:var(--text-1)}
-/* Primary buttons — white text on navy bg */
-[data-theme="light"] .btn-primary,[data-theme="light"] .btn-green,[data-theme="light"] .btn-navy{color:#fff;border-color:rgba(0,82,163,.25)}
-[data-theme="light"] .btn-primary:hover,[data-theme="light"] .btn-green:hover,[data-theme="light"] .btn-navy:hover{background:#003580;border-color:rgba(0,82,163,.45)}/* Theme pill in light mode — dark translucent on light bg */
-[data-theme="light"] .theme-pill{background:rgba(9,21,42,.07);border-color:rgba(9,21,42,.12)}
-[data-theme="light"] .theme-opt{color:rgba(9,21,42,.35)}
-[data-theme="light"] .theme-opt.active{background:rgba(9,21,42,.12);color:var(--text-1);box-shadow:0 1px 4px rgba(0,0,0,.12)}
-/* Mobile menu */
-[data-theme="light"] .mob-menu a{color:var(--text-1)}
-/* Tags in light mode */
-[data-theme="light"] .tag-navy,[data-theme="light"] .tag-green{color:var(--acc);background:var(--acc-dim);border-color:rgba(0,82,163,.18)}
-[data-theme="light"] .tag-white{color:var(--text-2);background:var(--bg-card);border-color:var(--border)}
-/* h2 accent em */
-[data-theme="light"] .h2 em{color:var(--acc)}
