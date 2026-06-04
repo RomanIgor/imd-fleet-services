@@ -452,7 +452,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .branche-name{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text-1)}
 .branche-sub{font-size:11px;color:var(--text-3);margin-top:1px}
 /* Persona card */
-.persona{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-2xl);padding:28px;display:flex;flex-direction:column;gap:16px}
+.persona{background:#fff;border:1px solid var(--border);border-radius:var(--r-2xl);padding:28px;display:flex;flex-direction:column;gap:16px}
 .pe-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
 .pe-avatar{font-size:48px;line-height:1}
 .pe-name{font-family:var(--fh);font-size:18px;font-weight:800;color:var(--text-1);letter-spacing:-.02em}
@@ -478,12 +478,12 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .crange-hint{font-family:var(--fh);font-size:10px;color:var(--text-3)}
 .crange-val{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--blue)}
 .cnum{width:100%;background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text-1);padding:10px 14px;font-family:var(--fh);font-size:15px;font-weight:600;outline:none;transition:border-color .2s}
-.cnum:focus{border-color:rgba(200,216,232,.35)}
+.cnum:focus{border-color:var(--blue-bd)}
 /* Result panel */
 .calc-result{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r-2xl);padding:32px;display:flex;flex-direction:column;gap:16px}
 .cr-hero{text-align:center;padding:20px 0;border-bottom:1px solid var(--border)}
 .cr-h-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
-.cr-h-val{font-family:var(--fh);font-size:52px;font-weight:800;color:var(--blue);letter-spacing:-.04em;line-height:1}
+.cr-h-val{font-family:var(--fh);font-size:52px;font-weight:800;color:var(--text-1);letter-spacing:-.04em;line-height:1}
 .cr-h-unit{font-size:13px;color:var(--text-3);margin-top:4px}
 .cr-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cr-cmp{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;text-align:center}
@@ -508,6 +508,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .faq-q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px}
 .faq-q-text{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text-1);line-height:1.4}
 .faq-icon{font-family:var(--fh);font-size:18px;color:var(--text-3);flex-shrink:0;line-height:1;transition:transform .2s var(--ease)}
+.faq-item.open .faq-q{border-left:3px solid var(--blue)}
 .faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s var(--ease)}
 .faq-item.open .faq-a{max-height:300px}
