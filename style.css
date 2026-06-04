@@ -124,7 +124,7 @@ a{text-decoration:none;color:inherit}
 .hero-copy{background:linear-gradient(135deg,#f0f5fb 0%,#e8eef8 100%);padding:96px 64px 64px;display:flex;flex-direction:column;justify-content:center}
 
 /* Right beton photo */
-.hero-photo{background:url('new_background_header.jpeg') center/cover;position:relative}
+.hero-photo{background:url('new_images/1.jpeg') center/cover;position:relative}
 .hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,#e8eef8,transparent 40px);pointer-events:none}
 
 /* Eyebrow badge */
@@ -216,6 +216,10 @@ nav.sc{box-shadow:0 2px 12px rgba(9,21,42,.07)}
 .nav-in{width:100%;max-width:1160px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:16px}
 .nav-logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0;background:transparent}
 .logo-img{width:clamp(120px,9vw,160px);height:auto;display:block;object-fit:contain}
+.logo-light-mode{display:block}
+.logo-dark-mode{display:none}
+[data-theme="dark"] .logo-light-mode{display:none}
+[data-theme="dark"] .logo-dark-mode{display:block}
 .nav-links{display:flex;gap:28px;list-style:none;flex:1;justify-content:center}
 .nav-links a{font-family:var(--fh);font-size:13px;font-weight:500;color:var(--text-2);letter-spacing:.01em;transition:color .2s var(--ease);position:relative;padding-bottom:2px}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--blue);border-radius:1px;transition:width .22s var(--ease)}
