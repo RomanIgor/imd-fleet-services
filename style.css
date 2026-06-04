@@ -855,8 +855,8 @@ tbody tr:hover td{background:var(--f0)}
 /* ── Dark mode override — photo background + neutral grey palette ── */
 [data-theme="dark"]{
   --bg:rgba(22,24,30,0.36);--bg-s:rgba(30,32,40,0.40);--bg-deep:rgba(20,25,45,0.50);--bg-footer:rgba(12,18,35,0.54);--bg-card:rgba(22,24,30,0.30);
-  --navy:#252830;--blue:#C8D8E8;--blue-bg:rgba(200,216,232,.18);--blue-bd:rgba(200,216,232,.2);
-  --acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:#252830;
+  --navy:rgba(55,70,105,0.55);--blue:#C8D8E8;--blue-bg:rgba(200,216,232,.18);--blue-bd:rgba(200,216,232,.2);
+  --acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:rgba(55,70,105,0.55);
   --text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28);
   --border:rgba(238,242,246,.10);--border-s:rgba(238,242,246,.06)
 }
@@ -868,10 +868,14 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .theme-opt.active{color:#eef2f6;background:rgba(255,255,255,.1)}
 [data-theme="dark"] .btn-primary,
 [data-theme="dark"] .btn-green,
-[data-theme="dark"] .btn-navy { color: var(--acc); }
+[data-theme="dark"] .btn-navy { color: var(--acc); border-color: rgba(200,216,232,.25); }
+[data-theme="dark"] .btn-primary:hover,
+[data-theme="dark"] .btn-green:hover,
+[data-theme="dark"] .btn-navy:hover { background: rgba(55,70,105,0.75); }
 [data-theme="dark"] nav{background:rgba(19,20,26,0.48);border-bottom-color:rgba(255,255,255,.08);backdrop-filter:blur(14px)}
 [data-theme="dark"] nav.sc{background:rgba(19,20,26,0.58)}
-[data-theme="dark"] .nav-cta{background:#252830;color:#c8d8e8;border-color:rgba(200,216,232,.2)}
+[data-theme="dark"] .nav-cta{background:rgba(55,70,105,0.55);color:#c8d8e8;border-color:rgba(200,216,232,.25)}
+[data-theme="dark"] .nav-cta:hover{background:rgba(55,70,105,0.75)}
 [data-theme="dark"] .nav-links a{color:rgba(238,242,246,.55)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
 [data-theme="dark"] .mob-menu{background:rgba(19,20,26,0.68)}
@@ -887,6 +891,8 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .hero-eyebrow-text{color:#c8d8e8}
 [data-theme="dark"] .hero-kpi{background:rgba(238,242,246,.1);border-color:rgba(238,242,246,.1)}
 [data-theme="dark"] .hkpi-val{color:#eef2f6}
+[data-theme="dark"] img:not(.logo-light-mode):not(.logo-dark-mode){opacity:0.80}
+[data-theme="dark"] .hero-photo{opacity:0.85}
 
 /* Player always renders with dark tokens */
 .mgp-wrap{--border:rgba(238,242,246,.10);--text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28)}
