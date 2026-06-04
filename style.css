@@ -8,29 +8,29 @@
 .wk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
 .wk{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
 .wk-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--border)}
-.wk-head.bad{background:rgba(238,242,246,.02)}
-.wk-head.good{background:var(--acc-dim)}
+.wk-head.bad{background:rgba(9,21,42,.02)}
+.wk-head.good{background:var(--blue-bg)}
 .wk-ico{width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.wk-ico.bad{background:rgba(238,242,246,.06);color:var(--text-3)}
-.wk-ico.good{background:rgba(200,216,232,.15);color:var(--acc)}
+.wk-ico.bad{background:var(--bg-s);color:var(--text-3)}
+.wk-ico.good{background:var(--blue-bg);color:var(--blue)}
 .wk-name{font-family:var(--fh);font-size:14px;font-weight:800;color:var(--text-1)}
 .wk-sub{font-size:11px;color:var(--text-3);margin-top:1px}
 .wk-body{padding:16px 20px;display:flex;flex-direction:column;gap:10px}
 .wk-row{display:flex;gap:10px;align-items:flex-start}
 .wk-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.wk-dot.bad{background:rgba(238,242,246,.2)}
-.wk-dot.good{background:var(--acc)}
+.wk-dot.bad{background:var(--border)}
+.wk-dot.good{background:var(--blue)}
 .wk-text{font-size:13px;color:var(--text-2);line-height:1.6}
 .wk-text strong{color:var(--text-1);font-weight:700}
 /* Comparison table */
 .ver-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
 .ver-tbl{width:100%;border-collapse:collapse}
 .ver-tbl th,.ver-tbl td{padding:12px 16px;text-align:left;font-family:var(--fh);font-size:12px;border-bottom:1px solid var(--border)}
-.ver-tbl th{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-3);background:var(--bg-deep)}
-.ver-tbl th.best{color:var(--acc);background:rgba(200,216,232,.06)}
-.ver-tbl th.old{color:var(--text-3)}
+.ver-tbl th{font-size:11px;font-weight:700;letter-spacing:.06em;color:rgba(238,242,246,.6);background:var(--bg-deep)}
+.ver-tbl th.best{color:#c8d8e8;background:rgba(37,99,235,.15)}
+.ver-tbl th.old{color:rgba(238,242,246,.4)}
 .ver-tbl td{color:var(--text-2);background:var(--bg-s)}
-.ver-tbl td.best{background:rgba(200,216,232,.04)}
+.ver-tbl td.best{background:var(--blue-bg)}
 .ver-tbl td.old{background:var(--bg)}
 .ver-tbl tbody tr:hover td{background:rgba(238,242,246,.03)}
 .vno{color:var(--text-3)}.vno-s{font-size:11px;color:var(--text-3);margin-left:4px}
@@ -43,9 +43,11 @@
 .allein-text{font-size:13px;color:var(--text-2);line-height:1.7}
 
 /* ══════════════ ÜBER UNS ══════════════ */
-.ub-intro-grid{display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:start;margin-bottom:0}
+.ub-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:0}
+.ub-photo-col{flex-shrink:0}
+.ub-photo{width:100%;max-width:460px;border-radius:12px;object-fit:cover;display:block}
 /* Stat grid (inline styles in HTML — CSS support) */
-.stat-num{font-family:var(--fh);font-size:44px;font-weight:800;color:var(--text-1);letter-spacing:-.04em;line-height:1}
+.stat-num{font-family:var(--fh);font-size:44px;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1}
 /* Gründer-Card */
 .founder-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-2xl);padding:28px;display:flex;flex-direction:column;gap:18px}
 .founder-avatar{display:flex;align-items:center;gap:14px}
@@ -53,14 +55,14 @@
 .founder-info{display:flex;flex-direction:column;gap:3px}
 .founder-name{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);letter-spacing:-.02em}
 .founder-role{font-size:12px;color:var(--text-3)}
-.founder-quote{font-size:14px;color:var(--text-2);line-height:1.75;font-style:italic;border-left:2px solid var(--acc);padding-left:14px}
+.founder-quote{font-size:14px;color:rgba(238,242,246,.7);line-height:1.75;font-style:italic;border-left:2px solid #c8d8e8;padding-left:14px}
 /* Prinzip-Karten */
 .prinzip-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px 24px;display:flex;flex-direction:column;gap:10px}
-.prinzip-icon{width:42px;height:42px;border-radius:var(--r-lg);background:var(--acc-dim);border:1px solid rgba(200,216,232,.2);display:flex;align-items:center;justify-content:center;color:var(--acc);margin-bottom:2px;flex-shrink:0}
+.prinzip-icon{width:42px;height:42px;border-radius:var(--r-lg);background:rgba(200,216,232,.12);border:1px solid rgba(200,216,232,.2);display:flex;align-items:center;justify-content:center;color:#c8d8e8;margin-bottom:2px;flex-shrink:0}
 .prinzip-title{font-family:var(--fh);font-size:16px;font-weight:800;color:var(--text-1);letter-spacing:-.02em;line-height:1.2}
 .prinzip-sub{font-family:var(--fh);font-size:11px;font-weight:600;color:var(--text-3);letter-spacing:.01em}
 .prinzip-text{font-size:13px;color:var(--text-2);line-height:1.75}
-#ueber-uns [data-countup]{color:var(--acc)!important}
+#ueber-uns [data-countup]{color:#c8d8e8!important}
 :root {
   /* ── Light mode tokens (default) ── */
   --bg:        #ffffff;
@@ -849,5 +851,3 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="light"] .tag-white{color:var(--text-2);background:var(--bg-card);border-color:var(--border)}
 /* h2 accent em */
 [data-theme="light"] .h2 em{color:var(--acc)}
-/* Über uns — always dark (hardcoded white inline styles require dark bg) */
-[data-theme="light"] #ueber-uns{--bg:#1e2840;--bg-s:#243350;--bg-deep:#171f33;--bg-card:rgba(238,242,246,.06);--acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:#253048;--text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28);--border:rgba(238,242,246,.10);--border-s:rgba(238,242,246,.06)}
