@@ -55,6 +55,7 @@
 .founder-name{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);letter-spacing:-.02em}
 .founder-role{font-size:12px;color:var(--text-3)}
 .founder-quote{font-size:14px;color:rgba(238,242,246,.7);line-height:1.75;font-style:italic;border-left:2px solid #c8d8e8;padding-left:14px}
+#ueber-uns .founder-card{background:rgba(255,255,255,.06)}
 /* Prinzip-Karten */
 .prinzip-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px 24px;display:flex;flex-direction:column;gap:10px}
 .prinzip-icon{width:42px;height:42px;border-radius:var(--r-lg);background:rgba(200,216,232,.12);border:1px solid rgba(200,216,232,.2);display:flex;align-items:center;justify-content:center;color:#c8d8e8;margin-bottom:2px;flex-shrink:0}
@@ -561,7 +562,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .consent input{width:14px;height:14px;accent-color:var(--acc);cursor:pointer;flex-shrink:0;margin-top:2px}
 /* Navigation buttons */
 .form-nav{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
-.btn-next,.btn-submit{background:var(--btn-bg);color:var(--acc);border:1.5px solid rgba(200,216,232,.2);padding:11px 24px;border-radius:var(--r);font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s}
+.btn-next,.btn-submit{background:var(--btn-bg);color:#fff;border:1.5px solid rgba(200,216,232,.2);padding:11px 24px;border-radius:var(--r);font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s}
 .btn-next:hover,.btn-submit:hover{background:#253d56;border-color:rgba(200,216,232,.4)}
 .btn-back{background:transparent;color:var(--text-3);border:1.5px solid var(--border);padding:11px 20px;border-radius:var(--r);font-family:var(--fh);font-size:13px;font-weight:600;cursor:pointer;transition:all .18s}
 .btn-back:hover{color:var(--text-1);border-color:rgba(238,242,246,.2)}
@@ -744,7 +745,7 @@ tbody tr:hover td{background:var(--f0)}
 #dash .btn-navy:hover{background:var(--navy-legacy-l)}
 
 /* ══════════════ TOAST ══════════════ */
-.toast{position:fixed;bottom:18px;right:18px;z-index:9999;background:var(--bg-deep);color:var(--text-1);border:1px solid var(--border);border-radius:var(--r-lg);padding:11px 16px;font-family:var(--fh);font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:var(--sh-xl);transform:translateY(60px);opacity:0;transition:all .4s var(--ease);pointer-events:none}
+.toast{position:fixed;bottom:18px;right:18px;z-index:9999;background:var(--bg-deep);color:#eef2f6;border:1px solid var(--border);border-radius:var(--r-lg);padding:11px 16px;font-family:var(--fh);font-size:12px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:var(--sh-xl);transform:translateY(60px);opacity:0;transition:all .4s var(--ease);pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast-ico{color:var(--acc)}
 
