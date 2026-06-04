@@ -836,9 +836,9 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:480px){.scd-cards{grid-template-columns:1fr}}
 
 /* ══════════════ THEME TOGGLE ══════════════ */
-.theme-pill{display:flex;background:rgba(255,255,255,.1);border-radius:999px;padding:3px;gap:1px;border:1px solid rgba(255,255,255,.15);flex-shrink:0}
-.theme-opt{width:30px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.4,0,.2,1);color:rgba(255,255,255,.45);cursor:pointer;border:0;background:transparent}
-.theme-opt.active{background:rgba(255,255,255,.18);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.theme-pill{display:flex;background:rgba(9,21,42,.07);border-radius:999px;padding:3px;gap:1px;border:1px solid rgba(9,21,42,.1);flex-shrink:0}
+.theme-opt{width:30px;height:30px;border-radius:999px;display:flex;align-items:center;justify-content:center;transition:all .2s cubic-bezier(.4,0,.2,1);color:rgba(9,21,42,.45);cursor:pointer;border:0;background:transparent}
+.theme-opt.active{background:#fff;color:#1a2540;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 /* ── Dark mode override — restores navy palette when toggle is dark ── */
 [data-theme="dark"]{
   --bg:#1e2840;--bg-s:#243350;--bg-deep:#171f33;--bg-card:rgba(238,242,246,.06);
@@ -850,6 +850,9 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] body{background:var(--bg);color:var(--text-1)}
 [data-theme="dark"] ::-webkit-scrollbar-thumb{background:rgba(200,216,232,.3)}
 [data-theme="dark"] .theme-opt.active{box-shadow:0 1px 4px rgba(0,0,0,.5)}
+[data-theme="dark"] .theme-pill{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .theme-opt{color:rgba(255,255,255,.45)}
+[data-theme="dark"] .theme-opt.active{color:#eef2f6;background:rgba(255,255,255,.1)}
 [data-theme="dark"] .btn-primary,
 [data-theme="dark"] .btn-green,
 [data-theme="dark"] .btn-navy { color: var(--acc); }
