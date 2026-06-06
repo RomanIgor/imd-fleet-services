@@ -118,14 +118,14 @@ a{text-decoration:none;color:inherit}
 
 /* ══════════════ HERO ══════════════ */
 .hero{display:flex;flex-direction:column;min-height:100vh}
-.hero-split{position:relative;flex:1;min-height:calc(100vh - 72px)}
+.hero-split{display:flex;flex:1;min-height:calc(100vh - 72px)}
 
-/* Photo fills the full hero-split — static */
-.hero-photo{position:absolute;inset:0;z-index:0;background:url('new_images/new_hero_example.jpeg') 50% 15%/cover no-repeat}
-.hero-photo::before{content:none}
+/* Left copy panel — solid dark panel */
+.hero-copy{flex:0 0 52%;position:relative;z-index:2;background:linear-gradient(to right,rgba(6,10,22,0.96) 0%,rgba(6,10,22,0.90) 100%);padding:96px 72px 64px;display:flex;flex-direction:column;justify-content:center}
 
-/* Left copy panel — gradient overlay, no diagonal line */
-.hero-copy{position:relative;z-index:2;width:58%;min-height:calc(100vh - 72px);background:linear-gradient(to right,rgba(6,10,22,0.88) 0%,rgba(6,10,22,0.72) 50%,rgba(6,10,22,0.30) 78%,transparent 100%);padding:96px 72px 64px;display:flex;flex-direction:column;justify-content:center}
+/* Right photo panel — flex item, full height, cover crops sides not top/bottom */
+.hero-photo{flex:1;overflow:hidden;position:relative;background:url('new_images/new_hero_example.jpeg') center/cover no-repeat}
+.hero-photo::before{content:'';position:absolute;top:0;left:0;bottom:0;width:120px;background:linear-gradient(to right,rgba(6,10,22,0.90),transparent);z-index:1}
 
 /* Eyebrow badge — always light on photo */
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:5px 14px;align-self:flex-start}
@@ -786,9 +786,10 @@ tbody tr:hover td{background:var(--f0)}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
   .hero-sub{font-size:15px}
-  .hero-split{min-height:100svh}
-  .hero-copy{width:100%;min-height:auto;padding:96px 32px 52px;background:linear-gradient(to bottom,rgba(6,10,22,0.85) 0%,rgba(6,10,22,0.72) 60%,rgba(6,10,22,0.50) 100%)}
-  .hero-photo{position:absolute;inset:0;height:auto}
+  .hero-split{min-height:100svh;display:block;position:relative}
+  .hero-copy{flex:none;width:100%;min-height:auto;padding:96px 32px 52px;background:linear-gradient(to bottom,rgba(6,10,22,0.85) 0%,rgba(6,10,22,0.72) 60%,rgba(6,10,22,0.50) 100%)}
+  .hero-photo{position:absolute;inset:0;flex:none;overflow:visible}
+  .hero-photo::before{display:none}
   .ub-intro-grid{grid-template-columns:1fr}
   .ub-photo{max-width:100%;height:260px}
 }
