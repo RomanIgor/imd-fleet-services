@@ -121,7 +121,7 @@ a{text-decoration:none;color:inherit}
 .hero-split{position:relative;flex:1;min-height:calc(100vh - 72px)}
 
 /* Photo fills the full hero-split — static */
-.hero-photo{position:absolute;inset:0;z-index:0;background:url('new_images/new_hero_example.jpeg') 50% 10%/cover no-repeat}
+.hero-photo{position:absolute;inset:0;z-index:0;background:#0d1624 url('new_images/new_hero_example.jpeg') right 5%/contain no-repeat}
 .hero-photo::before{content:none}
 
 /* Left copy panel — gradient overlay, no diagonal line */
