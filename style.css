@@ -121,35 +121,35 @@ a{text-decoration:none;color:inherit}
 .hero-split{position:relative;flex:1;min-height:calc(100vh - 72px)}
 
 /* Photo fills the full hero-split — animated */
-.hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden;background:url('new_images/1.jpeg') center/cover no-repeat;animation:heroPan 20s ease-in-out infinite alternate}
-@keyframes heroPan{0%{background-position:52% 48%}100%{background-position:48% 54%}}
+.hero-photo{position:absolute;inset:0;z-index:0;overflow:hidden;background:url('new_images/new_hero_example.jpeg') center/cover no-repeat;animation:heroPan 24s ease-in-out infinite alternate}
+@keyframes heroPan{0%{background-position:54% 46%}100%{background-position:46% 54%}}
 .hero-photo::before{content:none}
 
-/* Left copy panel — diagonal right edge via clip-path */
-.hero-copy{position:relative;z-index:2;width:54%;min-height:calc(100vh - 72px);background:linear-gradient(135deg,rgba(240,245,251,0.90) 0%,rgba(232,238,248,0.90) 100%);padding:96px 64px 64px;display:flex;flex-direction:column;justify-content:center;clip-path:polygon(0 0,100% 0,calc(100% - 110px) 100%,0 100%)}
+/* Left copy panel — gradient overlay, no diagonal line */
+.hero-copy{position:relative;z-index:2;width:58%;min-height:calc(100vh - 72px);background:linear-gradient(to right,rgba(6,10,22,0.88) 0%,rgba(6,10,22,0.72) 50%,rgba(6,10,22,0.30) 78%,transparent 100%);padding:96px 72px 64px;display:flex;flex-direction:column;justify-content:center}
 
-/* Eyebrow badge */
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:100px;padding:5px 14px;align-self:flex-start}
+/* Eyebrow badge — always light on photo */
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:5px 14px;align-self:flex-start}
 .hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
-@keyframes heDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.15)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.06)}}
-.hero-eyebrow-text{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.10em;text-transform:uppercase}
+@keyframes heDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.10)}}
+.hero-eyebrow-text{font-family:var(--fh);font-size:10px;font-weight:700;color:rgba(200,216,232,.9);letter-spacing:.10em;text-transform:uppercase}
 
-/* H1 */
-.hero-h1{font-family:var(--fh);font-size:clamp(38px,4vw,60px);font-weight:800;line-height:1.04;letter-spacing:-.04em;color:var(--text-1);margin-bottom:20px}
-.hero-h1 span{color:var(--blue)}
+/* H1 — always white on photo */
+.hero-h1{font-family:var(--fh);font-size:clamp(38px,4vw,60px);font-weight:800;line-height:1.04;letter-spacing:-.04em;color:#fff;margin-bottom:20px}
+.hero-h1 span{color:#93c5fd}
 
-/* Sub */
-.hero-sub{font-size:16px;font-weight:400;color:var(--text-2);line-height:1.75;max-width:460px;margin-bottom:32px}
+/* Sub — always light on photo */
+.hero-sub{font-size:16px;font-weight:400;color:rgba(255,255,255,.80);line-height:1.75;max-width:480px;margin-bottom:32px}
 
 /* Buttons */
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
 
-/* KPI strip */
-.hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);max-width:460px}
-.hkpi{background:var(--bg);padding:16px 20px;transition:background .22s}
-.hkpi:hover{background:var(--bg-s)}
-.hkpi-val{font-family:var(--fh);font-size:22px;font-weight:800;color:var(--text-1);letter-spacing:-.035em}
-.hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:var(--text-3);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
+/* KPI strip — glass effect on photo */
+.hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(255,255,255,.15);max-width:460px;backdrop-filter:blur(4px)}
+.hkpi{background:rgba(0,0,0,.20);padding:16px 20px;transition:background .22s}
+.hkpi:hover{background:rgba(0,0,0,.32)}
+.hkpi-val{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff;letter-spacing:-.035em}
+.hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:rgba(255,255,255,.60);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
 
 /* ══════════════ TRUST BAR ══════════════ */
 .trust-bar{background:var(--bg-deep);border-top:1px solid rgba(255,255,255,.06)}
@@ -787,10 +787,9 @@ tbody tr:hover td{background:var(--f0)}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
   .hero-sub{font-size:15px}
-  .hero-split{display:flex;flex-direction:column;min-height:auto}
-  .hero-copy{width:100%;clip-path:none;min-height:auto;padding:96px 32px 48px}
-  .hero-photo{position:relative;height:280px;order:2}
-  .hero-photo::before{content:none}
+  .hero-split{min-height:100svh}
+  .hero-copy{width:100%;min-height:auto;padding:96px 32px 52px;background:linear-gradient(to bottom,rgba(6,10,22,0.85) 0%,rgba(6,10,22,0.72) 60%,rgba(6,10,22,0.50) 100%)}
+  .hero-photo{position:absolute;inset:0;height:auto}
   .ub-intro-grid{grid-template-columns:1fr}
   .ub-photo{max-width:100%;height:260px}
 }
@@ -886,15 +885,10 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
 [data-theme="dark"] .mob-menu{background:rgba(19,20,26,0.68)}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
-[data-theme="dark"] .hero-copy{background:linear-gradient(135deg,rgba(22,24,30,0.50) 0%,rgba(30,32,40,0.54) 100%)}
-[data-theme="dark"] .hero-h1{color:#eef2f6}
-[data-theme="dark"] .hero-h1 span{color:#c8d8e8}
-[data-theme="dark"] .hero-sub{color:rgba(238,242,246,.55)}
+/* hero always renders on photo — no theme override needed for copy/h1/sub */
 [data-theme="dark"] .hkpi{background:rgba(30,32,40,0.32)}
 [data-theme="dark"] .hkpi:hover{background:rgba(238,242,246,.04)}
-[data-theme="dark"] .hero-eyebrow{background:rgba(200,216,232,.1);border-color:rgba(200,216,232,.2)}
-[data-theme="dark"] .hero-eyebrow-text{color:#c8d8e8}
-[data-theme="dark"] .hero-kpi{background:rgba(238,242,246,.1);border-color:rgba(238,242,246,.1)}
+/* hero eyebrow/kpi always on photo — no theme override needed */
 [data-theme="dark"] .hkpi-val{color:#eef2f6}
 [data-theme="dark"] img:not(.logo-light-mode):not(.logo-dark-mode){opacity:0.80}
 [data-theme="dark"] .hero-photo{opacity:0.85}

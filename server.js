@@ -76,6 +76,7 @@ const publicAssets = new Set([
   '/new_background_header.jpeg',
   '/new_images/1.jpeg',
   '/new_images/2.jpeg',
+  '/new_images/new_hero_example.jpeg',
 ]);
 app.use((req, res, next) => {
   if ((req.method === 'GET' || req.method === 'HEAD') && publicAssets.has(req.path)) {
