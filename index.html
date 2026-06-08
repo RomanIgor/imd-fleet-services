@@ -2075,12 +2075,13 @@ function hcChip(el){
   hcRepair=Number(el.dataset.repair)||0;
 }
 function hcGoToForm(){
-  var el=document.getElementById('anmelden');
+  var el=document.querySelector('#anmelden .form-card')||document.getElementById('anmelden');
   if(!el)return;
   var nav=document.querySelector('nav');
-  var offset=nav?nav.offsetHeight+8:80;
+  var offset=nav?nav.offsetHeight+16:88;
   var y=el.getBoundingClientRect().top+window.pageYOffset-offset;
   window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+});
 }
 function hcCalculate(){
   var type=document.getElementById('hcType').value;
