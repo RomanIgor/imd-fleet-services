@@ -152,7 +152,7 @@ a{text-decoration:none;color:inherit}
 .hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:rgba(255,255,255,.60);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
 
 /* ══════════════ HERO CALCULATOR ══════════════ */
-.hero-calc{position:absolute;top:50%;right:4%;transform:translateY(-50%);width:340px;max-height:calc(100% - 56px);overflow-y:auto;background:rgba(8,14,30,0.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.10);border-radius:14px;padding:22px 24px;z-index:4;color:#fff;font-family:var(--fh)}
+.hero-calc{position:absolute;top:50%;right:4%;transform:translateY(-50%);width:345px;max-height:calc(100% - 40px);overflow-y:auto;background:rgba(6,10,22,0.46);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.10);border-radius:14px;padding:20px 22px;z-index:4;color:#fff;font-family:var(--fh)}
 .hero-calc::-webkit-scrollbar{width:3px}.hero-calc::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
 .hc-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;background:rgba(147,197,253,.10);border:1px solid rgba(147,197,253,.22);border-radius:100px;padding:4px 10px;margin-bottom:10px}
 .hc-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
@@ -174,11 +174,20 @@ a{text-decoration:none;color:inherit}
 .hc-kpi.hc-warn{border-color:rgba(251,191,36,.28);background:rgba(251,191,36,.07)}
 .hc-kpi.hc-loss{grid-column:span 2;display:flex;flex-direction:column}
 .hc-kpi small{display:block;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(200,216,232,.55);margin-bottom:3px}
-.hc-kpi strong{display:block;font-size:19px;font-weight:800;color:#fff;line-height:1.1}
+.hc-kpi strong{display:block;font-size:16px;font-weight:800;color:#fff;line-height:1.1}
 .hc-kpi span{display:block;font-size:11px;color:rgba(200,216,232,.55);margin-top:2px}
 .hc-recommend{font-size:11.5px;line-height:1.5;color:rgba(200,216,232,.85);background:rgba(255,255,255,.04);border-left:3px solid #2563eb;border-radius:0 6px 6px 0;padding:9px 11px}
 .hc-back{display:block;text-align:center;font-size:11px;color:rgba(200,216,232,.45);cursor:pointer;margin-top:8px;text-decoration:none}
 .hc-back:hover{color:rgba(200,216,232,.8)}
+.hc-pill{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid;margin-bottom:7px}
+.hc-headline{font-size:11.5px;font-weight:600;color:rgba(200,216,232,.82);line-height:1.45;margin:0 0 10px}
+.hc-compare{display:grid;grid-template-columns:1fr 4px 1fr;gap:0;margin:10px 0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;overflow:hidden}
+.hc-cmp-col{padding:9px 10px}
+.hc-cmp-div{background:rgba(255,255,255,.08)}
+.hc-cmp-head{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(200,216,232,.55);margin-bottom:6px}
+.hc-cmp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.hc-cmp-row span{font-size:10px;color:rgba(200,216,232,.55)}
+.hc-cmp-row b{font-size:11px;font-weight:700;color:#fff}
 .hc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
 .hc-chip{padding:5px 10px;font-size:11px;font-weight:600;font-family:var(--fh);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;color:rgba(200,216,232,.75);cursor:pointer;transition:all .16s}
 .hc-chip:hover{background:rgba(255,255,255,.12);color:#fff}

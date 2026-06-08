@@ -118,20 +118,49 @@
           <p class="hc-note">Keine Marktwertanalyse. Basiert auf AfA, Buchwertquote, Laufleistung und Reparaturrisiko.</p>
         </div>
         <div id="hcResult" style="display:none">
+          <div class="hc-pill" id="hcStatusPill">—</div>
+          <p class="hc-headline" id="hcHeadline"></p>
           <div class="hc-kpis">
+            <div class="hc-kpi">
+              <small>Nutzungsdauer</small>
+              <strong id="hcAge">—</strong>
+            </div>
+            <div class="hc-kpi">
+              <small>Kilometerstand</small>
+              <strong id="hcKmOut">—</strong>
+            </div>
             <div class="hc-kpi hc-hi">
               <small>Buchwert heute</small>
               <strong id="hcBookVal">—</strong>
               <span id="hcBookQ">—</span>
             </div>
             <div class="hc-kpi hc-warn">
-              <small>In 12 Monaten</small>
+              <small>Buchwert in 12 Mon.</small>
               <strong id="hcBookVal12">—</strong>
               <span id="hcBookQ12">—</span>
             </div>
+            <div class="hc-kpi">
+              <small>AfA / Monat</small>
+              <strong id="hcMonthlyAfa">—</strong>
+            </div>
             <div class="hc-kpi hc-loss">
-              <small>AfA-Verlust nächste 12 Monate</small>
+              <small>AfA-Verlust 12 Monate</small>
               <strong id="hcAfaLoss">—</strong>
+            </div>
+          </div>
+          <div class="hc-compare">
+            <div class="hc-cmp-col">
+              <div class="hc-cmp-head">Heute</div>
+              <div class="hc-cmp-row"><span>Buchwert</span><b id="hcTodayBook">—</b></div>
+              <div class="hc-cmp-row"><span>Quote</span><b id="hcTodayQ">—</b></div>
+              <div class="hc-cmp-row"><span>Status</span><b id="hcTodayStatus">—</b></div>
+            </div>
+            <div class="hc-cmp-div"></div>
+            <div class="hc-cmp-col">
+              <div class="hc-cmp-head">In 12 Monaten</div>
+              <div class="hc-cmp-row"><span>Buchwert</span><b id="hcFutureBook">—</b></div>
+              <div class="hc-cmp-row"><span>Quote</span><b id="hcFutureQ">—</b></div>
+              <div class="hc-cmp-row"><span>+km</span><b id="hcFutureKm">—</b></div>
             </div>
           </div>
           <div class="hc-recommend" id="hcRecommendBox"></div>
