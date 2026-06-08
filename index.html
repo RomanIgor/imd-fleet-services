@@ -2081,7 +2081,6 @@ function hcGoToForm(){
   var offset=nav?nav.offsetHeight+16:88;
   var y=el.getBoundingClientRect().top+window.pageYOffset-offset;
   window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
-});
 }
 function hcCalculate(){
   var type=document.getElementById('hcType').value;
