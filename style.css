@@ -176,6 +176,7 @@ a{text-decoration:none;color:inherit}
 .hc-kpi small{display:block;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(200,216,232,.55);margin-bottom:3px}
 .hc-kpi strong{display:block;font-size:16px;font-weight:800;color:#fff;line-height:1.1}
 .hc-kpi span{display:block;font-size:11px;color:rgba(200,216,232,.55);margin-top:2px}
+.hc-next-box{font-size:10.5px;line-height:1.5;color:rgba(200,216,232,.65);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:7px 10px;margin-bottom:7px}
 .hc-recommend{font-size:11.5px;line-height:1.5;color:rgba(200,216,232,.85);background:rgba(255,255,255,.04);border-left:3px solid #2563eb;border-radius:0 6px 6px 0;padding:9px 11px}
 .hc-back{display:block;text-align:center;font-size:11px;color:rgba(200,216,232,.45);cursor:pointer;margin-top:8px;text-decoration:none}
 .hc-back:hover{color:rgba(200,216,232,.8)}

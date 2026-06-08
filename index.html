@@ -81,8 +81,9 @@
           <div class="hc-field">
             <label>Fahrzeugart</label>
             <select id="hcType">
-              <option value="ice">Verbrenner / Hybrid</option>
-              <option value="ev">Elektrofahrzeug</option>
+              <option value="pkw_ice">PKW Verbrenner / Hybrid</option>
+              <option value="pkw_ev">PKW Elektro</option>
+              <option value="van_35">Kleintransporter bis 3,5 t</option>
             </select>
           </div>
           <div class="hc-2col">
@@ -95,15 +96,9 @@
               <input id="hcPurchase" type="number" placeholder="42000">
             </div>
           </div>
-          <div class="hc-2col">
-            <div class="hc-field">
-              <label>Kilometerstand</label>
-              <input id="hcKm" type="number" placeholder="118000">
-            </div>
-            <div class="hc-field">
-              <label>Jährl. Fahrleistung</label>
-              <input id="hcAnnualKm" type="number" placeholder="30000">
-            </div>
+          <div class="hc-field">
+            <label>Kilometerstand</label>
+            <input id="hcKm" type="number" placeholder="118000">
           </div>
           <div class="hc-field">
             <label>Größere Reparaturen letzte 12 Monate? <span style="opacity:.5;font-weight:400">optional</span></label>
@@ -115,7 +110,7 @@
             </div>
           </div>
           <button class="hc-btn" onclick="hcCalculate()">Wirtschaftlichkeit prüfen →</button>
-          <p class="hc-note">Keine Marktwertanalyse. Basiert auf AfA, Buchwertquote, Laufleistung und Reparaturrisiko.</p>
+          <p class="hc-note">Jahresfahrleistung wird automatisch berechnet. Keine Marktwertanalyse.</p>
         </div>
         <div id="hcResult" style="display:none">
           <div class="hc-pill" id="hcStatusPill">—</div>
@@ -145,9 +140,9 @@
               <small>AfA / Monat</small>
               <strong id="hcMonthlyAfa">—</strong>
             </div>
-            <div class="hc-kpi hc-loss">
-              <small>AfA-Verlust 12 Monate</small>
-              <strong id="hcAfaLoss">—</strong>
+            <div class="hc-kpi">
+              <small>Jahresfahrleistung autom.</small>
+              <strong id="hcAnnualKmOut">—</strong>
             </div>
           </div>
           <div class="hc-compare">
@@ -159,15 +154,16 @@
             </div>
             <div class="hc-cmp-div"></div>
             <div class="hc-cmp-col">
-              <div class="hc-cmp-head">In 12 Monaten</div>
-              <div class="hc-cmp-row"><span>Buchwert</span><b id="hcFutureBook">—</b></div>
-              <div class="hc-cmp-row"><span>Quote</span><b id="hcFutureQ">—</b></div>
-              <div class="hc-cmp-row"><span>+km</span><b id="hcFutureKm">—</b></div>
+              <div class="hc-cmp-head">Bis Maximalnutzung</div>
+              <div class="hc-cmp-row"><span>Restkm</span><b id="hcRemainingKm">—</b></div>
+              <div class="hc-cmp-row"><span>Restmonate</span><b id="hcRemainingMonths">—</b></div>
+              <div class="hc-cmp-row"><span>Zeitpunkt</span><b id="hcTargetDate">—</b></div>
             </div>
           </div>
+          <div class="hc-next-box" id="hcNextBox"></div>
           <div class="hc-recommend" id="hcRecommendBox"></div>
           <p class="hc-disclaimer">Statische Orientierungsrechnung auf AfA-Basis. Kein Ersatz f&#252;r steuerliche Beratung oder Marktwertbewertung.</p>
-          <button class="hc-btn hc-cta" onclick="document.getElementById('anmelden').scrollIntoView({behavior:'smooth'})">Fahrzeug zur Ankaufprüfung anmelden →</button>
+          <button class="hc-btn hc-cta" id="hcSellBtn" onclick="hcGoToForm()">Fahrzeug an IMD Fleet Services verkaufen →</button>
           <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block'">← Neu berechnen</a>
         </div>
       </div>
@@ -2078,61 +2074,77 @@ function hcChip(el){
   el.classList.add('active');
   hcRepair=Number(el.dataset.repair)||0;
 }
+function hcGoToForm(){
+  var el=document.getElementById('anmelden');
+  if(!el)return;
+  var nav=document.querySelector('nav');
+  var offset=nav?nav.offsetHeight+8:80;
+  var y=el.getBoundingClientRect().top+window.pageYOffset-offset;
+  window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+}
 function hcCalculate(){
   var type=document.getElementById('hcType').value;
   var firstReg=document.getElementById('hcFirstReg').value;
   var purchase=Number(document.getElementById('hcPurchase').value)||0;
   var km=Number(document.getElementById('hcKm').value)||0;
-  var annualKm=Number(document.getElementById('hcAnnualKm').value)||0;
   if(!purchase||!firstReg){alert('Bitte Erstzulassung und Kaufpreis eingeben.');return;}
   var s=new Date(firstReg),n=new Date();
   var months=(n.getFullYear()-s.getFullYear())*12+(n.getMonth()-s.getMonth());
   if(n.getDate()<s.getDate())months--;
   months=Math.max(0,months);
-  var monthlyAfa=purchase/72;
+  var years=Math.max(months/12,0.01);
+  var annualKm=km/years;
+  var cfg=type==='pkw_ev'
+    ?{afaM:72,idealMinM:36,idealMaxM:60,idealMinKm:60000,idealMaxKm:125000,tBQ:45}
+    :{afaM:72,idealMinM:42,idealMaxM:66,idealMinKm:80000,idealMaxKm:145000,tBQ:40};
+  var monthlyAfa=purchase/cfg.afaM;
   var bookValue=Math.max(0,purchase-monthlyAfa*months);
   var bookQuote=purchase>0?(bookValue/purchase)*100:0;
   var dep12=Math.min(bookValue,monthlyAfa*12);
   var bookValue12=Math.max(0,bookValue-dep12);
   var bookQuote12=purchase>0?(bookValue12/purchase)*100:0;
-  var idealMinM=type==='ev'?36:42,idealMaxM=type==='ev'?60:66;
-  var idealMinKm=type==='ev'?60000:80000,idealMaxKm=type==='ev'?125000:145000;
+  var remainingKm=Math.max(0,cfg.idealMaxKm-km);
+  var rmByKm=annualKm>0?Math.floor((remainingKm/annualKm)*12):0;
+  var rmByAge=Math.max(0,cfg.idealMaxM-months);
+  var remainingMonths=(rmByKm>0&&rmByAge>0)?Math.min(rmByKm,rmByAge):(rmByKm||rmByAge);
+  var targetDate=new Date();targetDate.setMonth(targetDate.getMonth()+remainingMonths);
   var points=0;
-  if(months>=idealMinM&&months<=idealMaxM)points+=30;
-  if(km>=idealMinKm&&km<=idealMaxKm)points+=30;
-  if(bookQuote<=(type==='ev'?45:40))points+=25;
-  if(months>idealMaxM||km>idealMaxKm)points+=10;
+  if(months>=cfg.idealMinM&&months<=cfg.idealMaxM)points+=30;
+  if(km>=cfg.idealMinKm&&km<=cfg.idealMaxKm)points+=30;
+  if(bookQuote<=cfg.tBQ)points+=25;
+  if(months>cfg.idealMaxM||km>cfg.idealMaxKm)points+=10;
   if(hcRepair>=1500)points+=5;
   if(hcRepair>=3000)points+=5;
   function fe(v){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(v);}
-  function fp(v){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(v)+' %';}
-  function fkm(v){return new Intl.NumberFormat('de-DE').format(v)+' km';}
+  function fp(v){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(v)+' %';}
+  function fkm(v){return new Intl.NumberFormat('de-DE').format(Math.round(v))+' km';}
+  function fdate(d){return d.toLocaleDateString('de-DE',{month:'short',year:'numeric'});}
   var yrs=Math.floor(months/12),mos=months%12;
   var ageStr=yrs>0?(yrs+' J., '+mos+' Mon.'):(mos+' Mon.');
   var color,headline,statusLabel,copy,box,todayStatus,pillText;
   if(points>=80){
-    color='#f87171';pillText='VERKAUF EMPFOHLEN';
-    statusLabel='Zeitnahe Ankaufprüfung empfohlen';
-    headline='Ihr Fahrzeug sollte zeitnah zur Veräußerung geprüft werden.';
-    copy='Buchwert, Laufleistung und Kostenrisiko sprechen für eine zeitnahe Aussteuerung.';
+    color='#4ade80';pillText='VERKAUF EMPFOHLEN';
+    statusLabel='Jetzt an IMD Fleet Services verkaufen';
+    headline='Dieses Fahrzeug kann jetzt an IMD Fleet Services verkauft werden.';
+    copy='Buchwert, Fahrzeugalter und Laufleistung sprechen für eine zeitnahe Aussteuerung. Ein Verkauf ist jetzt möglich und sinnvoll.';
     todayStatus='Verkauf empfohlen';
-    box='<b>IMD Empfehlung:</b><br>Verkauf empfohlen. Bei weiterer Nutzung reduziert sich der Buchwert um voraussichtlich <b>'+fe(dep12)+'</b> in 12 Monaten.';
-  } else if(points>=60){
-    color='#fbbf24';pillText='VERKAUFSFENSTER';
-    statusLabel='Verkauf innerhalb der nächsten 6–12 Monate prüfen';
-    headline='Ihr Fahrzeug befindet sich im optimalen Verkaufsfenster.';
-    copy='AfA-Verlauf und Laufleistung zeigen: jetzt ist ein wirtschaftlich günstiger Zeitpunkt zur Aussteuerung.';
-    todayStatus='Verkauf prüfen';
-    box='<b>IMD Empfehlung:</b><br>Verkauf prüfen. Bei weiterer Nutzung sinkt der Buchwert um <b>'+fe(dep12)+'</b> in 12 Monaten.';
-  } else if(points>=40){
-    color='#60a5fa';pillText='BEOBACHTEN';
-    statusLabel='In den nächsten Monaten erneut bewerten';
-    headline='Ihr Fahrzeug nähert sich dem wirtschaftlichen Verkaufsfenster.';
-    copy='Das Fahrzeug sollte regelmäßig geprüft werden — bei steigender Laufleistung erneut kalkulieren.';
+    box='<b>IMD Empfehlung:</b><br>Das Verkaufsfenster ist erreicht. Sie können das Fahrzeug jetzt direkt an IMD Fleet Services verkaufen.';
+  }else if(points>=60){
+    color='#4ade80';pillText='VERKAUFSFENSTER';
+    statusLabel='Jetzt Verkauf an IMD möglich';
+    headline='Dieses Fahrzeug ist im passenden Verkaufsfenster.';
+    copy='Buchwert, Fahrzeugalter und Laufleistung sprechen dafür, das Fahrzeug jetzt an IMD Fleet Services zu verkaufen.';
+    todayStatus='Verkaufsfenster';
+    box='<b>IMD Empfehlung:</b><br>Das Verkaufsfenster ist erreicht. Ein Verkauf an IMD Fleet Services ist jetzt sinnvoll.';
+  }else if(points>=40){
+    color='#fbbf24';pillText='BALD VERKAUFSREIF';
+    statusLabel='Noch weiterfahren, Maximalnutzung beachten';
+    headline='Das Fahrzeug nähert sich dem optimalen Verkaufsfenster.';
+    copy='Das Fahrzeug sollte weiter beobachtet werden. Der Rechner zeigt die empfohlene maximale Nutzung.';
     todayStatus='Beobachten';
-    box='<b>IMD Empfehlung:</b><br>Beobachten. Die nächste 12-Monats-AfA beträgt voraussichtlich <b>'+fe(dep12)+'</b>.';
-  } else {
-    color='#4ade80';pillText='WEITERFAHREN';
+    box='<b>IMD Empfehlung:</b><br>Noch weiterfahren. Erneut prüfen spätestens bei '+fkm(cfg.idealMaxKm)+' oder '+cfg.idealMaxM+' Monaten Nutzungsdauer.';
+  }else{
+    color='#60a5fa';pillText='WEITERFAHREN';
     statusLabel='Weitere Nutzung wirtschaftlich plausibel';
     headline='Ihr Fahrzeug liegt noch vor dem wirtschaftlichen Verkaufsfenster.';
     copy='Die Berechnung spricht aktuell für eine weitere Nutzung. AfA, Laufleistung und Instandhaltungskosten regelmäßig beobachten.';
@@ -2151,15 +2163,19 @@ function hcCalculate(){
   document.getElementById('hcBookVal12').textContent=fe(bookValue12);
   document.getElementById('hcBookQ12').textContent=fp(bookQuote12);
   document.getElementById('hcMonthlyAfa').textContent=fe(monthlyAfa);
-  document.getElementById('hcAfaLoss').textContent=fe(dep12);
+  document.getElementById('hcAnnualKmOut').textContent=fkm(annualKm);
   document.getElementById('hcTodayBook').textContent=fe(bookValue);
   document.getElementById('hcTodayQ').textContent=fp(bookQuote);
   document.getElementById('hcTodayStatus').textContent=todayStatus;
-  document.getElementById('hcFutureBook').textContent=fe(bookValue12);
-  document.getElementById('hcFutureQ').textContent=fp(bookQuote12);
-  document.getElementById('hcFutureKm').textContent=annualKm>0?fkm(annualKm):'k. A.';
+  document.getElementById('hcRemainingKm').textContent=remainingKm>0?fkm(remainingKm):'—';
+  document.getElementById('hcRemainingMonths').textContent=remainingMonths>0?(remainingMonths+' Mon.'):'—';
+  document.getElementById('hcTargetDate').textContent=remainingMonths>0?fdate(targetDate):'—';
+  var nb=document.getElementById('hcNextBox');
+  nb.innerHTML='<b>Empf. max. Nutzung:</b> bis '+fkm(cfg.idealMaxKm)+' oder '+cfg.idealMaxM+' Monate.';
   var rb=document.getElementById('hcRecommendBox');
   rb.innerHTML=box;rb.style.borderLeftColor=color;
+  var sb=document.getElementById('hcSellBtn');
+  if(sb)sb.textContent=points>=60?'Fahrzeug an IMD Fleet Services verkaufen →':'Fahrzeug später erneut prüfen →';
   document.getElementById('hcForm').style.display='none';
   document.getElementById('hcResult').style.display='block';
 }function selectFleet(btn,val){
