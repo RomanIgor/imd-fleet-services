@@ -119,7 +119,9 @@
         </div>
         <div id="hcResult" style="display:none">
           <div class="hc-pill" id="hcStatusPill">—</div>
+          <p class="hc-status-label" id="hcStatusLabel"></p>
           <p class="hc-headline" id="hcHeadline"></p>
+          <p class="hc-copy" id="hcResultCopy"></p>
           <div class="hc-kpis">
             <div class="hc-kpi">
               <small>Nutzungsdauer</small>
@@ -164,6 +166,7 @@
             </div>
           </div>
           <div class="hc-recommend" id="hcRecommendBox"></div>
+          <p class="hc-disclaimer">Statische Orientierungsrechnung auf AfA-Basis. Kein Ersatz f&#252;r steuerliche Beratung oder Marktwertbewertung.</p>
           <button class="hc-btn hc-cta" onclick="document.getElementById('anmelden').scrollIntoView({behavior:'smooth'})">Fahrzeug zur Ankaufprüfung anmelden →</button>
           <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block'">← Neu berechnen</a>
         </div>
@@ -2102,24 +2105,65 @@ function hcCalculate(){
   if(months>idealMaxM||km>idealMaxKm)points+=10;
   if(hcRepair>=1500)points+=5;
   if(hcRepair>=3000)points+=5;
-  function fe(n){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
-  function fp(n){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n)+' %';}
-  var color,box;
-  if(points>=80){color='#f87171';box='<b>Verkauf empfohlen.</b> Buchwert, Laufleistung und AfA sprechen für eine zeitnahe Aussteuerung. Verlust nächste 12 Monate: '+fe(dep12)+'.';}
-  else if(points>=60){color='#fbbf24';box='<b>Verkauf prüfen.</b> Fahrzeug im wirtschaftlichen Verkaufsfenster. AfA-Verlust nächste 12 Monate: '+fe(dep12)+'.';}
-  else if(points>=40){color='#60a5fa';box='<b>Beobachten.</b> Fahrzeug nähert sich dem Verkaufsfenster. Nächste 12-Monats-AfA: '+fe(dep12)+'.';}
-  else{color='#4ade80';box='<b>Weiterfahren.</b> Fahrzeug liegt noch vor dem wirtschaftlichen Verkaufsfenster.';}
+  function fe(v){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(v);}
+  function fp(v){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(v)+' %';}
+  function fkm(v){return new Intl.NumberFormat('de-DE').format(v)+' km';}
+  var yrs=Math.floor(months/12),mos=months%12;
+  var ageStr=yrs>0?(yrs+' J., '+mos+' Mon.'):(mos+' Mon.');
+  var color,headline,statusLabel,copy,box,todayStatus,pillText;
+  if(points>=80){
+    color='#f87171';pillText='VERKAUF EMPFOHLEN';
+    statusLabel='Zeitnahe Ankaufprüfung empfohlen';
+    headline='Ihr Fahrzeug sollte zeitnah zur Veräußerung geprüft werden.';
+    copy='Buchwert, Laufleistung und Kostenrisiko sprechen für eine zeitnahe Aussteuerung.';
+    todayStatus='Verkauf empfohlen';
+    box='<b>IMD Empfehlung:</b><br>Verkauf empfohlen. Bei weiterer Nutzung reduziert sich der Buchwert um voraussichtlich <b>'+fe(dep12)+'</b> in 12 Monaten.';
+  } else if(points>=60){
+    color='#fbbf24';pillText='VERKAUFSFENSTER';
+    statusLabel='Verkauf innerhalb der nächsten 6–12 Monate prüfen';
+    headline='Ihr Fahrzeug befindet sich im optimalen Verkaufsfenster.';
+    copy='AfA-Verlauf und Laufleistung zeigen: jetzt ist ein wirtschaftlich günstiger Zeitpunkt zur Aussteuerung.';
+    todayStatus='Verkauf prüfen';
+    box='<b>IMD Empfehlung:</b><br>Verkauf prüfen. Bei weiterer Nutzung sinkt der Buchwert um <b>'+fe(dep12)+'</b> in 12 Monaten.';
+  } else if(points>=40){
+    color='#60a5fa';pillText='BEOBACHTEN';
+    statusLabel='In den nächsten Monaten erneut bewerten';
+    headline='Ihr Fahrzeug nähert sich dem wirtschaftlichen Verkaufsfenster.';
+    copy='Das Fahrzeug sollte regelmäßig geprüft werden — bei steigender Laufleistung erneut kalkulieren.';
+    todayStatus='Beobachten';
+    box='<b>IMD Empfehlung:</b><br>Beobachten. Die nächste 12-Monats-AfA beträgt voraussichtlich <b>'+fe(dep12)+'</b>.';
+  } else {
+    color='#4ade80';pillText='WEITERFAHREN';
+    statusLabel='Weitere Nutzung wirtschaftlich plausibel';
+    headline='Ihr Fahrzeug liegt noch vor dem wirtschaftlichen Verkaufsfenster.';
+    copy='Die Berechnung spricht aktuell für eine weitere Nutzung. AfA, Laufleistung und Instandhaltungskosten regelmäßig beobachten.';
+    todayStatus='Weiterfahren';
+    box='<b>IMD Empfehlung:</b><br>Weiterfahren und zu einem späteren Zeitpunkt erneut prüfen.';
+  }
+  var pill=document.getElementById('hcStatusPill');
+  pill.textContent=pillText;pill.style.color=color;pill.style.borderColor=color+'55';pill.style.background=color+'18';
+  document.getElementById('hcStatusLabel').textContent=statusLabel;
+  document.getElementById('hcHeadline').textContent=headline;
+  document.getElementById('hcResultCopy').textContent=copy;
+  document.getElementById('hcAge').textContent=ageStr;
+  document.getElementById('hcKmOut').textContent=fkm(km);
   document.getElementById('hcBookVal').textContent=fe(bookValue);
   document.getElementById('hcBookQ').textContent=fp(bookQuote);
   document.getElementById('hcBookVal12').textContent=fe(bookValue12);
   document.getElementById('hcBookQ12').textContent=fp(bookQuote12);
+  document.getElementById('hcMonthlyAfa').textContent=fe(monthlyAfa);
   document.getElementById('hcAfaLoss').textContent=fe(dep12);
+  document.getElementById('hcTodayBook').textContent=fe(bookValue);
+  document.getElementById('hcTodayQ').textContent=fp(bookQuote);
+  document.getElementById('hcTodayStatus').textContent=todayStatus;
+  document.getElementById('hcFutureBook').textContent=fe(bookValue12);
+  document.getElementById('hcFutureQ').textContent=fp(bookQuote12);
+  document.getElementById('hcFutureKm').textContent=annualKm>0?fkm(annualKm):'k. A.';
   var rb=document.getElementById('hcRecommendBox');
   rb.innerHTML=box;rb.style.borderLeftColor=color;
   document.getElementById('hcForm').style.display='none';
   document.getElementById('hcResult').style.display='block';
-}
-function selectFleet(btn,val){
+}function selectFleet(btn,val){
   document.querySelectorAll('.fleet-opt').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
   var h=document.getElementById('fFleetSize');
