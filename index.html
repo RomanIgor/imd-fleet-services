@@ -72,8 +72,65 @@
       </div>
     </div>
 
-    <!-- RIGHT: beton photo -->
-    <div class="hero-photo" aria-hidden="true"></div>
+    <!-- RIGHT: photo + calculator overlay -->
+    <div class="hero-photo">
+      <div class="hero-calc">
+        <div class="hc-badge">Live-Rechner</div>
+        <h3 class="hc-title">Fahrzeug-Buchwert prüfen</h3>
+        <div id="hcForm">
+          <div class="hc-field">
+            <label>Fahrzeugart</label>
+            <select id="hcType">
+              <option value="ice">Verbrenner / Hybrid</option>
+              <option value="ev">Elektrofahrzeug</option>
+            </select>
+          </div>
+          <div class="hc-2col">
+            <div class="hc-field">
+              <label>Erstzulassung</label>
+              <input id="hcFirstReg" type="date">
+            </div>
+            <div class="hc-field">
+              <label>Kaufpreis netto (€)</label>
+              <input id="hcPurchase" type="number" placeholder="42000">
+            </div>
+          </div>
+          <div class="hc-2col">
+            <div class="hc-field">
+              <label>Kilometerstand</label>
+              <input id="hcKm" type="number" placeholder="118000">
+            </div>
+            <div class="hc-field">
+              <label>Jährl. Fahrleistung</label>
+              <input id="hcAnnualKm" type="number" placeholder="30000">
+            </div>
+          </div>
+          <button class="hc-btn" onclick="hcCalculate()">Buchwert berechnen →</button>
+          <p class="hc-note">Basiert auf linearer AfA über 72 Monate.</p>
+        </div>
+        <div id="hcResult" style="display:none">
+          <div class="hc-kpis">
+            <div class="hc-kpi hc-hi">
+              <small>Buchwert heute</small>
+              <strong id="hcBookVal">—</strong>
+              <span id="hcBookQ">—</span>
+            </div>
+            <div class="hc-kpi hc-warn">
+              <small>In 12 Monaten</small>
+              <strong id="hcBookVal12">—</strong>
+              <span id="hcBookQ12">—</span>
+            </div>
+            <div class="hc-kpi hc-loss">
+              <small>AfA-Verlust nächste 12 Monate</small>
+              <strong id="hcAfaLoss">—</strong>
+            </div>
+          </div>
+          <div class="hc-recommend" id="hcRecommendBox"></div>
+          <button class="hc-btn hc-cta" onclick="document.getElementById('anmelden').scrollIntoView({behavior:'smooth'})">Fahrzeug zur Ankaufprüfung anmelden →</button>
+          <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block'">← Neu berechnen</a>
+        </div>
+      </div>
+    </div>
 
   </div>
   <div class="trust-bar">
@@ -1975,6 +2032,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="main.js?v=hero-concrete-system-7"></script>
 <script>
+function hcCalculate(){
+  var type=document.getElementById('hcType').value;
+  var firstReg=document.getElementById('hcFirstReg').value;
+  var purchase=Number(document.getElementById('hcPurchase').value)||0;
+  var km=Number(document.getElementById('hcKm').value)||0;
+  var annualKm=Number(document.getElementById('hcAnnualKm').value)||0;
+  if(!purchase||!firstReg){alert('Bitte Erstzulassung und Kaufpreis eingeben.');return;}
+  var s=new Date(firstReg),n=new Date();
+  var months=(n.getFullYear()-s.getFullYear())*12+(n.getMonth()-s.getMonth());
+  if(n.getDate()<s.getDate())months--;
+  months=Math.max(0,months);
+  var monthlyAfa=purchase/72;
+  var bookValue=Math.max(0,purchase-monthlyAfa*months);
+  var bookQuote=purchase>0?(bookValue/purchase)*100:0;
+  var dep12=Math.min(bookValue,monthlyAfa*12);
+  var bookValue12=Math.max(0,bookValue-dep12);
+  var bookQuote12=purchase>0?(bookValue12/purchase)*100:0;
+  var idealMinM=type==='ev'?36:42,idealMaxM=type==='ev'?60:66;
+  var idealMinKm=type==='ev'?60000:80000,idealMaxKm=type==='ev'?125000:145000;
+  var points=0;
+  if(months>=idealMinM&&months<=idealMaxM)points+=30;
+  if(km>=idealMinKm&&km<=idealMaxKm)points+=30;
+  if(bookQuote<=(type==='ev'?45:40))points+=25;
+  if(months>idealMaxM||km>idealMaxKm)points+=10;
+  function fe(n){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
+  function fp(n){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n)+' %';}
+  var color,box;
+  if(points>=80){color='#f87171';box='<b>Verkauf empfohlen.</b> Buchwert, Laufleistung und AfA sprechen für eine zeitnahe Aussteuerung. Verlust nächste 12 Monate: '+fe(dep12)+'.';}
+  else if(points>=60){color='#fbbf24';box='<b>Verkauf prüfen.</b> Fahrzeug im wirtschaftlichen Verkaufsfenster. AfA-Verlust nächste 12 Monate: '+fe(dep12)+'.';}
+  else if(points>=40){color='#60a5fa';box='<b>Beobachten.</b> Fahrzeug nähert sich dem Verkaufsfenster. Nächste 12-Monats-AfA: '+fe(dep12)+'.';}
+  else{color='#4ade80';box='<b>Weiterfahren.</b> Fahrzeug liegt noch vor dem wirtschaftlichen Verkaufsfenster.';}
+  document.getElementById('hcBookVal').textContent=fe(bookValue);
+  document.getElementById('hcBookQ').textContent=fp(bookQuote);
+  document.getElementById('hcBookVal12').textContent=fe(bookValue12);
+  document.getElementById('hcBookQ12').textContent=fp(bookQuote12);
+  document.getElementById('hcAfaLoss').textContent=fe(dep12);
+  var rb=document.getElementById('hcRecommendBox');
+  rb.innerHTML=box;rb.style.borderLeftColor=color;
+  document.getElementById('hcForm').style.display='none';
+  document.getElementById('hcResult').style.display='block';
+}
 function selectFleet(btn,val){
   document.querySelectorAll('.fleet-opt').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
