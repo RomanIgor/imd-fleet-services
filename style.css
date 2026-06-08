@@ -152,7 +152,7 @@ a{text-decoration:none;color:inherit}
 .hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:rgba(255,255,255,.60);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
 
 /* ══════════════ HERO CALCULATOR ══════════════ */
-.hero-calc{position:absolute;top:50%;right:4%;transform:translateY(-50%);width:340px;max-height:calc(100% - 56px);overflow-y:auto;background:rgba(8,14,30,0.84);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.11);border-radius:14px;padding:22px 24px;z-index:4;color:#fff;font-family:var(--fh)}
+.hero-calc{position:absolute;top:50%;right:4%;transform:translateY(-50%);width:340px;max-height:calc(100% - 56px);overflow-y:auto;background:rgba(8,14,30,0.62);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,0.10);border-radius:14px;padding:22px 24px;z-index:4;color:#fff;font-family:var(--fh)}
 .hero-calc::-webkit-scrollbar{width:3px}.hero-calc::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
 .hc-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;background:rgba(147,197,253,.10);border:1px solid rgba(147,197,253,.22);border-radius:100px;padding:4px 10px;margin-bottom:10px}
 .hc-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
@@ -179,6 +179,10 @@ a{text-decoration:none;color:inherit}
 .hc-recommend{font-size:11.5px;line-height:1.5;color:rgba(200,216,232,.85);background:rgba(255,255,255,.04);border-left:3px solid #2563eb;border-radius:0 6px 6px 0;padding:9px 11px}
 .hc-back{display:block;text-align:center;font-size:11px;color:rgba(200,216,232,.45);cursor:pointer;margin-top:8px;text-decoration:none}
 .hc-back:hover{color:rgba(200,216,232,.8)}
+.hc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.hc-chip{padding:5px 10px;font-size:11px;font-weight:600;font-family:var(--fh);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;color:rgba(200,216,232,.75);cursor:pointer;transition:all .16s}
+.hc-chip:hover{background:rgba(255,255,255,.12);color:#fff}
+.hc-chip.active{background:rgba(147,197,253,.18);border-color:rgba(147,197,253,.40);color:#93c5fd}
 
 /* ══════════════ TRUST BAR ══════════════ */
 .trust-bar{background:#0f172a}

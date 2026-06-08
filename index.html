@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -105,8 +105,17 @@
               <input id="hcAnnualKm" type="number" placeholder="30000">
             </div>
           </div>
-          <button class="hc-btn" onclick="hcCalculate()">Buchwert berechnen →</button>
-          <p class="hc-note">Basiert auf linearer AfA über 72 Monate.</p>
+          <div class="hc-field">
+            <label>Größere Reparaturen letzte 12 Monate? <span style="opacity:.5;font-weight:400">optional</span></label>
+            <div class="hc-chips">
+              <button class="hc-chip active" data-repair="0" onclick="hcChip(this)">Nein / unbekannt</button>
+              <button class="hc-chip" data-repair="1200" onclick="hcChip(this)">bis 1.500 €</button>
+              <button class="hc-chip" data-repair="2500" onclick="hcChip(this)">1.500–3.000 €</button>
+              <button class="hc-chip" data-repair="4000" onclick="hcChip(this)">über 3.000 €</button>
+            </div>
+          </div>
+          <button class="hc-btn" onclick="hcCalculate()">Wirtschaftlichkeit prüfen →</button>
+          <p class="hc-note">Keine Marktwertanalyse. Basiert auf AfA, Buchwertquote, Laufleistung und Reparaturrisiko.</p>
         </div>
         <div id="hcResult" style="display:none">
           <div class="hc-kpis">
@@ -2032,6 +2041,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="main.js?v=hero-concrete-system-7"></script>
 <script>
+var hcRepair=0;
+function hcChip(el){
+  document.querySelectorAll('.hc-chip').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  hcRepair=Number(el.dataset.repair)||0;
+}
 function hcCalculate(){
   var type=document.getElementById('hcType').value;
   var firstReg=document.getElementById('hcFirstReg').value;
@@ -2056,6 +2071,8 @@ function hcCalculate(){
   if(km>=idealMinKm&&km<=idealMaxKm)points+=30;
   if(bookQuote<=(type==='ev'?45:40))points+=25;
   if(months>idealMaxM||km>idealMaxKm)points+=10;
+  if(hcRepair>=1500)points+=5;
+  if(hcRepair>=3000)points+=5;
   function fe(n){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
   function fp(n){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n)+' %';}
   var color,box;
