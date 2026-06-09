@@ -80,14 +80,20 @@
         <div id="hcForm">
           <div class="hc-2col">
             <div class="hc-field">
-              <label>Hersteller</label>
-              <input list="hcManufacturerList" id="hcManufacturer" placeholder="z. B. BMW">
-              <datalist id="hcManufacturerList"><option value="Audi"><option value="BMW"><option value="Mercedes-Benz"><option value="Volkswagen"><option value="Skoda"><option value="Ford"><option value="Opel"><option value="Toyota"><option value="Renault"><option value="Peugeot"><option value="Volvo"><option value="Hyundai"><option value="Kia"><option value="Tesla"><option value="Nissan"><option value="Seat"></datalist>
+              <label>Marke</label>
+              <select id="hcManufacturer" onchange="hcPopulateModels(this.value)">
+                <option value="">— Marke —</option>
+                <option>BMW</option><option>Mercedes-Benz</option><option>Audi</option>
+                <option>Volkswagen</option><option>Skoda</option><option>Ford</option>
+                <option>Opel</option><option>Toyota</option><option>Volvo</option>
+                <option>Porsche</option><option>Renault</option><option>Andere</option>
+              </select>
             </div>
             <div class="hc-field">
               <label>Modell</label>
-              <input list="hcModelList" id="hcModel" placeholder="z. B. 320d Touring">
-              <datalist id="hcModelList"><option value="320d Touring"><option value="520d Touring"><option value="A4 Avant"><option value="A6 Avant"><option value="C-Klasse T-Modell"><option value="E-Klasse T-Modell"><option value="Passat Variant"><option value="Golf Variant"><option value="Octavia Combi"><option value="Superb Combi"><option value="Transit Custom"><option value="Transporter"><option value="Vito"></datalist>
+              <select id="hcModel" disabled style="opacity:.5">
+                <option value="">— erst Marke wählen —</option>
+              </select>
             </div>
           </div>
           <div class="hc-field">
@@ -2126,6 +2132,27 @@ function hcCategoryConfig(c){
     van_35:{afaMonths:72,earlyMonths:36,idealMinMonths:36,idealMaxMonths:60,lateMonths:72,earlyKm:85000,idealMinKm:90000,idealMaxKm:140000,lateKm:155000,targetBookQuote:45}
   };
   return cfg[c]||cfg.pkw_ice;
+}
+function hcPopulateModels(marke){
+  var sel=document.getElementById('hcModel');
+  if(!sel)return;
+  sel.innerHTML='';
+  if(!marke||!window.MODELLE||!window.MODELLE[marke]){
+    sel.innerHTML='<option value="">— erst Marke wählen —</option>';
+    sel.disabled=true;sel.style.opacity='.5';return;
+  }
+  if(marke==='Andere'){
+    var ph2=document.createElement('option');
+    ph2.value='';ph2.textContent='— Modell eingeben —';
+    sel.appendChild(ph2);sel.disabled=false;sel.style.opacity='1';return;
+  }
+  var ph=document.createElement('option');
+  ph.value='';ph.textContent='— Modell wählen —';
+  sel.appendChild(ph);
+  window.MODELLE[marke].forEach(function(m){
+    var o=document.createElement('option');o.value=m;o.textContent=m;sel.appendChild(o);
+  });
+  sel.disabled=false;sel.style.opacity='1';
 }
 function hcCalculate(){
   var manufacturer=document.getElementById('hcManufacturer').value.trim();
