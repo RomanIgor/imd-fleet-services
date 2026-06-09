@@ -855,16 +855,16 @@ tbody tr:hover td{background:var(--f0)}
 }
 @media(max-width:600px){
   .hc-2col{grid-template-columns:1fr}
-  .hero-split{background:#060a16;overflow:visible}
-  .hero-photo{display:block;position:absolute;top:0;left:0;right:0;height:clamp(360px,72vw,480px);background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
-  .hero-copy{width:100%;height:clamp(360px,72vw,480px);overflow:hidden;position:relative;z-index:2;background:linear-gradient(to top,rgba(6,10,22,0.95) 0%,rgba(6,10,22,0.72) 45%,rgba(6,10,22,0.20) 80%,transparent 100%);padding:0 24px 36px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start}
-  .hero-h1{font-size:clamp(26px,7vw,34px)}
-  .hero-sub{display:block;font-size:14px;line-height:1.7;margin-bottom:20px}
+  .hero-split{overflow:hidden}
+  .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
+  .hero-copy{width:100%;position:relative;z-index:2;background:linear-gradient(to bottom,rgba(6,10,22,0.80) 0%,rgba(6,10,22,0.50) 100%);padding:32px 24px 20px}
+  .hero-h1{font-size:clamp(24px,6.5vw,30px)}
+  .hero-sub{display:none}
   .hero-kpi{display:none}
   .hero-eyebrow{margin-bottom:10px}
   .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:0;align-items:center}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
-  .hero-calc{display:block;position:relative;z-index:3;top:auto;right:auto;transform:none;width:calc(100% - 32px);max-height:none;overflow-y:visible;background:rgba(10,15,35,0.97);border-radius:12px;margin:16px 16px 32px;border:1px solid rgba(255,255,255,.16)}
+  .hero-calc{display:block;position:relative;z-index:3;top:auto;right:auto;transform:none;width:calc(100% - 32px);max-height:none;overflow-y:visible;background:rgba(8,12,28,0.90);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;margin:0 16px 24px;border:1px solid rgba(255,255,255,.18)}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
