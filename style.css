@@ -863,15 +863,15 @@ tbody tr:hover td{background:var(--f0)}
   .hero-split{height:clamp(360px,72vw,480px);overflow:hidden}
   .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
   .hero-copy{width:100%;height:100%;overflow:hidden;position:relative;z-index:2;background:linear-gradient(to top,rgba(6,10,22,0.95) 0%,rgba(6,10,22,0.65) 50%,rgba(6,10,22,0.15) 100%);padding:0 24px 32px;display:flex;flex-direction:column;justify-content:flex-end}
+  .hero-eyebrow{display:none}
   .hero-h1{font-size:clamp(24px,6.5vw,32px)}
   .hero-sub{display:block;font-size:14px;line-height:1.65;margin-bottom:16px}
   .hero-kpi{display:none}
-  .hero-eyebrow{margin-bottom:10px}
   .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:14px}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
   /* Trigger button */
-  .hc-open-btn{display:flex;align-items:center;gap:8px;width:100%;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:10px;padding:11px 16px;color:rgba(255,255,255,0.90);font-size:13px;font-weight:600;cursor:pointer;transition:background .18s}
-  .hc-open-btn:hover{background:rgba(255,255,255,0.17)}
+  .hc-open-btn{display:flex;align-items:center;gap:8px;width:100%;background:rgba(37,99,235,0.30);border:1px solid rgba(37,99,235,0.65);border-radius:10px;padding:11px 16px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:background .18s}
+  .hc-open-btn:hover{background:rgba(37,99,235,0.45)}
   /* Calculator: verborgen, apare ca bottom sheet */
   .hero-calc{display:none;position:fixed;top:72px;bottom:0;left:0;right:0;width:100%;margin:0;overflow-y:auto;background:rgba(6,10,22,0.28);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:0;padding:16px 20px 40px;z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.10)}
   .hero-calc.hc-open{display:block;animation:hcSlideUp .22s cubic-bezier(0.32,0.72,0,1) forwards}
