@@ -870,18 +870,19 @@ tbody tr:hover td{background:var(--f0)}
   .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:14px}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
   /* Trigger button */
-  .hc-open-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:rgba(37,99,235,0.18);border:1px solid rgba(93,149,255,0.35);border-radius:8px;color:#93c5fd;padding:12px 20px;font-size:13px;font-weight:600;font-family:var(--fh);cursor:pointer;letter-spacing:0;transition:background .18s,border-color .18s}
-  .hc-open-btn:hover{background:rgba(37,99,235,0.30);border-color:rgba(93,149,255,0.55)}
+  .hc-open-btn{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.45);border-radius:4px;color:#fff;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--fh);cursor:pointer;letter-spacing:-.012em;transition:background .18s,border-color .18s}
+  .hc-open-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.75)}
   /* Calculator: verborgen, apare ca bottom sheet */
   .hero-calc{display:none;position:fixed;top:72px;bottom:0;left:0;right:0;width:100%;margin:0;overflow-y:auto;background:rgba(6,10,22,0.28);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:0;padding:16px 20px 40px;z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.10)}
   .hero-calc.hc-open{display:block;animation:hcSlideUp .22s cubic-bezier(0.32,0.72,0,1) forwards}
   .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:14px;width:fit-content}
   .hc-2col{grid-template-columns:1fr}
-  /* Result section: 6 KPIs 2-col, hide decorative / wide elements */
+  /* Result section: 6 KPIs 2-col */
   .hero-calc .hc-kpis{grid-template-columns:1fr 1fr}
   .hero-calc .hc-status-icon{display:none}
   .hero-calc .hc-status-label{display:none}
   .hero-calc .hc-compare{display:none}
+  .hero-calc .hc-next-box{display:none}
   .hero-calc .hc-disclaimer{display:none}
   .hero-calc .hc-btn.hc-cta{margin-top:14px}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
