@@ -841,6 +841,7 @@ tbody tr:hover td{background:var(--f0)}
   .faq-grid{grid-template-columns:1fr}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
+  .hero{padding-top:72px;min-height:0}
   .hero-sub{font-size:15px}
   .hero-split{min-height:0;flex:none;display:flex;flex-direction:column}
   .hero-split::after{display:none}
