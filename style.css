@@ -877,12 +877,15 @@ tbody tr:hover td{background:var(--f0)}
   .hero-calc.hc-open{display:block;animation:hcSlideUp .22s cubic-bezier(0.32,0.72,0,1) forwards}
   .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:14px;width:fit-content}
   .hc-2col{grid-template-columns:1fr}
-  /* Result section: 6 KPIs 2-col */
+  /* Result section: 6 KPIs 2-col, rest hidden */
   .hero-calc .hc-kpis{grid-template-columns:1fr 1fr}
   .hero-calc .hc-status-icon{display:none}
   .hero-calc .hc-status-label{display:none}
+  .hero-calc .hc-copy{display:none}
   .hero-calc .hc-compare{display:none}
+  .hero-calc .hc-checklist{display:none}
   .hero-calc .hc-next-box{display:none}
+  .hero-calc .hc-recommend{display:none}
   .hero-calc .hc-disclaimer{display:none}
   .hero-calc .hc-btn.hc-cta{margin-top:14px}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
