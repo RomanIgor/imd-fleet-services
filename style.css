@@ -193,6 +193,14 @@ a{text-decoration:none;color:inherit}
 .hc-chip{padding:5px 10px;font-size:11px;font-weight:600;font-family:var(--fh);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:20px;color:rgba(200,216,232,.75);cursor:pointer;transition:all .16s}
 .hc-chip:hover{background:rgba(255,255,255,.12);color:#fff}
 .hc-chip.active{background:rgba(147,197,253,.18);border-color:rgba(147,197,253,.40);color:#93c5fd}
+.hc-status-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.hc-status-icon svg{width:17px;height:17px}
+.hc-checklist{display:grid;gap:5px;margin-top:10px;margin-bottom:8px}
+.hc-checkitem{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:7px;padding:8px 10px;color:rgba(200,216,232,.70);font-size:11.5px;display:flex;gap:7px;align-items:flex-start}
+.hc-checkitem .mk{flex:0 0 auto;font-weight:800}
+.hc-checkitem.ok .mk{color:#4f9c72}
+.hc-checkitem.warn{background:rgba(192,122,58,.12);border-color:rgba(192,122,58,.30)}
+.hc-checkitem.warn .mk{color:#c07a3a}
 .hc-status-label{font-size:10.5px;font-weight:600;color:rgba(200,216,232,.62);letter-spacing:.04em;margin:0 0 7px;display:block}
 .hc-copy{font-size:11.5px;color:rgba(200,216,232,.70);line-height:1.55;margin:0 0 10px}
 .hc-disclaimer{font-size:9.5px;color:rgba(200,216,232,.28);line-height:1.5;margin:8px 0 0;border-top:1px solid rgba(255,255,255,.07);padding-top:8px}
