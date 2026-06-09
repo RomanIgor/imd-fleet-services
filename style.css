@@ -842,10 +842,10 @@ tbody tr:hover td{background:var(--f0)}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
   .hero-sub{font-size:15px}
-  .hero-split{min-height:0;flex:none}
+  .hero-split{min-height:0;flex:none;display:flex;flex-direction:column}
   .hero-split::after{display:none}
-  .hero-copy{width:100%;min-height:0;padding:72px 32px 44px;background:linear-gradient(to bottom,rgba(6,10,22,0.82) 0%,rgba(6,10,22,0.68) 70%,rgba(6,10,22,0.55) 100%),url('new_images/new_hero_example.jpeg') 50% 15%/cover no-repeat}
-  .hero-photo{display:none}
+  .hero-photo{order:-1;position:relative;inset:auto;display:block;width:100%;height:56vw;min-height:180px;max-height:260px;flex-shrink:0;z-index:0}
+  .hero-copy{order:0;width:100%;min-height:0;padding:28px 28px 36px;background:rgba(6,10,22,0.97)}
   .hero-calc{position:relative;top:auto;right:auto;transform:none;display:block;width:calc(100% - 40px);max-height:none;overflow-y:visible;background:rgba(6,10,22,0.90);backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:12px;margin:0 20px 36px;border:1px solid rgba(255,255,255,.16);z-index:5}
   .ub-intro-grid{grid-template-columns:1fr}
   .ub-photo{max-width:100%;height:260px}
@@ -857,7 +857,7 @@ tbody tr:hover td{background:var(--f0)}
   .hc-2col{grid-template-columns:1fr}
   .hero-calc{width:calc(100% - 32px);margin:0 16px 28px;padding:18px 16px}
   .hero-h1{font-size:clamp(30px,8vw,38px)}
-  .hero-copy{padding:64px 20px 36px}
+  .hero-copy{padding:24px 20px 32px}
   .hero-kpi{grid-template-columns:1fr}
   .hkpi{border-bottom:1px solid var(--border)}
   .hero-btns{flex-direction:column;align-items:stretch}
