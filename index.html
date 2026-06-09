@@ -65,6 +65,10 @@
         <button class="btn btn-primary btn-lg" onclick="goTo('anmelden')">Jetzt Fuhrpark anbieten →</button>
         <button class="btn btn-ghost btn-lg" onclick="goTo('prozess')">So funktioniert es</button>
       </div>
+      <button class="hc-open-btn" onclick="hcOpenCalc()">
+        <svg width="15" height="15" viewBox="0 0 256 256" fill="currentColor"><path d="M232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-104,40a12,12,0,1,0,12,12A12,12,0,0,0,128,168Zm-4-40V80a4,4,0,0,1,8,0v48a4,4,0,0,1-8,0Z"/></svg>
+        Fahrzeug-Buchwert prüfen
+      </button>
       <div class="hero-kpi">
         <div class="hkpi"><div class="hkpi-val">25.000+</div><div class="hkpi-lbl">Fahrzeuge angekauft</div></div>
         <div class="hkpi"><div class="hkpi-val">48h</div><div class="hkpi-lbl">Ø Bearbeitung</div></div>
@@ -75,6 +79,7 @@
     <!-- RIGHT: photo background -->
     <div class="hero-photo"></div>
     <div class="hero-calc">
+        <button class="hc-close-btn" onclick="hcCloseCalc()">✕ Schließen</button>
         <div class="hc-badge">Live-Rechner</div>
         <h3 class="hc-title">Fahrzeug-Buchwert prüfen</h3>
         <div id="hcForm">
@@ -2093,6 +2098,14 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="main.js?v=hero-concrete-system-7"></script>
 <script>
 var hcRepair=0;
+function hcOpenCalc(){
+  document.querySelector('.hero-calc').classList.add('hc-open');
+  document.body.style.overflow='hidden';
+}
+function hcCloseCalc(){
+  document.querySelector('.hero-calc').classList.remove('hc-open');
+  document.body.style.overflow='';
+}
 function hcChip(el){
   document.querySelectorAll('.hc-chip').forEach(function(c){c.classList.remove('active');});
   el.classList.add('active');

@@ -853,28 +853,29 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:720px){
   .exp-grid{grid-template-columns:1fr}
 }
+/* Mobile calc trigger button — hidden on desktop */
+.hc-open-btn{display:none}
+.hc-close-btn{display:none}
+
 @media(max-width:600px){
-  .hc-2col{grid-template-columns:1fr 1fr}
-  .hero-split{min-height:calc(100vh - 72px);overflow:hidden}
+  /* Hero: foto full-width, text overlay jos */
+  .hero-split{height:clamp(360px,72vw,480px);overflow:hidden}
   .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
-  .hero-copy{width:48%;min-height:calc(100vh - 72px);position:relative;z-index:2;background:linear-gradient(to right,rgba(6,10,22,0.92) 0%,rgba(6,10,22,0.72) 65%,transparent 100%);padding:20px 8px 20px 14px;display:flex;flex-direction:column;justify-content:center}
-  .hero-h1{font-size:clamp(13px,3.5vw,17px);line-height:1.3}
-  .hero-sub{display:block;font-size:10px;line-height:1.5;margin-bottom:10px}
+  .hero-copy{width:100%;height:100%;overflow:hidden;position:relative;z-index:2;background:linear-gradient(to top,rgba(6,10,22,0.95) 0%,rgba(6,10,22,0.65) 50%,rgba(6,10,22,0.15) 100%);padding:0 24px 32px;display:flex;flex-direction:column;justify-content:flex-end}
+  .hero-h1{font-size:clamp(24px,6.5vw,32px)}
+  .hero-sub{display:block;font-size:14px;line-height:1.65;margin-bottom:16px}
   .hero-kpi{display:none}
-  .hero-eyebrow{margin-bottom:6px;font-size:9px}
-  .hero-btns{flex-direction:column;gap:5px;margin-bottom:0}
-  .hero-btns .btn-primary,.hero-btns .btn-ghost{font-size:10px;padding:7px 8px;text-align:center;justify-content:center}
-  .hero-calc{position:absolute;top:50%;right:2%;transform:translateY(-50%);width:46%;max-height:calc(100vh - 96px);overflow-y:auto;padding:8px 9px}
-  .hc-badge{font-size:8px;padding:3px 7px;margin-bottom:5px}
-  .hc-title{font-size:11px;margin-bottom:6px}
-  .hc-field{margin-bottom:4px}
-  .hc-field label{font-size:8px;margin-bottom:2px}
-  .hc-field input,.hc-field select{padding:4px 6px;font-size:10px;border-radius:5px}
-  .hc-2col{gap:4px}
-  .hc-chips{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-  .hc-chip{font-size:9px;padding:4px 6px;border-radius:10px}
-  .hc-btn{padding:6px 10px;font-size:10px;margin-top:5px}
-  .hc-note{font-size:8px;margin-top:4px}
+  .hero-eyebrow{margin-bottom:10px}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
+  /* Trigger button */
+  .hc-open-btn{display:flex;align-items:center;gap:8px;width:100%;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:10px;padding:11px 16px;color:rgba(255,255,255,0.90);font-size:13px;font-weight:600;cursor:pointer;transition:background .18s}
+  .hc-open-btn:hover{background:rgba(255,255,255,0.17)}
+  /* Calculator: verborgen, apare ca bottom sheet */
+  .hero-calc{display:none;position:fixed;bottom:0;left:0;right:0;top:auto;width:100%;transform:none;max-height:85vh;overflow-y:auto;background:rgba(8,12,28,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px 20px 0 0;padding:20px 20px 40px;z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.15)}
+  .hero-calc.hc-open{display:block}
+  .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:8px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:16px}
+  .hc-2col{grid-template-columns:1fr 1fr}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
@@ -893,17 +894,11 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:480px){
   .wrap{padding-left:20px;padding-right:20px}
   .nav-in{padding-left:20px;padding-right:20px}
-  .hero-h1{font-size:clamp(12px,3.2vw,15px);margin-bottom:4px}
-  .hero-copy{padding:16px 6px 16px 12px}
-  .hero-sub{font-size:9px;margin-bottom:8px}
-  .hero-btns{gap:4px}
-  .hero-calc{width:47%;padding:8px 8px}
-  .hc-title{font-size:11px;margin-bottom:6px}
-  .hc-field{margin-bottom:4px}
-  .hc-field input,.hc-field select{padding:4px 6px;font-size:9px}
-  .hc-field label{font-size:7px}
-  .hc-2col{gap:4px}
-  .hc-btn{padding:6px 8px;font-size:10px;margin-top:5px}
+  .hero-split{height:clamp(320px,70vw,420px)}
+  .hero-h1{font-size:clamp(22px,6vw,28px);margin-bottom:8px}
+  .hero-copy{padding:0 20px 28px}
+  .hero-sub{font-size:13px;margin-bottom:14px}
+  .hero-btns{gap:8px;margin-bottom:12px}
   .trust-inner{padding-left:16px;padding-right:16px}
 }
 
