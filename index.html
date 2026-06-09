@@ -2137,7 +2137,7 @@ function hcPopulateModels(marke){
   var sel=document.getElementById('hcModel');
   if(!sel)return;
   sel.innerHTML='';
-  if(!marke||!window.MODELLE||!window.MODELLE[marke]){
+  if(!marke||typeof MODELLE==='undefined'||!MODELLE[marke]){
     sel.innerHTML='<option value="">— erst Marke wählen —</option>';
     sel.disabled=true;sel.style.opacity='.5';return;
   }
@@ -2149,7 +2149,7 @@ function hcPopulateModels(marke){
   var ph=document.createElement('option');
   ph.value='';ph.textContent='— Modell wählen —';
   sel.appendChild(ph);
-  window.MODELLE[marke].forEach(function(m){
+  MODELLE[marke].forEach(function(m){
     var o=document.createElement('option');o.value=m;o.textContent=m;sel.appendChild(o);
   });
   sel.disabled=false;sel.style.opacity='1';
