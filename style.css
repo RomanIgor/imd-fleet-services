@@ -855,16 +855,16 @@ tbody tr:hover td{background:var(--f0)}
 }
 @media(max-width:600px){
   .hc-2col{grid-template-columns:1fr}
-  .hero-split{overflow:hidden}
+  .hero-split{height:calc(100vh - 72px);display:flex;flex-direction:column;overflow:hidden}
   .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
-  .hero-copy{width:100%;position:relative;z-index:2;background:linear-gradient(to bottom,rgba(6,10,22,0.80) 0%,rgba(6,10,22,0.50) 100%);padding:32px 24px 20px}
-  .hero-h1{font-size:clamp(24px,6.5vw,30px)}
+  .hero-copy{flex:0 0 auto;width:100%;position:relative;z-index:2;background:linear-gradient(to bottom,rgba(6,10,22,0.82) 0%,rgba(6,10,22,0.55) 100%);padding:20px 24px 16px}
+  .hero-h1{font-size:clamp(22px,6vw,28px)}
   .hero-sub{display:none}
   .hero-kpi{display:none}
-  .hero-eyebrow{margin-bottom:10px}
-  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:0;align-items:center}
+  .hero-eyebrow{margin-bottom:8px}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:8px;margin-bottom:0;align-items:center}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
-  .hero-calc{display:block;position:relative;z-index:3;top:auto;right:auto;transform:none;width:calc(100% - 32px);max-height:none;overflow-y:visible;background:rgba(8,12,28,0.90);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px;margin:0 16px 24px;border:1px solid rgba(255,255,255,.18)}
+  .hero-calc{flex:1 1 auto;min-height:0;overflow-y:auto;display:block;position:relative;z-index:3;top:auto;right:auto;transform:none;width:calc(100% - 32px);background:rgba(8,12,28,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:12px 12px 0 0;margin:8px 16px 0;border:1px solid rgba(255,255,255,.18);border-bottom:none}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
