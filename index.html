@@ -151,23 +151,17 @@
               <small>Kilometerstand</small>
               <strong id="hcKmOut">—</strong>
             </div>
-            <div class="hc-kpi hc-hi">
-              <small>Buchwert heute</small>
-              <strong id="hcBookVal">—</strong>
-              <span id="hcBookQ">—</span>
-            </div>
-            <div class="hc-kpi hc-warn">
-              <small>Buchwert in 12 Mon.</small>
-              <strong id="hcBookVal12">—</strong>
-              <span id="hcBookQ12">—</span>
-            </div>
-            <div class="hc-kpi">
-              <small>AfA / Monat</small>
-              <strong id="hcMonthlyAfa">—</strong>
-            </div>
             <div class="hc-kpi">
               <small>Jahresfahrleistung autom.</small>
               <strong id="hcAnnualKmOut">—</strong>
+            </div>
+            <div class="hc-kpi hc-hi">
+              <small>Buchwert heute</small>
+              <strong id="hcBookVal">—</strong>
+            </div>
+            <div class="hc-kpi hc-hi">
+              <small>Restbuchwertquote</small>
+              <strong id="hcBookQuote">—</strong>
             </div>
           </div>
           <div class="hc-compare">
@@ -2257,13 +2251,7 @@ function hcCalculate(){
   document.getElementById('hcAge').textContent=ageStr;
   document.getElementById('hcKmOut').textContent=fkm(km);
   document.getElementById('hcBookVal').textContent=fe(bookValue);
-  document.getElementById('hcBookQ').textContent=fp(bookQuote);
-  var dep12=Math.min(bookValue,monthlyAfa*12);
-  var bookValue12=Math.max(0,bookValue-dep12);
-  var bookQuote12=purchase>0?(bookValue12/purchase)*100:0;
-  document.getElementById('hcBookVal12').textContent=fe(bookValue12);
-  document.getElementById('hcBookQ12').textContent=fp(bookQuote12);
-  document.getElementById('hcMonthlyAfa').textContent=fe(monthlyAfa);
+  document.getElementById('hcBookQuote').textContent=fp(bookQuote);
   document.getElementById('hcAnnualKmOut').textContent=fkm(annualKm);
   document.getElementById('hcTodayBook').textContent=fe(bookValue);
   document.getElementById('hcTodayQ').textContent=fp(bookQuote);
