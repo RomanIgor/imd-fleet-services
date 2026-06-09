@@ -856,15 +856,15 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:600px){
   .hc-2col{grid-template-columns:1fr}
   .hero-calc{display:none}
-  .hero-split{height:calc(100vh - 72px);overflow:hidden}
+  .hero-split{height:clamp(220px,60vw,290px);overflow:hidden}
   .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 50% 20%/cover no-repeat}
-  .hero-copy{width:100%;height:100%;background:linear-gradient(to bottom,rgba(6,10,22,0.82) 0%,rgba(6,10,22,0.60) 60%,rgba(6,10,22,0.35) 100%);padding:40px 24px 36px;display:flex;flex-direction:column;justify-content:center}
-  .hero-h1{font-size:clamp(28px,7.5vw,36px)}
-  .hero-sub{display:block;font-size:15px;line-height:1.75}
+  .hero-copy{width:58%;height:100%;overflow:hidden;background:linear-gradient(to right,rgba(6,10,22,0.92) 0%,rgba(6,10,22,0.72) 55%,rgba(6,10,22,0.15) 88%,transparent 100%);padding:20px 14px 20px}
+  .hero-h1{font-size:clamp(17px,4.5vw,22px)}
+  .hero-sub{display:none}
   .hero-kpi{display:none}
-  .hero-eyebrow{margin-bottom:12px}
-  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:0;align-items:stretch}
-  .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center;flex:1 1 auto}
+  .hero-eyebrow{margin-bottom:8px}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:6px;margin-bottom:0;align-items:stretch}
+  .hero-btns .btn-primary,.hero-btns .btn-ghost{font-size:12px;padding:8px 10px;text-align:center;justify-content:center}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
@@ -885,9 +885,10 @@ tbody tr:hover td{background:var(--f0)}
   .nav-in{padding-left:20px;padding-right:20px}
   .hkpi{padding:14px 10px}
   .hkpi-val{font-size:20px}
-  .hero-h1{font-size:clamp(26px,7.5vw,32px);margin-bottom:10px}
-  .hero-copy{padding:32px 20px 28px}
-  .hero-btns{margin-bottom:0;gap:8px}
+  .hero-split{height:clamp(200px,58vw,260px)}
+  .hero-h1{font-size:clamp(16px,4.2vw,20px);margin-bottom:8px}
+  .hero-copy{padding:16px 12px 16px}
+  .hero-btns{margin-bottom:0;gap:6px}
   .trust-inner{padding-left:16px;padding-right:16px}
 }
 
