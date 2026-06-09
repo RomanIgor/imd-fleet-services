@@ -872,10 +872,16 @@ tbody tr:hover td{background:var(--f0)}
   .hc-open-btn{display:flex;align-items:center;gap:8px;width:100%;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:10px;padding:11px 16px;color:rgba(255,255,255,0.90);font-size:13px;font-weight:600;cursor:pointer;transition:background .18s}
   .hc-open-btn:hover{background:rgba(255,255,255,0.17)}
   /* Calculator: verborgen, apare ca bottom sheet */
-  .hero-calc{display:none;position:fixed;bottom:0;left:0;right:0;top:auto;width:100%;transform:none;max-height:85vh;overflow-y:auto;background:rgba(8,12,28,0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px 20px 0 0;padding:20px 20px 40px;z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.15)}
+  .hero-calc{display:none;position:fixed;bottom:0;left:0;right:0;top:auto;width:100%;transform:none;max-height:88vh;overflow-y:auto;background:rgba(8,12,28,0.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px 20px 0 0;padding:16px 20px env(safe-area-inset-bottom,24px);z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.18)}
   .hero-calc.hc-open{display:block}
-  .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:8px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:16px}
+  .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:14px;width:fit-content}
   .hc-2col{grid-template-columns:1fr 1fr}
+  /* Result section layout inside overlay */
+  .hero-calc .hc-kpis{grid-template-columns:1fr 1fr}
+  .hero-calc .hc-kpi.hc-loss{grid-column:span 2}
+  .hero-calc .hc-compare{margin:10px 0}
+  .hero-calc #hcResult{padding-bottom:16px}
+  .hero-calc .hc-btn.hc-cta{margin-top:14px}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}

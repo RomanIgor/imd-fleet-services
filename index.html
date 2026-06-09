@@ -193,7 +193,7 @@
           <div class="hc-recommend" id="hcRecommendBox"></div>
           <p class="hc-disclaimer">Statische Orientierungsrechnung auf AfA-Basis. Kein Ersatz f&#252;r steuerliche Beratung oder Marktwertbewertung.</p>
           <button class="hc-btn hc-cta" id="hcSellBtn" onclick="hcGoToForm()">Fahrzeug an IMD Fleet Services verkaufen →</button>
-          <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block'">← Neu berechnen</a>
+          <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block';var c=document.querySelector('.hero-calc');if(c)c.scrollTop=0;">← Neu berechnen</a>
         </div>
       </div>
 
@@ -2112,12 +2112,15 @@ function hcChip(el){
   hcRepair=Number(el.dataset.repair)||0;
 }
 function hcGoToForm(){
+  hcCloseCalc();
   var el=document.querySelector('#anmelden .form-card')||document.getElementById('anmelden');
   if(!el)return;
   var nav=document.querySelector('nav');
   var offset=nav?nav.offsetHeight+16:88;
-  var y=el.getBoundingClientRect().top+window.pageYOffset-offset;
-  window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  setTimeout(function(){
+    var y=el.getBoundingClientRect().top+window.pageYOffset-offset;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  },120);
 }
 var HC_ICONS={
   ok:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
