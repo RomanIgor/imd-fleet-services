@@ -856,15 +856,15 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:600px){
   .hc-2col{grid-template-columns:1fr}
   .hero-calc{display:none}
-  .hero-split{height:clamp(220px,60vw,290px);overflow:hidden}
-  .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 50% 20%/cover no-repeat}
-  .hero-copy{width:58%;height:100%;overflow:hidden;background:linear-gradient(to right,rgba(6,10,22,0.92) 0%,rgba(6,10,22,0.72) 55%,rgba(6,10,22,0.15) 88%,transparent 100%);padding:20px 14px 20px}
-  .hero-h1{font-size:clamp(17px,4.5vw,22px)}
-  .hero-sub{display:none}
+  .hero-split{height:clamp(360px,72vw,480px);overflow:hidden}
+  .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
+  .hero-copy{width:100%;height:100%;overflow:hidden;background:linear-gradient(to top,rgba(6,10,22,0.95) 0%,rgba(6,10,22,0.72) 45%,rgba(6,10,22,0.20) 80%,transparent 100%);padding:0 24px 36px;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start}
+  .hero-h1{font-size:clamp(26px,7vw,34px)}
+  .hero-sub{display:block;font-size:14px;line-height:1.7;margin-bottom:20px}
   .hero-kpi{display:none}
-  .hero-eyebrow{margin-bottom:8px}
-  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:6px;margin-bottom:0;align-items:stretch}
-  .hero-btns .btn-primary,.hero-btns .btn-ghost{font-size:12px;padding:8px 10px;text-align:center;justify-content:center}
+  .hero-eyebrow{margin-bottom:10px}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;gap:10px;margin-bottom:0;align-items:center}
+  .hero-btns .btn-primary,.hero-btns .btn-ghost{text-align:center;justify-content:center}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
@@ -885,10 +885,10 @@ tbody tr:hover td{background:var(--f0)}
   .nav-in{padding-left:20px;padding-right:20px}
   .hkpi{padding:14px 10px}
   .hkpi-val{font-size:20px}
-  .hero-split{height:clamp(200px,58vw,260px)}
-  .hero-h1{font-size:clamp(16px,4.2vw,20px);margin-bottom:8px}
-  .hero-copy{padding:16px 12px 16px}
-  .hero-btns{margin-bottom:0;gap:6px}
+  .hero-split{height:clamp(320px,70vw,420px)}
+  .hero-h1{font-size:clamp(24px,6.5vw,30px);margin-bottom:10px}
+  .hero-copy{padding:0 20px 28px}
+  .hero-btns{margin-bottom:0;gap:8px}
   .trust-inner{padding-left:16px;padding-right:16px}
 }
 
