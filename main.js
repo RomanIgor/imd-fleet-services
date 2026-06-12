@@ -1104,17 +1104,18 @@ if (window.location.pathname === '/intern') {
   window.addEventListener('load', openDash);
 }
 
-// ─── TRUST-BAR SLIDE-UP ANIMATION (mobile only) ───
+// ─── TRUST-BAR SLIDE LEFT/RIGHT ANIMATION (mobile only) ───
 if (window.innerWidth <= 600 && 'IntersectionObserver' in window) {
   document.querySelectorAll('.ti').forEach((el, i) => {
     el.classList.add('ti-hidden');
-    el.style.animationDelay = (i * 0.12) + 's';
+    el.style.animationDelay = (i * 0.13) + 's';
   });
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        const i = Array.from(entry.target.parentElement.children).indexOf(entry.target);
         entry.target.classList.remove('ti-hidden');
-        entry.target.classList.add('ti-show');
+        entry.target.classList.add(i % 2 === 0 ? 'ti-show-left' : 'ti-show-right');
         obs.unobserve(entry.target);
       }
     });
