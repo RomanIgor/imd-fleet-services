@@ -266,6 +266,8 @@ img{display:block;max-width:100%}
 .mob-menu.open{display:flex}
 .mob-menu a{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text-1)}
 .mob-menu a:hover{color:var(--blue)}
+.mob-close{position:absolute;top:18px;right:20px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:22px;line-height:1;padding:8px;border-radius:50%;transition:color .18s ease}
+.mob-close:hover{color:var(--text-1)}
 
 /* ══════════════ NAV ══════════════ */
 nav{position:fixed;inset:0 0 auto;z-index:300;height:72px;display:flex;align-items:center;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(9,21,42,.04)}
@@ -965,7 +967,8 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .nav-cta:hover{background:rgba(55,70,105,0.75)}
 [data-theme="dark"] .nav-links a{color:rgba(238,242,246,.55)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
-[data-theme="dark"] .mob-menu{background:rgba(19,20,26,0.68)}
+[data-theme="dark"] .mob-menu{background:#13141a}
+[data-theme="dark"] .mob-close{color:#8899aa}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
 /* hero always renders on photo — no theme override needed for copy/h1/sub */
 [data-theme="dark"] .hkpi{background:rgba(30,32,40,0.32)}
