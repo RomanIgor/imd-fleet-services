@@ -133,6 +133,7 @@ a{text-decoration:none;color:inherit}
 .hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
 @keyframes heDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.10)}}
 @keyframes hcSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes tiSlideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 .hero-eyebrow-text{font-family:var(--fh);font-size:10px;font-weight:700;color:rgba(200,216,232,.9);letter-spacing:.10em;text-transform:uppercase}
 
 /* H1 — always white on photo */
@@ -890,6 +891,13 @@ tbody tr:hover td{background:var(--f0)}
   .hero-calc .hc-recommend{display:none}
   .hero-calc .hc-disclaimer{display:none}
   .hero-calc .hc-btn.hc-cta{margin-top:14px}
+  /* Trust-bar: ghost cards pe mobile */
+  .trust-bar{background:transparent;padding:8px 0 4px}
+  .ti{background:transparent;border:1.5px solid rgba(255,255,255,0.35);border-bottom:1.5px solid rgba(255,255,255,0.35);border-radius:10px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  /* Animatie slide-up la scroll */
+  .ti-hidden{opacity:0;transform:translateY(28px)}
+  .ti-show{animation:tiSlideUp .45s ease forwards}
   .trust-inner{grid-template-columns:1fr;padding:0 24px}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}

@@ -1103,3 +1103,21 @@ document.addEventListener('DOMContentLoaded', revealAll);
 if (window.location.pathname === '/intern') {
   window.addEventListener('load', openDash);
 }
+
+// ─── TRUST-BAR SLIDE-UP ANIMATION (mobile only) ───
+if (window.innerWidth <= 600 && 'IntersectionObserver' in window) {
+  document.querySelectorAll('.ti').forEach((el, i) => {
+    el.classList.add('ti-hidden');
+    el.style.animationDelay = (i * 0.12) + 's';
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('ti-hidden');
+        entry.target.classList.add('ti-show');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.ti').forEach(el => obs.observe(el));
+}
