@@ -73,6 +73,7 @@ const publicAssets = new Set([
   '/design-assets/imd-hero-reference-2x.webp',
   '/design-assets/pwa-phones.jpg',
   '/design-assets/services-building.jpg',
+  '/design-assets/mob-menu-cars.png',
   '/new_background_header.jpeg',
   '/new_images/1.jpeg',
   '/new_images/2.jpeg',
