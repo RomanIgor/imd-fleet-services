@@ -269,8 +269,10 @@ img{display:block;max-width:100%}
 .mob-menu.open{display:flex}
 .mob-menu::before{content:'';position:absolute;top:-60px;right:-70px;width:280px;height:280px;border:1.5px solid rgba(26,37,64,0.10);transform:rotate(45deg);pointer-events:none;z-index:0}
 .mob-menu::after{content:'';position:absolute;bottom:-80px;left:-60px;width:220px;height:220px;border:1px solid rgba(26,37,64,0.07);transform:rotate(45deg);pointer-events:none;z-index:0}
-.mob-menu a{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text-1);position:relative;z-index:1}
-.mob-menu a:hover{color:var(--blue)}
+.mob-menu a{font-family:var(--fh);font-size:18px;font-weight:700;color:var(--text-1);position:relative;z-index:1;display:block;width:100%;padding:16px 20px;border:1px solid rgba(26,37,64,0.15);border-radius:12px;box-sizing:border-box;transition:background .18s,border-color .18s}
+.mob-menu a:hover{color:var(--blue);background:rgba(26,37,64,0.04);border-color:rgba(26,37,64,0.25)}
+[data-theme="dark"] .mob-menu a{border-color:rgba(255,255,255,0.12)}
+[data-theme="dark"] .mob-menu a:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.25)}
 .mob-close{position:absolute;top:80px;right:24px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:26px;line-height:1;padding:8px;border-radius:50%;transition:color .18s ease;z-index:2}
 .mob-close:hover{color:var(--text-1)}
 [data-theme="dark"] .mob-menu::before{border-color:rgba(200,216,232,0.10)}
