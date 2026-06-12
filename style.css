@@ -270,7 +270,7 @@ img{display:block;max-width:100%}
 /* ══════════════ NAV ══════════════ */
 nav{position:fixed;inset:0 0 auto;z-index:300;height:72px;display:flex;align-items:center;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(9,21,42,.04)}
 nav.sc{box-shadow:0 2px 12px rgba(9,21,42,.07)}
-.nav-in{width:100%;max-width:1160px;margin:0 auto;padding:0 48px;display:flex;align-items:center;gap:16px}
+.nav-in{width:100%;padding:0 48px;display:flex;align-items:center;gap:16px}
 .nav-logo{display:flex;align-items:center;gap:9px;cursor:pointer;flex-shrink:0;background:transparent}
 .logo-img{width:clamp(120px,9vw,160px);height:auto;display:block;object-fit:contain}
 .logo-light-mode{display:block}
