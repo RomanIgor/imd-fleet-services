@@ -967,7 +967,7 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .nav-cta:hover{background:rgba(55,70,105,0.75)}
 [data-theme="dark"] .nav-links a{color:rgba(238,242,246,.55)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
-[data-theme="dark"] .mob-menu{background:rgba(13,14,20,0.88);backdrop-filter:blur(18px)}
+[data-theme="dark"] .mob-menu{background:rgba(26,37,64,0.75);backdrop-filter:blur(24px)}
 [data-theme="dark"] .mob-close{color:#8899aa}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
 /* hero always renders on photo — no theme override needed for copy/h1/sub */
