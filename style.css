@@ -207,7 +207,7 @@ a{text-decoration:none;color:inherit}
 .hc-disclaimer{font-size:9.5px;color:rgba(200,216,232,.28);line-height:1.5;margin:8px 0 0;border-top:1px solid rgba(255,255,255,.07);padding-top:8px}
 
 /* ══════════════ TRUST BAR ══════════════ */
-.trust-bar{background:#0f172a}
+.trust-bar{background:rgba(26,37,64,0.55);backdrop-filter:blur(12px)}
 .trust-inner{max-width:1160px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr)}
 .ti{display:flex;align-items:center;gap:14px;padding:26px 20px;border-right:1px solid rgba(255,255,255,.07);transition:transform .22s ease,background .22s ease,box-shadow .22s ease;cursor:default}
 .ti:last-child{border-right:none}
