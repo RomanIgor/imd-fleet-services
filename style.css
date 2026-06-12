@@ -895,7 +895,7 @@ tbody tr:hover td{background:var(--f0)}
   .hero-calc .hc-btn.hc-cta{margin-top:14px}
   /* Trust-bar: ghost cards pe mobile */
   .trust-bar{background:transparent;padding:8px 0 4px}
-  .ti{background:transparent;border:1.5px solid rgba(255,255,255,0.14);border-bottom:1.5px solid rgba(255,255,255,0.14);border-radius:10px;margin-bottom:10px}
+  .ti{background:rgba(6,10,22,0.35);border:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:10px}
   .ti:last-child{margin-bottom:0}
   /* Animatie stanga/dreapta la scroll */
   .ti-hidden{opacity:0}
