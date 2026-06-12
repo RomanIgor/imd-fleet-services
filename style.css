@@ -272,7 +272,7 @@ img{display:block;max-width:100%}
 .mob-menu a:hover{color:var(--blue);padding-left:8px}
 .mob-close{position:absolute;top:22px;right:22px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:24px;line-height:1;padding:8px;border-radius:50%;transition:color .18s ease}
 .mob-close:hover{color:var(--text-1)}
-[data-theme="dark"] .mob-menu{background:#0f172a}
+[data-theme="dark"] .mob-menu{background:rgba(26,37,64,0.75);backdrop-filter:blur(24px)}
 [data-theme="dark"] .mob-menu a{color:#eef2f6;border-bottom-color:rgba(255,255,255,0.08)}
 [data-theme="dark"] .mob-menu a:first-of-type{border-top-color:rgba(255,255,255,0.08)}
 [data-theme="dark"] .mob-menu a:hover{color:var(--blue)}
