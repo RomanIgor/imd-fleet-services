@@ -268,15 +268,14 @@ img{display:block;max-width:100%}
 /* ── MOB MENU ── */
 .mob-menu{display:none;position:fixed;inset:0;z-index:301;background:#0d0f14;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:72px 0 0;gap:0;overflow:hidden}
 .mob-menu.open{display:flex}
-.mob-menu a{font-family:var(--fh);font-size:0;color:transparent;display:flex;align-items:center;flex:1;padding:0;border-bottom:1px solid rgba(255,255,255,0.06);box-sizing:border-box;opacity:0;background-image:url('/design-assets/mob-menu-cars.png');background-size:100% 600%;background-repeat:no-repeat}
-.mob-menu a:nth-of-type(1){background-position:0 0%}
-.mob-menu a:nth-of-type(2){background-position:0 20%}
-.mob-menu a:nth-of-type(3){background-position:0 40%}
-.mob-menu a:nth-of-type(4){background-position:0 60%}
-.mob-menu a:nth-of-type(5){background-position:0 80%}
-.mob-menu a:nth-of-type(6){background-position:0 100%}
-.mob-menu a:first-of-type{border-top:1px solid rgba(255,255,255,0.06)}
-.mob-menu a:hover{opacity:0.85;filter:brightness(1.1)}
+.mob-menu a{font-family:var(--fh);font-size:0;color:transparent;display:flex;align-items:center;flex:1;padding:0;border:none;box-sizing:border-box;opacity:0;background-image:url('/design-assets/mob-menu-cars.png');background-size:auto 600%;background-repeat:no-repeat}
+.mob-menu a:nth-of-type(1){background-position:left 0%}
+.mob-menu a:nth-of-type(2){background-position:left 20%}
+.mob-menu a:nth-of-type(3){background-position:left 40%}
+.mob-menu a:nth-of-type(4){background-position:left 60%}
+.mob-menu a:nth-of-type(5){background-position:left 80%}
+.mob-menu a:nth-of-type(6){background-position:left 100%}
+.mob-menu a:hover{filter:brightness(1.12)}
 .mob-menu.open a{animation:mobSlideIn .38s cubic-bezier(0.25,0.46,0.45,0.94) forwards}
 .mob-menu.open a:nth-of-type(1){animation-delay:.05s}
 .mob-menu.open a:nth-of-type(2){animation-delay:.13s}
