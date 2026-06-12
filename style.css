@@ -262,7 +262,7 @@ img{display:block;max-width:100%}
 .d4{transition-delay:.24s}.d5{transition-delay:.3s}.d6{transition-delay:.36s}
 
 /* ── MOB MENU ── */
-.mob-menu{display:none;position:fixed;inset:0;z-index:299;background:#fff;flex-direction:column;align-items:flex-start;justify-content:center;padding:80px 48px 48px;gap:24px;border-top:1px solid var(--border)}
+.mob-menu{display:none;position:fixed;inset:0;z-index:299;background:#fff;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:110px 48px 48px;gap:28px;border-top:1px solid var(--border)}
 .mob-menu.open{display:flex}
 .mob-menu a{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text-1)}
 .mob-menu a:hover{color:var(--blue)}
@@ -967,7 +967,7 @@ tbody tr:hover td{background:var(--f0)}
 [data-theme="dark"] .nav-cta:hover{background:rgba(55,70,105,0.75)}
 [data-theme="dark"] .nav-links a{color:rgba(238,242,246,.55)}
 [data-theme="dark"] .nav-links a:hover{color:#eef2f6}
-[data-theme="dark"] .mob-menu{background:#13141a}
+[data-theme="dark"] .mob-menu{background:rgba(13,14,20,0.88);backdrop-filter:blur(18px)}
 [data-theme="dark"] .mob-close{color:#8899aa}
 [data-theme="dark"] .mob-menu a{color:#eef2f6}
 /* hero always renders on photo — no theme override needed for copy/h1/sub */
