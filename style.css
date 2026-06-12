@@ -943,7 +943,7 @@ tbody tr:hover td{background:var(--f0)}
 .theme-opt.active{background:#fff;color:#1a2540;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 /* ── Dark mode override — photo background + neutral grey palette ── */
 [data-theme="dark"]{
-  --bg:rgba(22,24,30,0.36);--bg-s:rgba(255,255,255,0.14);--bg-deep:rgba(20,25,45,0.50);--bg-footer:rgba(12,18,35,0.54);--bg-card:rgba(22,24,30,0.30);
+  --bg:rgba(22,24,30,0.36);--bg-s:rgba(255,255,255,0.32);--bg-deep:rgba(20,25,45,0.50);--bg-footer:rgba(12,18,35,0.54);--bg-card:rgba(22,24,30,0.30);
   --navy:rgba(55,70,105,0.55);--blue:#C8D8E8;--blue-bg:rgba(200,216,232,.18);--blue-bd:rgba(200,216,232,.2);
   --acc:#C8D8E8;--acc-dim:rgba(200,216,232,.18);--btn-bg:rgba(55,70,105,0.55);
   --text-1:#EEF2F6;--text-2:rgba(238,242,246,.55);--text-3:rgba(238,242,246,.28);
