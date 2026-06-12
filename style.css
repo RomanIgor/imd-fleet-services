@@ -266,7 +266,7 @@ img{display:block;max-width:100%}
 .mob-menu.open{display:flex}
 .mob-menu a{font-family:var(--fh);font-size:20px;font-weight:700;color:var(--text-1)}
 .mob-menu a:hover{color:var(--blue)}
-.mob-close{position:absolute;top:18px;right:20px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:22px;line-height:1;padding:8px;border-radius:50%;transition:color .18s ease}
+.mob-close{position:absolute;top:80px;right:24px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:26px;line-height:1;padding:8px;border-radius:50%;transition:color .18s ease}
 .mob-close:hover{color:var(--text-1)}
 
 /* ══════════════ NAV ══════════════ */
