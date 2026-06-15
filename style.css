@@ -308,20 +308,20 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .nav-cta{background:var(--navy);color:#fff;border:1.5px solid transparent;padding:9px 22px;border-radius:var(--r);font-family:var(--fh);font-size:13px;font-weight:700;cursor:pointer;transition:all .18s ease;flex-shrink:0;margin-left:auto}
 .nav-cta:hover{background:#0f172a;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
 .nav-cta:active{transform:scale(.97)}
-.hamburglar{display:none;position:relative;width:68px;height:68px;background:var(--blue);border-radius:50%;cursor:pointer;margin-left:auto;transform:scale(0.6);transform-origin:center;-webkit-touch-callout:none;user-select:none;flex-shrink:0}
+.hamburglar{display:none;position:relative;width:68px;height:68px;background:transparent;cursor:pointer;margin-left:auto;transform:scale(0.6);transform-origin:center;-webkit-touch-callout:none;user-select:none;flex-shrink:0}
 .burger-icon{position:absolute;padding:20px 16px;height:68px;width:68px}
 .burger-container{position:relative;height:28px;width:36px}
-.burger-bun-top,.burger-bun-bot,.burger-filling{position:absolute;display:block;height:4px;width:36px;border-radius:2px;background:#fff}
+.burger-bun-top,.burger-bun-bot,.burger-filling{position:absolute;display:block;height:4px;width:36px;border-radius:2px;background:var(--text-1)}
 .burger-bun-top{top:0;transform-origin:34px 2px}
 .burger-bun-bot{bottom:0;transform-origin:34px 2px}
 .burger-filling{top:12px}
 .burger-ring{position:absolute;top:0;left:0;width:68px;height:68px}
-.svg-ring{width:68px;height:68px}
+.svg-ring{width:68px;height:68px}.svg-ring .path{stroke:var(--text-1)}
 .path{stroke-dasharray:240;stroke-dashoffset:240;stroke-linejoin:round}
 .path-burger{position:absolute;top:0;left:0;height:68px;width:68px;mask:url(#mask)}
 .animate-path{position:absolute;top:0;left:0;width:68px;height:68px}
 .path-rotation{height:34px;width:34px;margin:34px 34px 0 0;transform:rotate(0deg);transform-origin:100% 0}
-.path-rotation:before{content:'';display:block;width:30px;height:34px;margin:0 4px 0 0;background:#fff}
+.path-rotation:before{content:'';display:block;width:30px;height:34px;margin:0 4px 0 0;background:var(--text-1)}
 @keyframes rotate-out{0%{transform:rotate(0deg)}40%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
 @keyframes rotate-in{0%{transform:rotate(360deg)}40%{transform:rotate(180deg)}100%{transform:rotate(0deg)}}
 @keyframes dash-in{0%{stroke-dashoffset:240}40%{stroke-dashoffset:240}100%{stroke-dashoffset:0}}
