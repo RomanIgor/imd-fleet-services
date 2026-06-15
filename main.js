@@ -1037,16 +1037,6 @@ document.querySelectorAll('.wf-step, .rev, .pstep').forEach(el => io.observe(el)
 // Nav scroll behavior
 window.addEventListener('scroll', updateNavState, {passive: true});
 
-// Mob menu
-function toggleMob() {
-  document.getElementById('mobMenu').classList.toggle('open');
-  document.querySelector('.nav-mob-toggle').classList.toggle('open');
-}
-function closeMob() {
-  document.getElementById('mobMenu').classList.remove('open');
-  document.querySelector('.nav-mob-toggle')?.classList.remove('open');
-}
-
 // Scroll to section
 function goTo(id) {
   closeMob();
