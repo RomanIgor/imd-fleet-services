@@ -30,7 +30,7 @@
     <a href="#kontakt" onclick="closeMob()">Kontakt</a>
   </div>
   <div class="mob-footer">
-    <a href="#" class="mob-cta" onclick="closeMob();setTimeout(()=>document.getElementById('kontakt-form').scrollIntoView({behavior:'smooth',block:'start'}),320);return false;">Jetzt anfragen →</a>
+    <a href="#" class="mob-cta" onclick="closeMob();setTimeout(()=>{const el=document.getElementById('kontakt-form');const top=el.getBoundingClientRect().top+window.scrollY-88;window.scrollTo({top,behavior:'smooth'});},320);return false;">Jetzt anfragen →</a>
   </div>
 </div>
 
