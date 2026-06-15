@@ -274,7 +274,7 @@ img{display:block;max-width:100%}
 .mob-logo{height:28px;width:auto}
 .mob-close{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);cursor:pointer;color:rgba(238,242,246,0.6);font-size:15px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .18s,color .18s;flex-shrink:0}
 .mob-close:hover{background:rgba(255,255,255,0.12);color:#fff}
-.mob-nav{display:flex;flex-direction:column;gap:6px;padding:20px 16px}
+.mob-nav{display:flex;flex-direction:column;gap:6px;padding:20px 16px;flex:1}
 .mob-nav a{font-family:var(--fh);font-size:14px;font-weight:600;color:rgba(238,242,246,0.75);display:block;width:100%;padding:11px 18px;border-radius:50px;border:1.5px solid transparent;background:linear-gradient(rgba(8,16,46,0.3),rgba(8,16,46,0.3)) padding-box,linear-gradient(120deg,rgba(200,210,225,0.45) 0%,rgba(140,155,175,0.25) 100%) border-box;box-sizing:border-box;letter-spacing:.01em;opacity:0;transition:color .2s,background .2s}
 .mob-menu.open .mob-nav a{animation:mobSlideIn .3s ease forwards}
 .mob-menu.open .mob-nav a:nth-child(1){animation-delay:.08s}
