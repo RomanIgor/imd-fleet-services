@@ -17,13 +17,21 @@
 <!-- MOB MENU -->
 <div class="mob-backdrop" id="mobBackdrop" onclick="closeMob()"></div>
 <div class="mob-menu" id="mobMenu">
-  <button class="mob-close" onclick="closeMob()">✕</button>
-  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});closeMob();">Home</a>
-  <a href="#service" onclick="closeMob()">Fahrzeugverkauf</a>
-  <a href="#prozess" onclick="closeMob()">So funktioniert's</a>
-  <a href="#rechner" onclick="closeMob()">Verkaufszeitpunkt prüfen</a>
-  <a href="#warum" onclick="closeMob()">Warum IMD</a>
-  <a href="#kontakt" onclick="closeMob()">Kontakt</a>
+  <div class="mob-header">
+    <img src="logo_dark.png" class="mob-logo" alt="IMD Fleet Services"/>
+    <button class="mob-close" onclick="closeMob()">✕</button>
+  </div>
+  <div class="mob-nav">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});closeMob();">Home</a>
+    <a href="#service" onclick="closeMob()">Fahrzeugverkauf</a>
+    <a href="#prozess" onclick="closeMob()">So funktioniert's</a>
+    <a href="#rechner" onclick="closeMob()">Verkaufszeitpunkt prüfen</a>
+    <a href="#warum" onclick="closeMob()">Warum IMD</a>
+    <a href="#kontakt" onclick="closeMob()">Kontakt</a>
+  </div>
+  <div class="mob-footer">
+    <a href="#kontakt" class="mob-cta" onclick="closeMob()">Jetzt anfragen →</a>
+  </div>
 </div>
 
 <!-- NAV -->
