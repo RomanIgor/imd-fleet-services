@@ -74,6 +74,7 @@ const publicAssets = new Set([
   '/design-assets/pwa-phones.jpg',
   '/design-assets/services-building.jpg',
   '/design-assets/mob-menu-cars.png',
+  '/assets/bg_imd_wall.jpg',
   '/assets/icons/calendar.svg',
   '/assets/icons/car.svg',
   '/assets/icons/chat.svg',
