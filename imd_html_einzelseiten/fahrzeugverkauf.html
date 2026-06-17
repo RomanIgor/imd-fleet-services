@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fahrzeugverkauf – IMD Fleet Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+body{background-image:linear-gradient(90deg,rgba(0,0,0,.48),rgba(0,0,0,.14) 33%,rgba(0,0,0,.24) 63%,rgba(0,0,0,.38)),url('assets/imd-wall-background.jpg');background-size:cover;background-position:center top;background-attachment:fixed}
+.fv-hero{display:grid;grid-template-columns:1.05fr .92fr;gap:7vw;align-items:start;padding-top:38px}
+.fv-eyebrow{font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.86);margin:0 0 24px}
+.fv-h1{font-size:47px;line-height:1.12;letter-spacing:-.03em;margin:0 0 24px;font-weight:800;color:#fff}
+.fv-lead{font-size:16px;line-height:1.75;color:rgba(255,255,255,.82);margin:0 0 28px}
+.fv-chips{display:flex;flex-wrap:wrap;gap:10px;max-width:600px;margin-bottom:24px}
+.fv-chip{display:inline-flex;align-items:center;gap:8px;height:35px;padding:0 14px;border:1px solid rgba(255,255,255,.20);border-radius:11px;background:rgba(43,43,42,.24);backdrop-filter:blur(12px);font-size:13px;color:rgba(255,255,255,.88)}
+.fv-chip img{width:15px;height:15px;filter:invert(1);opacity:.9}
+.fv-note{max-width:580px;color:rgba(255,255,255,.80);font-size:15px;line-height:1.65;margin:0}
+
+.fv-cost-card{justify-self:end;margin-top:12px;width:min(420px,100%);padding:32px 34px 31px;border:1px solid rgba(255,255,255,.20);border-radius:18px;background:linear-gradient(135deg,rgba(105,103,99,.52),rgba(54,53,51,.42));backdrop-filter:blur(14px);box-shadow:0 22px 80px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.08)}
+.fv-card-kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:700;margin:0 0 20px}
+.fv-cost-card h2{font-size:28px;line-height:1.18;letter-spacing:-.02em;margin:0 0 22px;color:#fff;font-weight:800}
+.fv-cost-list{list-style:none;margin:0;padding:0}
+.fv-cost-list li{display:flex;align-items:center;gap:14px;padding:13px 0;border-top:1px solid rgba(255,255,255,.12);font-size:15px;color:rgba(255,255,255,.90)}
+.fv-cost-list li:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.fv-check{width:22px;height:22px;flex:0 0 auto}
+.fv-small{font-size:13px;color:rgba(255,255,255,.67);line-height:1.6;margin-top:18px}
+
+.fv-mid{display:grid;grid-template-columns:.88fr 1.22fr;gap:5vw;align-items:center;margin-top:42px}
+.fv-intro{padding-left:16px;border-left:3px solid rgba(255,255,255,.62)}
+.fv-intro h3{font-size:21px;line-height:1.3;margin:0 0 16px;color:#fff;font-weight:700}
+.fv-intro p{margin:0 0 11px;color:rgba(255,255,255,.82);font-size:15px;line-height:1.65}
+.fv-intro em{color:rgba(255,255,255,.94)}
+
+.fv-flow{display:grid;grid-template-columns:1fr 46px 1fr 46px 1fr 46px 1fr;align-items:center}
+.fv-flow-card{min-height:132px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:linear-gradient(135deg,rgba(118,116,112,.34),rgba(60,59,57,.28));backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;color:white}
+.fv-flow-card img{width:47px;height:47px;filter:invert(1);opacity:.9}
+.fv-flow-card b{font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.fv-arrow{text-align:center;font-size:30px;color:rgba(255,255,255,.78)}
+
+.fv-bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.fv-panel{border:1px solid rgba(255,255,255,.12);border-radius:16px;background:linear-gradient(135deg,rgba(85,84,81,.42),rgba(36,36,35,.34));backdrop-filter:blur(12px);box-shadow:0 20px 70px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.06)}
+.fv-panel h3{text-align:center;font-size:21px;margin:0 0 21px;letter-spacing:-.01em;color:#fff;font-weight:700}
+.fv-services{padding:22px 26px}
+.fv-service-row{display:grid;grid-template-columns:repeat(4,1fr)}
+.fv-service{padding:0 22px;text-align:center;border-right:1px solid rgba(255,255,255,.12)}
+.fv-service:last-child{border-right:none}
+.fv-service img{width:45px;height:45px;filter:invert(1);opacity:.88;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto}
+.fv-service h4{font-size:13px;margin:0 0 11px;color:#fff;font-weight:600}
+.fv-service p{font-size:11.5px;line-height:1.55;margin:0;color:rgba(255,255,255,.72)}
+.fv-steps-panel{padding:22px 30px}
+.fv-step-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;position:relative}
+.fv-step-row::before{content:"";position:absolute;left:12%;right:12%;top:19px;border-top:1px solid rgba(255,255,255,.25);z-index:0}
+.fv-step{position:relative;z-index:1}
+.fv-num{margin:0 auto 13px;width:38px;height:38px;border:1px solid rgba(255,255,255,.45);background:rgba(56,56,54,.66);border-radius:50%;display:grid;place-items:center;font-size:18px;color:#fff;font-weight:600}
+.fv-step b{display:block;font-size:13px;margin-bottom:12px;color:#fff;font-weight:600}
+.fv-step p{font-size:11.5px;line-height:1.55;margin:0;color:rgba(255,255,255,.72)}
+
+.fv-cta{margin:16px 0 48px;display:grid;grid-template-columns:72px 1fr auto;gap:22px;align-items:center;padding:22px 34px}
+.fv-cta img{width:48px;height:48px;filter:invert(1);opacity:.92}
+.fv-cta h2{font-size:24px;margin:0 0 8px;color:#fff;font-weight:700}
+.fv-cta p{font-size:16px;margin:0;color:rgba(255,255,255,.76)}
+.fv-btn{display:inline-flex;align-items:center;gap:26px;justify-content:center;border:0;border-radius:10px;background:#f2f1ed;color:#191a1a;font-weight:700;font-size:15px;padding:18px 33px;text-decoration:none;min-width:285px;box-shadow:0 12px 30px rgba(0,0,0,.22);white-space:nowrap}
+
+@media(max-width:1000px){
+  .fv-hero,.fv-mid,.fv-bottom-grid{grid-template-columns:1fr}
+  .fv-cost-card{justify-self:stretch}
+  .fv-flow{grid-template-columns:1fr;gap:12px}
+  .fv-arrow{transform:rotate(90deg)}
+  .fv-service-row{grid-template-columns:1fr 1fr;gap:25px}
+  .fv-service{border-right:none;padding-bottom:20px}
+  .fv-cta{grid-template-columns:1fr}
+  .fv-btn{width:100%}
+}
+</style>
+</head>
+<body>
+<main class="page">
+
+<nav class="nav">
+  <div class="logo">IMD<small>FLEET SERVICES</small></div>
+  <div class="menu">
+    <a href="index.html">Home</a>
+    <a class="active" href="fahrzeugverkauf.html">Fahrzeugverkauf</a>
+    <a href="so-funktionierts.html">So funktioniert's</a>
+    <a href="verkaufszeitpunkt.html">Verkaufszeitpunkt prüfen</a>
+    <a href="warum-imd.html">Warum IMD</a>
+    <a href="kontakt.html">Kontakt</a>
+    <span class="toggle">☼ &nbsp; ◔</span>
+  </div>
+</nav>
+
+<section class="fv-hero">
+  <div>
+    <p class="fv-eyebrow">Fahrzeugverkauf für Unternehmen</p>
+    <h1 class="fv-h1">Firmenfahrzeuge<br>verkaufen –<br>ohne Aufwand für<br>Ihren Fuhrpark.</h1>
+    <p class="fv-lead">Der Aufwand entsteht nicht durch das Fahrzeug –<br>sondern durch den Verkaufsprozess.</p>
+    <div class="fv-chips">
+      <span class="fv-chip"><img src="assets/icons/evaluation.svg" alt="">Bewertung</span>
+      <span class="fv-chip"><img src="assets/icons/calendar.svg" alt="">Terminabstimmung</span>
+      <span class="fv-chip"><img src="assets/icons/chat.svg" alt="">Rückfragen</span>
+      <span class="fv-chip"><img src="assets/icons/document.svg" alt="">Dokumentation</span>
+      <span class="fv-chip"><img src="assets/icons/handover.svg" alt="">Fahrzeugübergabe</span>
+      <span class="fv-chip"><img src="assets/icons/chat.svg" alt="">Interne Abstimmungen</span>
+    </div>
+    <p class="fv-note">Diese Schritte binden Zeit und Ressourcen, die in Ihrem Unternehmen an anderer Stelle benötigt werden.</p>
+  </div>
+  <aside class="fv-cost-card">
+    <p class="fv-card-kicker">IMD Fleet Services Vollservice</p>
+    <h2>Für Sie vollständig<br>kostenfrei.*</h2>
+    <ul class="fv-cost-list">
+      <li><img class="fv-check" src="assets/icons/check.svg" alt="">Keine Händlergebühren</li>
+      <li><img class="fv-check" src="assets/icons/check.svg" alt="">Keine Insertionskosten</li>
+      <li><img class="fv-check" src="assets/icons/check.svg" alt="">Keine Gutachtenkosten</li>
+      <li><img class="fv-check" src="assets/icons/check.svg" alt="">Keine Logistikkosten</li>
+      <li><img class="fv-check" src="assets/icons/check.svg" alt="">Keine Abmeldegebühren</li>
+    </ul>
+    <p class="fv-small">* Abwicklung ohne Zusatzkosten bei Verkauf<br>an IMD Fleet Services.</p>
+  </aside>
+</section>
+
+<section class="fv-mid">
+  <div class="fv-intro">
+    <h3>Genau hier setzt IMD Fleet Services an.</h3>
+    <p>Sie melden Ihr Fahrzeug oder Ihren Fuhrpark online zum Verkauf an – wir übernehmen die gesamte weitere Abwicklung. Von der Fahrzeugabholung über die Wertermittlung bis hin zur Auszahlung erhalten Sie einen strukturierten, transparenten und professionellen Prozess aus einer Hand.</p>
+    <p><em>So wird aus dem Fahrzeugverkauf kein internes Projekt,<br>sondern ein effizient abgewickelter Vorgang.</em></p>
+  </div>
+  <div class="fv-flow">
+    <div class="fv-flow-card"><img src="assets/icons/document.svg" alt=""><b>Meldung</b></div>
+    <div class="fv-arrow">→</div>
+    <div class="fv-flow-card"><img src="assets/icons/evaluation.svg" alt=""><b>Abholung</b></div>
+    <div class="fv-arrow">→</div>
+    <div class="fv-flow-card"><img src="assets/icons/document.svg" alt=""><b>Gutachten</b></div>
+    <div class="fv-arrow">→</div>
+    <div class="fv-flow-card"><img src="assets/icons/wallet.svg" alt=""><b>Auszahlung</b></div>
+  </div>
+</section>
+
+<section class="fv-bottom-grid">
+  <div class="fv-panel fv-services">
+    <h3>Wir übernehmen alles für Sie</h3>
+    <div class="fv-service-row">
+      <article class="fv-service">
+        <img src="assets/icons/car.svg" alt="">
+        <h4>Kostenlose Bewertung</h4>
+        <p>Wir bewerten Ihre Fahrzeuge marktorientiert und transparent – auf Basis aktueller Markt- und Datenanalysen.</p>
+      </article>
+      <article class="fv-service">
+        <img src="assets/icons/document.svg" alt="">
+        <h4>Professionelles Gutachten</h4>
+        <p>Unsere Gutachten sind nachvollziehbar, objektiv und bilden die Grundlage für eine sichere und faire Abwicklung.</p>
+      </article>
+      <article class="fv-service">
+        <img src="assets/icons/truck.svg" alt="">
+        <h4>Abholung &amp; Logistik</h4>
+        <p>Wir koordinieren die gesamte Abholung – deutschlandweit, zuverlässig und termingerecht.</p>
+      </article>
+      <article class="fv-service">
+        <img src="assets/icons/euro.svg" alt="">
+        <h4>Schnelle Auszahlung</h4>
+        <p>Nach finaler Prüfung erfolgt die Auszahlung schnell, sicher und unkompliziert.</p>
+      </article>
+    </div>
+  </div>
+  <div class="fv-panel fv-steps-panel">
+    <h3>So funktioniert der Verkauf mit IMD</h3>
+    <div class="fv-step-row">
+      <article class="fv-step"><div class="fv-num">1</div><b>Meldung</b><p>Sie melden Ihre Fahrzeuge einfach online an.</p></article>
+      <article class="fv-step"><div class="fv-num">2</div><b>Abholung</b><p>Wir holen die Fahrzeuge zum vereinbarten Termin ab.</p></article>
+      <article class="fv-step"><div class="fv-num">3</div><b>Gutachten</b><p>Vor Ort erstellen wir ein professionelles Gutachten.</p></article>
+      <article class="fv-step"><div class="fv-num">4</div><b>Auszahlung</b><p>Nach Prüfung erhalten Sie die Auszahlung – ohne Abzüge.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="fv-panel fv-cta">
+  <img src="assets/icons/growth.svg" alt="">
+  <div>
+    <h2>Fuhrpark verkaufen? Wir übernehmen den gesamten Prozess.</h2>
+    <p>Unverbindlich. Transparent. Effizient.</p>
+  </div>
+  <a class="fv-btn" href="anfrage.html">Jetzt unverbindlich anfragen <span>→</span></a>
+</section>
+
+</main>
+</body>
+</html>

@@ -373,6 +373,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .ic-foot:hover{color:#c8d8e8}
 
 /* ══════════════ SERVICE (Fahrzeugverkauf redesign) ══════════════ */
+#service{background-image:linear-gradient(90deg,rgba(0,0,0,.48),rgba(0,0,0,.14) 33%,rgba(0,0,0,.24) 63%,rgba(0,0,0,.38)),url('assets/imd-wall-background.jpg');background-size:cover;background-position:center}
 .fv-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:6vw;align-items:start;margin-bottom:52px}
 .fv-chips{display:flex;flex-wrap:wrap;gap:9px;max-width:580px;margin-bottom:22px}
 .fv-chip{display:inline-flex;align-items:center;gap:7px;height:33px;padding:0 13px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.04);font-size:12.5px;color:var(--text-2)}
