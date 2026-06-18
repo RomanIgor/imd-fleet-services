@@ -12,7 +12,7 @@
 /* ── background ── */
 body{
   background-image:
-    linear-gradient(170deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.30) 48%,rgba(0,0,0,.55) 100%),
+    linear-gradient(170deg,rgba(0,0,0,.60) 0%,rgba(0,0,0,.28) 50%,rgba(0,0,0,.55) 100%),
     url('assets/imd-wall-background.jpg');
   background-size:cover;
   background-position:center 40%;
@@ -22,10 +22,7 @@ body{
 /* ── page container ── */
 .page{max-width:1240px;margin:0 auto;padding:0 52px 80px}
 
-/* ── nav spacing ── */
-.nav{margin-bottom:0}
-
-/* ─────────── HERO ─────────── */
+/* ══════════════ HERO ══════════════ */
 .fv-hero{
   display:grid;
   grid-template-columns:1.15fr .85fr;
@@ -36,7 +33,7 @@ body{
 }
 .fv-eyebrow{
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-  font-weight:700;color:rgba(255,255,255,.72);margin:0 0 20px;
+  font-weight:700;color:rgba(255,255,255,.70);margin:0 0 20px;
 }
 .fv-h1{
   font-size:52px;line-height:1.08;letter-spacing:-.035em;
@@ -51,7 +48,7 @@ body{
   font-size:13px;color:rgba(255,255,255,.85);
 }
 .fv-chip img{width:15px;height:15px;filter:invert(1);opacity:.85}
-.fv-note{color:rgba(255,255,255,.72);font-size:14.5px;line-height:1.68;margin:0}
+.fv-note{color:rgba(255,255,255,.70);font-size:14.5px;line-height:1.68;margin:0}
 
 /* cost card */
 .fv-cost-card{
@@ -65,7 +62,7 @@ body{
 }
 .fv-card-kicker{
   font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(255,255,255,.60);font-weight:700;margin:0 0 18px;
+  color:rgba(255,255,255,.58);font-weight:700;margin:0 0 18px;
 }
 .fv-cost-card h2{font-size:27px;line-height:1.2;letter-spacing:-.02em;margin:0 0 22px;color:#fff;font-weight:800}
 .fv-cost-list{list-style:none;margin:0;padding:0}
@@ -76,115 +73,135 @@ body{
 }
 .fv-cost-list li:last-child{border-bottom:1px solid rgba(255,255,255,.10)}
 .fv-check{width:22px;height:22px;flex:0 0 auto}
-.fv-small{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.62;margin-top:18px}
+.fv-small{font-size:12.5px;color:rgba(255,255,255,.52);line-height:1.62;margin-top:18px}
 
-/* ─────────── MID (process intro + flow) ─────────── */
+/* ══════════════ MID — vertical stack (full width) ══════════════ */
 .fv-mid{
-  display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;
-  align-items:center;padding:64px 0;
+  display:flex;
+  flex-direction:column;
+  gap:44px;
+  padding:64px 0 68px;
   border-bottom:1px solid rgba(255,255,255,.10);
 }
-.fv-intro{padding-left:20px;border-left:3px solid rgba(255,255,255,.50)}
-.fv-intro h3{font-size:22px;line-height:1.28;margin:0 0 16px;color:#fff;font-weight:700}
-.fv-intro p{margin:0 0 12px;color:rgba(255,255,255,.78);font-size:15px;line-height:1.70}
+.fv-intro{
+  max-width:700px;
+  padding-left:22px;
+  border-left:3px solid rgba(255,255,255,.45);
+}
+.fv-intro h3{font-size:26px;line-height:1.24;margin:0 0 16px;color:#fff;font-weight:700}
+.fv-intro p{margin:0 0 12px;color:rgba(255,255,255,.78);font-size:16px;line-height:1.72}
 .fv-intro em{color:rgba(255,255,255,.92);font-style:italic}
 
-/* process flow */
+/* flow cards — now full page width, cards get ~245px each */
 .fv-flow{
   display:grid;
-  grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr;
+  grid-template-columns:1fr 52px 1fr 52px 1fr 52px 1fr;
   align-items:center;
 }
 .fv-flow-card{
-  min-height:128px;
-  border:1px solid rgba(255,255,255,.13);border-radius:14px;
+  min-height:160px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:16px;
   background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.04));
   backdrop-filter:blur(12px);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
   text-align:center;color:white;
 }
-.fv-flow-card img{width:44px;height:44px;filter:invert(1);opacity:.88}
-.fv-flow-card b{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.90)}
-.fv-arrow{text-align:center;font-size:22px;color:rgba(255,255,255,.55)}
+.fv-flow-card img{width:48px;height:48px;filter:invert(1);opacity:.88}
+.fv-flow-card b{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.90)}
+.fv-arrow{text-align:center;font-size:24px;color:rgba(255,255,255,.45)}
 
-/* ─────────── BOTTOM GRID ─────────── */
-.fv-bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:56px 0 0}
+/* ══════════════ BOTTOM GRID ══════════════ */
+.fv-bottom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  padding:56px 0 0;
+}
 .fv-panel{
-  border:1px solid rgba(255,255,255,.11);border-radius:18px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:18px;
   background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.04));
   backdrop-filter:blur(14px);
   box-shadow:0 20px 60px rgba(0,0,0,.20),inset 0 1px 0 rgba(255,255,255,.07);
 }
-.fv-panel h3{text-align:center;font-size:20px;margin:0 0 22px;letter-spacing:-.01em;color:#fff;font-weight:700}
+.fv-panel h3{
+  text-align:center;font-size:19px;margin:0 0 24px;
+  letter-spacing:-.01em;color:#fff;font-weight:700;
+}
 
 /* services panel */
-.fv-services{padding:28px 28px 26px}
-.fv-service-row{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-.fv-service{padding:0 16px 0;text-align:center;border-right:1px solid rgba(255,255,255,.09)}
+.fv-services{padding:30px 30px 28px}
+.fv-service-row{display:grid;grid-template-columns:repeat(4,1fr)}
+.fv-service{
+  padding:0 18px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.09);
+}
 .fv-service:last-child{border-right:none}
 .fv-service img{
-  width:42px;height:42px;filter:invert(1);opacity:.85;
+  width:44px;height:44px;filter:invert(1);opacity:.85;
   margin-bottom:14px;display:block;margin-left:auto;margin-right:auto;
 }
-.fv-service h4{font-size:13px;margin:0 0 10px;color:#fff;font-weight:600}
-.fv-service p{font-size:12px;line-height:1.58;margin:0;color:rgba(255,255,255,.68)}
+.fv-service h4{font-size:13.5px;margin:0 0 10px;color:#fff;font-weight:600}
+.fv-service p{font-size:12.5px;line-height:1.60;margin:0;color:rgba(255,255,255,.66)}
 
 /* steps panel */
-.fv-steps-panel{padding:28px 32px 26px}
+.fv-steps-panel{padding:30px 34px 28px}
 .fv-step-row{
   display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
   text-align:center;position:relative;
 }
 .fv-step-row::before{
-  content:"";position:absolute;left:12.5%;right:12.5%;top:18px;
-  border-top:1px solid rgba(255,255,255,.20);z-index:0;
+  content:"";position:absolute;left:12%;right:12%;top:18px;
+  border-top:1px solid rgba(255,255,255,.18);z-index:0;
 }
 .fv-step{position:relative;z-index:1}
 .fv-num{
   margin:0 auto 14px;width:36px;height:36px;
-  border:1px solid rgba(255,255,255,.40);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.38);background:rgba(255,255,255,.08);
   border-radius:50%;display:grid;place-items:center;
   font-size:16px;color:#fff;font-weight:600;
 }
-.fv-step b{display:block;font-size:13px;margin-bottom:10px;color:#fff;font-weight:600}
-.fv-step p{font-size:12px;line-height:1.58;margin:0;color:rgba(255,255,255,.68)}
+.fv-step b{display:block;font-size:13.5px;margin-bottom:10px;color:#fff;font-weight:600}
+.fv-step p{font-size:12.5px;line-height:1.60;margin:0;color:rgba(255,255,255,.66)}
 
-/* ─────────── CTA ─────────── */
+/* ══════════════ CTA ══════════════ */
 .fv-cta{
   margin:18px 0 0;
   display:grid;grid-template-columns:60px 1fr auto;gap:24px;
-  align-items:center;padding:26px 36px;
+  align-items:center;padding:28px 36px;
 }
 .fv-cta img{width:44px;height:44px;filter:invert(1);opacity:.88}
 .fv-cta h2{font-size:22px;margin:0 0 6px;color:#fff;font-weight:700}
-.fv-cta p{font-size:15px;margin:0;color:rgba(255,255,255,.72)}
+.fv-cta p{font-size:15px;margin:0;color:rgba(255,255,255,.70)}
 .fv-btn{
   display:inline-flex;align-items:center;gap:18px;justify-content:center;
   border:0;border-radius:10px;background:#f0ede8;color:#111;
-  font-weight:700;font-size:15px;padding:17px 30px;
+  font-weight:700;font-size:15px;padding:17px 32px;
   text-decoration:none;white-space:nowrap;
   box-shadow:0 10px 28px rgba(0,0,0,.25);
   transition:opacity .15s;
 }
 .fv-btn:hover{opacity:.9}
 
-/* ─────────── RESPONSIVE ─────────── */
+/* ══════════════ RESPONSIVE ══════════════ */
 @media(max-width:1080px){
-  .page{padding:0 32px 64px}
+  .page{padding:0 36px 64px}
   .fv-h1{font-size:44px}
+  .fv-hero{gap:48px}
 }
 @media(max-width:860px){
-  .fv-hero{grid-template-columns:1fr;gap:40px;padding:52px 0 56px}
-  .fv-mid{grid-template-columns:1fr;gap:36px;padding:48px 0}
-  .fv-bottom-grid{grid-template-columns:1fr;padding:40px 0 0}
-  .fv-flow{grid-template-columns:1fr;gap:10px}
+  .page{padding:0 24px 52px}
+  .fv-h1{font-size:36px}
+  .fv-hero{grid-template-columns:1fr;gap:36px;padding:52px 0 56px}
+  .fv-mid{gap:32px;padding:52px 0}
+  .fv-flow{grid-template-columns:1fr;gap:8px}
   .fv-arrow{transform:rotate(90deg);font-size:18px}
-  .fv-service-row{grid-template-columns:1fr 1fr;gap:20px}
-  .fv-service{border-right:none;padding-bottom:16px}
+  .fv-bottom-grid{grid-template-columns:1fr;padding:36px 0 0}
+  .fv-service-row{grid-template-columns:1fr 1fr;gap:24px}
+  .fv-service{border-right:none;padding-bottom:18px}
   .fv-cta{grid-template-columns:1fr;text-align:center}
   .fv-btn{width:100%;justify-content:center}
-  .page{padding:0 22px 52px}
-  .fv-h1{font-size:36px}
 }
 </style>
 </head>
@@ -237,14 +254,14 @@ body{
   <div class="fv-intro">
     <h3>Genau hier setzt IMD Fleet Services an.</h3>
     <p>Sie melden Ihr Fahrzeug oder Ihren Fuhrpark online zum Verkauf an – wir übernehmen die gesamte weitere Abwicklung. Von der Fahrzeugabholung über die Wertermittlung bis hin zur Auszahlung erhalten Sie einen strukturierten, transparenten und professionellen Prozess aus einer Hand.</p>
-    <p><em>So wird aus dem Fahrzeugverkauf kein internes Projekt,<br>sondern ein effizient abgewickelter Vorgang.</em></p>
+    <p><em>So wird aus dem Fahrzeugverkauf kein internes Projekt, sondern ein effizient abgewickelter Vorgang.</em></p>
   </div>
   <div class="fv-flow">
     <div class="fv-flow-card"><img src="assets/icons/document.svg" alt=""><b>Meldung</b></div>
     <div class="fv-arrow">→</div>
-    <div class="fv-flow-card"><img src="assets/icons/evaluation.svg" alt=""><b>Abholung</b></div>
+    <div class="fv-flow-card"><img src="assets/icons/car.svg" alt=""><b>Abholung</b></div>
     <div class="fv-arrow">→</div>
-    <div class="fv-flow-card"><img src="assets/icons/document.svg" alt=""><b>Gutachten</b></div>
+    <div class="fv-flow-card"><img src="assets/icons/evaluation.svg" alt=""><b>Gutachten</b></div>
     <div class="fv-arrow">→</div>
     <div class="fv-flow-card"><img src="assets/icons/wallet.svg" alt=""><b>Auszahlung</b></div>
   </div>
