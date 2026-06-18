@@ -63,6 +63,10 @@ router.get('/preview', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'redesign.html'));
 });
 
+router.get('/fahrzeugverkauf', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'fahrzeugverkauf.html'));
+});
+
 router.get('/schaden', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.sendFile(path.join(__dirname, '..', 'schaden.html'));
