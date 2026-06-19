@@ -224,7 +224,7 @@ button{font-family:var(--fh)}
 img{display:block;max-width:100%}
 
 /* ── LAYOUT ── */
-.wrap{max-width:1360px;margin:0 auto;padding:0 48px}
+.wrap{max-width:1600px;margin:0 auto;padding:0 64px}
 .section{padding:112px 0;background:var(--bg)}
 .sec-light{background:var(--bg-s)}
 .sec-dark{background:var(--bg-deep);position:relative;overflow:hidden}
