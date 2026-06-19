@@ -411,7 +411,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .fv-cta img{width:42px;height:42px;filter:invert(1);opacity:.75}
 .fv-cta-h{font-family:var(--fh);font-size:19px;margin:0 0 5px;color:var(--text-1);font-weight:700}
 .fv-cta p{font-size:14px;margin:0;color:var(--text-2)}
-.fv-btn{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:8px;background:var(--button);color:#1a1a1a;font-weight:700;font-size:14px;padding:15px 26px;text-decoration:none;white-space:nowrap}
+.fv-btn{display:inline-flex;align-items:center;gap:14px;border:0;border-radius:8px;background:#eef3fb;color:#10182b;font-weight:700;font-size:14px;padding:15px 26px;text-decoration:none;white-space:nowrap}
 .fv-btn:hover{opacity:.9}
 @media (max-width:860px){
   .fv-hero{grid-template-columns:1fr}
