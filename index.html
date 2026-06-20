@@ -2411,6 +2411,7 @@ function applyTheme(dark){
 }
 function setTheme(theme){localStorage.setItem('imd-theme',theme);applyTheme(theme==='dark');}
 (function(){var t=localStorage.getItem('imd-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;applyTheme(d);})();
+(function(){var s=document.querySelector('.fv-steps');if(!s||!window.IntersectionObserver)return;new IntersectionObserver(function(e,o){if(e[0].isIntersecting){s.classList.add('visible');o.disconnect();}},{threshold:0.15}).observe(s);})();
 </script>
 
 
