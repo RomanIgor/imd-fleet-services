@@ -212,7 +212,7 @@ a{text-decoration:none;color:inherit}
 
 /* ══════════════ TRUST BAR ══════════════ */
 .trust-bar{background:rgba(26,37,64,0.72);backdrop-filter:blur(12px)}
-.trust-inner{max-width:1160px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr)}
+.trust-inner{max-width:1360px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:repeat(4,1fr)}
 .ti{display:flex;align-items:center;gap:14px;padding:26px 20px;border-right:1px solid rgba(255,255,255,.07);transition:transform .22s ease,background .22s ease,box-shadow .22s ease;cursor:default}
 .ti:last-child{border-right:none}
 .ti:hover{transform:translateY(-5px);background:rgba(255,255,255,.05);box-shadow:0 10px 28px rgba(0,0,0,.35)}
@@ -224,7 +224,7 @@ button{font-family:var(--fh)}
 img{display:block;max-width:100%}
 
 /* ── LAYOUT ── */
-.wrap{max-width:1160px;margin:0 auto;padding:0 48px}
+.wrap{max-width:1600px;margin:0 auto;padding:0 64px}
 .section{padding:112px 0;background:var(--bg)}
 #service.section{padding:88px 0 28px}
 .sec-light{background:var(--bg-s)}
