@@ -376,8 +376,9 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 
 /* ══════════════ SERVICE (Fahrzeugverkauf redesign) ══════════════ */
 #service{background-color:#11151d;background-image:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,.5) 30%,rgba(0,0,0,.5) 70%,rgba(0,0,0,.35)),url('assets/background_v2.jpeg');background-size:auto 130%;background-position:top right;background-repeat:no-repeat}
+#service .lead{max-width:480px}
 .fv-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:6vw;align-items:start;margin-bottom:24px}
-.fv-chips{display:flex;flex-wrap:wrap;gap:9px;max-width:none;margin-bottom:14px}
+.fv-chips{display:flex;flex-wrap:wrap;gap:9px;max-width:500px;margin-bottom:14px}
 .fv-chip{display:inline-flex;align-items:center;gap:7px;height:33px;padding:0 13px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.04);font-size:13px;color:var(--text-2)}
 .fv-chip img{width:14px;height:14px;filter:invert(1);opacity:.7}
 .fv-note{max-width:560px;color:var(--text-2);font-size:14.5px;line-height:1.7;margin:0}
@@ -390,7 +391,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .fv-check{width:22px;height:22px;flex:0 0 auto}
 .fv-small{font-size:12.5px;color:var(--text-3);line-height:1.65;margin-top:18px}
 
-.fv-process-intro{padding-left:20px;border-left:3px solid var(--blue);max-width:740px;margin-bottom:20px}
+.fv-process-intro{padding-left:20px;border-left:3px solid var(--blue);max-width:480px;margin-bottom:20px}
 .fv-process-intro h3{font-family:var(--fh);font-size:22px;line-height:1.35;margin:0 0 16px;color:var(--text-1);font-weight:700}
 .fv-process-intro p{margin:0 0 12px;color:var(--text-2);font-size:15.5px;line-height:1.75}
 .fv-process-intro em{color:var(--text-1);font-style:normal;font-weight:600}
