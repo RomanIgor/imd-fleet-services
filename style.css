@@ -226,7 +226,7 @@ img{display:block;max-width:100%}
 /* ── LAYOUT ── */
 .wrap{max-width:1600px;margin:0 auto;padding:0 64px}
 .section{padding:112px 0;background:var(--bg)}
-#service.section{padding:24px 0 28px}
+#service.section{padding:88px 0 28px}
 .sec-light{background:var(--bg-s)}
 .sec-dark{background:var(--bg-deep);position:relative;overflow:hidden}
 .sec-head{margin-bottom:64px}
