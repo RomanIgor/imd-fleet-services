@@ -1,5 +1,17 @@
 .env
 node_modules/
 server.log
+*.log
 *.docx
 rahmenvertrag.b64
+
+# Local agent/tooling state
+.agents/
+.claude/
+.superpowers/
+.chrome-imd-check/
+.edge-imd-check/
+
+# Python/cache artifacts
+__pycache__/
+*.pyc
