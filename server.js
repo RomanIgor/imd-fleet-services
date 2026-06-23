@@ -88,6 +88,7 @@ const publicAssets = new Set([
   '/assets/icons/search.svg',
   '/assets/icons/truck.svg',
   '/assets/icons/wallet.svg',
+  '/assets/showroom-background.png',
   '/assets/imd-wall-background.jpg',
   '/assets/background_v2.jpeg',
   '/new_background_header.jpeg',

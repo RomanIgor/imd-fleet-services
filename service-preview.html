@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Service Section — Modern Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f4f8;--bg-s:#f8fafc;--bg-card:#ffffff;--bg-deep:#0f172a;
+  --blue:#2563eb;--blue-bg:#eff6ff;--blue-bd:#bfdbfe;
+  --text-1:#0f172a;--text-2:#475569;--text-3:#94a3b8;
+  --border:#e2e8f0;--fh:'IBM Plex Sans',sans-serif;
+  --r-lg:14px;--r-xl:20px;--r-2xl:28px;
+}
+[data-theme="dark"]{
+  --bg:#0d0f14;--bg-s:rgba(255,255,255,0.04);--bg-card:rgba(22,26,36,0.9);--bg-deep:rgba(10,14,28,0.95);
+  --blue:#93c5fd;--blue-bg:rgba(147,197,253,.08);--blue-bd:rgba(147,197,253,.18);
+  --text-1:#f1f5f9;--text-2:rgba(241,245,249,.5);--text-3:rgba(241,245,249,.25);
+  --border:rgba(241,245,249,.08);
+}
+body{font-family:var(--fh);background:var(--bg);color:var(--text-1);min-height:100vh;transition:background .3s,color .3s;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+/* Controls */
+.controls{position:fixed;top:16px;right:16px;z-index:999;display:flex;gap:6px;align-items:center;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:6px 12px;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.controls span{font-family:var(--fh);font-size:11px;color:var(--text-3);margin-right:4px}
+.controls button{font-family:var(--fh);font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text-2);padding:5px 12px;border-radius:50px;transition:all .2s}
+.controls button.active{background:var(--bg-deep);color:#fff}
+[data-theme="dark"] .controls button.active{background:var(--blue);color:#0d0f14}
+
+.page{padding:72px 0 80px}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px}
+.section-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-3);margin-bottom:32px;display:flex;align-items:center;gap:12px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-divider{height:1px;background:var(--border);margin:72px 0}
+.eyebrow{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:14px}
+.h2{font-family:var(--fh);font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--text-1);line-height:1.1;letter-spacing:-.035em}
+.h2 em{color:var(--blue);font-style:normal}
+
+
+/* ═══════════════════════════════════════
+   D — BENTO GRID
+═══════════════════════════════════════ */
+.bento-intro{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;margin-bottom:12px}
+.bento-headline{grid-column:1 / -1}
+.bento{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto;gap:12px}
+.b-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;transition:border-color .2s}
+.b-card:hover{border-color:var(--blue-bd)}
+.b-card.wide{grid-column:1 / 3}
+.b-card.tall{grid-row:1 / 3}
+.b-card.accent{background:var(--bg-deep);border-color:transparent}
+.b-card.blue{background:var(--blue-bg);border-color:var(--blue-bd)}
+.b-chip{display:inline-flex;align-items:center;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);background:var(--bg-s);border:1px solid var(--border);border-radius:50px;padding:4px 10px;margin-bottom:14px}
+.b-title{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);letter-spacing:-.02em;margin-bottom:8px;line-height:1.3}
+.b-text{font-size:13px;color:var(--text-2);line-height:1.7}
+.b-pivot{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.03em;margin-bottom:8px}
+.b-pivot-sub{font-size:13px;color:rgba(241,245,249,.45);line-height:1.6}
+.b-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.b-tag{font-size:11px;color:var(--text-3);background:var(--bg-s);border:1px solid var(--border);border-radius:50px;padding:3px 10px;font-family:var(--fh);font-weight:500}
+.b-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.b-li{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2)}
+.b-li-dot{width:16px;height:16px;border-radius:4px;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--blue);flex-shrink:0}
+.b-stat{font-family:var(--fh);font-size:42px;font-weight:800;color:var(--blue);letter-spacing:-.04em;line-height:1}
+.b-stat-label{font-size:12px;color:var(--text-3);margin-top:4px}
+.b-free-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,200,100,.12);border:1px solid rgba(0,200,100,.25);color:#00c864;border-radius:50px;padding:6px 14px;font-family:var(--fh);font-size:12px;font-weight:700;margin-top:16px}
+
+
+/* ═══════════════════════════════════════
+   E — SPLIT EDITORIAL + HIGHLIGHT
+═══════════════════════════════════════ */
+.e-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.e-left{}
+.e-kicker{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.e-h{font-family:var(--fh);font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--text-1);line-height:1.1;letter-spacing:-.035em;margin-bottom:24px}
+.e-h em{color:var(--blue);font-style:normal}
+.e-problem{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 24px;margin-bottom:20px}
+.e-problem-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px}
+.e-problem-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.e-problem-item{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--text-2)}
+.e-problem-arrow{font-size:11px;color:var(--text-3)}
+.e-problem-result{width:100%;margin-top:12px;font-size:12px;color:var(--text-3);padding-top:10px;border-top:1px solid var(--border)}
+.e-pivot-line{display:flex;align-items:center;gap:14px;margin:24px 0}
+.e-pivot-line::before,.e-pivot-line::after{content:'';flex:1;height:1px;background:var(--border)}
+.e-pivot-text{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.e-body{font-size:14px;color:var(--text-2);line-height:1.8;margin-bottom:14px}
+.e-closing{font-size:13px;color:var(--text-3);font-style:italic;border-left:2px solid var(--border);padding-left:14px;margin-top:20px}
+.e-right{}
+.e-highlight{background:var(--bg-deep);border-radius:var(--r-2xl);padding:32px;margin-bottom:16px}
+.e-hl-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(147,197,253,.4);font-family:var(--fh);margin-bottom:20px}
+.e-hl-h{font-family:var(--fh);font-size:20px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:20px}
+.e-hl-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:rgba(241,245,249,.5)}
+.e-hl-item:last-child{border-bottom:none}
+.e-hl-dash{color:rgba(147,197,253,.3);font-weight:700}
+.e-svc-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.e-svc-pill{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-lg);padding:10px 14px;display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:12px;font-weight:600;color:var(--text-2)}
+.e-svc-pill-ck{color:var(--blue);font-size:11px;font-weight:700}
+
+
+/* ═══════════════════════════════════════
+   F — MINIMAL DARK HERO + COMPARISON
+═══════════════════════════════════════ */
+.f-section{background:var(--bg-deep);border-radius:var(--r-2xl);padding:56px;margin-bottom:20px;position:relative;overflow:hidden}
+.f-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 0%,rgba(37,99,235,.15) 0%,transparent 65%);pointer-events:none}
+.f-kicker{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(147,197,253,.55);margin-bottom:20px}
+.f-h{font-family:var(--fh);font-size:clamp(32px,5vw,52px);font-weight:800;color:#fff;line-height:1.08;letter-spacing:-.04em;margin-bottom:16px}
+.f-h em{color:#93c5fd;font-style:normal}
+.f-sub{font-size:16px;color:rgba(241,245,249,.45);line-height:1.6;max-width:560px;margin-bottom:40px}
+.f-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f-col-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid}
+.f-col-label.without{color:rgba(241,245,249,.25);border-color:rgba(241,245,249,.06)}
+.f-col-label.with{color:#93c5fd;border-color:rgba(147,197,253,.2)}
+.f-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px}
+.f-item.without{color:rgba(241,245,249,.3)}
+.f-item.with{color:rgba(241,245,249,.7)}
+.f-item-icon.cross{color:rgba(241,245,249,.2);font-size:12px;margin-top:2px;flex-shrink:0}
+.f-item-icon.check{color:#34d399;font-size:12px;margin-top:2px;flex-shrink:0}
+.f-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.f-bottom-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-xl);padding:20px 24px}
+.f-bc-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(241,245,249,.25);font-family:var(--fh);margin-bottom:10px}
+.f-bc-text{font-size:14px;color:rgba(241,245,249,.6);line-height:1.7}
+.f-bc-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:#34d399;border-radius:50px;padding:5px 12px;font-family:var(--fh);font-size:11px;font-weight:700;margin-top:12px}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <span>Modus:</span>
+  <button id="btn-light" class="active" onclick="setTheme('light')">☀ Light</button>
+  <button id="btn-dark" onclick="setTheme('dark')">☾ Dark</button>
+</div>
+
+<div class="page">
+<div class="wrap">
+
+
+<!-- ═══ D — BENTO GRID ═══ -->
+<div class="section-label">D — Bento Grid (Linear / Vercel style)</div>
+
+<span class="eyebrow">Fahrzeugverkauf für Unternehmen</span>
+<h2 class="h2" style="margin-bottom:24px">Firmenfahrzeuge verkaufen –<br><em>ohne Aufwand für Ihren Fuhrpark.</em></h2>
+
+<div class="bento" style="margin-top:0">
+
+  <!-- Wide: Problem -->
+  <div class="b-card wide">
+    <div class="b-chip">Das Problem</div>
+    <div class="b-title">Der Aufwand entsteht nicht durch das Fahrzeug</div>
+    <div class="b-text">Sondern durch den Verkaufsprozess.</div>
+    <div class="b-tags">
+      <span class="b-tag">Bewertung</span>
+      <span class="b-tag">Terminabstimmung</span>
+      <span class="b-tag">Rückfragen</span>
+      <span class="b-tag">Dokumentation</span>
+      <span class="b-tag">Fahrzeugübergabe</span>
+      <span class="b-tag">Interne Abstimmungen</span>
+    </div>
+  </div>
+
+  <!-- Tall: Pivot + kostenfrei -->
+  <div class="b-card accent tall">
+    <div class="b-chip" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:rgba(241,245,249,.35)">IMD Fleet Services</div>
+    <div class="b-pivot">Genau hier setzen wir an.</div>
+    <div class="b-pivot-sub">Sie melden – wir übernehmen. Von der Abholung bis zur Auszahlung. Strukturiert. Transparent. Aus einer Hand.</div>
+    <div class="b-free-badge">✓ Für Sie kostenfrei</div>
+  </div>
+
+  <!-- Service list -->
+  <div class="b-card">
+    <div class="b-chip">Was wir übernehmen</div>
+    <div class="b-list">
+      <div class="b-li"><div class="b-li-dot">✓</div>Fahrzeugabholung</div>
+      <div class="b-li"><div class="b-li-dot">✓</div>GKK-Wertgutachten</div>
+      <div class="b-li"><div class="b-li-dot">✓</div>Preisermittlung</div>
+      <div class="b-li"><div class="b-li-dot">✓</div>Rechnungsabwicklung</div>
+      <div class="b-li"><div class="b-li-dot">✓</div>Fahrzeugabmeldung</div>
+      <div class="b-li"><div class="b-li-dot">✓</div>Auszahlung</div>
+    </div>
+  </div>
+
+  <!-- Stat -->
+  <div class="b-card blue">
+    <div class="b-chip" style="background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)">Prozess</div>
+    <div class="b-stat">2 min</div>
+    <div class="b-stat-label">Fahrzeugmeldung digital</div>
+    <div style="margin-top:16px;font-size:13px;color:var(--text-2);line-height:1.6">Kein Callcenter. Keine Terminabstimmung. Keine organisatorischen Folgeaufgaben.</div>
+  </div>
+
+  <!-- Closing -->
+  <div class="b-card" style="grid-column:1 / -1">
+    <div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-.02em;font-style:italic">
+      „So wird aus dem Fahrzeugverkauf kein internes Projekt, sondern ein effizient abgewickelter Vorgang."
+    </div>
+  </div>
+
+</div>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ═══ E — SPLIT EDITORIAL ═══ -->
+<div class="section-label">E — Split Editorial + Highlight Panel (Stripe style)</div>
+
+<div class="e-wrap">
+  <div class="e-left">
+    <div class="e-kicker">Fahrzeugverkauf für Unternehmen</div>
+    <h2 class="e-h">Firmenfahrzeuge verkaufen –<br><em>ohne Aufwand.</em></h2>
+
+    <div class="e-problem">
+      <div class="e-problem-label">Was den Aufwand verursacht</div>
+      <div class="e-problem-flow">
+        <span class="e-problem-item">Bewertung</span>
+        <span class="e-problem-arrow">→</span>
+        <span class="e-problem-item">Terminabstimmung</span>
+        <span class="e-problem-arrow">→</span>
+        <span class="e-problem-item">Rückfragen</span>
+        <span class="e-problem-arrow">→</span>
+        <span class="e-problem-item">Dokumentation</span>
+        <span class="e-problem-arrow">→</span>
+        <span class="e-problem-item">Übergabe</span>
+      </div>
+      <div class="e-problem-result">Gebundene Zeit und Ressourcen, die Ihr Unternehmen anderweitig benötigt.</div>
+    </div>
+
+    <div class="e-pivot-line"><span class="e-pivot-text">Genau hier setzt IMD Fleet Services an</span></div>
+
+    <p class="e-body">Sie melden Ihr Fahrzeug oder Ihren Fuhrpark online zum Verkauf an – wir übernehmen die gesamte weitere Abwicklung.</p>
+    <p class="e-body">Von der Fahrzeugabholung über die Wertermittlung bis hin zur Auszahlung erhalten Sie einen strukturierten, transparenten und professionellen Prozess aus einer Hand.</p>
+
+    <div class="e-closing"><em>So wird aus dem Fahrzeugverkauf kein internes Projekt, sondern ein effizient abgewickelter Vorgang.</em></div>
+  </div>
+
+  <div class="e-right">
+    <div class="e-highlight">
+      <div class="e-hl-label">IMD Vollservice — kostenfrei</div>
+      <div class="e-hl-h">Kein Aufwand.<br>Kein Risiko.<br>Kein Zusatzkosten.</div>
+      <div class="e-hl-item"><span class="e-hl-dash">—</span>Keine Händlergebühren</div>
+      <div class="e-hl-item"><span class="e-hl-dash">—</span>Keine Insertionskosten</div>
+      <div class="e-hl-item"><span class="e-hl-dash">—</span>Keine Gutachtenkosten</div>
+      <div class="e-hl-item"><span class="e-hl-dash">—</span>Keine Logistikkosten</div>
+      <div class="e-hl-item"><span class="e-hl-dash">—</span>Keine Abmeldegebühren</div>
+    </div>
+    <div class="e-svc-mini">
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>Fahrzeugabholung</div>
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>GKK-Gutachten</div>
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>Wertermittlung</div>
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>Abmeldung</div>
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>Rechnungsstellung</div>
+      <div class="e-svc-pill"><span class="e-svc-pill-ck">✓</span>Auszahlung</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ═══ F — DARK HERO + COMPARISON ═══ -->
+<div class="section-label">F — Dark Feature Block + Ohne/Mit Vergleich (Apple / Raycast style)</div>
+
+<div class="f-section">
+  <div class="f-kicker">Fahrzeugverkauf für Unternehmen</div>
+  <h2 class="f-h">Firmenfahrzeuge verkaufen –<br><em>ohne Aufwand</em><br>für Ihren Fuhrpark.</h2>
+  <p class="f-sub">Der Aufwand entsteht nicht durch das Fahrzeug – sondern durch den Verkaufsprozess. Genau hier setzen wir an.</p>
+
+  <div class="f-compare">
+    <div>
+      <div class="f-col-label without">Ohne IMD Fleet Services</div>
+      <div class="f-item without"><span class="f-item-icon cross">✕</span>Interne Fahrzeugbewertung nötig</div>
+      <div class="f-item without"><span class="f-item-icon cross">✕</span>Terminabstimmung mit Händlern</div>
+      <div class="f-item without"><span class="f-item-icon cross">✕</span>Rückfragen und Dokumentation</div>
+      <div class="f-item without"><span class="f-item-icon cross">✕</span>Übergabe organisieren</div>
+      <div class="f-item without"><span class="f-item-icon cross">✕</span>Interne Ressourcen gebunden</div>
+    </div>
+    <div>
+      <div class="f-col-label with">Mit IMD Fleet Services</div>
+      <div class="f-item with"><span class="f-item-icon check">✓</span>Fahrzeug online anmelden — 2 Min.</div>
+      <div class="f-item with"><span class="f-item-icon check">✓</span>Abholung & Transport inklusive</div>
+      <div class="f-item with"><span class="f-item-icon check">✓</span>GKK-Wertgutachten inklusive</div>
+      <div class="f-item with"><span class="f-item-icon check">✓</span>Vollständige Abwicklung</div>
+      <div class="f-item with"><span class="f-item-icon check">✓</span>Auszahlung — kein Zusatzaufwand</div>
+    </div>
+  </div>
+
+  <div class="f-bottom">
+    <div class="f-bottom-card">
+      <div class="f-bc-label">Der Prozess</div>
+      <div class="f-bc-text">Sie melden Ihr Fahrzeug online an – wir übernehmen die gesamte weitere Abwicklung. Strukturiert, transparent und professionell aus einer Hand.</div>
+    </div>
+    <div class="f-bottom-card">
+      <div class="f-bc-label">Die Kosten</div>
+      <div class="f-bc-text">Keine Händlergebühren, keine Insertionskosten, keine Gutachten- oder Logistikkosten.</div>
+      <div class="f-bc-badge">✓ Vollständig kostenfrei</div>
+    </div>
+  </div>
+</div>
+
+<div style="font-family:var(--fh);font-size:13px;font-style:italic;color:var(--text-3);text-align:center;padding:0 40px">
+  „So wird aus dem Fahrzeugverkauf kein internes Projekt, sondern ein effizient abgewickelter Vorgang."
+</div>
+
+
+<div style="height:80px"></div>
+</div>
+</div>
+
+<script>
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('btn-light').className=t==='light'?'active':'';
+  document.getElementById('btn-dark').className=t==='dark'?'active':'';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMD Fleet Services — Finaler Redesign-Vorschlag</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Sans',sans-serif;background:#0C1016;color:#EEF2F6;line-height:1.6;-webkit-font-smoothing:antialiased;font-size:14px}
+
+/* ── TOKENS ── */
+:root{
+  --bg:       #12161C;
+  --bg-s:     #161B22;
+  --bg-deep:  #0E1218;
+  --bg-card:  rgba(238,242,246,0.04);
+  --acc:      #C8D8E8;
+  --acc-dim:  rgba(200,216,232,0.18);
+  --acc-glow: rgba(200,216,232,0.08);
+  --btn-bg:   #1E2E40;
+  --text-1:   #EEF2F6;
+  --text-2:   rgba(238,242,246,0.55);
+  --text-3:   rgba(238,242,246,0.28);
+  --border:   rgba(238,242,246,0.08);
+  --border-s: rgba(238,242,246,0.05);
+}
+
+.frame-header{background:#0C1016;border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.frame-header-left{font-size:11px;font-weight:700;color:var(--acc);letter-spacing:.1em;text-transform:uppercase}
+.frame-header-right{font-size:10px;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase}
+.section-block{padding:40px 32px;border-bottom:1px solid var(--border-s)}
+.section-title{font-size:9px;font-weight:700;color:var(--text-3);letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border-s)}
+
+/* ── TOKENS GRID ── */
+.tokens-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.token-group h4{font-size:9px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em;margin-bottom:12px}
+.swatch{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.sw{width:32px;height:32px;border-radius:6px;flex-shrink:0;border:1px solid var(--border)}
+.sw-name{font-size:11px;font-weight:600;color:var(--text-1);line-height:1.3}
+.sw-hex{font-size:9px;color:var(--text-3);font-family:monospace;margin-top:2px}
+
+.typo-samples{margin-top:24px;padding-top:24px;border-top:1px solid var(--border-s);display:flex;flex-direction:column;gap:14px}
+.typo-row{display:flex;align-items:baseline;gap:20px}
+.typo-meta{font-size:9px;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase;min-width:100px;flex-shrink:0}
+
+/* ── NAV ── */
+.nav-mock{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.nav-inner{display:flex;align-items:center;gap:28px;padding:14px 28px}
+.nav-links-mock{display:flex;gap:26px;flex:1;justify-content:center}
+.nav-link{font-size:11px;font-weight:600;color:var(--text-3);letter-spacing:.01em}
+.nav-link.active{color:var(--text-1)}
+.nav-cta{background:var(--btn-bg);border:1px solid var(--acc-dim);color:var(--text-1);padding:8px 18px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0}
+.state-label{font-size:10px;color:var(--text-3);margin-bottom:10px;padding-left:2px}
+
+/* ── HERO ── */
+.hero-mock{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.hero-inner{padding:52px 48px;display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center;min-height:380px;position:relative}
+
+/* Subtile Tiefe — kein Glühen, nur Ebenen */
+.hero-inner::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(200,216,232,0.025) 0%,transparent 50%,rgba(200,216,232,0.015) 100%);
+  pointer-events:none
+}
+
+.hero-copy{display:flex;flex-direction:column;gap:18px;position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 13px;border-radius:3px;background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.12);width:fit-content}
+.hero-eyebrow-dot{width:4px;height:4px;background:var(--acc)}
+.hero-eyebrow-text{font-size:9px;font-weight:700;color:rgba(200,216,232,0.5);letter-spacing:.16em;text-transform:uppercase}
+.hero-h1{font-size:44px;font-weight:800;line-height:1.03;letter-spacing:-0.04em;color:var(--text-1)}
+.hero-h1 span{color:var(--acc)}
+.hero-sub{font-size:15px;color:var(--text-2);line-height:1.85;max-width:440px;font-weight:300}
+.hero-proof{display:flex;align-items:flex-start;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;max-width:480px}
+.proof-mark{width:18px;height:18px;border-radius:3px;background:rgba(200,216,232,0.08);border:1px solid rgba(200,216,232,0.18);display:flex;align-items:center;justify-content:center;color:var(--acc);font-size:10px;flex-shrink:0;margin-top:1px}
+.proof-text{font-size:12px;color:rgba(238,242,246,0.52);line-height:1.65}
+.proof-text strong{color:var(--text-1)}
+.hero-btns{display:flex;gap:10px}
+.btn-p{background:var(--btn-bg);border:1px solid rgba(200,216,232,0.22);color:var(--text-1);padding:13px 26px;border-radius:5px;font-size:13px;font-weight:700;letter-spacing:-.005em}
+.btn-g{border:1px solid var(--border);color:var(--text-2);padding:13px 26px;border-radius:5px;font-size:13px}
+.hero-kpis{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg-card);width:fit-content}
+.kpi{padding:14px 22px;border-right:1px solid var(--border)}
+.kpi:last-child{border-right:none}
+.kpi-val{font-size:22px;font-weight:800;color:var(--text-1);letter-spacing:-0.03em;line-height:1}
+.kpi-val.acc{color:var(--acc)}
+.kpi-lbl{font-size:8px;color:var(--text-3);text-transform:uppercase;letter-spacing:.13em;margin-top:4px}
+
+/* Dashboard card */
+.hero-dash{position:relative;z-index:2}
+.dash-card{background:rgba(22,27,34,0.9);border:1px solid rgba(200,216,232,0.1);border-radius:14px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,0.45)}
+.dc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dc-label{font-size:9px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.15em}
+.dc-status{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:600;color:var(--acc)}
+.dc-dot{width:4px;height:4px;background:var(--acc)}
+.dc-kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.dc-kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px}
+.dc-kpi-val{font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.02em;line-height:1}
+.dc-kpi-val.acc{color:var(--acc)}
+.dc-kpi-lbl{font-size:8px;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
+.dc-kpi-note{font-size:9px;color:var(--acc);margin-top:3px;opacity:0.7}
+.dc-list{display:flex;flex-direction:column;gap:5px}
+.dc-row{display:flex;align-items:center;gap:9px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:9px 11px}
+.dc-bar{width:2px;height:22px;border-radius:1px;flex-shrink:0}
+.dc-row-name{font-size:11px;font-weight:500;color:rgba(238,242,246,0.65);flex:1}
+.dc-row-tag{font-size:9px;font-weight:600;color:var(--acc);opacity:0.75}
+.dc-row-tag.amber{color:#D4A840;opacity:0.85}
+.dc-row-tag.muted{color:var(--text-3)}
+
+/* Trust bar */
+.trust-bar{background:var(--bg-deep);border-top:1px solid var(--border-s);padding:16px 48px;display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center}
+.trust-item{display:flex;align-items:center;gap:9px}
+.trust-ck{width:16px;height:16px;border-radius:3px;background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.14);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--acc);flex-shrink:0}
+.trust-lbl{font-size:10px;font-weight:600;color:rgba(238,242,246,0.5)}
+.trust-sub{font-size:8px;color:var(--text-3);margin-top:1px}
+
+/* Notes */
+.note{margin-top:20px;padding:14px 18px;background:rgba(200,216,232,0.04);border-left:2px solid rgba(200,216,232,0.25);border-radius:0 6px 6px 0;font-size:12px;color:var(--text-2);line-height:1.75}
+.note strong{color:var(--text-1)}
+.note code{font-family:monospace;font-size:11px;color:var(--acc);opacity:0.75}
+
+/* Section preview (weitere Abschnitte) */
+.sections-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:0}
+.sec-prev{background:var(--bg-s);border:1px solid var(--border);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.sec-prev-num{font-size:9px;font-weight:700;color:var(--text-3);letter-spacing:.15em;text-transform:uppercase}
+.sec-prev-name{font-size:13px;font-weight:700;color:var(--text-1)}
+.sec-prev-desc{font-size:11px;color:var(--text-2);line-height:1.6}
+.sec-prev-tag{display:inline-flex;padding:3px 8px;background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.1);border-radius:3px;font-size:9px;font-weight:600;color:rgba(200,216,232,0.5);letter-spacing:.08em;text-transform:uppercase;width:fit-content;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="frame-header">
+  <div class="frame-header-left">IMD Fleet Services — Redesign · Kalte Präzision</div>
+  <div class="frame-header-right">Design-System · Navigation · Hero · Trust Bar</div>
+</div>
+
+<!-- ══ 1. FARBEN + TYPO ══ -->
+<div class="section-block">
+  <div class="section-title">1 — Farbsystem & Typografie</div>
+  <div class="tokens-grid">
+    <div class="token-group">
+      <h4>Hintergründe</h4>
+      <div class="swatch"><div class="sw" style="background:#12161C"></div><div><div class="sw-name">Haupt­hintergrund</div><div class="sw-hex">#12161C</div></div></div>
+      <div class="swatch"><div class="sw" style="background:#161B22"></div><div><div class="sw-name">Karten­oberfläche</div><div class="sw-hex">#161B22</div></div></div>
+      <div class="swatch"><div class="sw" style="background:#0E1218"></div><div><div class="sw-name">Tiefer Hintergrund</div><div class="sw-hex">#0E1218</div></div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(238,242,246,0.04);"></div><div><div class="sw-name">Karten-Oberfläche</div><div class="sw-hex">rgba(EEF2F6, 4 %)</div></div></div>
+    </div>
+    <div class="token-group">
+      <h4>Akzente</h4>
+      <div class="swatch"><div class="sw" style="background:#C8D8E8"></div><div><div class="sw-name">Eisblau — Hauptakzent</div><div class="sw-hex">#C8D8E8</div></div></div>
+      <div class="swatch"><div class="sw" style="background:#1E2E40"></div><div><div class="sw-name">Marineblau — Primärbutton</div><div class="sw-hex">#1E2E40</div></div></div>
+      <div class="swatch"><div class="sw" style="background:#D4A840"></div><div><div class="sw-name">Bernstein — Status / Hinweis</div><div class="sw-hex">#D4A840</div></div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(200,216,232,0.08)"></div><div><div class="sw-name">Akzentfläche — Highlight</div><div class="sw-hex">rgba(C8D8E8, 8 %)</div></div></div>
+    </div>
+    <div class="token-group">
+      <h4>Text</h4>
+      <div class="swatch"><div class="sw" style="background:#EEF2F6"></div><div><div class="sw-name">Primär — Überschriften</div><div class="sw-hex">#EEF2F6</div></div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(238,242,246,0.55)"></div><div><div class="sw-name">Sekundär — Fließtext</div><div class="sw-hex">rgba(EEF2F6, 55 %)</div></div></div>
+      <div class="swatch"><div class="sw" style="background:rgba(238,242,246,0.28)"></div><div><div class="sw-name">Gedimmt — Labels</div><div class="sw-hex">rgba(EEF2F6, 28 %)</div></div></div>
+      <div class="swatch"><div class="sw" style="background:#C8D8E8"></div><div><div class="sw-name">Akzenttext — Hervorhebung</div><div class="sw-hex">#C8D8E8</div></div></div>
+    </div>
+    <div class="token-group">
+      <h4>Radien & Schatten</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;background:var(--bg-s);border:1px solid var(--border);border-radius:3px;flex-shrink:0"></div>
+          <div><div class="sw-name">r-sm — 3–5px</div><div class="sw-hex">Buttons, Tags, Badges</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;background:var(--bg-s);border:1px solid var(--border);border-radius:8px;flex-shrink:0"></div>
+          <div><div class="sw-name">r-md — 8–10px</div><div class="sw-hex">Karten, Felder</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;background:var(--bg-s);border:1px solid var(--border);border-radius:14px;flex-shrink:0"></div>
+          <div><div class="sw-name">r-lg — 12–16px</div><div class="sw-hex">Dashboard-Karten</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="typo-samples">
+    <div class="typo-row">
+      <div class="typo-meta">H1 · 60 px · 800</div>
+      <div style="font-size:34px;font-weight:800;letter-spacing:-0.04em;color:#EEF2F6;line-height:1">Professioneller Flottenankauf für <span style="color:#C8D8E8">Ihr Unternehmen.</span></div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta">H2 · 44 px · 800</div>
+      <div style="font-size:24px;font-weight:800;letter-spacing:-0.035em;color:#EEF2F6">Wir übernehmen <span style="color:#C8D8E8">alles für Sie.</span></div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta">Lead · 17 px · 300</div>
+      <div style="font-size:15px;font-weight:300;color:rgba(238,242,246,0.55);line-height:1.8">Kein Händler anrufen. Kein Inserat. Keine Verhandlungen. IMD Fleet Services wickelt alles ab.</div>
+    </div>
+    <div class="typo-row">
+      <div class="typo-meta">Label · 9 px · 700</div>
+      <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,242,246,0.28)">KOSTENLOSER KOMPLETTSERVICE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 2. NAVIGATION ══ -->
+<div class="section-block">
+  <div class="section-title">2 — Navigation · Zwei Zustände</div>
+
+  <p class="state-label">Ausgangszustand — transparent über dem Hero:</p>
+  <div class="nav-mock" style="background:rgba(18,22,28,0.7)">
+    <div class="nav-inner" style="background:transparent">
+      <img src="/logo_light.png" alt="IMD Fleet Services" style="height:36px" onerror="this.style.display='none'">
+      <div class="nav-links-mock">
+        <span class="nav-link">Für Fuhrparks</span>
+        <span class="nav-link">So funktioniert es</span>
+        <span class="nav-link">Warum wir</span>
+        <span class="nav-link">Über uns</span>
+        <span class="nav-link">Kontakt</span>
+      </div>
+      <div class="nav-cta">Fahrzeug anmelden</div>
+    </div>
+  </div>
+
+  <p class="state-label" style="margin-top:18px">Gescrollter Zustand — dunkles Schiefergrau, durchgehend im Dark-Stil:</p>
+  <div class="nav-mock" style="background:#0E1218">
+    <div class="nav-inner" style="background:#0E1218;border-bottom:1px solid rgba(238,242,246,0.06)">
+      <img src="/logo_dark.png" alt="IMD Fleet Services" style="height:36px" onerror="this.style.display='none'">
+      <div class="nav-links-mock">
+        <span class="nav-link active">Für Fuhrparks</span>
+        <span class="nav-link">So funktioniert es</span>
+        <span class="nav-link">Warum wir</span>
+        <span class="nav-link">Über uns</span>
+        <span class="nav-link">Kontakt</span>
+      </div>
+      <div class="nav-cta">Fahrzeug anmelden</div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Wesentliche Änderung:</strong> Die Navigation wechselt beim Scrollen nicht mehr auf Weiß — sie bleibt konsequent im Schiefergrau-Stil. Kein Farbbruch, kein „KI-Glühen", nur ruhige Tiefe durch Ebenen und Transparenz.
+  </div>
+</div>
+
+<!-- ══ 3. HERO ══ -->
+<div class="section-block">
+  <div class="section-title">3 — Hero-Bereich · Zweispaltig mit Dashboard-Karte</div>
+
+  <div class="hero-mock">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-dot"></div>
+          <span class="hero-eyebrow-text">IMD Fleet Services · Flottenankauf · Bundesweit</span>
+        </div>
+        <h1 class="hero-h1">
+          Professioneller<br>
+          Flottenankauf für<br>
+          <span>Ihr Unternehmen.</span>
+        </h1>
+        <p class="hero-sub">IMD Fleet Services übernimmt Abholung, Vorbereitung, Gutachten und Auszahlung Ihrer Firmenfahrzeuge — vollständig digital und ohne Aufwand für Ihren Fuhrpark.</p>
+        <div class="hero-proof">
+          <div class="proof-mark">✓</div>
+          <div class="proof-text"><strong>Garantierter Mindestpreis durch unabhängiges Wertgutachten</strong> — schriftlich zugesichert. Häufig mit Bonus über dem HEK-Wert.</div>
+        </div>
+        <div class="hero-btns">
+          <div class="btn-p">Fahrzeug anmelden</div>
+          <div class="btn-g">So funktioniert es →</div>
+        </div>
+        <div class="hero-kpis">
+          <div class="kpi"><div class="kpi-val">2 Min.</div><div class="kpi-lbl">Anmeldung</div></div>
+          <div class="kpi"><div class="kpi-val acc">HEK+</div><div class="kpi-lbl">Mindestpreis</div></div>
+          <div class="kpi"><div class="kpi-val">100 %</div><div class="kpi-lbl">Digital & sicher</div></div>
+        </div>
+      </div>
+      <div class="hero-dash">
+        <div class="dash-card">
+          <div class="dc-top">
+            <div class="dc-label">Fleet Dashboard · Übersicht</div>
+            <div class="dc-status"><div class="dc-dot"></div>Live</div>
+          </div>
+          <div class="dc-kpis">
+            <div class="dc-kpi">
+              <div class="dc-kpi-val">14</div>
+              <div class="dc-kpi-lbl">Aktive Fahrzeuge</div>
+              <div class="dc-kpi-note">↑ +3 diesen Monat</div>
+            </div>
+            <div class="dc-kpi">
+              <div class="dc-kpi-val acc">HEK+</div>
+              <div class="dc-kpi-lbl">Mindestpreis</div>
+              <div class="dc-kpi-note">Ø +9,4 % Bonus</div>
+            </div>
+          </div>
+          <div class="dc-list">
+            <div class="dc-row">
+              <div class="dc-bar" style="background:#C8D8E8;opacity:0.6"></div>
+              <div class="dc-row-name">VW Crafter · 2021</div>
+              <div class="dc-row-tag">✓ Ausgezahlt</div>
+            </div>
+            <div class="dc-row">
+              <div class="dc-bar" style="background:#D4A840;opacity:0.7"></div>
+              <div class="dc-row-name">Mercedes Sprinter · 2022</div>
+              <div class="dc-row-tag amber">⏳ Gutachten läuft</div>
+            </div>
+            <div class="dc-row">
+              <div class="dc-bar" style="background:#C8D8E8;opacity:0.3"></div>
+              <div class="dc-row-name">Ford Transit · 2020</div>
+              <div class="dc-row-tag muted">→ Abholung geplant</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="trust-bar">
+      <div class="trust-item"><div class="trust-ck">✓</div><div><div class="trust-lbl">Wertgutachten</div><div class="trust-sub">Revisionssicher · GKK</div></div></div>
+      <div class="trust-item"><div class="trust-ck">✓</div><div><div class="trust-lbl">HEK-Mindestpreis</div><div class="trust-sub">Vertraglich zugesichert</div></div></div>
+      <div class="trust-item"><div class="trust-ck">✓</div><div><div class="trust-lbl">Bonus möglich</div><div class="trust-sub">Je nach Marktlage</div></div></div>
+      <div class="trust-item"><div class="trust-ck">✓</div><div><div class="trust-lbl">Abholung bundesweit</div><div class="trust-sub">Wir kommen zu Ihnen</div></div></div>
+      <div class="trust-item"><div class="trust-ck">✓</div><div><div class="trust-lbl">100 % digital</div><div class="trust-sub">Kein Papierkram</div></div></div>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Hintergrund-Philosophie:</strong> Statt Glüheffekten und Rasterlinien arbeiten wir mit Tiefen-Ebenen — jede Fläche ist einen Ton heller als die darunter liegende. Das wirkt präzise und industriell, nicht wie eine KI-generierte Vorlage.<br><br>
+    <strong>Akzentfarbe:</strong> Eisblau <code>#C8D8E8</code> mit sehr niedriger Sättigung — kein leuchtendes Neon, sondern gedämpfte Eleganz. Wird sparsam eingesetzt: Überschriften-Highlight, Button-Rahmen, Status-Indikatoren.<br><br>
+    <strong>Hero-Änderung:</strong> Das bestehende statische PNG-Hotspot-System wird vollständig durch natives HTML/CSS ersetzt — responsiv, pflegeleicht, keine Bildabhängigkeit.
+  </div>
+</div>
+
+<!-- ══ 4. NÄCHSTE ABSCHNITTE (Übersicht) ══ -->
+<div class="section-block">
+  <div class="section-title">4 — Weitere Abschnitte · Übersicht</div>
+  <div class="sections-preview">
+    <div class="sec-prev">
+      <div class="sec-prev-num">02</div>
+      <div class="sec-prev-name">Service</div>
+      <div class="sec-prev-desc">„Wir übernehmen alles" — zweispaltig mit Included-Card. Hintergrund leicht aufgehellt (#161B22) für Abwechslung.</div>
+      <div class="sec-prev-tag">Nächster Schritt</div>
+    </div>
+    <div class="sec-prev">
+      <div class="sec-prev-num">03</div>
+      <div class="sec-prev-name">Prozess</div>
+      <div class="sec-prev-desc">4-Schritt-Workflow — Karten mit vertikaler Linie statt horizontaler Reihe. Klarer auf Mobile.</div>
+      <div class="sec-prev-tag">Ausstehend</div>
+    </div>
+    <div class="sec-prev">
+      <div class="sec-prev-num">04–08</div>
+      <div class="sec-prev-name">Explainer · Warum wir · Über uns · FAQ · Formular</div>
+      <div class="sec-prev-desc">Alle bestehenden Inhalte bleiben erhalten — nur neue Farben, Abstände und Komponenten-Stil.</div>
+      <div class="sec-prev-tag">Ausstehend</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

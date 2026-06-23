@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMD Fleet Services — Redesign Vorschlag</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'IBM Plex Sans',sans-serif;background:#0F1117;color:#fff;line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased}
+
+.frame-label{background:#1E2330;border-bottom:1px solid rgba(255,255,255,0.08);padding:12px 28px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.frame-label span{color:#5BC48A}
+.section-block{padding:36px 28px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.section-title{font-size:10px;font-weight:700;color:rgba(255,255,255,0.28);letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.07)}
+
+/* ══════ TOKENS ══════ */
+.tokens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.token-group h4{font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px}
+.color-swatch{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sw{width:34px;height:34px;border-radius:7px;flex-shrink:0;border:1px solid rgba(255,255,255,0.08)}
+.sw-name{font-size:11px;font-weight:600;color:rgba(255,255,255,0.8)}
+.sw-hex{font-size:10px;color:rgba(255,255,255,0.32);font-family:monospace;margin-top:2px}
+
+.typo-row{display:flex;flex-direction:column;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07)}
+.typo-sample{display:flex;align-items:baseline;gap:16px}
+.typo-meta{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:.1em;text-transform:uppercase;min-width:80px;flex-shrink:0}
+
+/* ══════ NAV ══════ */
+.nav-mock{background:#16191F;border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.nav-inner{display:flex;align-items:center;gap:24px;padding:14px 28px}
+.nav-logo-area{display:flex;align-items:center;flex-shrink:0}
+.nav-links-mock{display:flex;gap:24px;flex:1;justify-content:center}
+.nav-link-mock{font-size:11px;font-weight:600;color:rgba(255,255,255,0.42);letter-spacing:.01em;cursor:default}
+.nav-link-mock.active{color:rgba(255,255,255,0.85)}
+.nav-cta-mock{background:#1E6B3A;border:1px solid rgba(91,196,138,0.28);color:#fff;padding:8px 18px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0}
+.state-note{font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:10px;padding-left:4px}
+
+/* ══════ HERO ══════ */
+.hero-mock{background:#16191F;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.hero-mock-inner{
+  background:
+    linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:44px 44px;
+  min-height:360px;position:relative;display:grid;grid-template-columns:1fr 400px;gap:0;padding:52px 48px;align-items:center
+}
+.hero-mock-inner::before{content:'';position:absolute;top:-60px;left:15%;width:520px;height:420px;background:radial-gradient(ellipse,rgba(46,125,50,0.09) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero-mock-inner::after{content:'';position:absolute;bottom:-80px;right:10%;width:380px;height:320px;background:radial-gradient(ellipse,rgba(0,82,163,0.07) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+.hero-copy{display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;z-index:2}
+.hero-badge-mock{display:inline-flex;align-items:center;gap:7px;background:rgba(46,125,50,0.1);border:1px solid rgba(91,196,138,0.18);padding:5px 13px;border-radius:20px;width:fit-content}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#5BC48A;box-shadow:0 0 8px rgba(91,196,138,0.7)}
+.hero-badge-text{font-size:10px;font-weight:600;color:rgba(255,255,255,0.48);letter-spacing:.11em;text-transform:uppercase}
+.hero-h1-mock{font-size:44px;font-weight:800;line-height:1.03;letter-spacing:-0.04em;color:#fff}
+.hero-h1-mock span{color:#5BC48A}
+.hero-sub-mock{font-size:15px;color:rgba(255,255,255,0.44);line-height:1.85;max-width:450px;font-weight:300}
+.hero-proof-mock{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 18px;max-width:490px}
+.proof-check{width:20px;height:20px;border-radius:50%;background:rgba(46,125,50,0.2);border:1px solid rgba(91,196,138,0.3);display:flex;align-items:center;justify-content:center;color:#5BC48A;font-size:10px;flex-shrink:0;margin-top:2px}
+.proof-text{font-size:12px;color:rgba(255,255,255,0.58);line-height:1.65}
+.proof-text strong{color:rgba(255,255,255,0.85)}
+.hero-btns-mock{display:flex;gap:10px}
+.btn-primary-mock{background:#1E6B3A;border:1px solid rgba(91,196,138,0.28);color:#fff;padding:13px 26px;border-radius:24px;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(46,125,50,0.22);cursor:default}
+.btn-ghost-mock{border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.58);padding:13px 26px;border-radius:24px;font-size:13px;cursor:default}
+.hero-kpi-mock{display:flex;border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.025);width:fit-content}
+.hkpi-mock{padding:14px 22px;border-right:1px solid rgba(255,255,255,0.07)}
+.hkpi-mock:last-child{border-right:none}
+.hkpi-val-mock{font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1}
+.hkpi-val-mock.green{color:#5BC48A}
+.hkpi-lbl-mock{font-size:9px;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:.13em;margin-top:4px}
+
+.hero-dash-area{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
+.dash-card-mock{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:22px;width:100%;box-shadow:0 24px 72px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.04);backdrop-filter:blur(20px)}
+.dc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dc-title{font-size:9px;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:.14em}
+.dc-live{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:600;color:#5BC48A}
+.dc-live-dot{width:5px;height:5px;border-radius:50%;background:#5BC48A;box-shadow:0 0 6px rgba(91,196,138,0.8)}
+.dc-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.dc-kpi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:13px}
+.dc-kpi.green{background:rgba(46,125,50,0.1);border-color:rgba(91,196,138,0.15)}
+.dc-kpi-val{font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.025em;line-height:1}
+.dc-kpi-val.green{color:#5BC48A}
+.dc-kpi-lbl{font-size:8px;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:.11em;margin-top:3px}
+.dc-kpi-delta{font-size:10px;color:#5BC48A;margin-top:4px;font-weight:600}
+.dc-vehicles{display:flex;flex-direction:column;gap:5px}
+.dc-veh{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px;position:relative;overflow:hidden}
+.dc-veh::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px}
+.dc-veh.v-green::before{background:#5BC48A}
+.dc-veh.v-amber::before{background:#F0B030}
+.dc-veh.v-blue::before{background:#4A90E2}
+.dc-veh-name{font-size:11px;font-weight:600;color:rgba(255,255,255,0.72);flex:1}
+.dc-veh-status{font-size:9px;font-weight:600}
+.dc-veh-status.green{color:#5BC48A}
+.dc-veh-status.amber{color:#F0B030}
+.dc-veh-status.blue{color:#7EC8F4}
+
+.trust-mock{background:#111418;border-top:1px solid rgba(255,255,255,0.07);padding:18px 28px;display:flex;gap:32px;justify-content:center;align-items:center;flex-wrap:wrap}
+.trust-item-mock{display:flex;align-items:center;gap:9px}
+.trust-check-mock{width:18px;height:18px;border-radius:50%;background:rgba(46,125,50,0.15);border:1px solid rgba(91,196,138,0.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:#5BC48A;flex-shrink:0}
+.trust-label-mock{font-size:11px;font-weight:600;color:rgba(255,255,255,0.58)}
+.trust-sub-mock{font-size:9px;color:rgba(255,255,255,0.26);margin-top:1px}
+
+.annotation{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-left:3px solid rgba(91,196,138,0.4);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:18px;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.75}
+.annotation strong{color:rgba(255,255,255,0.8)}
+</style>
+</head>
+<body>
+
+<div class="frame-label">
+  IMD Fleet Services — <span>Redesign-Vorschlag · Abschnitt 1: Design-System + Navigation + Hero</span>
+</div>
+
+<!-- ══ 1. DESIGN SYSTEM ══ -->
+<div class="section-block">
+  <div class="section-title">1.1 — Farbpalette & Typografie</div>
+
+  <div class="tokens-grid">
+    <div class="token-group">
+      <h4>Hintergründe</h4>
+      <div class="color-swatch"><div class="sw" style="background:#16191F"></div><div><div class="sw-name">Haupthintergrund</div><div class="sw-hex">#16191F</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#1C2030"></div><div><div class="sw-name">Kartenoberfläche</div><div class="sw-hex">#1C2030</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#111418"></div><div><div class="sw-name">Tiefer Hintergrund (Footer)</div><div class="sw-hex">#111418</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1)"></div><div><div class="sw-name">Karten-Oberfläche</div><div class="sw-hex">rgba(255,255,255, 0.04)</div></div></div>
+    </div>
+    <div class="token-group">
+      <h4>Akzentfarben</h4>
+      <div class="color-swatch"><div class="sw" style="background:#5BC48A"></div><div><div class="sw-name">IMD Grün — Hauptakzent</div><div class="sw-hex">#5BC48A</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#1E6B3A"></div><div><div class="sw-name">Grün dunkel — Primärbutton</div><div class="sw-hex">#1E6B3A</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#4A90E2"></div><div><div class="sw-name">Blau — Sekundärakzent</div><div class="sw-hex">#4A90E2</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#F0B030"></div><div><div class="sw-name">Amber — Status / Hinweis</div><div class="sw-hex">#F0B030</div></div></div>
+    </div>
+    <div class="token-group">
+      <h4>Textfarben</h4>
+      <div class="color-swatch"><div class="sw" style="background:#fff"></div><div><div class="sw-name">Primär — Überschriften</div><div class="sw-hex">#FFFFFF</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:rgba(255,255,255,0.65)"></div><div><div class="sw-name">Sekundär — Fließtext</div><div class="sw-hex">rgba(255,255,255, 0.65)</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:rgba(255,255,255,0.32)"></div><div><div class="sw-name">Gedimmt — Labels / Untertitel</div><div class="sw-hex">rgba(255,255,255, 0.32)</div></div></div>
+      <div class="color-swatch"><div class="sw" style="background:#5BC48A"></div><div><div class="sw-name">Akzent — Hervorhebungen</div><div class="sw-hex">#5BC48A</div></div></div>
+    </div>
+  </div>
+
+  <div class="typo-row">
+    <div class="typo-sample">
+      <div class="typo-meta">H1 · 60px · 800</div>
+      <div style="font-size:36px;font-weight:800;letter-spacing:-0.04em;color:#fff;line-height:1">Professioneller Flottenankauf</div>
+    </div>
+    <div class="typo-sample">
+      <div class="typo-meta">H2 · 44px · 800</div>
+      <div style="font-size:26px;font-weight:800;letter-spacing:-0.035em;color:#fff">Wir übernehmen <span style="color:#5BC48A">alles für Sie.</span></div>
+    </div>
+    <div class="typo-sample">
+      <div class="typo-meta">Lead · 17px · 300</div>
+      <div style="font-size:15px;font-weight:300;color:rgba(255,255,255,0.55);line-height:1.8">Kein Händler anrufen. Kein Inserat. Keine Verhandlungen.</div>
+    </div>
+    <div class="typo-sample">
+      <div class="typo-meta">Label · 10px · 700</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,0.32)">KOSTENLOSER KOMPLETTSERVICE</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 2. NAVIGATION ══ -->
+<div class="section-block">
+  <div class="section-title">1.2 — Navigation · Zwei Zustände</div>
+
+  <p class="state-note">Ausgangszustand — transparent über dem Hero (beim Seitenaufruf):</p>
+  <div class="nav-mock">
+    <div class="nav-inner" style="background:linear-gradient(to bottom,rgba(22,25,31,0.85),rgba(22,25,31,0.3))">
+      <div class="nav-logo-area">
+        <img src="/logo_light.png" alt="IMD Fleet Services" style="height:38px" onerror="this.style.display='none'">
+      </div>
+      <div class="nav-links-mock">
+        <span class="nav-link-mock">Für Fuhrparks</span>
+        <span class="nav-link-mock">So funktioniert es</span>
+        <span class="nav-link-mock">Warum wir</span>
+        <span class="nav-link-mock">Über uns</span>
+        <span class="nav-link-mock">Kontakt</span>
+      </div>
+      <div class="nav-cta-mock">Fahrzeug anmelden</div>
+    </div>
+  </div>
+
+  <p class="state-note" style="margin-top:16px">Gescrollter Zustand — dunkler Hintergrund mit leichtem Blur-Effekt:</p>
+  <div class="nav-mock">
+    <div class="nav-inner" style="background:rgba(22,25,31,0.97);border-bottom:1px solid rgba(255,255,255,0.07)">
+      <div class="nav-logo-area">
+        <img src="/logo_dark.png" alt="IMD Fleet Services" style="height:38px" onerror="this.style.display='none'">
+      </div>
+      <div class="nav-links-mock">
+        <span class="nav-link-mock active">Für Fuhrparks</span>
+        <span class="nav-link-mock">So funktioniert es</span>
+        <span class="nav-link-mock">Warum wir</span>
+        <span class="nav-link-mock">Über uns</span>
+        <span class="nav-link-mock">Kontakt</span>
+      </div>
+      <div class="nav-cta-mock">Fahrzeug anmelden</div>
+    </div>
+  </div>
+
+  <div class="annotation">
+    <strong>Änderung gegenüber dem aktuellen Design:</strong> Die Navigation wechselt beim Scrollen nicht mehr auf Weiß — sie bleibt im dunklen Charcoal-Stil und fügt sich damit durchgehend in das Gesamtdesign ein. Das Logo wechselt weiterhin zwischen heller und dunkler Variante je nach Hintergrund.
+  </div>
+</div>
+
+<!-- ══ 3. HERO ══ -->
+<div class="section-block">
+  <div class="section-title">1.3 — Hero-Bereich · Zweispaltig: Text links · Dashboard-Karte rechts</div>
+
+  <div class="hero-mock">
+    <div class="hero-mock-inner">
+      <!-- Linke Spalte: Texte + CTA -->
+      <div class="hero-copy">
+        <div class="hero-badge-mock">
+          <div class="hero-badge-dot"></div>
+          <span class="hero-badge-text">IMD Fleet Services · Flottenankauf · Bundesweit</span>
+        </div>
+        <h1 class="hero-h1-mock">
+          Professioneller<br>
+          Flottenankauf für<br>
+          <span>Ihr Unternehmen.</span>
+        </h1>
+        <p class="hero-sub-mock">IMD Fleet Services übernimmt Abholung, Vorbereitung, Gutachten und Auszahlung Ihrer Firmenfahrzeuge — vollständig digital und ohne Aufwand für Ihren Fuhrpark.</p>
+        <div class="hero-proof-mock">
+          <div class="proof-check">✓</div>
+          <div class="proof-text"><strong>Garantierter Mindestpreis durch unabhängiges Wertgutachten</strong> — schriftlich zugesichert. Häufig mit Bonus über dem HEK-Wert.</div>
+        </div>
+        <div class="hero-btns-mock">
+          <div class="btn-primary-mock">Fahrzeug anmelden</div>
+          <div class="btn-ghost-mock">So funktioniert es →</div>
+        </div>
+        <div class="hero-kpi-mock">
+          <div class="hkpi-mock">
+            <div class="hkpi-val-mock">2 Min.</div>
+            <div class="hkpi-lbl-mock">Anmeldung</div>
+          </div>
+          <div class="hkpi-mock">
+            <div class="hkpi-val-mock green">HEK+</div>
+            <div class="hkpi-lbl-mock">Mindestpreis</div>
+          </div>
+          <div class="hkpi-mock">
+            <div class="hkpi-val-mock">100%</div>
+            <div class="hkpi-lbl-mock">Digital & sicher</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rechte Spalte: Dashboard-Vorschaukarte -->
+      <div class="hero-dash-area">
+        <div class="dash-card-mock">
+          <div class="dc-header">
+            <div class="dc-title">Fleet Dashboard · Übersicht</div>
+            <div class="dc-live"><div class="dc-live-dot"></div>Live</div>
+          </div>
+          <div class="dc-kpis">
+            <div class="dc-kpi">
+              <div class="dc-kpi-val">14</div>
+              <div class="dc-kpi-lbl">Aktive Fahrzeuge</div>
+              <div class="dc-kpi-delta">↑ +3 diesen Monat</div>
+            </div>
+            <div class="dc-kpi green">
+              <div class="dc-kpi-val green">HEK+</div>
+              <div class="dc-kpi-lbl">Mindestpreis</div>
+              <div class="dc-kpi-delta">Ø +9,4 % Bonus</div>
+            </div>
+          </div>
+          <div class="dc-vehicles">
+            <div class="dc-veh v-green">
+              <div class="dc-veh-name">VW Crafter · 2021</div>
+              <div class="dc-veh-status green">✓ Ausgezahlt</div>
+            </div>
+            <div class="dc-veh v-amber">
+              <div class="dc-veh-name">Mercedes Sprinter · 2022</div>
+              <div class="dc-veh-status amber">⏳ Gutachten läuft</div>
+            </div>
+            <div class="dc-veh v-blue">
+              <div class="dc-veh-name">Ford Transit · 2020</div>
+              <div class="dc-veh-status blue">→ Abholung geplant</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Bar -->
+    <div class="trust-mock">
+      <div class="trust-item-mock">
+        <div class="trust-check-mock">✓</div>
+        <div><div class="trust-label-mock">Wertgutachten</div><div class="trust-sub-mock">Revisionssicher · GKK-zertifiziert</div></div>
+      </div>
+      <div class="trust-item-mock">
+        <div class="trust-check-mock">✓</div>
+        <div><div class="trust-label-mock">HEK-Mindestpreis</div><div class="trust-sub-mock">Vertraglich zugesichert</div></div>
+      </div>
+      <div class="trust-item-mock">
+        <div class="trust-check-mock">✓</div>
+        <div><div class="trust-label-mock">Bonus möglich</div><div class="trust-sub-mock">Je nach Marktlage</div></div>
+      </div>
+      <div class="trust-item-mock">
+        <div class="trust-check-mock">✓</div>
+        <div><div class="trust-label-mock">Abholung bundesweit</div><div class="trust-sub-mock">Wir kommen zu Ihnen</div></div>
+      </div>
+      <div class="trust-item-mock">
+        <div class="trust-check-mock">✓</div>
+        <div><div class="trust-label-mock">100 % digital</div><div class="trust-sub-mock">Kein Papierkram</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotation">
+    <strong>Wesentliche Änderung gegenüber dem aktuellen Hero:</strong> Der bestehende Hero basiert auf einem statischen PNG-Bild mit eingebetteten Klickbereichen (sog. Hotspot-System) — dieses wird vollständig durch ein natives HTML/CSS-Layout ersetzt. Das neue Design ist responsiv, pflegeleicht und unabhängig von einem bestimmten Bild.<br><br>
+    <strong>Hintergrund:</strong> Charcoal #16191F mit einem dezenten Gitternetz (2 % Deckkraft) sowie einem grünen radialen Leuchten links oben und einem blauen Schimmer rechts unten — für Tiefe ohne visuelle Ablenkung.<br><br>
+    <strong>Vertrauensleiste:</strong> Wird direkt unterhalb des Hero-Bereichs eingebettet, statt als separate Sektion — kompakter und wirkungsvoller.
+  </div>
+</div>
+
+</body>
+</html>

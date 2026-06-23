@@ -1,0 +1,64 @@
+<h2>Rollenkonzept — Welche Variante passt zu IMD?</h2>
+<p class="subtitle">Wer soll Zugriff auf das System haben? Wähle den Ansatz, der am besten passt.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>2-Ebenen (aktuell / vereinfacht)</h3>
+      <p><strong>IMD Admin</strong> → <strong>Fahrer</strong></p>
+      <p style="margin-top:10px;font-size:13px;color:#666">IMD legt jeden Fahrer manuell an. Kein Zwischenmanager. Fuhrpark ist nur ein Dateneintrag (kein Login).</p>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Einfach zu implementieren</span>
+        <span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">⚠ Skaliert nicht</span>
+        <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ IMD muss alles manuell pflegen</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>3-Ebenen — B2B SaaS Standard ★ Empfohlen</h3>
+      <p><strong>IMD Admin</strong> → <strong>Fuhrparkmanager</strong> → <strong>Fahrer</strong></p>
+      <p style="margin-top:10px;font-size:13px;color:#666">Jeder Fuhrpark bekommt einen (oder mehrere) Manager mit eigenem Login. Der Manager verwaltet seine eigenen Fahrer selbst — IMD muss sich nicht um jeden Einzelnen kümmern.</p>
+      <div style="margin-top:12px">
+        <div style="font-size:12px;font-weight:700;color:#0c2461;margin-bottom:6px">Was kann der Fuhrparkmanager?</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:12px;">
+          <span>✓ Fahrer einladen &amp; deaktivieren (nur eigener Fuhrpark)</span>
+          <span>✓ Alle Schadensmeldungen seines Fuhrparks sehen</span>
+          <span>✓ Fahrzeuge verwalten (später)</span>
+          <span>✓ Statistiken für seinen Fuhrpark</span>
+          <span>✗ Kein Zugriff auf andere Fuhrparks</span>
+          <span>✗ Kein Zugriff auf IMD-Admin-Bereich</span>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Skaliert auf 100+ Fuhrparks</span>
+        <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Echter B2B SaaS Standard</span>
+        <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Weniger Arbeit für IMD</span>
+        <span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">⚠ Mehr Implementierungsaufwand</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>3-Ebenen + Sub-Rollen (komplex)</h3>
+      <p><strong>IMD Admin</strong> → <strong>Fuhrparkmanager (Admin/Viewer)</strong> → <strong>Fahrer</strong></p>
+      <p style="margin-top:10px;font-size:13px;color:#666">Wie B, aber Fuhrparkmanager hat zwei Unter-Rollen: "Admin" (darf Fahrer anlegen) und "Viewer" (nur lesen). Sinnvoll wenn Fuhrparks große interne Teams haben.</p>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Maximale Flexibilität</span>
+        <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ Deutlich komplexer</span>
+        <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ Für Phase 1 zu früh</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:24px;background:#fffbeb;border:1.5px solid #fcd34d;border-radius:12px;padding:16px 20px;font-size:13px;color:#78350f;line-height:1.6;">
+  <strong>Empfehlung:</strong> Option B ist der richtige Weg für ein B2B SaaS. Ohne Fuhrparkmanager muss IMD jeden einzelnen Fahrer bei 10, 20, 50 Fuhrparks manuell anlegen — das skaliert nicht. Mit Option B delegiert IMD die tägliche Verwaltung an den jeweiligen Fuhrpark.
+</div>

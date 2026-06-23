@@ -1,0 +1,143 @@
+<h2>Layout Hero</h2>
+<p class="subtitle">Direcție: premium dark corporate, mai modern decât referința. Ce structură vizuală vrei în hero?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="split-visual" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16191F;min-height:220px;overflow:hidden;position:relative;display:flex">
+      <!-- Left 55% — copy -->
+      <div style="width:55%;padding:20px;display:flex;flex-direction:column;justify-content:center;gap:9px;position:relative;z-index:2">
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="width:5px;height:5px;border-radius:50%;background:#2E7D32;box-shadow:0 0 6px rgba(46,125,50,0.7)"></div>
+          <span style="color:rgba(255,255,255,0.35);font-size:8px;font-family:sans-serif;letter-spacing:.14em;text-transform:uppercase">Flottenankauf · Bundesweit</span>
+        </div>
+        <div style="font-size:17px;font-weight:800;color:#fff;line-height:1.08;font-family:sans-serif;letter-spacing:-0.025em">Professioneller<br>Flottenankauf für<br><span style="color:#5BC48A">Unternehmen.</span></div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.4);font-family:sans-serif;line-height:1.6;max-width:200px">Abholung · Gutachten · Auszahlung — vollständig digital.</div>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <div style="background:#1E6B3A;border:1px solid rgba(91,196,138,0.3);color:#fff;padding:6px 12px;border-radius:7px;font-size:9px;font-weight:700;font-family:sans-serif">Fahrzeug anmelden</div>
+          <div style="border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);padding:6px 12px;border-radius:7px;font-size:9px;font-family:sans-serif">Mehr erfahren →</div>
+        </div>
+      </div>
+      <!-- Right 45% — fleet photo area -->
+      <div style="width:45%;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,#16191F 0%,transparent 35%)"></div>
+        <!-- Truck illustration -->
+        <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px">
+          <svg viewBox="0 0 200 120" width="190" height="115" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="100" width="200" height="20" fill="#1C1F26"/>
+            <!-- Big truck -->
+            <rect x="20" y="50" width="110" height="50" rx="3" fill="#2E3440"/>
+            <rect x="20" y="50" width="110" height="10" rx="2" fill="#3B4252"/>
+            <!-- Cab -->
+            <rect x="105" y="36" width="52" height="64" rx="5" fill="#3B4252"/>
+            <rect x="107" y="38" width="48" height="28" rx="3" fill="rgba(74,130,200,0.5)"/>
+            <rect x="109" y="40" width="44" height="24" rx="2" fill="rgba(90,150,220,0.35)"/>
+            <!-- Wheels -->
+            <circle cx="42" cy="100" r="9" fill="#1C1F26"/><circle cx="42" cy="100" r="4" fill="#2E3440"/>
+            <circle cx="95" cy="100" r="9" fill="#1C1F26"/><circle cx="95" cy="100" r="4" fill="#2E3440"/>
+            <circle cx="140" cy="100" r="9" fill="#1C1F26"/><circle cx="140" cy="100" r="4" fill="#2E3440"/>
+            <!-- IMD badge on truck -->
+            <rect x="32" y="62" width="42" height="18" rx="2" fill="rgba(30,107,58,0.7)"/>
+            <text x="53" y="73" font-size="6" fill="white" text-anchor="middle" font-family="sans-serif" font-weight="700">IMD</text>
+            <!-- Green glow under truck -->
+            <ellipse cx="90" cy="102" rx="70" ry="4" fill="rgba(46,125,50,0.15)"/>
+          </svg>
+        </div>
+        <!-- Subtle green glow top-right -->
+        <div style="position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(46,125,50,0.18) 0%,transparent 70%)"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Split: text stânga + vizual dreapta</h3>
+      <p>Layout clasic premium B2B. Text cu CTA stânga, ilustrație/foto flotă dreapta. Clar, echilibrat, conversional.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="centered-big" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16191F;min-height:220px;overflow:hidden;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center">
+      <!-- Background subtle lines -->
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 39px,rgba(255,255,255,0.015) 39px,rgba(255,255,255,0.015) 40px)"></div>
+      <!-- Glow -->
+      <div style="position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:300px;height:150px;background:radial-gradient(ellipse,rgba(46,125,50,0.12) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div style="display:flex;gap:6px;align-items:center;background:rgba(46,125,50,0.12);border:1px solid rgba(91,196,138,0.2);padding:4px 10px;border-radius:20px">
+          <div style="width:5px;height:5px;border-radius:50%;background:#2E7D32;box-shadow:0 0 6px rgba(46,125,50,0.7)"></div>
+          <span style="color:rgba(255,255,255,0.5);font-size:8px;font-family:sans-serif;letter-spacing:.14em;text-transform:uppercase">IMD Fleet Services · Bundesweit</span>
+        </div>
+        <div style="font-size:22px;font-weight:800;color:#fff;line-height:1.04;font-family:sans-serif;letter-spacing:-0.035em">Professioneller Flottenankauf<br>für <span style="color:#5BC48A">Ihr Unternehmen.</span></div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:sans-serif;max-width:280px;line-height:1.7">Abholung · Gutachten · Auszahlung — vollständig digital, ohne Aufwand.</div>
+        <div style="display:flex;gap:8px">
+          <div style="background:#1E6B3A;border:1px solid rgba(91,196,138,0.3);color:#fff;padding:7px 14px;border-radius:8px;font-size:9px;font-weight:700;font-family:sans-serif;box-shadow:0 4px 14px rgba(46,125,50,0.3)">Fahrzeug anmelden</div>
+          <div style="border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);padding:7px 14px;border-radius:8px;font-size:9px;font-family:sans-serif">So funktioniert es →</div>
+        </div>
+        <!-- Mini KPI strip -->
+        <div style="display:flex;gap:16px;margin-top:4px">
+          <div style="text-align:center"><div style="color:#fff;font-size:13px;font-weight:800;font-family:sans-serif">2 Min.</div><div style="color:rgba(255,255,255,0.3);font-size:7px;font-family:sans-serif;letter-spacing:.1em;text-transform:uppercase">Anmeldung</div></div>
+          <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
+          <div style="text-align:center"><div style="color:#5BC48A;font-size:13px;font-weight:800;font-family:sans-serif">HEK+</div><div style="color:rgba(255,255,255,0.3);font-size:7px;font-family:sans-serif;letter-spacing:.1em;text-transform:uppercase">Mindestpreis</div></div>
+          <div style="width:1px;background:rgba(255,255,255,0.1)"></div>
+          <div style="text-align:center"><div style="color:#fff;font-size:13px;font-weight:800;font-family:sans-serif">100%</div><div style="color:rgba(255,255,255,0.3);font-size:7px;font-family:sans-serif;letter-spacing:.1em;text-transform:uppercase">Digital</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Centrat, heading mare</h3>
+      <p>Hero pe toată lățimea, text centrat cu heading impactant. Modern, statement, fără distractori. Tipic pentru SaaS premium.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split-dashboard" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#16191F;min-height:220px;overflow:hidden;position:relative;display:flex">
+      <!-- Left copy -->
+      <div style="width:52%;padding:20px;display:flex;flex-direction:column;justify-content:center;gap:9px;z-index:2">
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="width:5px;height:5px;border-radius:50%;background:#2E7D32;box-shadow:0 0 6px rgba(46,125,50,0.7)"></div>
+          <span style="color:rgba(255,255,255,0.35);font-size:8px;font-family:sans-serif;letter-spacing:.14em;text-transform:uppercase">Flottenankauf · Digital</span>
+        </div>
+        <div style="font-size:17px;font-weight:800;color:#fff;line-height:1.08;font-family:sans-serif;letter-spacing:-0.025em">Professioneller<br>Flottenankauf für<br><span style="color:#5BC48A">Unternehmen.</span></div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.4);font-family:sans-serif;line-height:1.6">Vollständig digital · Garantierter Preis</div>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <div style="background:#1E6B3A;border:1px solid rgba(91,196,138,0.3);color:#fff;padding:6px 12px;border-radius:7px;font-size:9px;font-weight:700;font-family:sans-serif">Fahrzeug anmelden</div>
+        </div>
+      </div>
+      <!-- Right: floating dashboard card -->
+      <div style="width:48%;padding:16px 16px 16px 4px;display:flex;align-items:center">
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;width:100%;backdrop-filter:blur(8px);box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="color:rgba(255,255,255,0.35);font-size:7px;font-family:sans-serif;letter-spacing:.12em;text-transform:uppercase">Fleet Dashboard</span>
+            <span style="display:flex;gap:4px;align-items:center"><div style="width:4px;height:4px;border-radius:50%;background:#2E7D32;box-shadow:0 0 4px rgba(46,125,50,0.8)"></div><span style="color:#5BC48A;font-size:7px;font-family:sans-serif">Live</span></span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:7px">
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:7px">
+              <div style="color:#fff;font-size:12px;font-weight:800;font-family:sans-serif">14</div>
+              <div style="color:rgba(255,255,255,0.3);font-size:7px;font-family:sans-serif">Fahrzeuge</div>
+            </div>
+            <div style="background:rgba(46,125,50,0.12);border:1px solid rgba(91,196,138,0.15);border-radius:6px;padding:7px">
+              <div style="color:#5BC48A;font-size:12px;font-weight:800;font-family:sans-serif">HEK+</div>
+              <div style="color:rgba(255,255,255,0.3);font-size:7px;font-family:sans-serif">Mindestpreis</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <div style="background:rgba(255,255,255,0.04);border-radius:5px;padding:5px 7px;display:flex;justify-content:space-between">
+              <span style="color:rgba(255,255,255,0.55);font-size:7px;font-family:sans-serif">VW Crafter 2021</span>
+              <span style="color:#5BC48A;font-size:7px;font-family:sans-serif">✓ Ausgezahlt</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:5px;padding:5px 7px;display:flex;justify-content:space-between">
+              <span style="color:rgba(255,255,255,0.55);font-size:7px;font-family:sans-serif">Mercedes Sprinter 2022</span>
+              <span style="color:#F0B030;font-size:7px;font-family:sans-serif">⏳ Gutachten</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:5px;padding:5px 7px;display:flex;justify-content:space-between">
+              <span style="color:rgba(255,255,255,0.55);font-size:7px;font-family:sans-serif">Ford Transit 2020</span>
+              <span style="color:rgba(255,255,255,0.35);font-size:7px;font-family:sans-serif">→ Abholung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Split: text stânga + dashboard dreapta</h3>
+      <p>Ca varianta actuală, dar în noua estetică charcoal. Subliniază că platforma e digitală și că există un sistem real în spate.</p>
+    </div>
+  </div>
+
+</div>

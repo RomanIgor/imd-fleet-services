@@ -1,0 +1,61 @@
+<h2>Wo sollen Fuhrpark &amp; Fahrer in der Sidebar landen?</h2>
+<p class="subtitle">Die bestehende Sidebar hat: Übersicht · Fahrzeuge · Schäden · Prozess · Netzwerk · Dokumente · Einstellungen</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Neuer Abschnitt "Fuhrpark"</h3>
+      <p>Ein eigener Abschnitt mit zwei Einträgen direkt nach "Schäden"</p>
+      <div style="margin-top:12px;background:#f8faff;border-radius:8px;padding:12px;font-size:12px;font-family:monospace;color:#546e8a">
+        <div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:6px">Sidebar-Struktur</div>
+        <div>📊 Dashboard</div>
+        <div>🚗 Fahrzeuge</div>
+        <div>🚨 Schäden</div>
+        <div style="margin-top:6px;border-top:1px dashed #dde6f0;padding-top:6px;color:#0c2461;font-weight:700">🏢 Fuhrpark  ← neu</div>
+        <div style="padding-left:12px">  🏢 Fuhrparks</div>
+        <div style="padding-left:12px">  👤 Fahrer</div>
+        <div>📋 Prozess</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Unter "Einstellungen" einfügen</h3>
+      <p>Fuhrparks und Fahrer sind administrative Stammdaten — gehören zu Einstellungen</p>
+      <div style="margin-top:12px;background:#f8faff;border-radius:8px;padding:12px;font-size:12px;font-family:monospace;color:#546e8a">
+        <div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:6px">Sidebar-Struktur</div>
+        <div>📊 Dashboard</div>
+        <div>🚗 Fahrzeuge</div>
+        <div>🚨 Schäden</div>
+        <div>📋 Prozess</div>
+        <div style="margin-top:6px;border-top:1px dashed #dde6f0;padding-top:6px;color:#0c2461;font-weight:700">⚙️ Einstellungen  ← erweitert</div>
+        <div style="padding-left:12px">  👤 Benutzer (IMD)</div>
+        <div style="padding-left:12px;color:#0c2461;font-weight:700">  🏢 Fuhrparks  ← neu</div>
+        <div style="padding-left:12px;color:#0c2461;font-weight:700">  🚗 Fahrer  ← neu</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Fuhrparks &amp; Fahrer getrennte Abschnitte</h3>
+      <p>Fuhrparks oben als Stammdaten, Fahrer direkt bei "Schäden" weil funktional verwandt</p>
+      <div style="margin-top:12px;background:#f8faff;border-radius:8px;padding:12px;font-size:12px;font-family:monospace;color:#546e8a">
+        <div style="color:#888;font-size:10px;text-transform:uppercase;margin-bottom:6px">Sidebar-Struktur</div>
+        <div>📊 Dashboard</div>
+        <div style="color:#0c2461;font-weight:700">🏢 Fuhrparks  ← neu</div>
+        <div style="color:#0c2461;font-weight:700">👤 Fahrer  ← neu</div>
+        <div>🚗 Fahrzeuge</div>
+        <div>🚨 Schäden</div>
+        <div>📋 Prozess</div>
+        <div>⚙️ Einstellungen</div>
+      </div>
+    </div>
+  </div>
+
+</div>

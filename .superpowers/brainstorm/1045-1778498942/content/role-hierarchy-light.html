@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Superpowers Brainstorming</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    :root {
+      --bg-primary: #f5f5f7;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #e5e5e7;
+      --border: #d1d1d6;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --text-tertiary: #aeaeb2;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --success: #34c759;
+      --warning: #ff9f0a;
+      --error: #ff3b30;
+      --selected-bg: #e8f4fd;
+      --selected-border: #0071e3;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .header {
+      background: var(--bg-secondary);
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .header h1 { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+    .header .status { font-size: 0.7rem; color: var(--success); display: flex; align-items: center; gap: 0.4rem; }
+    .header .status::before { content: ''; width: 6px; height: 6px; background: var(--success); border-radius: 50%; }
+
+    .main { flex: 1; overflow-y: auto; }
+    #claude-content { padding: 2rem; min-height: 100%; }
+
+    .indicator-bar {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 0.5rem 1.5rem;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .indicator-bar span { font-size: 0.75rem; color: var(--text-secondary); }
+    .indicator-bar .selected-text { color: var(--accent); font-weight: 500; }
+
+    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+    h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--text-secondary); margin-bottom: 1.5rem; }
+
+    .options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .option {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .option:hover { border-color: var(--accent); }
+    .option.selected { background: var(--selected-bg); border-color: var(--selected-border); }
+    .option .letter {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      width: 1.75rem; height: 1.75rem;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .option.selected .letter { background: var(--accent); color: white; }
+    .option .content { flex: 1; }
+    .option .content h3 { font-size: 0.95rem; margin-bottom: 0.15rem; }
+    .option .content p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Superpowers Brainstorming</h1>
+    <div class="status">Connected</div>
+  </div>
+
+  <div class="main">
+    <div id="claude-content">
+
+      <h2>Rollenkonzept — Welche Variante passt zu IMD?</h2>
+      <p class="subtitle">Wer soll Zugriff auf das System haben? Wähle den Ansatz, der am besten passt.</p>
+
+      <div class="options">
+
+        <div class="option" data-choice="a" onclick="toggleSelect(this)">
+          <div class="letter">A</div>
+          <div class="content">
+            <h3>2-Ebenen (aktuell / vereinfacht)</h3>
+            <p><strong>IMD Admin</strong> → <strong>Fahrer</strong></p>
+            <p style="margin-top:10px;font-size:13px;">IMD legt jeden Fahrer manuell an. Kein Zwischenmanager. Fuhrpark ist nur ein Dateneintrag (kein Login).</p>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Einfach zu implementieren</span>
+              <span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">⚠ Skaliert nicht</span>
+              <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ IMD muss alles manuell pflegen</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="option" data-choice="b" onclick="toggleSelect(this)">
+          <div class="letter">B</div>
+          <div class="content">
+            <h3>3-Ebenen — B2B SaaS Standard ★ Empfohlen</h3>
+            <p><strong>IMD Admin</strong> → <strong>Fuhrparkmanager</strong> → <strong>Fahrer</strong></p>
+            <p style="margin-top:10px;font-size:13px;">Jeder Fuhrpark bekommt einen (oder mehrere) Manager mit eigenem Login. Der Manager verwaltet seine eigenen Fahrer selbst — IMD muss sich nicht um jeden Einzelnen kümmern.</p>
+            <div style="margin-top:12px">
+              <div style="font-size:12px;font-weight:700;color:#0c2461;margin-bottom:6px">Was kann der Fuhrparkmanager?</div>
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#334155;">
+                <span>✓ Fahrer einladen &amp; deaktivieren (nur eigener Fuhrpark)</span>
+                <span>✓ Alle Schadensmeldungen seines Fuhrparks sehen</span>
+                <span>✓ Fahrzeuge verwalten (später)</span>
+                <span>✓ Statistiken für seinen Fuhrpark</span>
+                <span style="color:#888">✗ Kein Zugriff auf andere Fuhrparks</span>
+                <span style="color:#888">✗ Kein Zugriff auf IMD-Admin-Bereich</span>
+              </div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Skaliert auf 100+ Fuhrparks</span>
+              <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Echter B2B SaaS Standard</span>
+              <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Weniger Arbeit für IMD</span>
+              <span style="background:#fef3c7;color:#92400e;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">⚠ Mehr Implementierungsaufwand</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="option" data-choice="c" onclick="toggleSelect(this)">
+          <div class="letter">C</div>
+          <div class="content">
+            <h3>3-Ebenen + Sub-Rollen (komplex)</h3>
+            <p><strong>IMD Admin</strong> → <strong>Fuhrparkmanager (Admin/Viewer)</strong> → <strong>Fahrer</strong></p>
+            <p style="margin-top:10px;font-size:13px;">Wie B, aber Fuhrparkmanager hat zwei Unter-Rollen: "Admin" (darf Fahrer anlegen) und "Viewer" (nur lesen). Sinnvoll wenn Fuhrparks große interne Teams haben.</p>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="background:#dcfce7;color:#166534;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✓ Maximale Flexibilität</span>
+              <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ Deutlich komplexer</span>
+              <span style="background:#fee2e2;color:#991b1b;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700">✗ Für Phase 1 zu früh</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;background:#fffbeb;border:1.5px solid #fcd34d;border-radius:12px;padding:16px 20px;font-size:13px;color:#78350f;line-height:1.6;">
+        <strong>Empfehlung:</strong> Option B ist der richtige Weg für ein B2B SaaS. Ohne Fuhrparkmanager muss IMD jeden einzelnen Fahrer bei 10, 20, 50 Fuhrparks manuell anlegen — das skaliert nicht. Mit Option B delegiert IMD die tägliche Verwaltung an den jeweiligen Fuhrpark.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="indicator-bar">
+    <span id="indicator-text">Click an option above, then return to the terminal</span>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<h2>Wie kommt das "Fahrer anlegen"-Formular in das Panel?</h2>
+<p class="subtitle">Die Tabelle zeigt alle Fahrer mit Status-Badge und Aktionen (deaktivieren · DSGVO löschen)</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Formular immer oben sichtbar</h3>
+      <p>Kein Klick nötig — Felder sind sofort da, Tabelle darunter</p>
+      <div style="margin-top:12px;border:1.5px solid #dde6f0;border-radius:10px;overflow:hidden;font-size:12px">
+        <div style="background:#0c2461;color:#fff;padding:8px 14px;font-size:11px;font-weight:700">👤 Fahrerverwaltung</div>
+        <div style="padding:12px;background:#f8faff;border-bottom:1px solid #dde6f0">
+          <div style="font-size:10px;font-weight:700;color:#0c2461;margin-bottom:6px">FAHRER ANLEGEN</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:6px 8px;color:#888">Vorname</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:6px 8px;color:#888">Nachname</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:6px 8px;color:#888">E-Mail</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:6px 8px;color:#888">Fuhrpark wählen ▾</div>
+          </div>
+          <div style="background:#0c2461;color:#fff;padding:6px 14px;border-radius:5px;font-size:11px;font-weight:700;display:inline-block">Fahrer anlegen + Einladung senden →</div>
+        </div>
+        <div style="padding:10px 14px">
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:10px;font-weight:700;color:#888;margin-bottom:6px">
+            <span>NAME</span><span>FUHRPARK</span><span>E-MAIL</span><span>STATUS</span><span>AKTIONEN</span>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:11px;align-items:center;padding:4px 0;border-top:1px solid #f1f5f9">
+            <span>Max Mustermann</span><span style="color:#546e8a">Test GmbH</span><span style="color:#546e8a">max@test.de</span>
+            <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Aktiv</span>
+            <span style="color:#0c2461;font-size:10px">⏸ · 🗑</span>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:11px;align-items:center;padding:4px 0;border-top:1px solid #f1f5f9">
+            <span>Lisa Schmidt</span><span style="color:#546e8a">Firma AG</span><span style="color:#546e8a">lisa@ag.de</span>
+            <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Inaktiv</span>
+            <span style="color:#0c2461;font-size:10px">▶ · 🗑</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Button öffnet Formular inline (ausklappbar)</h3>
+      <p>Tabelle zuerst — "+  Fahrer anlegen"-Button klappt das Formular darüber auf</p>
+      <div style="margin-top:12px;border:1.5px solid #dde6f0;border-radius:10px;overflow:hidden;font-size:12px">
+        <div style="background:#0c2461;color:#fff;padding:8px 14px;font-size:11px;font-weight:700;display:flex;justify-content:space-between;align-items:center">
+          <span>👤 Fahrerverwaltung</span>
+          <span style="background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:5px;font-size:10px;cursor:pointer">+ Fahrer anlegen</span>
+        </div>
+        <div style="padding:10px 14px">
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:10px;font-weight:700;color:#888;margin-bottom:6px">
+            <span>NAME</span><span>FUHRPARK</span><span>E-MAIL</span><span>STATUS</span><span>AKTIONEN</span>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:11px;align-items:center;padding:4px 0;border-top:1px solid #f1f5f9">
+            <span>Max Mustermann</span><span style="color:#546e8a">Test GmbH</span><span style="color:#546e8a">max@test.de</span>
+            <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Aktiv</span>
+            <span style="color:#0c2461;font-size:10px">⏸ · 🗑</span>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 2fr 2fr 1fr 1.5fr;gap:4px;font-size:11px;align-items:center;padding:4px 0;border-top:1px solid #f1f5f9">
+            <span>Lisa Schmidt</span><span style="color:#546e8a">Firma AG</span><span style="color:#546e8a">lisa@ag.de</span>
+            <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Inaktiv</span>
+            <span style="color:#0c2461;font-size:10px">▶ · 🗑</span>
+          </div>
+        </div>
+        <div style="padding:10px 14px;background:#f8faff;border-top:1px dashed #dde6f0">
+          <div style="font-size:10px;color:#888;text-align:center">↑ Klick "+ Fahrer anlegen" → Formular erscheint hier</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Split: Tabelle links · Formular rechts</h3>
+      <p>Beide Bereiche immer sichtbar nebeneinander — wie ein klassisches Admin-CRM</p>
+      <div style="margin-top:12px;border:1.5px solid #dde6f0;border-radius:10px;overflow:hidden;font-size:12px">
+        <div style="background:#0c2461;color:#fff;padding:8px 14px;font-size:11px;font-weight:700">👤 Fahrerverwaltung</div>
+        <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:0">
+          <div style="padding:10px 14px;border-right:1px solid #dde6f0">
+            <div style="font-size:10px;font-weight:700;color:#888;margin-bottom:6px">ALLE FAHRER</div>
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4px;font-size:10px;font-weight:700;color:#888;margin-bottom:4px">
+              <span>NAME</span><span>STATUS</span><span>AKTIONEN</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4px;font-size:11px;align-items:center;padding:3px 0;border-top:1px solid #f1f5f9">
+              <span>Max Mustermann<br><span style="color:#888;font-size:10px">Test GmbH</span></span>
+              <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Aktiv</span>
+              <span style="font-size:10px">⏸ · 🗑</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4px;font-size:11px;align-items:center;padding:3px 0;border-top:1px solid #f1f5f9">
+              <span>Lisa Schmidt<br><span style="color:#888;font-size:10px">Firma AG</span></span>
+              <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:20px;font-size:10px;font-weight:700">Inaktiv</span>
+              <span style="font-size:10px">▶ · 🗑</span>
+            </div>
+          </div>
+          <div style="padding:10px 14px;background:#f8faff">
+            <div style="font-size:10px;font-weight:700;color:#0c2461;margin-bottom:8px">FAHRER ANLEGEN</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:5px 8px;color:#888;margin-bottom:5px;font-size:11px">Vorname</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:5px 8px;color:#888;margin-bottom:5px;font-size:11px">Nachname</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:5px 8px;color:#888;margin-bottom:5px;font-size:11px">E-Mail</div>
+            <div style="background:#fff;border:1px solid #dde6f0;border-radius:5px;padding:5px 8px;color:#888;margin-bottom:8px;font-size:11px">Fuhrpark ▾</div>
+            <div style="background:#0c2461;color:#fff;padding:6px 10px;border-radius:5px;font-size:10px;font-weight:700;text-align:center">Anlegen + Einladung →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

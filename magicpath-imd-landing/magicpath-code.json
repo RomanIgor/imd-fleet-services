@@ -1,0 +1,53 @@
+{
+  "mode": "edit",
+  "componentId": "411021778580832256",
+  "projectId": "411020734966665216",
+  "selectedRevisionId": "411029588995629056",
+  "baseRevisionId": "411029588995629056",
+  "jobId": "411008191237857280-external-agent-411030567723872256",
+  "generatedName": "zesty-hill-9543",
+  "name": "IMD Fleet SaaS Landing",
+  "selectedImages": [],
+  "editableFiles": [
+    {
+      "path": "assets/form-car.jpg",
+      "sha256": "1e1a3321236010003aa4bcb253b1fedfd6ca51805a1cdaddf704453fce108404"
+    },
+    {
+      "path": "assets/hero-office.jpg",
+      "sha256": "afd923fc97400f783799baaad0fa3cb6ae08617aecf210f2e16b98eb0349c9e9"
+    },
+    {
+      "path": "assets/imd-logo-dark.png",
+      "sha256": "fb8a148b5b51b5003a1241044de5815befa29d4c5caa42b497ff8d39d8e72b30"
+    },
+    {
+      "path": "assets/imd-logo-white.png",
+      "sha256": "795b2190b6e1036bb98c067412f062b982cdbeec1a9af3d5295f3616336c6ce8"
+    },
+    {
+      "path": "assets/pwa-phones.jpg",
+      "sha256": "2efbec7c4b4ac22e9a4383f9cecf55254e41b5cbe51d67c5e3da51fa82adbbf0"
+    },
+    {
+      "path": "assets/services-building.jpg",
+      "sha256": "2c104da26ce8d1f787e8dcc730021d580e2f525a0bed3b503383bc8bb1d74f85"
+    },
+    {
+      "path": "src/App.tsx",
+      "sha256": "ed09d4488e81ff9bfe41d5252c33ef40d37c3fd3e0a6e843e91095f1609a1100"
+    },
+    {
+      "path": "src/components/generated/IMDFleetSaaSLanding.tsx",
+      "sha256": "01fc3541f5b3637e09543f474b6ba005a0eea23bbe32d4175669f8c6f592412c"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "4f863749adaea1ef68864d81cde99cfe14a3c4c79e53c3a6d35ea6c919179dbb"
+    }
+  ],
+  "dimensions": {
+    "width": 1440,
+    "height": 980
+  }
+}

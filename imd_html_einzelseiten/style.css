@@ -1,0 +1,74 @@
+
+:root{
+  --bg:#151515;
+  --panel:rgba(255,255,255,.105);
+  --panel-strong:rgba(255,255,255,.15);
+  --line:rgba(255,255,255,.20);
+  --text:#f2f2f0;
+  --muted:rgba(242,242,240,.72);
+  --soft:rgba(242,242,240,.50);
+  --dark:#0f0f0f;
+  --button:#efefed;
+  --button-text:#171717;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#141414;color:var(--text)}
+body{
+  background-image:linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,.08) 48%,rgba(0,0,0,.38)),url('assets/bg_imd_wall.jpg');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 55% 12%,rgba(255,255,255,.17),transparent 32%),
+             radial-gradient(circle at 26% 90%,rgba(255,255,255,.07),transparent 42%),
+             rgba(0,0,0,.15);
+}
+.page{position:relative;min-height:100vh;padding:28px 54px 46px;display:flex;flex-direction:column}
+.nav{height:52px;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.logo{font-weight:800;letter-spacing:.08em;font-size:30px;line-height:.8;color:white;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.logo small{display:block;font-size:8px;letter-spacing:.46em;margin-top:10px;font-weight:500}
+.menu{display:flex;align-items:center;gap:34px;font-size:13px;color:rgba(255,255,255,.72)}
+.menu a{color:inherit;text-decoration:none;position:relative;padding:14px 0}
+.menu a.active{color:#fff}
+.menu a.active::after{content:"";position:absolute;height:2px;background:#fff;left:0;right:0;bottom:4px}
+.toggle{border:1px solid var(--line);border-radius:99px;padding:8px 13px;color:white;opacity:.9}
+.grid{display:grid;grid-template-columns:1fr 1.35fr;gap:60px;align-items:center;flex:1;padding-top:58px}
+.kicker{text-transform:uppercase;letter-spacing:.22em;font-weight:800;font-size:11px;color:rgba(255,255,255,.7);margin-bottom:20px}
+h1{font-size:42px;line-height:1.08;margin:0 0 22px;font-weight:760;letter-spacing:-.03em}
+h2{font-size:24px;line-height:1.15;margin:0 0 22px;font-weight:760}
+p{color:var(--muted);font-size:15px;line-height:1.72;margin:0 0 24px}
+.glass{
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.065));
+  border:1px solid var(--line);
+  box-shadow:0 26px 80px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);
+  border-radius:14px;
+}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{min-height:190px;padding:28px 22px;text-align:center}
+.num{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:grid;place-items:center;margin:0 auto 18px;font-size:18px;color:#fff}
+.icon{font-size:34px;margin-bottom:18px;opacity:.9}
+.step h3,.card h3{font-size:15px;margin:0 0 12px;color:#fff}
+.step p,.card p{font-size:12px;line-height:1.55;margin:0;color:rgba(255,255,255,.66)}
+.note{max-width:560px;padding:24px 32px;display:flex;gap:22px;align-items:center;margin:34px auto 0}
+.note .icon{margin:0;font-size:36px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{padding:26px 22px;min-height:220px;position:relative;overflow:hidden}
+.card img{position:absolute;inset:auto 0 0;width:100%;height:95px;object-fit:cover;opacity:.22;filter:grayscale(1)}
+.chart{padding:28px;min-height:255px}
+.cta{display:flex;align-items:center;justify-content:space-between;padding:24px 32px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:22px;background:var(--button);color:var(--button-text);text-decoration:none;border-radius:8px;padding:16px 26px;font-weight:720;font-size:14px}
+.darkbtn{background:#111;color:#fff;border:1px solid rgba(255,255,255,.18)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.bigimg{width:100%;height:330px;object-fit:cover;border-radius:14px;border:1px solid var(--line);filter:grayscale(.15);opacity:.9}
+.list{display:flex;flex-direction:column}
+.listrow{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:20px 4px}
+.listrow span:first-child{font-size:20px;color:rgba(255,255,255,.55);margin-right:22px}
+.form{padding:30px}
+input,select{width:100%;border:1px solid rgba(255,255,255,.24);background:rgba(0,0,0,.08);height:46px;border-radius:6px;margin-bottom:12px;color:#fff;padding:0 14px}
+input::placeholder{color:rgba(255,255,255,.55)}
+@media(max-width:900px){
+  .page{padding:22px}.menu{display:none}.grid,.split{grid-template-columns:1fr}.steps,.cards{grid-template-columns:1fr 1fr}h1{font-size:34px}
+}
