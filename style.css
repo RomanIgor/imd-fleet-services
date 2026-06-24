@@ -1715,3 +1715,312 @@ tbody tr:hover td{background:var(--f0)}
   }
 }
 
+/* ===== Fahrzeugverkauf dedicated mobile layout ===== */
+@media(max-width:767px){
+  nav{
+    height:70px;
+    background:rgba(15,18,24,.72);
+    border-bottom:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .nav-in{
+    height:70px;
+    padding:0 18px;
+  }
+  .nav-logo .logo-img{
+    width:132px;
+  }
+  .theme-pill{
+    display:none;
+  }
+  .hamburglar{
+    display:block;
+    margin-right:-10px;
+  }
+  .burger-bun-top,
+  .burger-bun-bot,
+  .burger-filling,
+  .path-rotation::before{
+    background:#eef2f6;
+  }
+  .svg-ring .path{
+    stroke:#eef2f6;
+  }
+
+  #service{
+    position:relative;
+    isolation:isolate;
+    min-height:0;
+    padding:250px 0 64px;
+    overflow:visible;
+    background:#10131a;
+    background-image:none;
+  }
+  #service::before{
+    content:"";
+    position:absolute;
+    z-index:-2;
+    inset:0 0 auto;
+    height:260px;
+    opacity:1;
+    mask-image:none;
+    background:
+      linear-gradient(180deg,rgba(7,10,15,.24) 0%,rgba(7,10,15,.12) 48%,rgba(16,19,26,.86) 100%),
+      url('assets/showroom-background.png') center 43% / cover no-repeat;
+    pointer-events:none;
+  }
+  #service::after{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:0;
+    height:auto;
+    background:linear-gradient(180deg,transparent 190px,#10131a 330px);
+    pointer-events:none;
+  }
+  #service .imd-page{
+    width:calc(100% - 32px);
+    max-width:none;
+    margin:0 16px;
+    display:grid;
+    gap:0;
+  }
+  #service .imd-glass{
+    border-radius:22px;
+    background:linear-gradient(145deg,rgba(28,34,43,.58),rgba(12,17,24,.44));
+    border-color:rgba(255,255,255,.14);
+    box-shadow:0 18px 44px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.07);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+
+  #service .imd-hero{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+    min-height:0;
+  }
+  #service .imd-hero-card{
+    grid-column:1;
+    width:100%;
+    max-width:none;
+    margin:-42px 0 0;
+    padding:24px 22px;
+    border-radius:22px;
+  }
+  #service .imd-h1{
+    margin-bottom:16px;
+    font-size:clamp(29px,8.5vw,36px);
+    line-height:1.08;
+  }
+  #service .imd-subline{
+    margin-bottom:20px;
+    font-size:13px;
+    line-height:1.55;
+  }
+  #service .imd-tags{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+  #service .imd-tags span{
+    width:100%;
+    min-width:0;
+    min-height:40px;
+    padding:7px 10px;
+    white-space:normal;
+    line-height:1.25;
+  }
+  #service .imd-cost-card{
+    grid-column:1;
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:24px 22px;
+    border-radius:22px;
+  }
+  #service .imd-cost-list{
+    margin-top:4px;
+  }
+  #service .imd-cost-list li{
+    min-height:44px;
+    padding:11px 0;
+    font-size:12px;
+  }
+  #service .imd-note{
+    padding-top:14px;
+    line-height:1.55;
+  }
+
+  #service .imd-process-panel{
+    display:block;
+    min-height:0;
+    margin-top:28px;
+    padding:22px 18px;
+    border-radius:22px;
+  }
+  #service .imd-process-panel .imd-intro-text{
+    padding:0 2px 20px;
+    border:0;
+  }
+  #service .imd-process-panel .imd-intro-text h3{
+    font-size:18px;
+    line-height:1.25;
+  }
+  #service .imd-process-panel .imd-intro-text p{
+    font-size:12px;
+    line-height:1.55;
+  }
+  #service .imd-process-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  #service .imd-process-grid::before{
+    content:"";
+    position:absolute;
+    z-index:0;
+    top:30px;
+    bottom:30px;
+    left:27px;
+    width:1px;
+    background:linear-gradient(180deg,rgba(96,141,255,.56),rgba(96,141,255,.12));
+  }
+  #service .imd-process-grid article{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:52px 1fr;
+    grid-template-rows:auto auto auto;
+    column-gap:14px;
+    min-height:92px;
+    padding:15px 16px 15px 12px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    background:linear-gradient(145deg,rgba(31,37,47,.46),rgba(13,18,25,.34));
+  }
+  #service .imd-process-grid article:not(:last-child)::after{
+    display:none;
+  }
+  #service .imd-process-line-icon{
+    grid-column:1;
+    grid-row:1 / 4;
+    width:48px;
+    height:48px;
+    align-self:center;
+    border-radius:14px;
+    background:#151c2a;
+    box-shadow:0 0 0 6px rgba(16,19,26,.78);
+  }
+  #service .imd-process-line-icon img{
+    width:25px;
+    height:25px;
+  }
+  #service .imd-process-number{
+    grid-column:2;
+    grid-row:1;
+    align-self:end;
+    padding:0;
+    font-size:12px;
+  }
+  #service .imd-process-grid h4{
+    grid-column:2;
+    grid-row:2;
+    margin:3px 0 4px;
+    font-size:14px;
+  }
+  #service .imd-process-grid p{
+    grid-column:2;
+    grid-row:3;
+    font-size:11px;
+    line-height:1.4;
+  }
+
+  #service .imd-bottom-panel{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    margin-top:30px;
+  }
+  #service .imd-why-compact{
+    min-height:0;
+  }
+  #service .imd-why-compact h3{
+    margin-bottom:15px;
+    font-size:18px;
+  }
+  #service .imd-why-items{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:repeat(2,1fr);
+    gap:12px;
+    height:auto;
+  }
+  #service .imd-why-items article,
+  #service .imd-why-items article:first-child,
+  #service .imd-why-items article:nth-child(odd){
+    display:flex;
+    min-height:142px;
+    padding:16px 13px;
+    flex-direction:column;
+    align-items:flex-start;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:18px;
+    background:linear-gradient(145deg,rgba(31,37,47,.38),rgba(13,18,25,.25));
+  }
+  #service .imd-why-icon{
+    width:38px;
+    height:38px;
+    margin:0 0 14px;
+    flex:0 0 auto;
+    border-radius:12px;
+  }
+  #service .imd-why-icon img{
+    width:21px;
+    height:21px;
+  }
+  #service .imd-why-items h4{
+    margin:0 0 6px;
+    font-size:11px;
+    line-height:1.3;
+  }
+  #service .imd-why-items p{
+    margin:0;
+    font-size:9.8px;
+    line-height:1.45;
+  }
+  #service .imd-cta-split{
+    min-height:260px;
+    padding:24px 22px 22px;
+    border-radius:22px;
+  }
+  #service .imd-cta-split h3{
+    font-size:19px;
+    line-height:1.25;
+  }
+  #service .imd-cta-split p{
+    font-size:12px;
+  }
+  #service .imd-cta-split ul{
+    gap:10px;
+    margin-bottom:20px;
+  }
+  #service .imd-cta-split li{
+    font-size:11.5px;
+  }
+  #service .imd-cta-split .imd-button{
+    min-height:52px;
+    height:auto;
+    padding:12px 16px;
+    border-radius:12px;
+    font-size:12px;
+  }
+  #service .imd-cta-split small{
+    margin-top:10px;
+    line-height:1.4;
+  }
+}
+
