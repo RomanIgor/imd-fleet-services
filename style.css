@@ -1895,14 +1895,17 @@ tbody tr:hover td{background:var(--f0)}
     height:86px;
     min-height:86px;
     padding:12px 16px 12px 12px;
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.10);
     border-radius:18px;
-    background:rgba(10,12,16,.65);
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.03),rgba(18,22,30,.85)),
+      rgba(18,22,30,.85);
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
   }
   #service .imd-process-grid article:first-child{
-    border-color:rgba(255,255,255,.08);
+    border-color:rgba(255,255,255,.10);
   }
   #service .imd-process-grid article:not(:last-child)::after{
     display:none;
@@ -1915,7 +1918,7 @@ tbody tr:hover td{background:var(--f0)}
     align-self:center;
     border-radius:16px;
     border-color:rgba(255,255,255,.07);
-    background:rgba(3,5,8,.58);
+    background:rgba(34,39,49,.88);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.07),inset 0 -8px 18px rgba(0,0,0,.20);
   }
   #service .imd-process-line-icon img{
