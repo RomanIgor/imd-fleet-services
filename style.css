@@ -2070,3 +2070,19 @@ tbody tr:hover td{background:var(--f0)}
   }
 }
 
+/* Fahrzeugverkauf desktop monochrome accents */
+@media(min-width:768px){
+  #service .imd-process-line-icon,
+  #service .imd-why-icon{
+    border-color:rgba(235,238,242,.20);
+    background:rgba(235,238,242,.055);
+  }
+  #service .imd-process-line-icon img,
+  #service .imd-why-icon img,
+  #service .imd-cost-list img,
+  #service .imd-cta-split li img,
+  #service .imd-tags img{
+    filter:brightness(0) saturate(100%) invert(91%) sepia(7%) saturate(161%) hue-rotate(177deg) brightness(101%) contrast(91%);
+  }
+}
+
