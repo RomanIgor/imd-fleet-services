@@ -1731,15 +1731,23 @@ tbody tr:hover td{background:var(--f0)}
   .nav-in{
     height:70px;
     padding:0 18px;
+    gap:8px;
   }
   .nav-logo .logo-img{
-    width:132px;
+    width:118px;
   }
   .theme-pill{
-    display:none;
+    display:flex;
+    margin-left:auto;
+    padding:2px;
+  }
+  .theme-opt{
+    width:28px;
+    height:28px;
   }
   .hamburglar{
     display:block;
+    margin-left:0;
     margin-right:-10px;
   }
   .burger-bun-top,
