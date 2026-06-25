@@ -1089,6 +1089,31 @@ window.addEventListener('load', () => {
 // Also reveal on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', revealAll);
 
+// Dedicated mobile reveal for the Fahrzeugverkauf process cards.
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.matchMedia('(max-width: 767px)').matches) return;
+
+  const processGrid = document.querySelector('#service .imd-process-grid');
+  if (!processGrid) return;
+
+  processGrid.classList.add('imd-process-animate');
+
+  if (!('IntersectionObserver' in window)) {
+    processGrid.classList.add('is-visible');
+    return;
+  }
+
+  const processObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      processObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.18 });
+
+  processObserver.observe(processGrid);
+});
+
 // ─── AUTO-OPEN DASHBOARD ON /intern ───
 if (window.location.pathname === '/intern') {
   window.addEventListener('load', openDash);
