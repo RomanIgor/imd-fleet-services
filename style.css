@@ -2005,12 +2005,12 @@ tbody tr:hover td{background:var(--f0)}
     padding-inline:24px;
   }
   #service .imd-why-compact h3{
-    width:min(100vw,360px);
-    max-width:none;
-    margin:0 calc((100% - min(100vw,360px)) / 2) 24px;
-    font-size:clamp(28px,7vw,34px);
+    width:100%;
+    max-width:300px;
+    margin:0 0 18px;
+    font-size:clamp(20px,5.4vw,24px);
     font-weight:700;
-    line-height:1.08;
+    line-height:1.12;
     letter-spacing:-.02em;
     text-wrap:balance;
   }
