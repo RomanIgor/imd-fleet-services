@@ -1000,10 +1000,10 @@ tbody tr:hover td{background:var(--f0)}
   .hero-photo{
     display:block;
     position:absolute;
-    inset:0 0 auto;
-    height:360px;
+    inset:0;
+    height:auto;
     background:
-      linear-gradient(180deg,rgba(6,10,22,.08) 0%,rgba(6,10,22,.16) 58%,rgba(16,19,26,.86) 100%),
+      linear-gradient(180deg,rgba(6,10,22,.08) 0%,rgba(6,10,22,.16) 42%,rgba(16,19,26,.76) 76%,rgba(16,19,26,.96) 100%),
       url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat;
   }
   .hero-copy{
@@ -1018,12 +1018,12 @@ tbody tr:hover td{background:var(--f0)}
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-    border:1px solid rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.10);
     border-radius:24px;
-    background:linear-gradient(145deg,rgba(25,30,39,.74),rgba(10,14,21,.58));
-    box-shadow:0 22px 54px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.08);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    background:rgba(6,10,22,.28);
+    box-shadow:0 22px 54px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.08);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
   }
   .hero-eyebrow{
     display:inline-flex;
@@ -1053,6 +1053,22 @@ tbody tr:hover td{background:var(--f0)}
   .hero-kpi{display:none}
   .hero-btns{flex-direction:column;flex-wrap:nowrap;gap:10px;margin-bottom:10px;width:100%}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{width:100%;text-align:center;justify-content:center;box-sizing:border-box}
+  .hero-btns .btn-primary{
+    background:rgba(255,255,255,.11);
+    border-color:rgba(255,255,255,.20);
+    color:#fff;
+    box-shadow:inset 0 1px rgba(255,255,255,.08);
+  }
+  .hero-btns .btn-ghost{
+    background:rgba(255,255,255,.04);
+    border-color:rgba(255,255,255,.18);
+    color:#fff;
+  }
+  .hero-btns .btn-primary:hover,
+  .hero-btns .btn-ghost:hover{
+    background:rgba(255,255,255,.14);
+    border-color:rgba(255,255,255,.32);
+  }
   /* Trigger button */
   .hc-open-btn{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.45);border-radius:4px;color:#fff;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--fh);cursor:pointer;letter-spacing:-.012em;transition:background .18s,border-color .18s}
   .hc-open-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.75)}
@@ -1099,7 +1115,6 @@ tbody tr:hover td{background:var(--f0)}
   .wrap{padding-left:20px;padding-right:20px}
   .nav-in{padding-left:20px;padding-right:20px}
   .hero-split{padding:310px 12px 0}
-  .hero-photo{height:340px}
   .hero-h1{font-size:clamp(26px,7.6vw,32px);margin-bottom:14px}
   .hero-copy{padding:26px 20px 22px}
   .hero-sub{font-size:12.5px;margin-bottom:20px}
