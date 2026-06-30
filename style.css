@@ -2068,10 +2068,9 @@ tbody tr:hover td{background:var(--f0)}
   }
   #service .imd-cta-split{
     min-height:0;
-    margin-top:32px;
-    padding:28px 24px 22px;
+    margin-top:38px;
+    padding:0 24px 22px;
     border:0;
-    border-top:1px solid rgba(255,255,255,.08);
     border-radius:0;
     background:transparent;
     box-shadow:none;
