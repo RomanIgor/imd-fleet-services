@@ -148,7 +148,6 @@ a{text-decoration:none;color:inherit}
 
 /* Buttons */
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
-.hero-process-cards{display:none}
 
 /* KPI strip — glass effect on photo */
 .hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(255,255,255,.15);max-width:460px;backdrop-filter:blur(4px)}
@@ -1050,27 +1049,6 @@ tbody tr:hover td{background:var(--f0)}
     color:rgba(255,255,255,.72);
     font-size:13px;
     line-height:1.65;
-  }
-  .hero-process-cards{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
-    margin-bottom:22px;
-  }
-  .hero-process-cards span{
-    min-height:38px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:8px 10px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:12px;
-    background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
-    color:rgba(255,255,255,.82);
-    font-size:10.5px;
-    font-weight:700;
-    line-height:1.25;
-    text-align:center;
   }
   .hero-kpi{display:none}
   .hero-btns{flex-direction:column;flex-wrap:nowrap;gap:10px;margin-bottom:10px;width:100%}
