@@ -1994,7 +1994,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-bottom-panel{
     display:grid;
     grid-template-columns:1fr;
-    gap:22px;
+    gap:0;
     margin-top:30px;
     min-width:0;
   }
@@ -2002,6 +2002,7 @@ tbody tr:hover td{background:var(--f0)}
     min-height:0;
     min-width:0;
     box-sizing:border-box;
+    padding-top:24px;
     padding-inline:24px;
   }
   #service .imd-why-compact h3{
@@ -2066,9 +2067,16 @@ tbody tr:hover td{background:var(--f0)}
     overflow-wrap:anywhere;
   }
   #service .imd-cta-split{
-    min-height:260px;
-    padding:24px 22px 22px;
-    border-radius:22px;
+    min-height:0;
+    margin-top:32px;
+    padding:28px 24px 22px;
+    border:0;
+    border-top:1px solid rgba(255,255,255,.08);
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
   }
   #service .imd-cta-split h3{
     font-size:19px;
