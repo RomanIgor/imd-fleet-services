@@ -1770,7 +1770,7 @@ tbody tr:hover td{background:var(--f0)}
     position:relative;
     isolation:isolate;
     min-height:0;
-    padding:250px 0 64px;
+    padding:340px 0 64px;
     overflow:visible;
     background:#10131a;
     background-image:none;
@@ -1780,11 +1780,11 @@ tbody tr:hover td{background:var(--f0)}
     position:absolute;
     z-index:-2;
     inset:0 0 auto;
-    height:260px;
+    height:360px;
     opacity:1;
     mask-image:none;
     background:
-      linear-gradient(180deg,rgba(7,10,15,.24) 0%,rgba(7,10,15,.12) 48%,rgba(16,19,26,.86) 100%),
+      linear-gradient(180deg,rgba(7,10,15,.16) 0%,rgba(7,10,15,.08) 48%,rgba(16,19,26,.82) 100%),
       url('assets/showroom-background.png') center 43% / cover no-repeat;
     pointer-events:none;
   }
@@ -1794,7 +1794,7 @@ tbody tr:hover td{background:var(--f0)}
     z-index:-1;
     inset:0;
     height:auto;
-    background:linear-gradient(180deg,transparent 190px,#10131a 330px);
+    background:linear-gradient(180deg,transparent 270px,#10131a 450px);
     pointer-events:none;
   }
   #service .imd-page{
@@ -1823,9 +1823,12 @@ tbody tr:hover td{background:var(--f0)}
     grid-column:1;
     width:100%;
     max-width:none;
-    margin:-42px 0 0;
-    padding:24px 22px;
-    border-radius:22px;
+    margin:-38px 0 0;
+    padding:28px 22px 24px;
+    border-radius:24px;
+    background:linear-gradient(145deg,rgba(25,30,39,.72),rgba(10,14,21,.56));
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 22px 54px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.08);
   }
   #service .imd-h1{
     margin-bottom:16px;
@@ -1840,7 +1843,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-tags{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:9px;
+    gap:10px;
   }
   #service .imd-tags span{
     width:100%;
