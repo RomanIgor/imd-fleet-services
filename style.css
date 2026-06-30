@@ -1012,18 +1012,29 @@ tbody tr:hover td{background:var(--f0)}
     min-height:0;
     overflow:visible;
     position:relative;
+    isolation:isolate;
     z-index:2;
     margin:-40px 0 0;
     padding:28px 22px 24px;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-    border:1px solid rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.16);
     border-radius:24px;
-    background:linear-gradient(145deg,rgba(25,30,39,.74),rgba(10,14,21,.58));
-    box-shadow:0 22px 54px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.08);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    background:linear-gradient(145deg,rgba(6,10,22,.50),rgba(6,10,22,.32));
+    box-shadow:0 22px 54px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.10);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+  }
+  .hero-copy::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    border-radius:inherit;
+    background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat;
+    opacity:.16;
+    pointer-events:none;
   }
   .hero-eyebrow{
     display:inline-flex;
@@ -1053,6 +1064,22 @@ tbody tr:hover td{background:var(--f0)}
   .hero-kpi{display:none}
   .hero-btns{flex-direction:column;flex-wrap:nowrap;gap:10px;margin-bottom:10px;width:100%}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{width:100%;text-align:center;justify-content:center;box-sizing:border-box}
+  .hero-btns .btn-primary{
+    background:rgba(255,255,255,.12);
+    border-color:rgba(255,255,255,.22);
+    color:#fff;
+    box-shadow:inset 0 1px rgba(255,255,255,.10);
+  }
+  .hero-btns .btn-ghost{
+    background:rgba(255,255,255,.045);
+    border-color:rgba(255,255,255,.20);
+    color:#fff;
+  }
+  .hero-btns .btn-primary:hover,
+  .hero-btns .btn-ghost:hover{
+    background:rgba(255,255,255,.15);
+    border-color:rgba(255,255,255,.34);
+  }
   /* Trigger button */
   .hc-open-btn{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.45);border-radius:4px;color:#fff;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--fh);cursor:pointer;letter-spacing:-.012em;transition:background .18s,border-color .18s}
   .hc-open-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.75)}
