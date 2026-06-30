@@ -148,6 +148,7 @@ a{text-decoration:none;color:inherit}
 
 /* Buttons */
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.hero-mobile-features{display:none}
 
 /* KPI strip — glass effect on photo */
 .hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(255,255,255,.15);max-width:460px;backdrop-filter:blur(4px)}
@@ -994,7 +995,7 @@ tbody tr:hover td{background:var(--f0)}
     height:auto;
     min-height:0;
     overflow:visible;
-    padding:330px 16px 0;
+    padding:360px 16px 0;
     background:#10131a;
   }
   .hero-photo{
@@ -1012,29 +1013,18 @@ tbody tr:hover td{background:var(--f0)}
     min-height:0;
     overflow:visible;
     position:relative;
-    isolation:isolate;
     z-index:2;
-    margin:-40px 0 0;
+    margin:-28px 0 0;
     padding:28px 22px 24px;
     display:flex;
     flex-direction:column;
     justify-content:flex-start;
-    border:1px solid rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.14);
     border-radius:24px;
-    background:linear-gradient(145deg,rgba(6,10,22,.50),rgba(6,10,22,.32));
-    box-shadow:0 22px 54px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.10);
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-  }
-  .hero-copy::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    z-index:-1;
-    border-radius:inherit;
-    background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat;
-    opacity:.16;
-    pointer-events:none;
+    background:#111820;
+    box-shadow:0 22px 54px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.06);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
   }
   .hero-eyebrow{
     display:inline-flex;
@@ -1061,24 +1051,66 @@ tbody tr:hover td{background:var(--f0)}
     font-size:13px;
     line-height:1.65;
   }
+  .hero-mobile-features{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin:0 0 22px;
+  }
+  .hero-feature{
+    min-height:58px;
+    display:grid;
+    grid-template-columns:30px 1fr;
+    grid-template-rows:auto auto;
+    column-gap:10px;
+    align-content:center;
+    padding:11px 12px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+  }
+  .hero-feature span{
+    grid-column:1;
+    grid-row:1 / 3;
+    width:28px;
+    height:28px;
+    display:grid;
+    place-items:center;
+    align-self:center;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:50%;
+    color:#fff;
+    font-size:12px;
+    font-weight:800;
+  }
+  .hero-feature strong{
+    color:#fff;
+    font-size:12px;
+    line-height:1.25;
+  }
+  .hero-feature small{
+    color:rgba(255,255,255,.60);
+    font-size:10.5px;
+    line-height:1.35;
+  }
   .hero-kpi{display:none}
   .hero-btns{flex-direction:column;flex-wrap:nowrap;gap:10px;margin-bottom:10px;width:100%}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{width:100%;text-align:center;justify-content:center;box-sizing:border-box}
   .hero-btns .btn-primary{
-    background:rgba(255,255,255,.12);
-    border-color:rgba(255,255,255,.22);
+    background:var(--navy);
+    border-color:transparent;
     color:#fff;
-    box-shadow:inset 0 1px rgba(255,255,255,.10);
+    box-shadow:none;
   }
   .hero-btns .btn-ghost{
-    background:rgba(255,255,255,.045);
-    border-color:rgba(255,255,255,.20);
+    background:transparent;
+    border-color:rgba(255,255,255,.36);
     color:#fff;
   }
   .hero-btns .btn-primary:hover,
   .hero-btns .btn-ghost:hover{
-    background:rgba(255,255,255,.15);
-    border-color:rgba(255,255,255,.34);
+    background:#0f172a;
+    border-color:rgba(255,255,255,.48);
   }
   /* Trigger button */
   .hc-open-btn{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.45);border-radius:4px;color:#fff;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--fh);cursor:pointer;letter-spacing:-.012em;transition:background .18s,border-color .18s}
@@ -1100,7 +1132,7 @@ tbody tr:hover td{background:var(--f0)}
   .hero-calc .hc-disclaimer{display:none}
   .hero-calc .hc-btn.hc-cta{margin-top:14px}
   /* Trust-bar: ghost cards pe mobile */
-  .trust-bar{background:transparent;padding:8px 0 4px}
+  .trust-bar{display:none}
   .ti{background:rgba(6,10,22,0.35);border:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:10px}
   .ti:last-child{margin-bottom:0}
   /* Animatie stanga/dreapta la scroll */
@@ -1125,7 +1157,7 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:480px){
   .wrap{padding-left:20px;padding-right:20px}
   .nav-in{padding-left:20px;padding-right:20px}
-  .hero-split{padding:310px 12px 0}
+  .hero-split{padding:340px 12px 0}
   .hero-photo{height:340px}
   .hero-h1{font-size:clamp(26px,7.6vw,32px);margin-bottom:14px}
   .hero-copy{padding:26px 20px 22px}
