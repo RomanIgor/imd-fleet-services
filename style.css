@@ -148,6 +148,7 @@ a{text-decoration:none;color:inherit}
 
 /* Buttons */
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.hero-process-cards{display:none}
 
 /* KPI strip — glass effect on photo */
 .hero-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:var(--r-md);overflow:hidden;border:1px solid rgba(255,255,255,.15);max-width:460px;backdrop-filter:blur(4px)}
@@ -988,13 +989,89 @@ tbody tr:hover td{background:var(--f0)}
 .hc-close-btn{display:none}
 
 @media(max-width:600px){
-  /* Hero: foto full-width, text overlay jos */
-  .hero-split{height:clamp(360px,72vw,480px);overflow:hidden}
-  .hero-photo{display:block;position:absolute;inset:0;background:url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat}
-  .hero-copy{width:100%;height:100%;overflow:hidden;position:relative;z-index:2;background:linear-gradient(to top,rgba(6,10,22,0.95) 0%,rgba(6,10,22,0.65) 50%,rgba(6,10,22,0.15) 100%);padding:0 24px 32px;display:flex;flex-direction:column;justify-content:flex-end}
-  .hero-eyebrow{display:none}
-  .hero-h1{font-size:clamp(24px,6.5vw,32px);margin-bottom:18px}
-  .hero-sub{display:none}
+  /* Hero: image first, premium content container below */
+  .hero{background:#10131a;padding-top:70px}
+  .hero-split{
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    padding:330px 16px 0;
+    background:#10131a;
+  }
+  .hero-photo{
+    display:block;
+    position:absolute;
+    inset:0 0 auto;
+    height:360px;
+    background:
+      linear-gradient(180deg,rgba(6,10,22,.08) 0%,rgba(6,10,22,.16) 58%,rgba(16,19,26,.86) 100%),
+      url('new_images/new_hero_example.jpeg') 55% 25%/cover no-repeat;
+  }
+  .hero-copy{
+    width:100%;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    position:relative;
+    z-index:2;
+    margin:-40px 0 0;
+    padding:28px 22px 24px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:24px;
+    background:linear-gradient(145deg,rgba(25,30,39,.74),rgba(10,14,21,.58));
+    box-shadow:0 22px 54px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    margin-bottom:16px;
+    background:rgba(255,255,255,.07);
+    border-color:rgba(255,255,255,.14);
+    border-radius:999px;
+  }
+  .hero-eyebrow-text{
+    font-size:8.5px;
+    letter-spacing:.095em;
+    line-height:1.25;
+  }
+  .hero-h1{
+    font-size:clamp(28px,8vw,34px);
+    margin-bottom:16px;
+    line-height:1.08;
+  }
+  .hero-sub{
+    display:block;
+    max-width:none;
+    margin-bottom:22px;
+    color:rgba(255,255,255,.72);
+    font-size:13px;
+    line-height:1.65;
+  }
+  .hero-process-cards{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+    margin-bottom:22px;
+  }
+  .hero-process-cards span{
+    min-height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 10px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;
+    background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+    color:rgba(255,255,255,.82);
+    font-size:10.5px;
+    font-weight:700;
+    line-height:1.25;
+    text-align:center;
+  }
   .hero-kpi{display:none}
   .hero-btns{flex-direction:column;flex-wrap:nowrap;gap:10px;margin-bottom:10px;width:100%}
   .hero-btns .btn-primary,.hero-btns .btn-ghost{width:100%;text-align:center;justify-content:center;box-sizing:border-box}
@@ -1043,10 +1120,11 @@ tbody tr:hover td{background:var(--f0)}
 @media(max-width:480px){
   .wrap{padding-left:20px;padding-right:20px}
   .nav-in{padding-left:20px;padding-right:20px}
-  .hero-split{height:clamp(320px,70vw,420px)}
-  .hero-h1{font-size:clamp(22px,6vw,28px);margin-bottom:8px}
-  .hero-copy{padding:0 20px 28px}
-  .hero-sub{font-size:13px;margin-bottom:14px}
+  .hero-split{padding:310px 12px 0}
+  .hero-photo{height:340px}
+  .hero-h1{font-size:clamp(26px,7.6vw,32px);margin-bottom:14px}
+  .hero-copy{padding:26px 20px 22px}
+  .hero-sub{font-size:12.5px;margin-bottom:20px}
   .hero-btns{gap:8px;margin-bottom:12px}
   .trust-inner{padding-left:16px;padding-right:16px}
 }
@@ -1770,7 +1848,7 @@ tbody tr:hover td{background:var(--f0)}
     position:relative;
     isolation:isolate;
     min-height:0;
-    padding:340px 0 64px;
+    padding:250px 0 64px;
     overflow:visible;
     background:#10131a;
     background-image:none;
@@ -1780,11 +1858,11 @@ tbody tr:hover td{background:var(--f0)}
     position:absolute;
     z-index:-2;
     inset:0 0 auto;
-    height:360px;
+    height:260px;
     opacity:1;
     mask-image:none;
     background:
-      linear-gradient(180deg,rgba(7,10,15,.16) 0%,rgba(7,10,15,.08) 48%,rgba(16,19,26,.82) 100%),
+      linear-gradient(180deg,rgba(7,10,15,.24) 0%,rgba(7,10,15,.12) 48%,rgba(16,19,26,.86) 100%),
       url('assets/showroom-background.png') center 43% / cover no-repeat;
     pointer-events:none;
   }
@@ -1794,7 +1872,7 @@ tbody tr:hover td{background:var(--f0)}
     z-index:-1;
     inset:0;
     height:auto;
-    background:linear-gradient(180deg,transparent 270px,#10131a 450px);
+    background:linear-gradient(180deg,transparent 190px,#10131a 330px);
     pointer-events:none;
   }
   #service .imd-page{
@@ -1823,12 +1901,9 @@ tbody tr:hover td{background:var(--f0)}
     grid-column:1;
     width:100%;
     max-width:none;
-    margin:-38px 0 0;
-    padding:28px 22px 24px;
-    border-radius:24px;
-    background:linear-gradient(145deg,rgba(25,30,39,.72),rgba(10,14,21,.56));
-    border:1px solid rgba(255,255,255,.15);
-    box-shadow:0 22px 54px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.08);
+    margin:-42px 0 0;
+    padding:24px 22px;
+    border-radius:22px;
   }
   #service .imd-h1{
     margin-bottom:16px;
@@ -1843,7 +1918,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-tags{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:10px;
+    gap:9px;
   }
   #service .imd-tags span{
     width:100%;
