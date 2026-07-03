@@ -661,37 +661,27 @@ window.addEventListener('load',checkProzess);
 // ─── COUNTUP ANIMATION ───
 function initHomeRoadmap(){
   const path = document.getElementById('homeRoadPath');
-  const mobilePath = document.getElementById('homeRoadPathMobile');
   const car = document.getElementById('homeRoadCar');
-  const mobileCar = document.getElementById('homeRoadCarMobile');
   const roadmap = document.getElementById('homeRoadmap');
   if (!path || !car || !roadmap) return;
 
   const steps = Array.from(roadmap.querySelectorAll('.home-road-step'));
   const markers = Array.from(roadmap.querySelectorAll('.home-road-marker'));
   const stops = [0, .17, .34, .52, .72, 1];
+  const total = path.getTotalLength();
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobileMedia = window.matchMedia('(max-width: 720px)');
-
-  function getTrack(){
-    if (mobileMedia.matches && mobilePath && mobileCar) {
-      return { path: mobilePath, car: mobileCar, total: mobilePath.getTotalLength() };
-    }
-    return { path, car, total: path.getTotalLength() };
-  }
 
   function setActive(index){
     steps.forEach((step, i) => step.classList.toggle('is-active', i === index));
     markers.forEach((marker, i) => marker.classList.toggle('is-active', i === index));
   }
   function place(progress){
-    const track = getTrack();
     const safe = Math.max(0, Math.min(1, progress));
-    const length = track.total * safe;
-    const point = track.path.getPointAtLength(length);
-    const next = track.path.getPointAtLength(Math.min(track.total, length + 2));
+    const length = total * safe;
+    const point = path.getPointAtLength(length);
+    const next = path.getPointAtLength(Math.min(total, length + 2));
     const angle = Math.atan2(next.y - point.y, next.x - point.x) * 180 / Math.PI;
-    track.car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
+    car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
   }
 
   setActive(0);
@@ -705,6 +695,13 @@ function initHomeRoadmap(){
   const moveMs = 1500;
 
   function tick(now){
+    if (window.innerWidth <= 860) {
+      setActive(0);
+      place(0);
+      requestAnimationFrame(tick);
+      return;
+    }
+
     if (paused) {
       if (now - phaseStart >= pauseMs) {
         paused = false;
