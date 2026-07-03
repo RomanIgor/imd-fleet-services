@@ -659,6 +659,77 @@ window.addEventListener('scroll',checkProzess,{passive:true});
 window.addEventListener('load',checkProzess);
 
 // ─── COUNTUP ANIMATION ───
+function initHomeRoadmap(){
+  const path = document.getElementById('homeRoadPath');
+  const car = document.getElementById('homeRoadCar');
+  const roadmap = document.getElementById('homeRoadmap');
+  if (!path || !car || !roadmap) return;
+
+  const steps = Array.from(roadmap.querySelectorAll('.home-road-step'));
+  const markers = Array.from(roadmap.querySelectorAll('.home-road-marker'));
+  const stops = [0, .17, .34, .52, .72, 1];
+  const total = path.getTotalLength();
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setActive(index){
+    steps.forEach((step, i) => step.classList.toggle('is-active', i === index));
+    markers.forEach((marker, i) => marker.classList.toggle('is-active', i === index));
+  }
+  function place(progress){
+    const safe = Math.max(0, Math.min(1, progress));
+    const length = total * safe;
+    const point = path.getPointAtLength(length);
+    const next = path.getPointAtLength(Math.min(total, length + 2));
+    const angle = Math.atan2(next.y - point.y, next.x - point.x) * 180 / Math.PI;
+    car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
+  }
+
+  setActive(0);
+  place(0);
+  if (reduced) return;
+
+  let index = 0;
+  let paused = true;
+  let phaseStart = performance.now();
+  const pauseMs = 780;
+  const moveMs = 1500;
+
+  function tick(now){
+    if (window.innerWidth <= 860) {
+      setActive(0);
+      place(0);
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    if (paused) {
+      if (now - phaseStart >= pauseMs) {
+        paused = false;
+        phaseStart = now;
+      }
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    const t = Math.min(1, (now - phaseStart) / moveMs);
+    const eased = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const from = stops[index];
+    const to = index === stops.length - 1 ? 0 : stops[index + 1];
+    const progress = index === stops.length - 1 ? 1 - eased : from + (to - from) * eased;
+    place(progress);
+
+    if (t >= 1) {
+      index = (index + 1) % stops.length;
+      setActive(index);
+      paused = true;
+      phaseStart = now;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+window.addEventListener('load', initHomeRoadmap);
+
 function animateCountup(el) {
   var target = parseFloat(el.dataset.countup);
   var prefix = el.dataset.prefix || '';

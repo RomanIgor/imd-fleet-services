@@ -367,115 +367,72 @@
       <p class="lead">Die Fahrzeugmeldung erfolgt vollständig digital. Keine Händleranfragen. Keine Vermarktung. Keine Besichtigungstermine. Keine Preisverhandlungen. Keine organisatorischen Folgeaufgaben. Keine internen Ressourcen, die für den Verkauf gebunden werden. Nach der digitalen Fahrzeugmeldung übernimmt IMD Fleet Services die komplette weitere Abwicklung.</p>
     </div>
 
-    <!-- Workflow -->
-    <div class="wf-wrap" id="prozessWrap">
+    <div class="home-roadmap" id="homeRoadmap" aria-label="Fahrzeugverkauf in sechs Schritten">
+      <svg class="home-road-svg" viewBox="0 0 1200 280" aria-hidden="true">
+        <defs>
+          <linearGradient id="homeCarPaint" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#f8fafc"/>
+            <stop offset=".42" stop-color="#94a3b8"/>
+            <stop offset="1" stop-color="#e2e8f0"/>
+          </linearGradient>
+        </defs>
+        <path class="home-road-shadow" d="M0 218 C92 154 176 124 279 166 S383 206 419 95 S546 53 644 141 S767 199 818 83 S936 37 1015 116 S1106 176 1200 104"/>
+        <path class="home-road-base" id="homeRoadPath" d="M0 218 C92 154 176 124 279 166 S383 206 419 95 S546 53 644 141 S767 199 818 83 S936 37 1015 116 S1106 176 1200 104"/>
+        <path class="home-road-rim" d="M0 218 C92 154 176 124 279 166 S383 206 419 95 S546 53 644 141 S767 199 818 83 S936 37 1015 116 S1106 176 1200 104"/>
+        <path class="home-road-dash" d="M0 218 C92 154 176 124 279 166 S383 206 419 95 S546 53 644 141 S767 199 818 83 S936 37 1015 116 S1106 176 1200 104"/>
+        <path class="home-road-arrow" d="M1198 103l-44-22 10 22-10 22z"/>
+        <g class="home-road-car" id="homeRoadCar" transform="translate(0 218)">
+          <g transform="translate(-44 -23)">
+            <path class="car-body" d="M9 29c4-15 16-23 33-23h17c13 0 25 8 31 23h9c6 0 11 5 11 11v12H1V40c0-6 4-11 8-11z"/>
+            <path class="car-window" d="M37 13h20c9 0 16 5 20 15H25c2-8 6-13 12-15z"/>
+            <circle class="car-wheel" cx="28" cy="54" r="9"/>
+            <circle class="car-wheel" cx="82" cy="54" r="9"/>
+            <path class="car-light" d="M99 34h8c3 0 5 2 5 5H99z"/>
+          </g>
+        </g>
+      </svg>
 
-      <!-- Connector line behind cards -->
-      <div class="wf-line"><div class="wf-line-fill" id="prozessLineFill"></div></div>
+      <span class="home-road-marker" data-step="1">01</span>
+      <span class="home-road-marker" data-step="2">02</span>
+      <span class="home-road-marker" data-step="3">03</span>
+      <span class="home-road-marker" data-step="4">04</span>
+      <span class="home-road-marker" data-step="5">05</span>
+      <span class="home-road-marker" data-step="6">06</span>
 
-      <!-- Steps row -->
-      <div class="wf-steps">
+      <article class="home-road-step" data-step="1" data-label="01">
+        <span class="home-road-icon"><img src="assets/icons/document.svg" alt=""></span>
+        <div><h3>Fahrzeug online melden</h3><p>Sie melden Ihr Fahrzeug bequem online mit allen relevanten Informationen.</p></div>
+      </article>
+      <article class="home-road-step" data-step="2" data-label="02">
+        <span class="home-road-icon"><img src="assets/icons/truck.svg" alt=""></span>
+        <div><h3>Abholung &amp; Transport</h3><p>Wir koordinieren Abholung und sicheren Transport zu unserem Standort.</p></div>
+      </article>
+      <article class="home-road-step" data-step="3" data-label="03">
+        <span class="home-road-icon"><img src="assets/icons/scale.svg" alt=""></span>
+        <div><h3>Pr&uuml;fung &amp; Gutachten</h3><p>Ihr Fahrzeug wird professionell gepr&uuml;ft und transparent bewertet.</p></div>
+      </article>
+      <article class="home-road-step" data-step="4" data-label="04">
+        <span class="home-road-icon"><img src="assets/icons/euro.svg" alt=""></span>
+        <div><h3>Kaufangebot erhalten</h3><p>Sie erhalten unser faires und verbindliches Kaufangebot schnell und transparent.</p></div>
+      </article>
+      <article class="home-road-step" data-step="5" data-label="05">
+        <span class="home-road-icon"><img src="assets/icons/book-open-text.svg" alt=""></span>
+        <div><h3>Rechnung einreichen</h3><p>Nach Annahme des Angebots stellen Sie uns einfach Ihre Verkaufsrechnung aus.</p></div>
+      </article>
+      <article class="home-road-step" data-step="6" data-label="06">
+        <span class="home-road-icon"><img src="assets/icons/check.svg" alt=""></span>
+        <div><h3>Zahlung erhalten</h3><p>Nach Rechnungseingang erhalten Sie die Zahlung innerhalb weniger Werktage.</p></div>
+      </article>
 
-        <!-- Step 1 — Sie -->
-        <div class="wf-step" id="ps1">
-          <div class="wf-card wf-card-you">
-            <div class="wf-card-top">
-              <div class="wf-num-badge wf-num-you">01</div>
-              <div class="wf-actor-pill wf-actor-you">Sie</div>
-            </div>
-            <div class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-2"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg></div>
-            <div class="wf-title">Fahrzeugmeldung</div>
-            <div class="wf-desc">Fahrzeugdaten online eingeben — Marke, Modell, KM-Stand. Dauert 2 Minuten.</div>
-            <div class="wf-details">
-              <div class="wf-detail-item">✓ Nur Grunddaten nötig</div>
-              <div class="wf-detail-item">✓ Kein Callcenter</div>
-              <div class="wf-detail-item">✓ Jederzeit möglich</div>
-            </div>
-            <div class="wf-time">⏱ ca. 2 Minuten</div>
-          </div>
-          <div class="wf-arrow">
-            <svg width="32" height="16" viewBox="0 0 32 16" fill="none"><path d="M0 8 H26 M20 2 L28 8 L20 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-
-        <!-- Step 2 — IMD Fleet Services -->
-        <div class="wf-step" id="ps2">
-          <div class="wf-card wf-card-us">
-            <div class="wf-card-top">
-              <div class="wf-num-badge wf-num-us">02</div>
-              <div class="wf-actor-pill wf-actor-us">IMD Fleet Services</div>
-            </div>
-            <div class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="14" height="11" rx="1"/><path d="M15 11h4l3 4v3h-7V11z"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></div>
-            <div class="wf-title">Abholung & Vorbereitung</div>
-            <div class="wf-desc">Wir koordinieren Transport und bereiten das Fahrzeug für das Gutachten vor.</div>
-            <div class="wf-details">
-              <div class="wf-detail-item">✓ Bundesweite Abholung</div>
-              <div class="wf-detail-item">✓ Fahrzeugvorbereitung</div>
-              <div class="wf-detail-item">✓ Logistik durch uns</div>
-            </div>
-            <div class="wf-time">⏱ Kein Aufwand für Sie</div>
-          </div>
-          <div class="wf-arrow">
-            <svg width="32" height="16" viewBox="0 0 32 16" fill="none"><path d="M0 8 H26 M20 2 L28 8 L20 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-        <!-- Step 3 — IMD Fleet Services -->
-        <div class="wf-step" id="ps3">
-          <div class="wf-card wf-card-us">
-            <div class="wf-card-top">
-              <div class="wf-num-badge wf-num-us">03</div>
-              <div class="wf-actor-pill wf-actor-us">IMD Fleet Services</div>
-            </div>
-            <div class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 13 11 15 15 11"/></svg></div>
-            <div class="wf-title">Gutachten & Angebot</div>
-            <div class="wf-desc">Unabhängiges GKK-Gutachten. Danach ein verbindliches Angebot — mindestens HEK.</div>
-            <div class="wf-details">
-              <div class="wf-detail-item">✓ GKK-zertifiziert</div>
-              <div class="wf-detail-item">✓ Mindestens HEK-Wert</div>
-              <div class="wf-detail-item">✓ Preis steht fest</div>
-            </div>
-            <div class="wf-time">⏱ Angebot zugesichert</div>
-          </div>
-          <div class="wf-arrow">
-            <svg width="32" height="16" viewBox="0 0 32 16" fill="none"><path d="M0 8 H26 M20 2 L28 8 L20 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-        <!-- Step 4 — Beide -->
-        <div class="wf-step" id="ps4">
-          <div class="wf-card wf-card-done">
-            <div class="wf-card-top">
-              <div class="wf-num-badge wf-num-done">04</div>
-              <div class="wf-actor-pill wf-actor-done">Abschluss</div>
-            </div>
-            <div class="wf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="15" x2="10" y2="15"/><line x1="13" y1="15" x2="17" y2="15"/></svg></div>
-            <div class="wf-title">Auszahlung</div>
-            <div class="wf-desc">Nach Annahme, Rechnung und Eingang der KFZ-Papiere erfolgt die Überweisung.</div>
-            <div class="wf-details">
-              <div class="wf-detail-item">✓ Nach Rechnungsstellung</div>
-              <div class="wf-detail-item">✓ Nach KFZ-Papiereingang</div>
-              <div class="wf-detail-item">✓ Zügige Überweisung</div>
-            </div>
-            <div class="wf-time">⏱ Zügig nach Eingang</div>
-          </div>
-          <!-- no arrow after last step -->
-          <div class="wf-arrow" style="visibility:hidden">
-            <svg width="32" height="16" viewBox="0 0 32 16" fill="none"><path d="M0 8 H26 M20 2 L28 8 L20 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-
-      </div><!-- /wf-steps -->
-    </div><!-- /wf-wrap -->
-
-    <!-- Legend + CTA — centered under the grid -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:24px;margin-top:40px;padding-top:28px;border-top:1px solid var(--border)">
-      <div class="wf-legend" style="border-top:none;margin-top:0;padding-top:0">
-        <div class="wf-legend-item"><div class="wf-legend-dot wf-legend-you"></div><span>Sie — 1 Schritt</span></div>
-        <div class="wf-legend-item"><div class="wf-legend-dot wf-legend-us"></div><span>IMD Fleet Services — 2 Schritte</span></div>
-        <div class="wf-legend-item"><div class="wf-legend-dot wf-legend-done"></div><span>Gemeinsam — Abschluss</span></div>
+      <div class="home-road-benefits" aria-label="Vorteile des IMD Verkaufsprozesses">
+        <div class="home-road-benefit"><img src="assets/icons/shield-check.svg" alt=""><div><strong>Sicher &amp; zuverl&auml;ssig</strong><span>Klare Abwicklung ohne versteckte Schritte.</span></div></div>
+        <div class="home-road-benefit"><img src="assets/icons/timer-reset.svg" alt=""><div><strong>Schnell &amp; unkompliziert</strong><span>Kurze Wege und z&uuml;gige Entscheidungen.</span></div></div>
+        <div class="home-road-benefit"><img src="assets/icons/user-key.svg" alt=""><div><strong>Pers&ouml;nlicher Ansprechpartner</strong><span>Ein fester Kontakt begleitet den Vorgang.</span></div></div>
+        <div class="home-road-benefit"><img src="assets/icons/chart.svg" alt=""><div><strong>Transparente Prozesse</strong><span>Jeder Schritt bleibt nachvollziehbar.</span></div></div>
       </div>
+    </div>
+
+    <div class="home-road-cta">
       <button class="btn btn-navy btn-lg" onclick="goTo('anmelden')">Jetzt kostenfrei starten</button>
     </div>
 

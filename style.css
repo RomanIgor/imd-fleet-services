@@ -474,6 +474,49 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .wf-legend-us{background:var(--text-3)}
 .wf-legend-done{background:var(--text-2)}
 
+.home-roadmap{position:relative;min-height:760px;scroll-margin-top:110px;border:1px solid rgba(238,242,246,.16);border-radius:var(--r-2xl);overflow:hidden;background:radial-gradient(circle at 24% 12%,rgba(238,242,246,.12),transparent 30%),radial-gradient(circle at 74% 8%,rgba(148,163,184,.10),transparent 34%),linear-gradient(180deg,#242a32 0%,#171d25 100%);box-shadow:0 26px 90px rgba(15,23,42,.22);color:#eef2f6}
+.home-roadmap::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:70px 70px;opacity:.18;pointer-events:none}
+.home-roadmap::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 0%,rgba(0,0,0,.18) 76%,rgba(0,0,0,.34) 100%);pointer-events:none}
+.home-road-svg{position:absolute;left:-2.5%;right:-2.5%;top:150px;width:105%;height:285px;z-index:1;overflow:visible}
+.home-road-shadow{fill:none;stroke:rgba(0,0,0,.30);stroke-width:46;stroke-linecap:round;filter:drop-shadow(0 18px 22px rgba(0,0,0,.38))}
+.home-road-base{fill:none;stroke:#27303a;stroke-width:38;stroke-linecap:round}
+.home-road-rim{fill:none;stroke:rgba(255,255,255,.42);stroke-width:42;stroke-linecap:round;stroke-dasharray:1 45}
+.home-road-dash{fill:none;stroke:rgba(255,255,255,.72);stroke-width:3;stroke-linecap:round;stroke-dasharray:21 20}
+.home-road-arrow{fill:#27303a;filter:drop-shadow(0 12px 18px rgba(0,0,0,.30))}
+.home-road-car{transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 14px 16px rgba(0,0,0,.45))}
+.home-road-car .car-body{fill:url(#homeCarPaint);stroke:rgba(255,255,255,.74);stroke-width:1.5}
+.home-road-car .car-window{fill:rgba(15,23,42,.74)}
+.home-road-car .car-wheel{fill:#111827;stroke:#f8fafc;stroke-width:2}
+.home-road-car .car-light{fill:#dbeafe}
+.home-road-marker{position:absolute;z-index:3;transform:translate(-50%,-50%);display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:linear-gradient(180deg,#4a5360,#171e29);border:2px solid rgba(255,255,255,.72);box-shadow:0 14px 32px rgba(0,0,0,.36);font-family:var(--fh);font-size:20px;font-weight:900;color:#fff;letter-spacing:0}
+.home-road-marker::after{content:"";position:absolute;left:50%;top:54px;width:1px;height:62px;transform:translateX(-50%);background:linear-gradient(rgba(255,255,255,.45),rgba(255,255,255,0))}
+.home-road-marker.is-active{background:#2563eb;box-shadow:0 0 0 7px rgba(37,99,235,.18),0 16px 34px rgba(37,99,235,.32)}
+.home-road-marker[data-step="1"]{left:15%;top:277px}
+.home-road-marker[data-step="2"]{left:29%;top:294px}
+.home-road-marker[data-step="3"]{left:42%;top:188px}
+.home-road-marker[data-step="4"]{left:59%;top:298px}
+.home-road-marker[data-step="5"]{left:77%;top:182px}
+.home-road-marker[data-step="6"]{left:91%;top:280px}
+.home-road-step{position:absolute;z-index:2;width:176px;text-align:center;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+.home-road-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg,#f8fafc,#dbe3ee);display:grid;place-items:center;border:1px solid rgba(255,255,255,.56);box-shadow:0 16px 32px rgba(0,0,0,.24);margin-bottom:14px;transition:transform .25s ease,box-shadow .25s ease}
+.home-road-icon img{width:30px;height:30px;filter:invert(11%) sepia(14%) saturate(1420%) hue-rotate(176deg) brightness(93%) contrast(90%)}
+.home-road-step h3{font-family:var(--fh);font-size:16px;letter-spacing:0;line-height:1.18;text-transform:uppercase;margin:0 0 9px;color:#fff;text-wrap:balance}
+.home-road-step p{font-size:12.5px;line-height:1.55;color:rgba(238,242,246,.72);margin:0}
+.home-road-step.is-active .home-road-icon{transform:translateY(-4px);box-shadow:0 0 0 7px rgba(37,99,235,.13),0 18px 38px rgba(37,99,235,.22)}
+.home-road-step[data-step="1"]{left:15%;top:365px}
+.home-road-step[data-step="2"]{left:29%;top:382px}
+.home-road-step[data-step="3"]{left:42%;top:276px}
+.home-road-step[data-step="4"]{left:59%;top:386px}
+.home-road-step[data-step="5"]{left:77%;top:270px}
+.home-road-step[data-step="6"]{left:91%;top:368px}
+.home-road-benefits{position:absolute;left:28px;right:28px;bottom:24px;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid rgba(238,242,246,.16);border-radius:14px;background:rgba(15,23,42,.28);backdrop-filter:blur(18px);overflow:hidden}
+.home-road-benefit{display:grid;grid-template-columns:50px 1fr;gap:14px;align-items:center;padding:17px 20px;border-right:1px solid rgba(238,242,246,.12)}
+.home-road-benefit:last-child{border-right:0}
+.home-road-benefit img{width:34px;height:34px;filter:invert(1);opacity:.86}
+.home-road-benefit strong{display:block;font-family:var(--fh);font-size:12px;line-height:1.2;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+.home-road-benefit span{display:block;margin-top:5px;font-size:12px;line-height:1.42;color:rgba(238,242,246,.64)}
+.home-road-cta{display:flex;justify-content:center;margin-top:30px}
+
 /* ══════════════ EXPLAINER (MGP) ══════════════ */
 .mgp-wrap{border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden;background:#1a2540}
 .mgp-stage{position:relative;height:380px;overflow:hidden}
@@ -969,6 +1012,23 @@ tbody tr:hover td{background:var(--f0)}
   .wf-steps{grid-template-columns:1fr 1fr}
   .wf-line{display:none}
   .wf-arrow{display:none}
+  .home-roadmap{min-height:820px}
+  .home-road-step{width:158px}
+  .home-road-marker[data-step="1"]{left:13%;top:282px}
+  .home-road-marker[data-step="2"]{left:29%;top:306px}
+  .home-road-marker[data-step="3"]{left:43%;top:190px}
+  .home-road-marker[data-step="4"]{left:59%;top:310px}
+  .home-road-marker[data-step="5"]{left:76%;top:188px}
+  .home-road-marker[data-step="6"]{left:90%;top:292px}
+  .home-road-step[data-step="1"]{left:13%;top:373px}
+  .home-road-step[data-step="2"]{left:29%;top:397px}
+  .home-road-step[data-step="3"]{left:43%;top:284px}
+  .home-road-step[data-step="4"]{left:59%;top:402px}
+  .home-road-step[data-step="5"]{left:76%;top:280px}
+  .home-road-step[data-step="6"]{left:90%;top:382px}
+  .home-road-benefits{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .home-road-benefit:nth-child(2){border-right:0}
+  .home-road-benefit:nth-child(-n+2){border-bottom:1px solid rgba(238,242,246,.12)}
   .faq-grid{grid-template-columns:1fr}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
   .branchen{grid-template-columns:1fr}
@@ -1143,6 +1203,19 @@ tbody tr:hover td{background:var(--f0)}
   .fg2{display:flex;flex-direction:column}
   .chk-wrap{grid-template-columns:1fr}
   .wf-steps{grid-template-columns:1fr}
+  .home-roadmap{display:grid;gap:14px;min-height:0;padding:18px;background:linear-gradient(180deg,#202733,#121923)}
+  .home-roadmap::before,.home-roadmap::after,.home-road-svg,.home-road-marker{display:none}
+  .home-road-step{position:relative;left:auto!important;top:auto!important;width:auto;transform:none;text-align:left;display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:center;padding:16px;border:1px solid rgba(238,242,246,.12);border-radius:14px;background:rgba(255,255,255,.045)}
+  .home-road-icon{grid-column:1;grid-row:1 / span 2;width:54px;height:54px;margin:0}
+  .home-road-icon img{width:25px;height:25px}
+  .home-road-step::before{content:attr(data-label);position:absolute;left:10px;top:10px;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#2563eb;color:#fff;font-family:var(--fh);font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.72)}
+  .home-road-step h3,.home-road-step p{grid-column:2}
+  .home-road-step h3{font-size:15px;margin:0 0 7px}
+  .home-road-step p{font-size:12.5px}
+  .home-road-benefits{position:relative;left:auto;right:auto;bottom:auto;grid-template-columns:1fr;margin-top:2px}
+  .home-road-benefit,.home-road-benefit:nth-child(2){border-right:0;border-bottom:1px solid rgba(238,242,246,.12)}
+  .home-road-benefit:last-child{border-bottom:0}
+  .home-road-cta{margin-top:22px}
   .ver-wrap{overflow-x:auto}
   .cr-compare{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
