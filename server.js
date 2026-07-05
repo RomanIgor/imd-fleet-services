@@ -53,6 +53,7 @@ const publicAssets = new Set([
   '/style.css',
   '/redesign.css',
   '/main.js',
+  '/cookie-consent.js',
   '/csrf-client.js',
   '/sw.js',
   '/manifest.json',
