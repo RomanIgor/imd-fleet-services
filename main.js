@@ -497,17 +497,6 @@ let xlsxLoadPromise = null;
 
 async function ensureXlsxLibrary(messageEl) {
   if (typeof XLSX !== 'undefined') return true;
-  if (typeof window.imdHasConsent === 'function' && !window.imdHasConsent('external')) {
-    const text = 'Bitte externe Dienste akzeptieren, um Excel-Funktionen zu nutzen.';
-    if (messageEl) {
-      messageEl.style.cssText = 'display:block;color:var(--red)';
-      messageEl.textContent = text;
-    } else {
-      showToast(text);
-    }
-    if (typeof window.imdOpenCookieSettings === 'function') window.imdOpenCookieSettings();
-    return false;
-  }
   if (!xlsxLoadPromise) {
     xlsxLoadPromise = new Promise((resolve, reject) => {
       const script = document.createElement('script');

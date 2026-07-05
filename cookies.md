@@ -60,7 +60,7 @@ Serverseitig kann der Chat-Endpunkt bei Nutzung eine Anfrage an Groq senden. Dab
 
 Die XLSX-Bibliothek von cdnjs wird ausschliesslich fuer Mitarbeiter-Funktionen im internen Dashboard genutzt, zum Beispiel Excel-Import oder Excel-Export. Sie ist keine Besucherfunktion der oeffentlichen Website.
 
-Die Bibliothek wird nicht beim normalen Seitenaufruf geladen. Sie wird erst nach Zustimmung zu `Externe Dienste` und erst bei Nutzung einer Excel-Funktion im Dashboard nachgeladen.
+Die Bibliothek wird nicht beim normalen Seitenaufruf der oeffentlichen Website geladen. Sie wird erst bei Nutzung einer Excel-Funktion im internen Dashboard nachgeladen und ist nicht Teil des Besucher-Consent-Banners.
 
 ## Verhalten bei Ablehnung
 
@@ -71,7 +71,7 @@ Wenn ein Besucher `Alle ablehnen` klickt:
 - Notwendige Sicherheits- und Formularfunktionen bleiben aktiv.
 - Externe Schriftarten werden nicht geladen; der Browser nutzt Fallback-Schriften.
 - Die OpenStreetMap-Karte bleibt blockiert und zeigt einen Hinweis.
-- Interne Excel-Funktionen im Mitarbeiter-Dashboard laden die externe XLSX-Bibliothek nicht, bis `Externe Dienste` akzeptiert wurde.
+- Interne Excel-Funktionen im Mitarbeiter-Dashboard sind vom Besucher-Banner getrennt und werden nur im geschuetzten Mitarbeiterbereich bei aktiver Nutzung geladen.
 
 ## Banner-Text
 
