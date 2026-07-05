@@ -95,13 +95,14 @@
       '.imd-cookie-toggle[aria-checked="true"]{background:#f5f5f1;border-color:#f5f5f1}',
       '.imd-cookie-toggle[aria-checked="true"]::after{left:19px;background:#4e4e4a}',
       '.imd-cookie-toggle[aria-disabled="true"]{cursor:not-allowed;opacity:.72}',
+      '.imd-cookie-static{align-self:center;white-space:nowrap;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(245,245,241,.13);color:#f5f5f1;padding:7px 9px;font:800 9px/1 IBM Plex Sans,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}',
       '.imd-cookie-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:14px 18px 18px;border-top:1px solid rgba(255,255,255,.10);background:rgba(30,30,28,.08)}',
       '.imd-cookie-btn{height:40px;padding:0 13px;border-radius:12px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.075);color:#f5f5f1;font:750 11.5px/1 IBM Plex Sans,Arial,sans-serif;cursor:pointer;transition:background .18s,transform .18s,border-color .18s}',
       '.imd-cookie-btn:hover{background:rgba(255,255,255,.11);transform:translateY(-1px)}',
       '.imd-cookie-btn-primary{grid-column:1/-1;grid-row:1;background:#f5f5f1;color:#4e4e4a;border-color:#f5f5f1}',
       '.imd-cookie-manage{position:fixed;left:18px;bottom:18px;z-index:2147482999;width:34px;height:34px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(78,78,74,.88);backdrop-filter:blur(12px);color:#f5f5f1;font:700 0/1 IBM Plex Sans,Arial,sans-serif;cursor:pointer;box-shadow:0 12px 30px rgba(20,20,18,.22)}',
       '.imd-cookie-manage::before{content:"";display:block;width:14px;height:14px;margin:auto;border:1.8px solid currentColor;border-radius:4px;transform:rotate(45deg)}',
-      '@media(max-width:760px){.imd-cookie-layer{padding:16px}.imd-cookie-box{width:min(360px,100%);border-radius:18px}.imd-cookie-inner{border-radius:17px}.imd-cookie-head{grid-template-columns:30px 1fr;gap:9px;padding:11px 11px 7px}.imd-cookie-mark{width:30px;height:30px;border-radius:10px}.imd-cookie-mark svg{width:16px;height:16px}.imd-cookie-kicker{font-size:7.5px}.imd-cookie-title{font-size:15px}.imd-cookie-text{padding:0 11px 9px;font-size:11px;line-height:1.42}.imd-cookie-options{gap:5px;padding:0 11px 10px}.imd-cookie-option{gap:8px;padding:8px 9px;border-radius:12px}.imd-cookie-option strong{font-size:10px}.imd-cookie-option span{font-size:9.5px;line-height:1.25}.imd-cookie-toggle{width:34px;height:19px}.imd-cookie-toggle::after{width:11px;height:11px}.imd-cookie-toggle[aria-checked="true"]::after{left:19px}.imd-cookie-actions{padding:10px 11px 11px}.imd-cookie-btn{height:34px;border-radius:9px;font-size:10px}.imd-cookie-manage{left:12px;bottom:12px}}'
+      '@media(max-width:760px){.imd-cookie-layer{padding:16px}.imd-cookie-box{width:min(360px,100%);border-radius:18px}.imd-cookie-inner{border-radius:17px}.imd-cookie-head{grid-template-columns:30px 1fr;gap:9px;padding:11px 11px 7px}.imd-cookie-mark{width:30px;height:30px;border-radius:10px}.imd-cookie-mark svg{width:16px;height:16px}.imd-cookie-kicker{font-size:7.5px}.imd-cookie-title{font-size:15px}.imd-cookie-text{padding:0 11px 9px;font-size:11px;line-height:1.42}.imd-cookie-options{gap:5px;padding:0 11px 10px}.imd-cookie-option{gap:8px;padding:8px 9px;border-radius:12px}.imd-cookie-option strong{font-size:10px}.imd-cookie-option span{font-size:9.5px;line-height:1.25}.imd-cookie-toggle{width:34px;height:19px}.imd-cookie-toggle::after{width:11px;height:11px}.imd-cookie-toggle[aria-checked="true"]::after{left:19px}.imd-cookie-static{padding:6px 8px;font-size:8px}.imd-cookie-actions{padding:10px 11px 11px}.imd-cookie-btn{height:34px;border-radius:9px;font-size:10px}.imd-cookie-manage{left:12px;bottom:12px}}'
     ].join('');
     document.head.appendChild(style);
   }
@@ -110,16 +111,21 @@
     var option = document.createElement('div');
     option.className = 'imd-cookie-option';
     option.innerHTML = '<div><strong>' + label + '</strong><span>' + desc + '</span></div>';
+    if (locked) {
+      var badge = document.createElement('span');
+      badge.className = 'imd-cookie-static';
+      badge.textContent = 'Immer aktiv';
+      option.appendChild(badge);
+      return option;
+    }
     var toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'imd-cookie-toggle';
     toggle.setAttribute('role', 'switch');
     toggle.setAttribute('aria-label', label);
-    toggle.setAttribute('aria-checked', locked ? 'true' : 'false');
-    if (locked) toggle.setAttribute('aria-disabled', 'true');
+    toggle.setAttribute('aria-checked', 'false');
     toggle.dataset.category = category;
     toggle.addEventListener('click', function () {
-      if (locked) return;
       toggle.setAttribute('aria-checked', toggle.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
     });
     option.appendChild(toggle);
