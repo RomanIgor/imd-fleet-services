@@ -207,14 +207,7 @@
   }
 
   function renderManageButton() {
-    injectStyles();
-    if (document.querySelector('.imd-cookie-manage')) return;
-    var button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'imd-cookie-manage';
-    button.textContent = 'Cookie-Einstellungen';
-    button.addEventListener('click', function () { renderBanner(true); });
-    document.body.appendChild(button);
+    document.querySelectorAll('.imd-cookie-manage').forEach(function (el) { el.remove(); });
   }
 
   window.imdHasConsent = hasConsent;
