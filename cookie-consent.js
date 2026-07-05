@@ -156,12 +156,12 @@
       '<div class="imd-cookie-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.75 5 5.75v5.9c0 4.45 3 7.65 7 9.6 4-1.95 7-5.15 7-9.6v-5.9l-7-3Z"/><path d="m9.2 12.1 1.8 1.8 3.9-4.1"/></svg></div>',
       '<div><div class="imd-cookie-kicker">Datenschutz</div><h2 class="imd-cookie-title" id="imd-cookie-title">Privatsph&auml;re einstellen</h2></div>',
       '</div>',
-      '<p class="imd-cookie-text">Notwendige Technologien gew&auml;hrleisten den sicheren Betrieb der Website. Externe Dienste werden erst nach Ihrer Zustimmung aktiviert.</p>',
+      '<p class="imd-cookie-text">Notwendige Funktionen sichern Betrieb, Formulare und Darstellung. Optional k&ouml;nnen externe Schriftarten und Karteninhalte aktiviert werden.</p>',
       '<div class="imd-cookie-options" id="imdCookieOptions"></div>',
       '<div class="imd-cookie-actions">',
-      '<button class="imd-cookie-btn" type="button" data-cookie-action="reject">Alle ablehnen</button>',
-      '<button class="imd-cookie-btn imd-cookie-btn-primary" type="button" data-cookie-action="save">Auswahl speichern</button>',
-      '<button class="imd-cookie-btn" type="button" data-cookie-action="accept">Alle akzeptieren</button>',
+      '<button class="imd-cookie-btn" type="button" data-cookie-action="reject">Ablehnen</button>',
+      '<button class="imd-cookie-btn imd-cookie-btn-primary" type="button" data-cookie-action="save">Speichern</button>',
+      '<button class="imd-cookie-btn" type="button" data-cookie-action="accept">Zustimmen</button>',
       '</div>',
       '</div>',
       '</div>'
@@ -169,7 +169,6 @@
     document.body.appendChild(layer);
 
     var options = layer.querySelector('#imdCookieOptions');
-    options.appendChild(makeToggle('necessary', 'Notwendig', 'Erforderlich f&uuml;r Sicherheit, Formulare, Session und korrekte Darstellung. Immer aktiv.', true));
     options.appendChild(makeToggle('external', 'Externe Dienste', 'Externe Schriftarten und OpenStreetMap-Karteninhalte nur nach Zustimmung.', false));
 
     if (saved) {

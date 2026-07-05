@@ -8,10 +8,11 @@ Scope: Hauptwebsite (`index.html`, `fahrzeugverkauf.html`) und serverseitige Fun
 
 Auf der Hauptwebsite werden keine Statistik- oder Marketingdienste eingesetzt. Es gibt kein Google Analytics, keinen Google Tag Manager, keinen Meta Pixel, kein reCAPTCHA, keine YouTube-/Vimeo-Einbettungen, keine Google Maps, keine Chat-Widgets und keine Marketing-Pixel.
 
-Der Banner zeigt deshalb keine Kategorien `Statistik` oder `Marketing`. Es gibt nur:
+Der Banner zeigt deshalb keine Kategorien `Statistik` oder `Marketing`. Als aktive Auswahl gibt es nur:
 
-- `Notwendig`
 - `Externe Dienste`
+
+Notwendige Funktionen werden im Text erwaehnt, aber nicht als auswählbare Kategorie dargestellt.
 
 ## Cookies
 
@@ -64,7 +65,7 @@ Die Bibliothek wird nicht beim normalen Seitenaufruf der oeffentlichen Website g
 
 ## Verhalten bei Ablehnung
 
-Wenn ein Besucher `Alle ablehnen` klickt:
+Wenn ein Besucher `Ablehnen` klickt:
 
 - Die Website bleibt lesbar und navigierbar.
 - Das Kontaktformular kann weiter genutzt werden.
@@ -79,14 +80,14 @@ Titel: Datenschutz
 
 Subtitle: Privatsphaere einstellen
 
-Intro: Notwendige Technologien gewaehrleisten den sicheren Betrieb der Website. Externe Dienste werden erst nach Ihrer Zustimmung aktiviert.
+Intro: Notwendige Funktionen sichern Betrieb, Formulare und Darstellung. Optional koennen externe Schriftarten und Karteninhalte aktiviert werden.
 
-Kategorie `Notwendig`: Erforderlich fuer Sicherheit, Formulare, Session und korrekte Darstellung. Immer aktiv.
+Hinweis zu notwendigen Funktionen: Erforderlich fuer Sicherheit, Formulare, Session und korrekte Darstellung. Keine Auswahl im Banner.
 
 Kategorie `Externe Dienste`: Externe Schriftarten und OpenStreetMap-Karteninhalte nur nach Zustimmung.
 
 Buttons:
 
-- Alle ablehnen
-- Auswahl speichern
-- Alle akzeptieren
+- Ablehnen
+- Speichern
+- Zustimmen
