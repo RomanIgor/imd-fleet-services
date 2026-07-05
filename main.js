@@ -492,8 +492,50 @@ function mapFahrerImportRows(rows) {
   })).filter(f => f.vorname || f.nachname || f.email || f.telefon);
 }
 
-function downloadFahrerImportTemplate() {
-  if (typeof XLSX === 'undefined') { showToast('XLSX-Bibliothek nicht geladen'); return; }
+const XLSX_CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+let xlsxLoadPromise = null;
+
+async function ensureXlsxLibrary(messageEl) {
+  if (typeof XLSX !== 'undefined') return true;
+  if (typeof window.imdHasConsent === 'function' && !window.imdHasConsent('external')) {
+    const text = 'Bitte externe Dienste akzeptieren, um Excel-Funktionen zu nutzen.';
+    if (messageEl) {
+      messageEl.style.cssText = 'display:block;color:var(--red)';
+      messageEl.textContent = text;
+    } else {
+      showToast(text);
+    }
+    if (typeof window.imdOpenCookieSettings === 'function') window.imdOpenCookieSettings();
+    return false;
+  }
+  if (!xlsxLoadPromise) {
+    xlsxLoadPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = XLSX_CDN_URL;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  try {
+    await xlsxLoadPromise;
+    return typeof XLSX !== 'undefined';
+  } catch (_) {
+    const text = 'XLSX-Bibliothek konnte nicht geladen werden.';
+    if (messageEl) {
+      messageEl.style.cssText = 'display:block;color:var(--red)';
+      messageEl.textContent = text;
+    } else {
+      showToast(text);
+    }
+    xlsxLoadPromise = null;
+    return false;
+  }
+}
+
+async function downloadFahrerImportTemplate() {
+  if (!(await ensureXlsxLibrary())) return;
   const rows = [{ Vorname: 'Max', Nachname: 'Mustermann', 'E-Mail': 'max@muster.de', Telefon: '0170 1234567' }];
   const ws = XLSX.utils.json_to_sheet(rows);
   const wb = XLSX.utils.book_new();
@@ -512,7 +554,7 @@ async function importFahrerExcel() {
   resultEl.innerHTML = '';
   if (!fuhrparkId) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Bitte Fuhrpark auswählen.'; return; }
   if (!file) { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='Bitte Excel- oder CSV-Datei auswählen.'; return; }
-  if (typeof XLSX === 'undefined') { msg.style.cssText='display:block;color:var(--red)'; msg.textContent='XLSX-Bibliothek nicht geladen.'; return; }
+  if (!(await ensureXlsxLibrary(msg))) return;
   try {
     btn.disabled = true;
     msg.style.cssText='display:block;color:var(--t2)';
@@ -578,8 +620,8 @@ async function confirmDeleteFahrer(id) {
 }
 
 // ─── EXCEL EXPORT ───
-function exportExcel(){
-  if(typeof XLSX==='undefined'){showToast('⚠ XLSX-Bibliothek nicht geladen');return;}
+async function exportExcel(){
+  if (!(await ensureXlsxLibrary())) return;
   fetch('/api/submissions').then(r=>r.json()).then(rows=>{
     const data=rows.map(r=>({
       'Datum':fmtDate(r.created_at),'Firma':r.firma,'Ansprechpartner':r.name,

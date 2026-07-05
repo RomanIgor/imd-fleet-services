@@ -53,9 +53,14 @@ Diese Dienste werden auf der Hauptwebsite erst nach Zustimmung zur Kategorie `Ex
 
 - Google Fonts (`fonts.googleapis.com`) fuer externe Schriftarten
 - OpenStreetMap iframe fuer die Kontaktkarte
-- cdnjs XLSX-Bibliothek fuer Excel-Funktionen im Dashboard
 
 Serverseitig kann der Chat-Endpunkt bei Nutzung eine Anfrage an Groq senden. Dabei wird kein Browser-Script eines Drittanbieters geladen und kein Tracking-Pixel gesetzt.
+
+## Interner Dashboard-Hinweis
+
+Die XLSX-Bibliothek von cdnjs wird ausschliesslich fuer Mitarbeiter-Funktionen im internen Dashboard genutzt, zum Beispiel Excel-Import oder Excel-Export. Sie ist keine Besucherfunktion der oeffentlichen Website.
+
+Die Bibliothek wird nicht beim normalen Seitenaufruf geladen. Sie wird erst nach Zustimmung zu `Externe Dienste` und erst bei Nutzung einer Excel-Funktion im Dashboard nachgeladen.
 
 ## Verhalten bei Ablehnung
 
@@ -66,7 +71,7 @@ Wenn ein Besucher `Alle ablehnen` klickt:
 - Notwendige Sicherheits- und Formularfunktionen bleiben aktiv.
 - Externe Schriftarten werden nicht geladen; der Browser nutzt Fallback-Schriften.
 - Die OpenStreetMap-Karte bleibt blockiert und zeigt einen Hinweis.
-- Die externe XLSX-Bibliothek wird nicht geladen; Excel-Funktionen im Dashboard stehen dann nicht zur Verfuegung.
+- Interne Excel-Funktionen im Mitarbeiter-Dashboard laden die externe XLSX-Bibliothek nicht, bis `Externe Dienste` akzeptiert wurde.
 
 ## Banner-Text
 
@@ -78,7 +83,7 @@ Intro: Notwendige Technologien gewaehrleisten den sicheren Betrieb der Website. 
 
 Kategorie `Notwendig`: Erforderlich fuer Sicherheit, Formulare, Session und korrekte Darstellung. Immer aktiv.
 
-Kategorie `Externe Dienste`: Externe Schriftarten, OpenStreetMap und XLSX-Dokumentfunktionen nur nach Zustimmung.
+Kategorie `Externe Dienste`: Externe Schriftarten und OpenStreetMap-Karteninhalte nur nach Zustimmung.
 
 Buttons:
 
