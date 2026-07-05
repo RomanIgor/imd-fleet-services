@@ -164,7 +164,7 @@
 
     var options = layer.querySelector('#imdCookieOptions');
     options.appendChild(makeToggle('necessary', 'Notwendig', 'Erforderlich f&uuml;r Sicherheit, Formulare, Session und korrekte Darstellung. Immer aktiv.', true));
-    options.appendChild(makeToggle('external', 'Externe Dienste', 'Externe Schriftarten, OpenStreetMap/Photon und XLSX-Dokumentfunktionen nur nach Zustimmung.', false));
+    options.appendChild(makeToggle('external', 'Externe Dienste', 'Externe Schriftarten, OpenStreetMap und XLSX-Dokumentfunktionen nur nach Zustimmung.', false));
 
     if (saved) {
       Object.keys(saved).forEach(function (key) {

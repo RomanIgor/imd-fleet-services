@@ -11,7 +11,9 @@
 <title>IMD Fleet Services — Schadenmeldung</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="stylesheet" data-consent-category="external" data-consent-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     color-scheme: light;
@@ -1590,7 +1592,6 @@
 </main>
 
 <script src="/csrf-client.js"></script>
-<script src="/cookie-consent.js?v=2"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
 // STATE
@@ -1703,17 +1704,8 @@ function updateField(name, value) {
   state.formData[name] = value;
 }
 
-function hasExternalConsent() {
-  return typeof window.imdHasConsent === 'function' && window.imdHasConsent('external');
-}
-
-function requestExternalConsent() {
-  if (typeof window.imdOpenCookieSettings === 'function') window.imdOpenCookieSettings();
-}
-
 async function lookupPlz(plz) {
   if (!/^\d{5}$/.test(plz)) return;
-  if (!hasExternalConsent()) return;
   try {
     const r = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(plz)}&format=json&addressdetails=1&countrycodes=de&limit=1`,
@@ -1789,7 +1781,6 @@ function _acSelect(id, idx) {
 
 const _acOrt = _debounce(async (val) => {
   if (val.length < 2) { _acClose('ac-dd-ort'); return; }
-  if (!hasExternalConsent()) { requestExternalConsent(); _acClose('ac-dd-ort'); return; }
   try {
     const res = await fetch(
       `https://photon.komoot.io/api/?q=${encodeURIComponent(val)}&limit=6&lang=de&countrycode=de`,
@@ -1809,7 +1800,6 @@ const _acOrt = _debounce(async (val) => {
 
 const _acStr = _debounce(async (val) => {
   if (val.length < 3) { _acClose('ac-dd-str'); return; }
-  if (!hasExternalConsent()) { requestExternalConsent(); _acClose('ac-dd-str'); return; }
   const city = state.formData.damageOrt || '';
   const q = city ? `${val}, ${city}` : val;
   try {
@@ -1830,7 +1820,6 @@ const _acStr = _debounce(async (val) => {
 
 const _acOOrt = _debounce(async (val) => {
   if (val.length < 2) { _acClose('ac-dd-oort'); return; }
-  if (!hasExternalConsent()) { requestExternalConsent(); _acClose('ac-dd-oort'); return; }
   try {
     const res = await fetch(
       `https://photon.komoot.io/api/?q=${encodeURIComponent(val)}&limit=6&lang=de&countrycode=de`,
@@ -1850,7 +1839,6 @@ const _acOOrt = _debounce(async (val) => {
 
 const _acOStr = _debounce(async (val) => {
   if (val.length < 3) { _acClose('ac-dd-ostr'); return; }
-  if (!hasExternalConsent()) { requestExternalConsent(); _acClose('ac-dd-ostr'); return; }
   const city = state.formData.opponentOrt || '';
   const q = city ? `${val}, ${city}` : val;
   try {
