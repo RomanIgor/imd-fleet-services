@@ -799,6 +799,12 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .contact-form-box{background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--r-xl);padding:24px}
 .contact-map-box{background:var(--bg-deep);border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden}
 .contact-active-badge{background:var(--acc-dim);border:1px solid rgba(200,216,232,.2);color:var(--acc);font-family:var(--fh);font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px}
+.imd-map-consent{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:22px;background:linear-gradient(145deg,rgba(18,22,29,.92),rgba(33,37,43,.86));color:var(--text-1)}
+.imd-map-consent[hidden]{display:none}
+.imd-map-consent-card{width:min(280px,100%);padding:20px;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);background:rgba(255,255,255,.06);text-align:center;box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.imd-map-consent-card strong{display:block;font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:8px}
+.imd-map-consent-card span{display:block;font-size:12px;line-height:1.55;color:var(--text-2);margin-bottom:14px}
+.imd-map-consent-card button{height:36px;padding:0 14px;border:1px solid rgba(255,255,255,.16);border-radius:var(--r-md);background:var(--text-1);color:var(--bg);font-family:var(--fh);font-size:11px;font-weight:800;cursor:pointer}
 .coverage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .coverage-city{text-align:center;padding:10px 8px;background:var(--bg-s);border-radius:var(--r-md)}
 .coverage-city-accent{background:var(--acc-dim);border:1px solid rgba(200,216,232,.15)}

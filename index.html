@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IMD Fleet Services — Fahrzeugankauf für Fuhrparks · Firmenfahrzeuge verkaufen</title>
 <meta name="description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir übernehmen Abholung, Wertgutachten und Auszahlung. Garantierter HEK-Mindestpreis.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" data-consent-category="external" data-consent-href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap">
 <link rel="icon" href="/icon-192.png">
-<link rel="stylesheet" href="style.css?v=mobile-home-solid-card-2">
+<link rel="stylesheet" href="style.css?v=privacy-external-1">
 <script>(function(){var t=localStorage.getItem('imd-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');})();</script>
 </head>
 
@@ -1619,8 +1618,16 @@
           </div>
           <!-- OpenStreetMap embed -->
           <div style="position:relative;height:340px">
+            <div class="imd-map-consent" data-consent-placeholder data-consent-category="external">
+              <div class="imd-map-consent-card">
+                <strong>Externe Karte laden</strong>
+                <span>OpenStreetMap wird erst nach Ihrer Zustimmung aktiviert.</span>
+                <button type="button" onclick="imdOpenCookieSettings()">Datenschutz einstellen</button>
+              </div>
+            </div>
             <iframe
-              src="https://www.openstreetmap.org/export/embed.html?bbox=12.8,50.75,13.0,50.87&layer=mapnik&marker=50.8278,12.9214"
+              data-consent-src="https://www.openstreetmap.org/export/embed.html?bbox=12.8,50.75,13.0,50.87&layer=mapnik&marker=50.8278,12.9214"
+              data-consent-category="external"
               style="width:100%;height:100%;border:none;display:block"
               title="IMD Fleet Services Standort Chemnitz"
               loading="lazy"
@@ -2171,8 +2178,8 @@
 
 <div class="toast" id="toast"><span class="toast-ico">✓</span><span id="toastMsg"></span></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="/cookie-consent.js?v=1"></script><script src="main.js?v=fahrzeugankauf-mobile-3"></script>
+<script type="text/plain" data-consent-category="external" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="/cookie-consent.js?v=2"></script><script src="main.js?v=fahrzeugankauf-mobile-3"></script>
 <script>
 var hcRepair=0;
 function hcOpenCalc(){

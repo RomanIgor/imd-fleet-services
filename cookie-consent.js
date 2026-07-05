@@ -1,9 +1,8 @@
 (function () {
-  var STORAGE_KEY = 'imd-cookie-consent-v1';
+  var STORAGE_KEY = 'imd-cookie-consent-v2';
   var DEFAULT_STATE = {
     necessary: true,
-    statistics: false,
-    marketing: false,
+    external: false,
     updatedAt: null
   };
 
@@ -26,7 +25,7 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
     window.imdCookieConsent = consent;
     window.dispatchEvent(new CustomEvent('imdConsentChanged', { detail: consent }));
-    runDeferredScripts(consent);
+    activateConsentedServices(consent);
     return consent;
   }
 
@@ -35,7 +34,21 @@
     return !!(consent && consent[category]);
   }
 
-  function runDeferredScripts(consent) {
+  function activateConsentedServices(consent) {
+    document.querySelectorAll('link[data-consent-href][data-consent-category]').forEach(function (link) {
+      var category = link.getAttribute('data-consent-category');
+      if (!consent[category] || link.dataset.loaded === 'true') return;
+      link.setAttribute('href', link.getAttribute('data-consent-href'));
+      link.dataset.loaded = 'true';
+    });
+
+    document.querySelectorAll('[data-consent-src][data-consent-category]').forEach(function (el) {
+      var category = el.getAttribute('data-consent-category');
+      if (!consent[category] || el.dataset.loaded === 'true') return;
+      el.setAttribute('src', el.getAttribute('data-consent-src'));
+      el.dataset.loaded = 'true';
+    });
+
     document.querySelectorAll('script[type="text/plain"][data-consent-category]').forEach(function (script) {
       var category = script.getAttribute('data-consent-category');
       if (!consent[category] || script.dataset.loaded === 'true') return;
@@ -48,6 +61,11 @@
       active.text = script.text || script.textContent || '';
       script.dataset.loaded = 'true';
       script.parentNode.insertBefore(active, script.nextSibling);
+    });
+
+    document.querySelectorAll('[data-consent-placeholder][data-consent-category]').forEach(function (placeholder) {
+      var category = placeholder.getAttribute('data-consent-category');
+      placeholder.hidden = !!consent[category];
     });
   }
 
@@ -66,7 +84,7 @@
       '.imd-cookie-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px rgba(255,255,255,.06)}',
       '.imd-cookie-mark svg{width:20px;height:20px;color:#f5f5f1}',
       '.imd-cookie-kicker{font:700 9px/1.2 IBM Plex Sans,Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:rgba(245,245,241,.58);margin-bottom:4px}',
-      '.imd-cookie-title{font:800 18px/1.12 IBM Plex Sans,Arial,sans-serif;letter-spacing:-.02em;margin:0;color:#fff}',
+      '.imd-cookie-title{font:800 18px/1.12 IBM Plex Sans,Arial,sans-serif;letter-spacing:0;margin:0;color:#fff}',
       '.imd-cookie-text{font:400 12.5px/1.58 IBM Plex Sans,Arial,sans-serif;color:rgba(245,245,241,.74);margin:0;padding:0 18px 14px}',
       '.imd-cookie-options{display:grid;grid-template-columns:1fr;gap:8px;padding:0 18px 16px}',
       '.imd-cookie-option{position:relative;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;min-width:0;min-height:0;padding:11px 12px;border:1px solid rgba(255,255,255,.12);border-radius:16px;background:rgba(255,255,255,.075)}',
@@ -83,7 +101,7 @@
       '.imd-cookie-btn-primary{grid-column:1/-1;grid-row:1;background:#f5f5f1;color:#4e4e4a;border-color:#f5f5f1}',
       '.imd-cookie-manage{position:fixed;left:18px;bottom:18px;z-index:2147482999;width:34px;height:34px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(78,78,74,.88);backdrop-filter:blur(12px);color:#f5f5f1;font:700 0/1 IBM Plex Sans,Arial,sans-serif;cursor:pointer;box-shadow:0 12px 30px rgba(20,20,18,.22)}',
       '.imd-cookie-manage::before{content:"";display:block;width:14px;height:14px;margin:auto;border:1.8px solid currentColor;border-radius:4px;transform:rotate(45deg)}',
-      '@media(max-width:760px){.imd-cookie-layer{padding:16px}.imd-cookie-box{width:min(360px,100%);border-radius:18px;background:linear-gradient(145deg,rgba(150,150,146,.46),rgba(92,92,88,.32));box-shadow:0 18px 50px rgba(20,20,18,.38)}.imd-cookie-inner{border-radius:17px;background:linear-gradient(145deg,rgba(112,112,108,.95),rgba(78,78,74,.92));color:#f5f5f1}.imd-cookie-inner::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.30),transparent)}.imd-cookie-head{grid-template-columns:30px 1fr;gap:9px;padding:11px 11px 7px}.imd-cookie-mark{width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.15);box-shadow:none}.imd-cookie-mark svg{width:16px;height:16px;color:#f5f5f1}.imd-cookie-kicker{font-size:7.5px;color:rgba(245,245,241,.58)}.imd-cookie-title{font-size:15px;color:#fff}.imd-cookie-text{padding:0 11px 9px;font-size:11px;line-height:1.42;color:rgba(245,245,241,.74)}.imd-cookie-options{grid-template-columns:1fr;gap:5px;padding:0 11px 10px}.imd-cookie-option{min-height:0;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 9px;border-radius:12px;background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.12)}.imd-cookie-option strong{font-size:10px;color:#fff}.imd-cookie-option span{font-size:9.5px;line-height:1.25;color:rgba(245,245,241,.62)}.imd-cookie-toggle{align-self:center;width:34px;height:19px;background:rgba(30,30,28,.20);border-color:rgba(255,255,255,.17)}.imd-cookie-toggle::after{width:11px;height:11px;background:rgba(245,245,241,.88);box-shadow:0 2px 5px rgba(20,20,18,.24)}.imd-cookie-toggle[aria-checked="true"]{background:#f5f5f1;border-color:#f5f5f1}.imd-cookie-toggle[aria-checked="true"]::after{left:19px;background:#4e4e4a}.imd-cookie-actions{padding:10px 11px 11px;border-top-color:rgba(255,255,255,.10);background:rgba(30,30,28,.08)}.imd-cookie-btn{height:34px;border-radius:9px;font-size:10px;color:#f5f5f1;background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.13)}.imd-cookie-btn-primary{background:#f5f5f1;color:#4e4e4a;border-color:#f5f5f1}.imd-cookie-manage{left:12px;bottom:12px;background:rgba(78,78,74,.88);color:#f5f5f1;border-color:rgba(255,255,255,.14)}}'
+      '@media(max-width:760px){.imd-cookie-layer{padding:16px}.imd-cookie-box{width:min(360px,100%);border-radius:18px}.imd-cookie-inner{border-radius:17px}.imd-cookie-head{grid-template-columns:30px 1fr;gap:9px;padding:11px 11px 7px}.imd-cookie-mark{width:30px;height:30px;border-radius:10px}.imd-cookie-mark svg{width:16px;height:16px}.imd-cookie-kicker{font-size:7.5px}.imd-cookie-title{font-size:15px}.imd-cookie-text{padding:0 11px 9px;font-size:11px;line-height:1.42}.imd-cookie-options{gap:5px;padding:0 11px 10px}.imd-cookie-option{gap:8px;padding:8px 9px;border-radius:12px}.imd-cookie-option strong{font-size:10px}.imd-cookie-option span{font-size:9.5px;line-height:1.25}.imd-cookie-toggle{width:34px;height:19px}.imd-cookie-toggle::after{width:11px;height:11px}.imd-cookie-toggle[aria-checked="true"]::after{left:19px}.imd-cookie-actions{padding:10px 11px 11px}.imd-cookie-btn{height:34px;border-radius:9px;font-size:10px}.imd-cookie-manage{left:12px;bottom:12px}}'
     ].join('');
     document.head.appendChild(style);
   }
@@ -115,7 +133,7 @@
     var saved = readConsent();
     if (saved && !forceOpen) {
       window.imdCookieConsent = saved;
-      runDeferredScripts(saved);
+      activateConsentedServices(saved);
       renderManageButton();
       return;
     }
@@ -130,9 +148,9 @@
       '<div class="imd-cookie-inner">',
       '<div class="imd-cookie-head">',
       '<div class="imd-cookie-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.75 5 5.75v5.9c0 4.45 3 7.65 7 9.6 4-1.95 7-5.15 7-9.6v-5.9l-7-3Z"/><path d="m9.2 12.1 1.8 1.8 3.9-4.1"/></svg></div>',
-      '<div><div class="imd-cookie-kicker">Datenschutz</div><h2 class="imd-cookie-title" id="imd-cookie-title">Privatsphäre einstellen</h2></div>',
+      '<div><div class="imd-cookie-kicker">Datenschutz</div><h2 class="imd-cookie-title" id="imd-cookie-title">Privatsph&auml;re einstellen</h2></div>',
       '</div>',
-      '<p class="imd-cookie-text">Notwendige Speicherungen halten Sicherheit, Formulare und Darstellung stabil. Optionale Dienste starten erst nach Ihrer Zustimmung.</p>',
+      '<p class="imd-cookie-text">Notwendige Technologien gew&auml;hrleisten den sicheren Betrieb der Website. Externe Dienste werden erst nach Ihrer Zustimmung aktiviert.</p>',
       '<div class="imd-cookie-options" id="imdCookieOptions"></div>',
       '<div class="imd-cookie-actions">',
       '<button class="imd-cookie-btn" type="button" data-cookie-action="reject">Alle ablehnen</button>',
@@ -145,9 +163,8 @@
     document.body.appendChild(layer);
 
     var options = layer.querySelector('#imdCookieOptions');
-    options.appendChild(makeToggle('necessary', 'Notwendig', 'Sicherheit und Darstellung. Immer aktiv.', true));
-    options.appendChild(makeToggle('statistics', 'Statistik', 'Anonyme Reichweite, falls aktiviert.', false));
-    options.appendChild(makeToggle('marketing', 'Marketing', 'Externe Dienste, falls aktiviert.', false));
+    options.appendChild(makeToggle('necessary', 'Notwendig', 'Erforderlich f&uuml;r Sicherheit, Formulare, Session und korrekte Darstellung. Immer aktiv.', true));
+    options.appendChild(makeToggle('external', 'Externe Dienste', 'Externe Schriftarten, OpenStreetMap/Photon und XLSX-Dokumentfunktionen nur nach Zustimmung.', false));
 
     if (saved) {
       Object.keys(saved).forEach(function (key) {
@@ -161,13 +178,12 @@
       if (!action) return;
       var consent;
       if (action === 'accept') {
-        consent = saveConsent({ statistics: true, marketing: true });
+        consent = saveConsent({ external: true });
       } else if (action === 'reject') {
-        consent = saveConsent({ statistics: false, marketing: false });
+        consent = saveConsent({ external: false });
       } else {
         consent = saveConsent({
-          statistics: layer.querySelector('[data-category="statistics"]').getAttribute('aria-checked') === 'true',
-          marketing: layer.querySelector('[data-category="marketing"]').getAttribute('aria-checked') === 'true'
+          external: layer.querySelector('[data-category="external"]').getAttribute('aria-checked') === 'true'
         });
       }
       layer.remove();
