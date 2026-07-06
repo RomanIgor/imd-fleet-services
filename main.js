@@ -997,45 +997,22 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.wf-step, .rev, .pstep').forEach(el => io.observe(el));
 
-// Workload collapse story: task list reduces from 8 items to one action.
-(function initWorkloadCollapse(){
-  const story = document.getElementById('workloadScroll');
+// Workload story: start the convergence animation when the section enters view.
+(function initWorkloadStory(){
+  const story = document.querySelector('.workload-story');
   if (!story) return;
-  const tasks = Array.from(story.querySelectorAll('.collapse-task'));
-  const counter = document.getElementById('workloadCounter');
-  const label = story.querySelector('.collapse-counter-label');
-  const total = tasks.length;
-  let ticking = false;
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
+  if (!('IntersectionObserver' in window)) {
+    story.classList.add('is-active');
+    return;
   }
-
-  function update() {
-    ticking = false;
-    const viewport = window.innerHeight || document.documentElement.clientHeight;
-    const start = story.offsetTop - viewport * 0.1;
-    const end = story.offsetTop + story.offsetHeight - viewport;
-    const progress = clamp((window.scrollY - start) / Math.max(1, end - start), 0, 1);
-    const gone = clamp(Math.floor(progress * (total + 0.95)), 0, total);
-    const remaining = Math.max(1, total - gone);
-
-    story.dataset.remaining = String(remaining);
-    story.classList.toggle('is-final', gone >= total);
-    if (counter) counter.textContent = String(remaining);
-    if (label) label.textContent = remaining === 1 ? 'Aufgabe' : 'Aufgaben';
-    tasks.forEach((task, index) => task.classList.toggle('is-gone', index < gone));
-  }
-
-  function requestUpdate() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(update);
-  }
-
-  update();
-  window.addEventListener('scroll', requestUpdate, { passive: true });
-  window.addEventListener('resize', requestUpdate);
+  const storyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      story.classList.add('is-active');
+      storyObserver.unobserve(story);
+    });
+  }, { threshold: 0.28 });
+  storyObserver.observe(story);
 })();
 
 // Nav scroll behavior
