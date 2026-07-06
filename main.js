@@ -997,6 +997,24 @@ const io = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.wf-step, .rev, .pstep').forEach(el => io.observe(el));
 
+// Workload story: start the convergence animation when the section enters view.
+(function initWorkloadStory(){
+  const story = document.querySelector('.workload-story');
+  if (!story) return;
+  if (!('IntersectionObserver' in window)) {
+    story.classList.add('is-active');
+    return;
+  }
+  const storyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      story.classList.add('is-active');
+      storyObserver.unobserve(story);
+    });
+  }, { threshold: 0.28 });
+  storyObserver.observe(story);
+})();
+
 // Nav scroll behavior
 window.addEventListener('scroll', updateNavState, {passive: true});
 
