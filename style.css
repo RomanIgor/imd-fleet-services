@@ -117,7 +117,7 @@ body{font-family:var(--fh);background:#e8eef8 url('/new_images/2.jpeg') center/c
 a{text-decoration:none;color:inherit}
 
 /* ══════════════ HERO ══════════════ */
-.hero{display:flex;flex-direction:column;min-height:0}
+.hero{display:flex;flex-direction:column;min-height:100vh}
 .hero-split{position:relative;flex:1;min-height:0}
 .hero-split::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent 0%,rgba(15,20,40,0.96) 100%);pointer-events:none;z-index:3}
 
@@ -2509,8 +2509,8 @@ tbody tr:hover td{background:var(--f0)}
 .difference-labels .difference-row{color:#fff;font-family:var(--fh);font-weight:780}
 .diff-ico,.diff-check,.diff-minus{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(238,242,246,.42);font-family:var(--fh);font-size:14px;color:rgba(238,242,246,.86);background:rgba(255,255,255,.035)}
 .diff-ico img,.difference-calendar img,.difference-benefits img{width:58%;height:58%;object-fit:contain;display:block;filter:brightness(0) invert(1);opacity:.78}
-.diff-check{background:rgba(238,242,246,.88);color:#30343b;border-color:rgba(255,255,255,.88);font-weight:900}
-.diff-minus{font-size:18px}
+.diff-check{background:rgba(34,197,94,.16);color:#22c55e;border-color:rgba(34,197,94,.62);font-weight:900;box-shadow:0 0 18px rgba(34,197,94,.14)}
+.diff-minus{font-size:18px;background:rgba(239,68,68,.13);color:#ef4444;border-color:rgba(239,68,68,.58);box-shadow:0 0 18px rgba(239,68,68,.10)}
 .difference-cta{display:grid;grid-template-columns:72px 1fr auto auto;align-items:center;gap:24px;padding:24px 30px;border:1px solid rgba(238,242,246,.16);border-radius:8px;background:rgba(255,255,255,.05);box-shadow:0 18px 54px rgba(0,0,0,.18);backdrop-filter:blur(10px)}
 .difference-calendar{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(238,242,246,.38);font-size:30px;color:rgba(238,242,246,.88);background:rgba(255,255,255,.035)}
 .difference-calendar img{width:44%;height:44%;opacity:.9}
