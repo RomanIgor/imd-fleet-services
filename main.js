@@ -1100,3 +1100,53 @@ if (window.innerWidth <= 600 && 'IntersectionObserver' in window) {
   }, { threshold: 0.15 });
   document.querySelectorAll('.ti').forEach(el => obs.observe(el));
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.querySelector('.difference-grid');
+  const cards = Array.from(document.querySelectorAll('.difference-option'));
+  const dots = Array.from(document.querySelectorAll('.difference-carousel-dots button'));
+  if (!grid || cards.length < 2 || dots.length !== cards.length) return;
+
+  let ticking = false;
+
+  function setActive(index) {
+    cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+  }
+
+  function updateActiveCard() {
+    ticking = false;
+    const gridRect = grid.getBoundingClientRect();
+    const center = gridRect.left + gridRect.width / 2;
+    let activeIndex = 0;
+    let activeDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const distance = Math.abs(center - cardCenter);
+      if (distance < activeDistance) {
+        activeDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    setActive(activeIndex);
+  }
+
+  grid.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateActiveCard);
+  }, { passive: true });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      cards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      setActive(index);
+    });
+  });
+
+  updateActiveCard();
+  window.addEventListener('resize', updateActiveCard, { passive: true });
+});
