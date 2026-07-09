@@ -2557,15 +2557,23 @@ tbody tr:hover td{background:var(--f0)}
   .difference-benefits div:nth-child(2){border-right:0}
 }
 @media(max-width:768px){
-  .difference-grid{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-padding-inline:calc((100vw - min(76vw,330px)) / 2);overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:8px calc((100vw - min(76vw,330px)) / 2) 20px;margin-inline:calc(var(--wrap-pad,20px) * -1)}
+  .difference-grid{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-padding-inline:calc((100vw - min(70vw,300px)) / 2);overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:8px calc((100vw - min(70vw,300px)) / 2) 18px;margin-inline:calc(var(--wrap-pad,20px) * -1)}
   .difference-grid::-webkit-scrollbar{display:none}
-  .difference-option{flex:0 0 min(76vw,330px);scroll-snap-align:center;scroll-snap-stop:always;transform:scale(.92);opacity:.58;filter:saturate(.78);transition:transform .28s var(--ease),opacity .28s var(--ease),filter .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
+  .difference-option{flex:0 0 min(70vw,300px);scroll-snap-align:center;scroll-snap-stop:always;transform:scale(.88);opacity:.52;filter:saturate(.76);transition:transform .28s var(--ease),opacity .28s var(--ease),filter .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
   .difference-option.is-active{transform:scale(1);opacity:1;filter:saturate(1);z-index:2}
-  .difference-option:hover,.difference-option:focus-visible{transform:scale(.92)}
+  .difference-option:hover,.difference-option:focus-visible{transform:scale(.88)}
   .difference-option.is-active:hover,.difference-option.is-active:focus-visible{transform:scale(1)}
   .difference-carousel-dots{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:-8px}
   .difference-carousel-dots button{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:rgba(238,242,246,.38);cursor:pointer;transition:width .22s var(--ease),background .22s var(--ease),opacity .22s var(--ease)}
   .difference-carousel-dots button.is-active{width:22px;border-radius:999px;background:rgba(238,242,246,.92)}
+  .difference-option-head{min-height:66px;padding:16px 18px 14px}
+  .difference-option-head strong{font-size:18px}
+  .difference-option-head span{font-size:12px}
+  .difference-option-logo{width:78px}
+  .difference-option-list div{min-height:64px;padding:13px 18px;grid-template-columns:30px 1fr;gap:12px}
+  .difference-option-list strong{font-size:13.2px}
+  .difference-option-list small{font-size:11.5px;line-height:1.38}
+  .difference-time{padding:14px 18px}
 }
 @media(max-width:620px){
   #prozess.section{background-attachment:scroll}
@@ -2575,8 +2583,8 @@ tbody tr:hover td{background:var(--f0)}
   .difference-head .lead{font-size:15px}
   .difference-insight{grid-template-columns:40px 1fr;padding:16px}
   .difference-insight .diff-ico{width:40px;height:40px}
-  .difference-option-head{padding:20px 18px 16px}
-  .difference-option-list div{padding:14px 18px;grid-template-columns:30px 1fr}
+  .difference-option-head{padding:15px 16px 13px}
+  .difference-option-list div{padding:12px 16px;grid-template-columns:28px 1fr}
   .difference-time{grid-template-columns:26px 1fr;padding:16px 18px}
   .difference-time strong{grid-column:2;font-size:12.5px}
   .difference-cta{padding:22px 18px}

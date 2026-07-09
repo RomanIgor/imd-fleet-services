@@ -1147,6 +1147,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  updateActiveCard();
+  if (window.matchMedia('(max-width: 768px)').matches && cards[1]) {
+    requestAnimationFrame(() => {
+      cards[1].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+      setActive(1);
+    });
+  } else {
+    updateActiveCard();
+  }
   window.addEventListener('resize', updateActiveCard, { passive: true });
 });
