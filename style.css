@@ -2557,9 +2557,12 @@ tbody tr:hover td{background:var(--f0)}
   .difference-benefits div:nth-child(2){border-right:0}
 }
 @media(max-width:768px){
-  .difference-grid{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-padding-inline:calc((100vw - min(70vw,300px)) / 2);overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:8px calc((100vw - min(70vw,300px)) / 2) 18px;margin-inline:calc(var(--wrap-pad,20px) * -1)}
+  .difference-grid{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-padding-inline:calc((100vw - min(70vw,300px)) / 2);overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-margin-top:86px;padding:8px calc((100vw - min(70vw,300px)) / 2) 18px;margin-inline:calc(var(--wrap-pad,20px) * -1)}
   .difference-grid::-webkit-scrollbar{display:none}
   .difference-option{flex:0 0 min(70vw,300px);scroll-snap-align:center;scroll-snap-stop:always;transform:scale(.88);opacity:.52;filter:saturate(.76);transition:transform .28s var(--ease),opacity .28s var(--ease),filter .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease)}
+  .difference-negative{order:1}
+  .difference-imd{order:2}
+  .difference-neutral{order:3}
   .difference-option.is-active{transform:scale(1);opacity:1;filter:saturate(1);z-index:2}
   .difference-option:hover,.difference-option:focus-visible{transform:scale(.88)}
   .difference-option.is-active:hover,.difference-option.is-active:focus-visible{transform:scale(1)}

@@ -1003,8 +1003,11 @@ window.addEventListener('scroll', updateNavState, {passive: true});
 // Scroll to section
 function goTo(id) {
   closeMob();
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({behavior:'smooth'});
+  const mobileWarumTarget = id === 'warum' && window.matchMedia('(max-width: 768px)').matches
+    ? document.querySelector('.difference-grid')
+    : null;
+  const el = mobileWarumTarget || document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 function openPwaVideo() {
@@ -1109,19 +1112,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let ticking = false;
 
+  function getVisualCards() {
+    return cards.slice().sort((a, b) => {
+      const orderA = Number.parseInt(window.getComputedStyle(a).order, 10) || 0;
+      const orderB = Number.parseInt(window.getComputedStyle(b).order, 10) || 0;
+      return orderA - orderB;
+    });
+  }
+
   function setActive(index) {
-    cards.forEach((card, i) => card.classList.toggle('is-active', i === index));
+    const visualCards = getVisualCards();
+    cards.forEach(card => card.classList.remove('is-active'));
+    if (visualCards[index]) visualCards[index].classList.add('is-active');
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
   }
 
   function updateActiveCard() {
     ticking = false;
+    const visualCards = getVisualCards();
     const gridRect = grid.getBoundingClientRect();
     const center = gridRect.left + gridRect.width / 2;
     let activeIndex = 0;
     let activeDistance = Infinity;
 
-    cards.forEach((card, index) => {
+    visualCards.forEach((card, index) => {
       const rect = card.getBoundingClientRect();
       const cardCenter = rect.left + rect.width / 2;
       const distance = Math.abs(center - cardCenter);
@@ -1142,14 +1156,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
-      cards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      const visualCards = getVisualCards();
+      visualCards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       setActive(index);
     });
   });
 
-  if (window.matchMedia('(max-width: 768px)').matches && cards[1]) {
+  if (window.matchMedia('(max-width: 768px)').matches && getVisualCards()[1]) {
     requestAnimationFrame(() => {
-      cards[1].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+      getVisualCards()[1].scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
       setActive(1);
     });
   } else {
