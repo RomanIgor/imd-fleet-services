@@ -70,3 +70,9 @@ Long secondary descriptions currently displayed under every comparison item are 
 - Replace provisional text glyphs in the side-panel headers with the local user and handshake SVG icons.
 - Add small colored SVG nodes to both ends of every connector path: muted red or ochre at the alternative panel, IMD blue at the central ellipse.
 - Preserve current dimensions, connector geometry, copy, and responsive behavior.
+
+## Approved proof-badge refinement
+
+- Replace the explanatory `Mehr Sicherheit. Weniger Aufwand.` insight card with a compact evidence badge.
+- Use the title `Geprüfte Abwicklung` and the concrete proof points `GKK-zertifiziert`, `HEK-Mindestpreis`, and `Rechtssicher`.
+- Reduce the badge's visual weight so the comparison heading remains dominant.

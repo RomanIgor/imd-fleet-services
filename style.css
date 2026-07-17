@@ -2500,6 +2500,12 @@ tbody tr:hover td{background:var(--f0)}
 .difference-insight .diff-ico{width:46px;height:46px;border-radius:14px}
 .difference-insight strong{display:block;font-family:var(--fh);font-size:15px;color:#fff;margin-bottom:5px}
 .difference-insight p{margin:0;font-size:12.5px;line-height:1.55;color:rgba(238,242,246,.66)}
+.difference-proof{width:min(430px,32vw);grid-template-columns:40px 1fr;gap:13px;margin-top:58px;padding:14px 16px;border-radius:14px}
+.difference-proof .diff-ico{width:40px;height:40px;border-radius:12px}
+.difference-proof strong{font-size:14px;margin-bottom:7px}
+.difference-proof-points{display:flex;align-items:center;flex-wrap:wrap;gap:5px 8px}
+.difference-proof-points span{display:inline-flex;align-items:center;gap:8px;margin:0;font-family:var(--fh);font-size:10.5px;font-weight:700;letter-spacing:.025em;color:rgba(238,242,246,.68);white-space:nowrap}
+.difference-proof-points span:not(:last-child)::after{content:"·";color:rgba(238,242,246,.42)}
 .difference-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;background:transparent}
 .difference-carousel-dots{display:none}
 .difference-option{position:relative;min-width:0;overflow:hidden;border:1px solid rgba(238,242,246,.14);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:0 22px 66px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(10px);transition:transform .28s var(--ease),box-shadow .28s var(--ease),border-color .28s var(--ease),background .28s var(--ease);outline:0}
@@ -2659,6 +2665,8 @@ tbody tr:hover td{background:var(--f0)}
 #warum .difference-time,
 #warum .difference-cta span,
 #warum .difference-benefits small{color:var(--cmp-text)}
+#warum .difference-proof-points span{color:var(--cmp-text)}
+#warum .difference-proof-points span:not(:last-child)::after{color:rgba(32,42,59,.34)}
 #warum .difference-option::before{
   background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0) 42%);
   opacity:.55;
