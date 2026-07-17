@@ -34,7 +34,7 @@ test('comparison stage provides connector, responsive, focus, and motion styling
 });
 
 test('comparison connectors align dynamically with all ten rows', () => {
-  assert.match(html, /style\.css\?v=why-proof-badge-5/);
+  assert.match(html, /style\.css\?v=why-viewport-fit-6/);
   assert.match(html, /main\.js\?v=privacy-xlsx-connectors-2/);
   assert.match(html, /<svg class="difference-connectors"/);
   assert.equal(count(/class="difference-connector-path"/g, html), 10);
@@ -46,7 +46,7 @@ test('comparison connectors align dynamically with all ten rows', () => {
 });
 
 test('comparison background is concrete without a square grid', () => {
-  assert.match(html, /style\.css\?v=why-proof-badge-5/);
+  assert.match(html, /style\.css\?v=why-viewport-fit-6/);
   assert.match(css, /#warum\s*\{[^}]*url\('new_images\/2\.jpeg'\)/s);
   assert.doesNotMatch(css, /background-size\s*:\s*auto,auto,82px 82px,82px 82px/);
   assert.doesNotMatch(css, /linear-gradient\(rgba\(255,255,255,\.12\) 1px,transparent 1px\)/);
@@ -58,7 +58,7 @@ test('comparison panels use local icons and connector endpoint nodes', () => {
   assert.equal(count(/<marker id="difference-node-/g, html), 4);
   assert.match(css, /marker-start\s*:\s*url\(#difference-node-private\)/);
   assert.match(css, /marker-end\s*:\s*url\(#difference-node-imd\)/);
-  assert.match(html, /style\.css\?v=why-proof-badge-5/);
+  assert.match(html, /style\.css\?v=why-viewport-fit-6/);
 });
 
 test('comparison header uses a compact evidence badge', () => {
@@ -69,5 +69,10 @@ test('comparison header uses a compact evidence badge', () => {
   assert.match(html, />Rechtssicher</);
   assert.doesNotMatch(html, /Mehr Sicherheit\. Weniger Aufwand\./);
   assert.match(css, /\.difference-proof-points\s*\{/);
-  assert.match(html, /style\.css\?v=why-proof-badge-5/);
+  assert.match(html, /style\.css\?v=why-viewport-fit-6/);
+});
+
+test('comparison content moves upward on desktop without changing mobile spacing', () => {
+  assert.match(css, /@media\s*\(min-width\s*:\s*1121px\)[\s\S]*?#warum\.section\s*\{[^}]*padding-top\s*:\s*72px[^}]*\}[\s\S]*?\.difference-showcase\s*\{[^}]*gap\s*:\s*10px/s);
+  assert.match(html, /style\.css\?v=why-viewport-fit-6/);
 });

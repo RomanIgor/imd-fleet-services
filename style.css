@@ -3053,3 +3053,8 @@ tbody tr:hover td{background:var(--f0)}
   .difference-core a{transition:none!important}
 }
 
+@media(min-width:1121px){
+  #warum.section{padding-top:72px}
+  #warum .difference-showcase{gap:10px}
+}
+
