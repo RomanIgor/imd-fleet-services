@@ -34,7 +34,7 @@ test('comparison stage provides connector, responsive, focus, and motion styling
 });
 
 test('comparison connectors align dynamically with all ten rows', () => {
-  assert.match(html, /style\.css\?v=why-single-viewport-3/);
+  assert.match(html, /style\.css\?v=why-connectors-2/);
   assert.match(html, /main\.js\?v=privacy-xlsx-connectors-2/);
   assert.match(html, /<svg class="difference-connectors"/);
   assert.equal(count(/class="difference-connector-path"/g, html), 10);
@@ -43,11 +43,4 @@ test('comparison connectors align dynamically with all ten rows', () => {
   assert.match(css, /\.difference-connector-path\s*\{/);
   assert.match(css, /stroke-dasharray\s*:/);
   assert.match(css, /#warum \.difference-head \.h2[^{]*\{[^}]*font-size\s*:\s*clamp\([^,]+,[^,]+,46px\)/s);
-});
-
-test('comparison section fits one desktop viewport without a square grid', () => {
-  assert.doesNotMatch(css, /background-size\s*:\s*auto,auto,82px 82px,82px 82px/);
-  assert.match(css, /@media\s*\(min-width\s*:\s*1121px\)\s*and\s*\(min-height\s*:\s*800px\)/);
-  assert.match(css, /#warum\.section\s*\{[^}]*min-height\s*:\s*calc\(100svh - 92px\)/s);
-  assert.match(css, /\.difference-showcase\s*\{[^}]*grid-template-rows\s*:\s*auto minmax\(0,1fr\) auto auto/s);
 });

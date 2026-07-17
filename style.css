@@ -2624,7 +2624,10 @@ tbody tr:hover td{background:var(--f0)}
 #warum::before{
   background:
     radial-gradient(circle at 62% 18%,rgba(229,228,223,.46),transparent 28%),
-    linear-gradient(90deg,rgba(28,34,40,.10),rgba(28,34,40,.02) 46%,rgba(28,34,40,.12));
+    linear-gradient(90deg,rgba(28,34,40,.10),rgba(28,34,40,.02) 46%,rgba(28,34,40,.12)),
+    linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+  background-size:auto,auto,82px 82px,82px 82px;
   opacity:1;
 }
 #warum .difference-head{padding-left:clamp(0px,3vw,44px)}
@@ -3031,69 +3034,6 @@ tbody tr:hover td{background:var(--f0)}
   .difference-core > strong{font-size:30px}
   .difference-core p{font-size:12.5px}
   .difference-side-head{min-height:68px}
-}
-@media(min-width:1121px) and (min-height:800px){
-  #warum.section{
-    min-height:calc(100svh - 92px);
-    height:calc(100svh - 92px);
-    padding:24px 0 18px;
-  }
-  #warum .wrap{height:100%}
-  .difference-showcase{
-    height:100%;
-    grid-template-rows:auto minmax(0,1fr) auto auto;
-    gap:10px;
-  }
-  #warum .difference-head{
-    min-height:0;
-    align-items:end;
-    padding-left:0;
-  }
-  #warum .difference-head .h2{font-size:clamp(30px,2.25vw,38px);max-width:720px}
-  #warum .difference-head .lead{margin-top:8px;font-size:13px;line-height:1.4}
-  #warum .difference-insight{
-    width:min(390px,31vw);
-    margin-top:0;
-    padding:11px 14px;
-    grid-template-columns:38px 1fr;
-    gap:11px;
-    border-radius:12px;
-  }
-  #warum .difference-insight .diff-ico{width:38px;height:38px;border-radius:11px}
-  #warum .difference-insight strong{font-size:13px;margin-bottom:2px}
-  #warum .difference-insight p{font-size:10.5px;line-height:1.35}
-  .difference-stage{min-height:0;height:100%;padding:4px 0;gap:clamp(24px,3.4vw,54px)}
-  .difference-side-head{min-height:54px;padding:9px 15px;gap:11px}
-  .difference-side-symbol{width:31px;height:31px;flex-basis:31px;font-size:19px}
-  .difference-side-head strong{font-size:13px}
-  .difference-side-head small{margin-top:2px;font-size:9px}
-  .difference-side-list{padding:3px 0}
-  .difference-row{min-height:38px;padding:6px 14px;font-size:10.5px;grid-template-columns:minmax(0,1fr) 20px}
-  .difference-row i{width:17px;height:17px;font-size:12px}
-  .difference-effort{padding:9px 15px 10px;gap:2px 10px}
-  .difference-effort > span:first-child{font-size:9px}
-  .difference-effort strong{font-size:12px}
-  .difference-meter{height:4px;margin-top:3px}
-  .difference-core{width:min(38svh,360px);padding:36px 42px 32px}
-  .difference-core::before{inset:-13px;box-shadow:0 0 0 6px rgba(229,228,223,.18)}
-  .difference-core::after{inset:-27px}
-  .difference-core-kicker{margin-bottom:10px;font-size:8px}
-  .difference-core img{width:min(53%,175px)}
-  .difference-core-rule{width:42px;margin:13px 0 11px}
-  .difference-core > strong{font-size:clamp(25px,2.2vw,34px)}
-  .difference-core > small{margin-top:5px;font-size:9px}
-  .difference-core p{margin-top:10px;font-size:11px;line-height:1.35}
-  .difference-core a{margin-top:11px;padding:8px 14px;font-size:9px}
-  .difference-cta{grid-template-columns:48px 1fr auto auto;gap:14px;padding:8px 14px}
-  .difference-calendar{width:42px;height:42px}
-  .difference-cta strong{font-size:17px}
-  .difference-cta span{font-size:11px}
-  .difference-btn{height:42px;min-width:205px;padding:0 17px;font-size:11px;gap:12px}
-  #warum .difference-benefits{gap:8px}
-  #warum .difference-benefits div{min-height:56px;padding:8px 12px;grid-template-columns:38px 1fr;column-gap:10px;border-radius:11px}
-  #warum .difference-benefits span img{width:30px;height:30px}
-  #warum .difference-benefits strong{font-size:11px}
-  #warum .difference-benefits small{font-size:9.5px}
 }
 @media(prefers-reduced-motion:reduce){
   .difference-side,
