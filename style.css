@@ -2818,6 +2818,7 @@ tbody tr:hover td{background:var(--f0)}
   font-size:24px;
   color:#f2f1ec;
 }
+.difference-side-symbol img{width:20px;height:20px;display:block;filter:brightness(0) invert(1);opacity:.9}
 .difference-side-head strong,
 .difference-side-head small{display:block}
 .difference-side-head strong{
@@ -2993,6 +2994,12 @@ tbody tr:hover td{background:var(--f0)}
 }
 .difference-connector-path[data-side="left"]{stroke:rgba(139,81,76,.46)}
 .difference-connector-path[data-side="right"]{stroke:rgba(154,116,75,.48)}
+.difference-connector-path[data-side="left"]{marker-start:url(#difference-node-private);marker-end:url(#difference-node-imd)}
+.difference-connector-path[data-side="right"]{marker-start:url(#difference-node-imd-right);marker-end:url(#difference-node-dealer)}
+#difference-node-private circle{fill:var(--cmp-negative)}
+#difference-node-dealer circle{fill:var(--cmp-warning)}
+#difference-node-imd circle,
+#difference-node-imd-right circle{fill:var(--cmp-blue)}
 
 @media(max-width:1120px){
   .difference-stage{grid-template-columns:minmax(220px,1fr) minmax(300px,1.35fr) minmax(220px,1fr);gap:30px;min-height:470px}

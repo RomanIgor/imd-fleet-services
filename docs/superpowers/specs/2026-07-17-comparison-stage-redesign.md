@@ -64,3 +64,9 @@ Long secondary descriptions currently displayed under every comparison item are 
 - Preserve the current component sizes and spacing.
 - Remove the square grid layers from the comparison background.
 - Retain the local concrete image with a quiet mineral overlay and soft radial lighting.
+
+## Approved icon and connector-node refinement
+
+- Replace provisional text glyphs in the side-panel headers with the local user and handshake SVG icons.
+- Add small colored SVG nodes to both ends of every connector path: muted red or ochre at the alternative panel, IMD blue at the central ellipse.
+- Preserve current dimensions, connector geometry, copy, and responsive behavior.
