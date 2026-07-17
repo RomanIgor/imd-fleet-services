@@ -1,0 +1,33 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const root = path.resolve(__dirname, '..');
+const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
+
+function count(pattern, source) {
+  return [...source.matchAll(pattern)].length;
+}
+
+test('comparison stage has two concise alternatives and a central IMD result', () => {
+  assert.match(html, /class="difference-stage"/);
+  assert.equal(count(/class="difference-side(?:\s|\\")/g, html), 2);
+  assert.equal(count(/class="difference-row"/g, html), 10);
+  assert.match(html, /class="difference-core"/);
+  assert.match(html, /ca\. 20 Minuten/);
+  assert.match(html, /interner Aufwand/);
+  assert.match(html, /Fahrzeug digital melden\.<br>Den Rest übernehmen wir\./);
+  assert.doesNotMatch(html, /difference-option-list[\s\S]*?<small>/);
+});
+
+test('comparison stage provides connector, responsive, focus, and motion styling', () => {
+  assert.match(css, /\.difference-stage\s*\{/);
+  assert.match(css, /\.difference-connector/);
+  assert.match(css, /\.difference-core::before/);
+  assert.match(css, /\.difference-stage[^}]*grid-template-columns\s*:\s*minmax\(0,27fr\)\s+minmax\(320px,46fr\)\s+minmax\(0,27fr\)/s);
+  assert.match(css, /@media\s*\(max-width\s*:\s*768px\)[\s\S]*\.difference-stage/);
+  assert.match(css, /\.difference-side:focus-visible/);
+  assert.match(css, /@media\s*\(prefers-reduced-motion\s*:\s*reduce\)[\s\S]*\.difference-side/);
+});
