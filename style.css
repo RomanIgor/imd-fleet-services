@@ -2814,6 +2814,10 @@ tbody tr:hover td{background:var(--f0)}
   background:linear-gradient(135deg,#202a3b,#2c3749);
   color:var(--cmp-highlight);
 }
+.difference-side-head{width:100%;border:0;font:inherit;text-align:left;cursor:default;appearance:none}
+.difference-side-copy{min-width:0}
+.difference-accordion-indicator{display:none}
+.difference-side-head:focus-visible{outline:3px solid rgba(54,162,197,.34);outline-offset:-3px}
 .difference-side-symbol{
   width:38px;
   height:38px;
@@ -3035,11 +3039,21 @@ tbody tr:hover td{background:var(--f0)}
   }
   .difference-core{grid-row:1;width:min(82vw,390px);padding:48px 44px 42px}
   .difference-side{width:100%;max-width:520px;justify-self:center}
+  .difference-side{overflow:hidden}
+  .difference-side-head{display:grid;cursor:pointer;grid-template-columns:38px minmax(0,1fr) 32px}
+  .difference-accordion-indicator{width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(229,228,223,.38);border-radius:50%;font-size:20px;color:var(--cmp-highlight);transition:transform .2s var(--ease)}
+  .difference-side.is-open .difference-accordion-indicator{transform:rotate(180deg)}
+  .difference-side-body{overflow:hidden;animation:differenceAccordionIn .22s var(--ease)}
+  .difference-side-body[hidden]{display:none}
   .difference-side-private{grid-row:2}
   .difference-side-dealer{grid-row:3}
   .difference-side-symbol{display:grid}
   .difference-side-head strong{font-size:16px}
   .difference-row{min-height:50px;padding-inline:20px;font-size:12.5px}
+}
+@keyframes differenceAccordionIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
 }
 @media(max-width:480px){
   .difference-core{width:min(88vw,350px);padding:42px 32px 36px}
@@ -3050,7 +3064,9 @@ tbody tr:hover td{background:var(--f0)}
 }
 @media(prefers-reduced-motion:reduce){
   .difference-side,
-  .difference-core a{transition:none!important}
+  .difference-core a,
+  .difference-side-body,
+  .difference-accordion-indicator{animation:none!important;transition:none!important}
 }
 
 @media(min-width:1121px){

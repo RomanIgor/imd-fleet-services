@@ -7,7 +7,7 @@
 <meta name="description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir übernehmen Abholung, Wertgutachten und Auszahlung. Garantierter HEK-Mindestpreis.">
 <link rel="stylesheet" data-consent-category="external" data-consent-href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap">
 <link rel="icon" href="/icon-192.png">
-  <link rel="stylesheet" href="style.css?v=why-viewport-fit-6">
+  <link rel="stylesheet" href="style.css?v=why-mobile-accordion-7">
 <script>(function(){var t=localStorage.getItem('imd-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');})();</script>
 </head>
 
@@ -433,22 +433,25 @@
       </header>
 
       <div class="difference-stage" aria-label="Vergleich der Verkaufsoptionen">
-        <article class="difference-side difference-side-private" tabindex="0">
-          <header class="difference-side-head">
+        <article class="difference-side difference-side-private">
+          <button class="difference-side-head" type="button" aria-expanded="false" aria-controls="difference-panel-private">
             <span class="difference-side-symbol" aria-hidden="true"><img src="assets/icons/user-key.svg" alt=""></span>
-            <div><strong>Privatverkauf</strong><small>Alles in Eigenregie</small></div>
-          </header>
-          <div class="difference-side-list">
+            <span class="difference-side-copy"><strong>Privatverkauf</strong><small>Alles in Eigenregie</small></span>
+            <span class="difference-accordion-indicator" aria-hidden="true">+</span>
+          </button>
+          <div class="difference-side-body" id="difference-panel-private">
+            <div class="difference-side-list">
             <div class="difference-row"><span>Inserate erstellen</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Anfragen &amp; Termine koordinieren</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Probefahrten organisieren</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Preis verhandeln</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Vertrag, Zahlung &amp; Haftung klären</span><i aria-hidden="true">−</i></div>
+            </div>
+            <footer class="difference-effort">
+              <span>Ihr Aufwand</span><strong>Hoch</strong>
+              <span class="difference-meter" aria-hidden="true"><i></i></span>
+            </footer>
           </div>
-          <footer class="difference-effort">
-            <span>Ihr Aufwand</span><strong>Hoch</strong>
-            <span class="difference-meter" aria-hidden="true"><i></i></span>
-          </footer>
         </article>
 
         <svg class="difference-connectors" aria-hidden="true" focusable="false">
@@ -480,22 +483,25 @@
           <a href="#kontakt">Fahrzeug melden <span aria-hidden="true">→</span></a>
         </article>
 
-        <article class="difference-side difference-side-dealer" tabindex="0">
-          <header class="difference-side-head">
+        <article class="difference-side difference-side-dealer">
+          <button class="difference-side-head" type="button" aria-expanded="false" aria-controls="difference-panel-dealer">
             <span class="difference-side-symbol" aria-hidden="true"><img src="assets/icons/handshake.svg" alt=""></span>
-            <div><strong>Händler / Auktion</strong><small>Mehrere Beteiligte</small></div>
-          </header>
-          <div class="difference-side-list">
+            <span class="difference-side-copy"><strong>Händler / Auktion</strong><small>Mehrere Beteiligte</small></span>
+            <span class="difference-accordion-indicator" aria-hidden="true">+</span>
+          </button>
+          <div class="difference-side-body" id="difference-panel-dealer">
+            <div class="difference-side-list">
             <div class="difference-row"><span>Angebote einholen</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Termine abstimmen</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Dokumente koordinieren</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Freigaben nachhalten</span><i aria-hidden="true">−</i></div>
             <div class="difference-row"><span>Zahlung &amp; Ergebnis prüfen</span><i aria-hidden="true">−</i></div>
+            </div>
+            <footer class="difference-effort">
+              <span>Ihr Aufwand</span><strong>Mittel</strong>
+              <span class="difference-meter" aria-hidden="true"><i></i></span>
+            </footer>
           </div>
-          <footer class="difference-effort">
-            <span>Ihr Aufwand</span><strong>Mittel</strong>
-            <span class="difference-meter" aria-hidden="true"><i></i></span>
-          </footer>
         </article>
       </div>
 
@@ -1583,7 +1589,7 @@
 
 <div class="toast" id="toast"><span class="toast-ico">✓</span><span id="toastMsg"></span></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="/cookie-consent.js?v=12"></script><script src="main.js?v=privacy-xlsx-connectors-2"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="/cookie-consent.js?v=12"></script><script src="main.js?v=privacy-xlsx-connectors-accordion-3"></script>
 <script>
 var hcRepair=0;
 function hcOpenCalc(){

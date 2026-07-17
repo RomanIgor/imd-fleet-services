@@ -1104,6 +1104,42 @@ if (window.innerWidth <= 600 && 'IntersectionObserver' in window) {
   document.querySelectorAll('.ti').forEach(el => obs.observe(el));
 }
 
+function setDifferencePanelState(panel, open) {
+  const button = panel.querySelector('.difference-side-head');
+  const body = panel.querySelector('.difference-side-body');
+  const indicator = panel.querySelector('.difference-accordion-indicator');
+  if (!button || !body || !indicator) return;
+  panel.classList.toggle('is-open', open);
+  button.setAttribute('aria-expanded', String(open));
+  body.hidden = !open;
+  indicator.textContent = open ? '−' : '+';
+}
+
+function initMobileDifferenceAccordion() {
+  const panels = Array.from(document.querySelectorAll('.difference-side'));
+  if (!panels.length) return;
+  const mobileQuery = window.matchMedia('(max-width:768px)');
+
+  function syncLayout() {
+    panels.forEach(panel => {
+      if (mobileQuery.matches) setDifferencePanelState(panel, false);
+      else setDifferencePanelState(panel, true);
+    });
+  }
+
+  panels.forEach(panel => {
+    const button = panel.querySelector('.difference-side-head');
+    button?.addEventListener('click', () => {
+      if (!mobileQuery.matches) return;
+      const isOpen = panel.classList.contains('is-open');
+      panels.forEach(otherPanel => setDifferencePanelState(otherPanel, otherPanel === panel && !isOpen));
+    });
+  });
+
+  syncLayout();
+  mobileQuery.addEventListener?.('change', syncLayout);
+}
+
 function updateDifferenceConnectors() {
   const stage = document.querySelector('.difference-stage');
   const svg = stage?.querySelector('.difference-connectors');
@@ -1146,6 +1182,7 @@ function updateDifferenceConnectors() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initMobileDifferenceAccordion();
   const connectorStage = document.querySelector('.difference-stage');
   if (connectorStage) {
     updateDifferenceConnectors();
