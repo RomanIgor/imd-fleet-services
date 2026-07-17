@@ -11,6 +11,7 @@ rahmenvertrag.b64
 .superpowers/
 .chrome-imd-check/
 .edge-imd-check/
+.worktrees/
 
 # Python/cache artifacts
 __pycache__/
