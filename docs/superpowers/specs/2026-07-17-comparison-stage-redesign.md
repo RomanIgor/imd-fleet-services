@@ -58,3 +58,9 @@ Long secondary descriptions currently displayed under every comparison item are 
 - Replace approximate CSS connector rules with a responsive SVG overlay.
 - Anchor one dotted curved path to the center of every side-panel row marker and terminate it on the corresponding side of the IMD ellipse.
 - Recalculate all ten paths on initial render and resize; hide the connector overlay at tablet and mobile widths.
+
+## Approved single-viewport refinement
+
+- Fit the complete comparison section, including heading, stage, CTA, and four benefit cards, within one desktop viewport at 1440×900 and larger.
+- Remove the square grid gradients from the background while retaining the concrete image, soft tonal overlay, and radial light.
+- Use compact desktop-only spacing and component heights; preserve normal document flow on tablet, mobile, and short desktop viewports.
