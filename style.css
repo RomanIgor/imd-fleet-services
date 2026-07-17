@@ -2617,17 +2617,15 @@ tbody tr:hover td{background:var(--f0)}
   --cmp-warning:#9A744B;
   --cmp-negative:#8B514C;
   background:
-    linear-gradient(180deg,rgba(202,201,196,.96),rgba(179,180,176,.88)),
+    radial-gradient(circle at 56% 14%,rgba(229,228,223,.38),transparent 42%),
+    linear-gradient(180deg,rgba(202,201,196,.88),rgba(179,180,176,.78)),
     url('new_images/2.jpeg') center/cover fixed;
   color:var(--cmp-graphite);
 }
 #warum::before{
   background:
-    radial-gradient(circle at 62% 18%,rgba(229,228,223,.46),transparent 28%),
-    linear-gradient(90deg,rgba(28,34,40,.10),rgba(28,34,40,.02) 46%,rgba(28,34,40,.12)),
-    linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
-  background-size:auto,auto,82px 82px,82px 82px;
+    radial-gradient(ellipse at 50% 42%,rgba(255,255,255,.16),transparent 48%),
+    linear-gradient(90deg,rgba(28,34,40,.11),transparent 42%,rgba(28,34,40,.13));
   opacity:1;
 }
 #warum .difference-head{padding-left:clamp(0px,3vw,44px)}

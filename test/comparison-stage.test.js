@@ -34,7 +34,7 @@ test('comparison stage provides connector, responsive, focus, and motion styling
 });
 
 test('comparison connectors align dynamically with all ten rows', () => {
-  assert.match(html, /style\.css\?v=why-connectors-2/);
+  assert.match(html, /style\.css\?v=why-concrete-no-grid-3/);
   assert.match(html, /main\.js\?v=privacy-xlsx-connectors-2/);
   assert.match(html, /<svg class="difference-connectors"/);
   assert.equal(count(/class="difference-connector-path"/g, html), 10);
@@ -43,4 +43,11 @@ test('comparison connectors align dynamically with all ten rows', () => {
   assert.match(css, /\.difference-connector-path\s*\{/);
   assert.match(css, /stroke-dasharray\s*:/);
   assert.match(css, /#warum \.difference-head \.h2[^{]*\{[^}]*font-size\s*:\s*clamp\([^,]+,[^,]+,46px\)/s);
+});
+
+test('comparison background is concrete without a square grid', () => {
+  assert.match(html, /style\.css\?v=why-concrete-no-grid-3/);
+  assert.match(css, /#warum\s*\{[^}]*url\('new_images\/2\.jpeg'\)/s);
+  assert.doesNotMatch(css, /background-size\s*:\s*auto,auto,82px 82px,82px 82px/);
+  assert.doesNotMatch(css, /linear-gradient\(rgba\(255,255,255,\.12\) 1px,transparent 1px\)/);
 });

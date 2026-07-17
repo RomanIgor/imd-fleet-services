@@ -58,3 +58,9 @@ Long secondary descriptions currently displayed under every comparison item are 
 - Replace approximate CSS connector rules with a responsive SVG overlay.
 - Anchor one dotted curved path to the center of every side-panel row marker and terminate it on the corresponding side of the IMD ellipse.
 - Recalculate all ten paths on initial render and resize; hide the connector overlay at tablet and mobile widths.
+
+## Approved concrete background refinement
+
+- Preserve the current component sizes and spacing.
+- Remove the square grid layers from the comparison background.
+- Retain the local concrete image with a quiet mineral overlay and soft radial lighting.
