@@ -51,3 +51,10 @@ Long secondary descriptions currently displayed under every comparison item are 
 - Confirm the center is visually dominant without covering connector paths.
 - Confirm carousel, keyboard focus, calls to action, and reduced-motion behavior still work.
 - Confirm no horizontal page overflow occurs.
+
+## Approved alignment refinement
+
+- Reduce the desktop comparison heading from a 58 px maximum to approximately 46 px.
+- Replace approximate CSS connector rules with a responsive SVG overlay.
+- Anchor one dotted curved path to the center of every side-panel row marker and terminate it on the corresponding side of the IMD ellipse.
+- Recalculate all ten paths on initial render and resize; hide the connector overlay at tablet and mobile widths.

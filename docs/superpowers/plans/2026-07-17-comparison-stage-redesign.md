@@ -76,3 +76,14 @@
 - [ ] **Step 3: Run `node --test test/comparison-stage.test.js`** and expect all tests to pass.
 - [ ] **Step 4: Run `git diff --check`** and expect no whitespace errors.
 - [ ] **Step 5: Inspect desktop and mobile screenshots** and correct only comparison-stage layout defects discovered during inspection.
+
+### Task 5: Precise connector alignment refinement
+
+**Files:**
+- Modify: `index.html`, `style.css`, `main.js`, `test/comparison-stage.test.js`
+
+- [ ] **Step 1: Extend the structural test** to require a dedicated SVG connector layer, ten paths, the connector update function, and the reduced title maximum.
+- [ ] **Step 2: Run the test and confirm it fails** because connectors are still fixed CSS lines.
+- [ ] **Step 3: Add the SVG layer and calculate path endpoints** from each row marker and the IMD ellipse geometry on render and resize.
+- [ ] **Step 4: Style paths as fine dotted curves** and hide them below the desktop breakpoint.
+- [ ] **Step 5: Run automated and visual checks** at desktop and mobile sizes.

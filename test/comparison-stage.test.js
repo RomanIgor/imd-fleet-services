@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
+const js = fs.readFileSync(path.join(root, 'main.js'), 'utf8');
 
 function count(pattern, source) {
   return [...source.matchAll(pattern)].length;
@@ -30,4 +31,16 @@ test('comparison stage provides connector, responsive, focus, and motion styling
   assert.match(css, /@media\s*\(max-width\s*:\s*768px\)[\s\S]*\.difference-stage/);
   assert.match(css, /\.difference-side:focus-visible/);
   assert.match(css, /@media\s*\(prefers-reduced-motion\s*:\s*reduce\)[\s\S]*\.difference-side/);
+});
+
+test('comparison connectors align dynamically with all ten rows', () => {
+  assert.match(html, /style\.css\?v=why-connectors-2/);
+  assert.match(html, /main\.js\?v=privacy-xlsx-connectors-2/);
+  assert.match(html, /<svg class="difference-connectors"/);
+  assert.equal(count(/class="difference-connector-path"/g, html), 10);
+  assert.match(js, /function updateDifferenceConnectors\(\)/);
+  assert.match(js, /ResizeObserver/);
+  assert.match(css, /\.difference-connector-path\s*\{/);
+  assert.match(css, /stroke-dasharray\s*:/);
+  assert.match(css, /#warum \.difference-head \.h2[^{]*\{[^}]*font-size\s*:\s*clamp\([^,]+,[^,]+,46px\)/s);
 });

@@ -1104,7 +1104,56 @@ if (window.innerWidth <= 600 && 'IntersectionObserver' in window) {
   document.querySelectorAll('.ti').forEach(el => obs.observe(el));
 }
 
+function updateDifferenceConnectors() {
+  const stage = document.querySelector('.difference-stage');
+  const svg = stage?.querySelector('.difference-connectors');
+  const core = stage?.querySelector('.difference-core');
+  if (!stage || !svg || !core || window.matchMedia('(max-width:1120px)').matches) return;
+
+  const stageRect = stage.getBoundingClientRect();
+  const coreRect = core.getBoundingClientRect();
+  const centerX = coreRect.left - stageRect.left + coreRect.width / 2;
+  const centerY = coreRect.top - stageRect.top + coreRect.height / 2;
+  const radiusX = coreRect.width / 2 + 18;
+  const radiusY = coreRect.height / 2 + 18;
+
+  svg.setAttribute('viewBox', `0 0 ${stageRect.width} ${stageRect.height}`);
+
+  svg.querySelectorAll('.difference-connector-path').forEach(path => {
+    const side = path.dataset.side;
+    const rowIndex = Number(path.dataset.row);
+    const panel = stage.querySelector(side === 'left' ? '.difference-side-private' : '.difference-side-dealer');
+    const rows = panel ? panel.querySelectorAll('.difference-row') : [];
+    const row = rows[rowIndex];
+    if (!row) return;
+
+    const rowRect = row.getBoundingClientRect();
+    const rowY = rowRect.top - stageRect.top + rowRect.height / 2;
+    const normalizedY = Math.max(-.94, Math.min(.94, (rowY - centerY) / radiusY));
+    const ellipseOffsetX = radiusX * Math.sqrt(1 - normalizedY * normalizedY);
+    const coreX = centerX + (side === 'left' ? -ellipseOffsetX : ellipseOffsetX);
+    const rowX = side === 'left' ? rowRect.right - stageRect.left : rowRect.left - stageRect.left;
+    const startX = side === 'left' ? rowX : coreX;
+    const endX = side === 'left' ? coreX : rowX;
+    const span = Math.abs(endX - startX);
+    const bend = (rowY - centerY) * .16;
+    const control1X = startX + span * .38;
+    const control2X = startX + span * .72;
+    const controlY = rowY - bend;
+
+    path.setAttribute('d', `M ${startX} ${rowY} C ${control1X} ${rowY}, ${control2X} ${controlY}, ${endX} ${rowY}`);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  const connectorStage = document.querySelector('.difference-stage');
+  if (connectorStage) {
+    updateDifferenceConnectors();
+    if ('ResizeObserver' in window) new ResizeObserver(updateDifferenceConnectors).observe(connectorStage);
+    window.addEventListener('resize', updateDifferenceConnectors, { passive: true });
+    if (document.fonts?.ready) document.fonts.ready.then(updateDifferenceConnectors);
+  }
+
   const grid = document.querySelector('.difference-grid');
   const cards = Array.from(document.querySelectorAll('.difference-option'));
   const dots = Array.from(document.querySelectorAll('.difference-carousel-dots button'));

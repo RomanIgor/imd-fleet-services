@@ -2635,6 +2635,9 @@ tbody tr:hover td{background:var(--f0)}
 #warum .eyebrow-white{color:var(--cmp-navy)}
 #warum .difference-head .h2{
   color:var(--cmp-graphite);
+  font-size:clamp(36px,2.8vw,46px);
+  line-height:1.04;
+  max-width:780px;
   text-shadow:none;
 }
 #warum .difference-head .h2 em{color:var(--cmp-text)}
@@ -2973,38 +2976,25 @@ tbody tr:hover td{background:var(--f0)}
 }
 .difference-core a:hover,
 .difference-core a:focus-visible{transform:translateY(-2px);background:var(--cmp-blue-hover);outline:2px solid rgba(54,162,197,.30);outline-offset:3px}
-.difference-connector{
+.difference-connectors{
   position:absolute;
   z-index:2;
-  top:100px;
-  width:19%;
-  height:320px;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:visible;
   pointer-events:none;
 }
-.difference-connector-left{left:23%}
-.difference-connector-right{right:23%}
-.difference-connector i{
-  position:absolute;
-  width:100%;
-  height:1px;
-  border-top:1px dashed rgba(32,42,59,.28);
-  transform-origin:center;
+.difference-connector-path{
+  fill:none;
+  stroke:rgba(32,42,59,.34);
+  stroke-width:1.15;
+  stroke-dasharray:2 5;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
 }
-.difference-connector i::before,
-.difference-connector i::after{content:"";position:absolute;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--cmp-blue)}
-.difference-connector i::before{left:-2px}
-.difference-connector i::after{right:-2px}
-.difference-connector i:nth-child(1){top:13%;transform:rotate(12deg)}
-.difference-connector i:nth-child(2){top:31%;transform:rotate(6deg)}
-.difference-connector i:nth-child(3){top:50%;transform:rotate(0)}
-.difference-connector i:nth-child(4){top:69%;transform:rotate(-6deg)}
-.difference-connector i:nth-child(5){top:87%;transform:rotate(-12deg)}
-.difference-connector-right i:nth-child(1){transform:rotate(-12deg)}
-.difference-connector-right i:nth-child(2){transform:rotate(-6deg)}
-.difference-connector-right i:nth-child(4){transform:rotate(6deg)}
-.difference-connector-right i:nth-child(5){transform:rotate(12deg)}
-.difference-connector-right i::before,
-.difference-connector-right i::after{background:var(--cmp-warning)}
+.difference-connector-path[data-side="left"]{stroke:rgba(139,81,76,.46)}
+.difference-connector-path[data-side="right"]{stroke:rgba(154,116,75,.48)}
 
 @media(max-width:1120px){
   .difference-stage{grid-template-columns:minmax(220px,1fr) minmax(300px,1.35fr) minmax(220px,1fr);gap:30px;min-height:470px}
@@ -3012,7 +3002,7 @@ tbody tr:hover td{background:var(--f0)}
   .difference-core::after{inset:-26px}
   .difference-row{padding-inline:15px;font-size:11.5px}
   .difference-side-head{padding-inline:16px}
-  .difference-connector{display:none}
+  .difference-connectors{display:none}
 }
 @media(max-width:860px){
   .difference-stage{grid-template-columns:minmax(190px,1fr) minmax(270px,1.2fr) minmax(190px,1fr);gap:18px}
