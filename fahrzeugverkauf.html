@@ -7,7 +7,7 @@
 <meta name="description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir uebernehmen Abholung, Wertgutachten und Auszahlung.">
 <link rel="stylesheet" data-consent-category="external" data-consent-href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&display=swap">
 <link rel="icon" href="/icon-192.png">
-<link rel="stylesheet" href="style.css?v=privacy-external-1">
+<link rel="stylesheet" href="style.css?v=concrete-design-1">
 <script>(function(){var t=localStorage.getItem('imd-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');})()</script>
 <style>
 .fv-page{background:linear-gradient(180deg,#f7f9fc 0%,#eef3f9 58%,#f7f9fc 100%);color:var(--text-1);overflow-x:hidden}
@@ -221,6 +221,94 @@
   .fv-included{grid-template-columns:1fr}
   .fv-included-item,.fv-included-item:nth-child(2n){border-right:0}
   .fv-included-item:nth-last-child(2){border-bottom:1px solid rgba(22,35,59,.10)}
+}
+
+/* Concrete Design System v1.0 overrides */
+.fv-page{
+  background:
+    linear-gradient(180deg,rgba(202,201,196,.90),rgba(179,180,176,.70)),
+    url('/new_images/2.jpeg') center/cover fixed;
+  color:#1C2228;
+}
+[data-theme="dark"] .fv-page{
+  background:
+    linear-gradient(180deg,rgba(202,201,196,.88),rgba(179,180,176,.72)),
+    url('/new_images/2.jpeg') center/cover fixed;
+}
+.fv-hero-sec,.fv-section,.fv-section-alt{
+  background:transparent;
+}
+[data-theme="dark"] .fv-hero-sec,[data-theme="dark"] .fv-section,[data-theme="dark"] .fv-section-alt{
+  background:transparent;
+}
+.fv-hero-sec::before{
+  background:linear-gradient(90deg,rgba(202,201,196,.96) 0%,rgba(202,201,196,.86) 42%,rgba(202,201,196,.30) 72%,rgba(202,201,196,.08) 100%),url('/assets/showroom-background.png') right center/cover no-repeat;
+}
+[data-theme="dark"] .fv-hero-sec::before{
+  background:linear-gradient(90deg,rgba(202,201,196,.96) 0%,rgba(202,201,196,.88) 44%,rgba(202,201,196,.38) 72%,rgba(202,201,196,.12) 100%),url('/assets/showroom-background.png') right center/cover no-repeat;
+}
+.fv-hero-sec::after,[data-theme="dark"] .fv-hero-sec::after{
+  background:linear-gradient(180deg,rgba(202,201,196,0),rgba(202,201,196,.92));
+}
+.fv-h1,.fv-h2,.fv-service-panel h2,.fv-included-item h3,[data-theme="dark"] .fv-h1,[data-theme="dark"] .fv-h2,[data-theme="dark"] .fv-service-panel h2,[data-theme="dark"] .fv-included-item h3{
+  color:#1C2228;
+}
+.fv-h1 span,.fv-kicker,.fv-route-time,[data-theme="dark"] .fv-h1 span,[data-theme="dark"] .fv-kicker,[data-theme="dark"] .fv-route-time{
+  color:#36A2C5;
+}
+.fv-lead,.fv-intro,.fv-service-panel p,.fv-included-item p,.fv-route-sub,[data-theme="dark"] .fv-lead,[data-theme="dark"] .fv-intro,[data-theme="dark"] .fv-service-panel p,[data-theme="dark"] .fv-included-item p,[data-theme="dark"] .fv-route-sub{
+  color:#4C5257;
+}
+.fv-btn-primary,.fv-cost-box,.fv-cta-sec{
+  background:#202A3B;
+  color:#E5E4DF;
+}
+.fv-btn-primary:hover{
+  background:#278FB4;
+  box-shadow:0 16px 36px rgba(32,42,59,.20);
+}
+.fv-btn-secondary,.fv-command,.fv-route-step,.fv-service-panel,.fv-included{
+  background:rgba(229,228,223,.76);
+  border-color:rgba(154,156,153,.46);
+  box-shadow:0 20px 56px rgba(28,34,40,.12),inset 0 1px rgba(255,255,255,.28);
+}
+[data-theme="dark"] .fv-btn-secondary,[data-theme="dark"] .fv-command,[data-theme="dark"] .fv-route-step,[data-theme="dark"] .fv-service-panel,[data-theme="dark"] .fv-included{
+  background:rgba(229,228,223,.72);
+  border-color:rgba(154,156,153,.46);
+  box-shadow:0 20px 56px rgba(28,34,40,.12),inset 0 1px rgba(255,255,255,.22);
+}
+.fv-route-label,[data-theme="dark"] .fv-route-label{
+  color:#1C2228;
+}
+.fv-route-ico,[data-theme="dark"] .fv-route-ico{
+  background:rgba(54,162,197,.12);
+}
+.fv-process,[data-theme="dark"] .fv-process{
+  background:linear-gradient(180deg,#202A3B 0%,#1C2228 100%);
+  border-color:rgba(229,228,223,.20);
+}
+.fv-road-marker.is-active,.fv-process-card::before{
+  background:#36A2C5;
+  box-shadow:0 0 0 7px rgba(54,162,197,.18),0 16px 34px rgba(28,34,40,.26);
+}
+.fv-cta-card .fv-btn-primary{
+  background:#E5E4DF;
+  color:#202A3B;
+}
+.fv-cta-card .fv-btn-primary:hover{
+  background:#D6D6D2;
+  color:#1C2228;
+}
+@media(max-width:860px){
+  .fv-hero-sec::before,[data-theme="dark"] .fv-hero-sec::before{
+    background:linear-gradient(180deg,rgba(202,201,196,.94),rgba(202,201,196,.90)),url('/assets/showroom-background.png') center/cover no-repeat;
+  }
+  .fv-process{
+    background:linear-gradient(180deg,#202A3B,#1C2228);
+  }
+}
+@media(max-width:620px){
+  .fv-page{background-attachment:scroll}
 }
 </style>
 </head>
