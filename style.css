@@ -3042,8 +3042,11 @@ tbody tr:hover td{background:var(--f0)}
   .difference-side{width:100%;max-width:520px;justify-self:center}
   .difference-side{overflow:hidden}
   .difference-side-head{display:grid;cursor:pointer;grid-template-columns:38px minmax(0,1fr) 32px;gap:14px;padding-inline:16px}
-  .difference-accordion-indicator{width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(229,228,223,.38);border-radius:50%;font-size:20px;color:var(--cmp-highlight);transition:transform .2s var(--ease)}
-  .difference-side.is-open .difference-accordion-indicator{transform:rotate(180deg)}
+  .difference-accordion-indicator{width:18px;height:18px;display:block;border:0;border-radius:0;position:relative;font-size:0;color:transparent;background:transparent}
+  .difference-accordion-indicator::before,.difference-accordion-indicator::after{content:"";position:absolute;left:50%;top:50%;background:var(--cmp-highlight);border-radius:2px;transform:translate(-50%,-50%)}
+  .difference-accordion-indicator::before{width:18px;height:1.5px}
+  .difference-accordion-indicator::after{width:1.5px;height:18px;opacity:1;transition:opacity .18s var(--ease),transform .18s var(--ease)}
+  .difference-side.is-open .difference-accordion-indicator::after{opacity:0;transform:scaleY(0)}
   .difference-side-body{overflow:hidden;animation:differenceAccordionIn .22s var(--ease)}
   .difference-side-body[hidden]{display:none}
   .difference-side-private{grid-row:2}
