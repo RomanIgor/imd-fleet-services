@@ -3090,3 +3090,76 @@ tbody tr:hover td{background:var(--f0)}
   #warum .difference-showcase{gap:10px}
 }
 
+/* Opening sections color refresh */
+.hero,#service,#prozess{--opening-concrete:#CAC9C4;--opening-highlight:#E5E4DF;--opening-navy:#202A3B;--opening-graphite:#1C2228;--opening-text:#4C5257;--opening-border:#9A9C99;--opening-accent:#36A2C5}
+
+/* Hero: retain the photography, but align its surfaces with the IMD palette. */
+.hero .hero-copy{background:linear-gradient(to right,var(--opening-graphite) 0%,rgba(28,34,40,.88) 52%,rgba(28,34,40,.38) 80%,transparent 100%)}
+.hero .hero-split::after{background:linear-gradient(to bottom,transparent 0%,rgba(32,42,59,.96) 100%)}
+.hero .hero-h1 span{color:#9DD2E3}
+.hero .hero-calc{background:var(--opening-highlight);border-color:rgba(154,156,153,.72);color:var(--opening-graphite);box-shadow:0 24px 58px rgba(28,34,40,.25),inset 0 1px rgba(255,255,255,.66)}
+.hero .hero-calc::-webkit-scrollbar-thumb{background:rgba(32,42,59,.24)}
+.hero .hc-title,.hero .hc-kpi strong,.hero .hc-cmp-row b{color:var(--opening-graphite)}
+.hero .hc-field label,.hero .hc-note,.hero .hc-kpi small,.hero .hc-kpi span,.hero .hc-next-box,.hero .hc-headline,.hero .hc-cmp-head,.hero .hc-cmp-row span,.hero .hc-status-label,.hero .hc-copy,.hero .hc-disclaimer{color:var(--opening-text)}
+.hero .hc-field input,.hero .hc-field select{background:rgba(255,255,255,.42);border-color:rgba(154,156,153,.58);color:var(--opening-graphite)}
+.hero .hc-field input:focus,.hero .hc-field select:focus{border-color:var(--opening-accent);background:rgba(255,255,255,.66)}
+.hero .hc-field select option{background:var(--opening-highlight);color:var(--opening-graphite)}
+.hero .hc-kpi,.hero .hc-next-box,.hero .hc-compare,.hero .hc-checkitem{background:rgba(202,201,196,.44);border-color:rgba(154,156,153,.48)}
+.hero .hc-cmp-div{background:rgba(32,42,59,.13)}
+.hero .hc-chip{background:rgba(202,201,196,.48);border-color:rgba(154,156,153,.58);color:var(--opening-text)}
+.hero .hc-chip:hover{background:rgba(255,255,255,.58);color:var(--opening-graphite)}
+.hero .hc-chip.active{background:rgba(54,162,197,.15);border-color:var(--opening-accent);color:#237F9E}
+.hero .hc-btn{background:var(--opening-navy);border-color:var(--opening-navy);color:#fff}
+.hero .hc-btn:hover,.hero .hc-btn.hc-cta:hover{background:var(--opening-accent)}
+.hero .hc-btn.hc-cta{background:var(--opening-navy)}
+.hero .hc-back{color:var(--opening-text)}
+.hero .hc-back:hover{color:var(--opening-graphite)}
+.hero .hc-recommend{color:var(--opening-text);background:rgba(202,201,196,.38);border-left-color:var(--opening-accent)}
+.hero .hc-disclaimer{border-top-color:rgba(154,156,153,.42)}
+
+/* Fahrzeugverkauf: concrete glass, graphite copy, navy controls. */
+#service{background-color:var(--opening-concrete);background-image:radial-gradient(circle at 52% 18%,rgba(229,228,223,.38),transparent 34%),linear-gradient(90deg,rgba(202,201,196,.92),rgba(202,201,196,.68) 50%,rgba(179,180,176,.88)),url('assets/showroom-background.png');color:var(--opening-graphite)}
+#service::before{background:linear-gradient(90deg,rgba(28,34,40,.10),transparent 48%,rgba(28,34,40,.12));opacity:.42}
+#service::after{background:linear-gradient(180deg,rgba(202,201,196,0),rgba(179,180,176,.88) 88%)}
+#service .imd-glass{background:var(--opening-highlight);border-color:rgba(154,156,153,.58);box-shadow:0 18px 46px rgba(28,34,40,.15),inset 0 1px rgba(255,255,255,.58)}
+#service .imd-h1,#service .imd-cost-h,#service .imd-process-panel h3,#service .imd-process-grid h4,#service .imd-why-compact h3,#service .imd-why-items h4,#service .imd-cta-split h3{color:var(--opening-graphite)}
+#service .imd-eyebrow,#service .imd-strong{color:var(--opening-navy)}
+#service .imd-subline,#service .imd-cost-list li,#service .imd-note,#service .imd-process-panel p,#service .imd-process-grid p,#service .imd-why-items p,#service .imd-cta-split p,#service .imd-cta-split li,#service .imd-cta-split small{color:var(--opening-text)}
+#service .imd-tags span{background:rgba(202,201,196,.52);border-color:rgba(154,156,153,.55);color:var(--opening-navy)}
+#service .imd-process-panel{background:rgba(229,228,223,.72);border-color:rgba(154,156,153,.55)}
+#service .imd-process-grid article,#service .imd-why-items article{background:var(--opening-concrete);border-color:rgba(154,156,153,.46);box-shadow:inset 0 1px rgba(255,255,255,.45)}
+#service .imd-process-grid article:not(:last-child)::after{color:rgba(32,42,59,.46)}
+#service .imd-process-line-icon{background:var(--opening-navy);border-color:var(--opening-navy)}
+#service .imd-why-icon{background:rgba(32,42,59,.10);border-color:rgba(32,42,59,.30)}
+#service .imd-process-line-icon img{filter:brightness(0) invert(1);opacity:.92}
+#service .imd-why-icon img,#service .imd-cost-list img,#service .imd-cta-split li img,#service .imd-tags img{filter:brightness(0) saturate(100%) invert(12%) sepia(12%) saturate(1033%) hue-rotate(180deg) brightness(95%) contrast(92%);opacity:.88}
+#service .imd-process-number{color:var(--opening-text)}
+#service .imd-cta-split{background:rgba(229,228,223,.82);border-color:rgba(154,156,153,.56);box-shadow:0 18px 44px rgba(28,34,40,.14),inset 0 1px rgba(255,255,255,.56)}
+#service .imd-button{background:var(--opening-navy);border-color:var(--opening-navy);color:#fff}
+#service .imd-button:hover,#service .imd-button:focus-visible{background:var(--opening-accent);border-color:var(--opening-accent)}
+
+/* Six-step process: concrete stage with navy markers and blue active state. */
+#prozess.section{background-color:var(--opening-concrete);background-image:radial-gradient(circle at 47% 15%,rgba(229,228,223,.46),transparent 32%),linear-gradient(90deg,rgba(202,201,196,.90),rgba(179,180,176,.76)),url('new_images/2.jpeg');background-position:center;background-size:cover;background-attachment:fixed;color:var(--opening-graphite)}
+#prozess::before{background:linear-gradient(90deg,rgba(28,34,40,.10),transparent 46%,rgba(28,34,40,.12))}
+#prozess .home-process-intro,#prozess .home-roadmap{background:var(--opening-highlight);border-color:rgba(154,156,153,.58);box-shadow:0 18px 46px rgba(28,34,40,.15),inset 0 1px rgba(255,255,255,.56);color:var(--opening-graphite)}
+#prozess .home-process-intro .h2,#prozess .home-process-note strong,#prozess .home-road-step h3,#prozess .home-road-benefit strong{color:var(--opening-graphite)}
+#prozess .home-process-intro .lead,#prozess .home-process-note span,#prozess .home-road-step p,#prozess .home-road-benefit span{color:var(--opening-text)}
+#prozess .home-process-note{background:rgba(202,201,196,.46);border-color:rgba(154,156,153,.48)}
+#prozess .home-roadmap::before{background:rgba(32,42,59,.18)}
+#prozess .home-roadmap::after{background:linear-gradient(180deg,var(--opening-navy),var(--opening-accent));box-shadow:0 0 18px rgba(54,162,197,.28)}
+#prozess .home-road-step,#prozess .home-road-benefit{background:rgba(202,201,196,.56);border-color:rgba(154,156,153,.48);box-shadow:inset 0 1px rgba(255,255,255,.48)}
+#prozess .home-road-step::before{background:var(--opening-navy);border-color:var(--opening-navy);color:var(--opening-highlight);box-shadow:0 10px 24px rgba(28,34,40,.18)}
+#prozess .home-road-step::after{background:linear-gradient(90deg,rgba(32,42,59,.38),transparent)}
+#prozess .home-road-icon{background:rgba(32,42,59,.09);border-color:rgba(32,42,59,.30);box-shadow:inset 0 1px rgba(255,255,255,.36)}
+#prozess .home-road-icon img,#prozess .home-road-benefit img{filter:brightness(0) saturate(100%) invert(12%) sepia(12%) saturate(1033%) hue-rotate(180deg) brightness(95%) contrast(92%);opacity:.88}
+#prozess .home-road-step.is-visible{opacity:.94}
+#prozess .home-road-step.is-active{border-color:var(--opening-accent);background:rgba(229,228,223,.94);box-shadow:0 18px 42px rgba(28,34,40,.17),0 0 0 2px rgba(54,162,197,.16),inset 0 1px rgba(255,255,255,.66)}
+#prozess .home-road-step.is-active::before{background:var(--opening-accent);border-color:var(--opening-accent);color:#fff;box-shadow:0 0 0 7px rgba(54,162,197,.12),0 0 24px rgba(54,162,197,.26)}
+#prozess .home-road-step.is-active .home-road-icon{background:var(--opening-navy);border-color:var(--opening-navy);box-shadow:0 0 0 7px rgba(54,162,197,.10)}
+#prozess .home-road-step.is-active .home-road-icon img{filter:brightness(0) invert(1);opacity:.96}
+
+@media(max-width:620px){
+  #service,#prozess.section{background-attachment:scroll}
+  .hero .hero-calc{background:rgba(229,228,223,.97)}
+}
+
