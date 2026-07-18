@@ -14,7 +14,7 @@ function count(pattern, source) {
 
 test('comparison stage has two concise alternatives and a central IMD result', () => {
   assert.match(html, /class="difference-stage"/);
-  assert.equal(count(/class="difference-side(?:\s|\\")/g, html), 2);
+  assert.equal(count(/class="difference-side(?:\s|\\")/g, html), 3);
   assert.equal(count(/class="difference-row"/g, html), 10);
   assert.match(html, /class="difference-core"/);
   assert.match(html, /ca\. 20 Minuten/);
@@ -34,8 +34,8 @@ test('comparison stage provides connector, responsive, focus, and motion styling
 });
 
 test('comparison connectors align dynamically with all ten rows', () => {
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
-  assert.match(html, /main\.js\?v=privacy-xlsx-connectors-accordion-3/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
+  assert.match(html, /main\.js\?v=privacy-xlsx-connectors-refinement-4/);
   assert.match(html, /<svg class="difference-connectors"/);
   assert.equal(count(/class="difference-connector-path"/g, html), 10);
   assert.match(js, /function updateDifferenceConnectors\(\)/);
@@ -46,7 +46,7 @@ test('comparison connectors align dynamically with all ten rows', () => {
 });
 
 test('comparison background is concrete without a square grid', () => {
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
   assert.match(css, /#warum\s*\{[^}]*url\('new_images\/2\.jpeg'\)/s);
   assert.doesNotMatch(css, /background-size\s*:\s*auto,auto,82px 82px,82px 82px/);
   assert.doesNotMatch(css, /linear-gradient\(rgba\(255,255,255,\.12\) 1px,transparent 1px\)/);
@@ -58,7 +58,7 @@ test('comparison panels use local icons and connector endpoint nodes', () => {
   assert.equal(count(/<marker id="difference-node-/g, html), 4);
   assert.match(css, /marker-start\s*:\s*url\(#difference-node-private\)/);
   assert.match(css, /marker-end\s*:\s*url\(#difference-node-imd\)/);
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
 });
 
 test('comparison header uses a compact evidence badge', () => {
@@ -69,24 +69,38 @@ test('comparison header uses a compact evidence badge', () => {
   assert.match(html, />Rechtssicher</);
   assert.doesNotMatch(html, /Mehr Sicherheit\. Weniger Aufwand\./);
   assert.match(css, /\.difference-proof-points\s*\{/);
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
 });
 
 test('comparison content moves upward on desktop without changing mobile spacing', () => {
   assert.match(css, /@media\s*\(min-width\s*:\s*1121px\)[\s\S]*?#warum\.section\s*\{[^}]*padding-top\s*:\s*72px[^}]*\}[\s\S]*?\.difference-showcase\s*\{[^}]*gap\s*:\s*10px/s);
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
 });
 
 test('comparison side panels become an exclusive accessible mobile accordion', () => {
-  assert.equal(count(/class="difference-side-head" type="button"/g, html), 2);
-  assert.equal(count(/aria-expanded="false"/g, html), 2);
-  assert.equal(count(/aria-controls="difference-panel-/g, html), 2);
-  assert.equal(count(/class="difference-side-body" id="difference-panel-/g, html), 2);
+  assert.equal(count(/class="difference-side-head" type="button"/g, html), 3);
+  assert.equal(count(/aria-expanded="false"/g, html), 3);
+  assert.equal(count(/aria-controls="difference-panel-/g, html), 3);
+  assert.equal(count(/class="difference-side-body" id="difference-panel-/g, html), 3);
   assert.match(js, /function initMobileDifferenceAccordion\(\)/);
   assert.match(js, /const mobileQuery = window\.matchMedia\('\(max-width:768px\)'\)/);
   assert.match(js, /panels\.forEach\(otherPanel => setDifferencePanelState\(otherPanel, otherPanel === panel && !isOpen\)\)/);
   assert.match(css, /@media\(max-width:768px\)[\s\S]*\.difference-side-body\[hidden\]\{display:none\}/);
   assert.match(css, /@media\(prefers-reduced-motion:reduce\)[\s\S]*\.difference-side-body/);
-  assert.match(html, /style\.css\?v=why-mobile-accordion-7/);
-  assert.match(html, /main\.js\?v=privacy-xlsx-connectors-accordion-3/);
+  assert.match(html, /style\.css\?v=why-mobile-refinement-8/);
+  assert.match(html, /main\.js\?v=privacy-xlsx-connectors-refinement-4/);
+});
+
+test('mobile comparison adds IMD benefits and removes duplicate registration actions', () => {
+  assert.match(html, /class="difference-side difference-side-imd" data-mobile-default="open"/);
+  assert.match(html, /id="difference-panel-imd"/);
+  assert.match(html, />Fahrzeug digital melden</);
+  assert.match(html, />Kostenfreie Abholung</);
+  assert.match(html, />HEK-Mindestpreis gesichert</);
+  assert.match(html, />Rechtssicher &amp; DSGVO-konform</);
+  assert.match(html, />Schnelle Auszahlung</);
+  assert.match(html, /class="difference-mobile-actions"/);
+  assert.match(js, /panel\.dataset\.mobileDefault === 'open'/);
+  assert.match(css, /\.difference-accordion-indicator\{[^}]*justify-self:end/s);
+  assert.match(css, /@media\(max-width:768px\)[\s\S]*\.difference-core > a[^}]*display:none[\s\S]*\.difference-cta[^}]*display:none[\s\S]*\.difference-benefits[^}]*display:none/s);
 });

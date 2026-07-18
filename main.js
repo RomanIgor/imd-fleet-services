@@ -1122,8 +1122,11 @@ function initMobileDifferenceAccordion() {
 
   function syncLayout() {
     panels.forEach(panel => {
-      if (mobileQuery.matches) setDifferencePanelState(panel, false);
-      else setDifferencePanelState(panel, true);
+      if (mobileQuery.matches) {
+        setDifferencePanelState(panel, panel.dataset.mobileDefault === 'open');
+      } else {
+        setDifferencePanelState(panel, true);
+      }
     });
   }
 
