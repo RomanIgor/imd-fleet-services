@@ -40,6 +40,6 @@ test('service CTA and keyboard focus are accessible', () => {
 test('service mobile layout is content-driven and deliberately stacked', () => {
   assert.match(css, /@media\(max-width:768px\)[\s\S]*#service \.imd-hero\{[^}]*grid-template-columns:1fr/s);
   assert.match(css, /@media\(max-width:768px\)[\s\S]*#service \.imd-process-grid\{[^}]*grid-template-columns:1fr/s);
-  assert.match(css, /@media\(max-width:768px\)[\s\S]*#service \.imd-button\{[^}]*min-height:44px/s);
-  assert.doesNotMatch(css, /#service\{[^}]*max-height:/s);
+  assert.match(css, /@media\(max-width:768px\)[\s\S]*#service \.imd-cta-split \.imd-button\{[^}]*min-height:(?:44|48|52)px/s);
+  assert.doesNotMatch(css, /#service\{[^}]*max-height:(?!none\s*;)/s);
 });
