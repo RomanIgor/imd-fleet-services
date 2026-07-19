@@ -80,7 +80,7 @@ test('service typography keeps body copy at 15px and metadata at 12px', () => {
 test('service desktop composition fits a 1080px viewport without shrinking copy', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
 
-  assert.match(desktopCss, /#service\{[^}]*min-height:calc\(100svh - 70px\)[^}]*padding:24px 0/s);
+  assert.match(desktopCss, /#service\{(?=[^}]*min-height:calc\(100svh - 70px\))(?=[^}]*padding:24px 0)[^}]*\}/s);
   assert.match(desktopCss, /#service \.imd-page\{[^}]*gap:16px/s);
   assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
@@ -90,7 +90,7 @@ test('service desktop composition fits a 1080px viewport without shrinking copy'
 test('service benefit icons remain in grid flow and cannot cover text', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
 
-  assert.match(desktopCss, /#service \.imd-why-items article\{[^}]*display:grid[^}]*grid-template-columns:42px minmax\(0,1fr\)/s);
+  assert.match(desktopCss, /#service \.imd-why-items article\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:42px minmax\(0,1fr\))[^}]*\}/s);
   assert.match(desktopCss, /#service \.imd-why-icon\{[^}]*position:static/s);
   assert.doesNotMatch(desktopCss, /#service \.imd-why-icon\{[^}]*position:absolute/s);
 });
@@ -110,11 +110,11 @@ test('service CTA and keyboard focus are accessible', () => {
 });
 
 test('service mobile layout is content-driven and deliberately stacked', () => {
-  const desktopHero = css.indexOf('#service .imd-hero{min-height:430px');
+  const desktopServiceLayer = css.lastIndexOf('@media(min-width:1101px){');
   const finalMobileLayer = css.lastIndexOf('@media(max-width:768px){');
 
-  assert.ok(desktopHero >= 0, 'desktop service hero rule is present');
-  assert.ok(finalMobileLayer > desktopHero, 'final mobile layer follows desktop service rules');
+  assert.ok(desktopServiceLayer >= 0, 'desktop service layer is present');
+  assert.ok(finalMobileLayer > desktopServiceLayer, 'final mobile layer follows desktop service rules');
 
   const finalMobileCss = finalMediaBlock('@media(max-width:768px){');
   assert.match(finalMobileCss, /#service\{[^}]*padding:52px 0 64px[^}]*background-attachment:scroll/s);
@@ -134,10 +134,11 @@ test('service mobile layout is content-driven and deliberately stacked', () => {
 });
 
 test('service tablet layout keeps the message and cost panel in a deliberate two-column composition', () => {
-  const desktopHero = css.indexOf('#service .imd-hero{min-height:430px');
+  const desktopServiceLayer = css.lastIndexOf('@media(min-width:1101px){');
   const finalTabletLayer = css.lastIndexOf('@media(max-width:1120px){');
 
-  assert.ok(finalTabletLayer > desktopHero, 'final tablet layer follows desktop service rules');
+  assert.ok(desktopServiceLayer >= 0, 'desktop service layer is present');
+  assert.ok(finalTabletLayer > desktopServiceLayer, 'final tablet layer follows desktop service rules');
 
   const finalTabletCss = finalMediaBlock('@media(max-width:1120px){');
   assert.match(finalTabletCss, /#service \.imd-page\{[^}]*width:min\(calc\(100% - 48px\),980px\)/s);
