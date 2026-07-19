@@ -19,7 +19,7 @@ At effective compact desktop widths of at least 1121px, the service section uses
 2. Process row: one coherent horizontal process band.
 3. Closing row: benefits and CTA side by side.
 
-The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). Vertical padding, row gaps, and internal card padding are reduced first. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
+The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation; a 1008px-or-shorter rendered section then ends within the 1080px viewport. Vertical padding, row gaps, and internal card padding are reduced first. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
 
 ## Benefits Icon Repair
 

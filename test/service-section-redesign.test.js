@@ -95,9 +95,19 @@ test('service desktop compaction controls composed content rather than relying o
   assert.match(desktopCss, /#service \.imd-process-panel \.imd-intro-text\{[^}]*padding:0 20px 0 0/s);
   assert.match(desktopCss, /#service \.imd-cta-split\{[^}]*padding:12px 24px/s);
   assert.match(desktopCss, /#service \.imd-cta-split h3\{(?=[^}]*margin:0 0 8px)(?=[^}]*font-size:22px)(?=[^}]*line-height:1\.15)[^}]*\}/s);
-  assert.match(desktopCss, /#service \.imd-cta-split p\{(?=[^}]*margin:0 0 8px)(?=[^}]*font-size:15px)(?=[^}]*line-height:1\.45)[^}]*\}/s);
-  assert.match(desktopCss, /#service \.imd-cta-split ul\{(?=[^}]*margin:0 0 10px)(?=[^}]*gap:4px)[^}]*\}/s);
-  assert.match(desktopCss, /#service \.imd-cta-split small\{(?=[^}]*margin-top:6px)(?=[^}]*font-size:12px)(?=[^}]*line-height:1\.35)[^}]*\}/s);
+});
+
+test('service anchor offset and compact CTA rhythm apply only at the effective desktop range', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  const effectiveDesktopCss = finalMediaBlock('@media(min-width:1121px){');
+
+  assert.match(effectiveDesktopCss, /#service\{[^}]*scroll-margin-top:72px/s);
+  assert.match(effectiveDesktopCss, /#service \.imd-cta-split p\{(?=[^}]*margin:0 0 8px)(?=[^}]*line-height:1\.45)[^}]*\}/s);
+  assert.match(effectiveDesktopCss, /#service \.imd-cta-split ul\{(?=[^}]*margin:0 0 10px)(?=[^}]*gap:4px)[^}]*\}/s);
+  assert.match(effectiveDesktopCss, /#service \.imd-cta-split small\{(?=[^}]*margin-top:6px)(?=[^}]*line-height:1\.35)[^}]*\}/s);
+  assert.doesNotMatch(desktopCss, /#service \.imd-cta-split p\{[^}]*margin:0 0 8px/s);
+  assert.doesNotMatch(desktopCss, /#service \.imd-cta-split ul\{[^}]*margin:0 0 10px/s);
+  assert.doesNotMatch(desktopCss, /#service \.imd-cta-split small\{[^}]*margin-top:6px/s);
 });
 
 test('service benefit icons remain in grid flow and cannot cover text', () => {

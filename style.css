@@ -3194,13 +3194,18 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cta-split{min-height:100%;padding:12px 24px;display:flex;flex-direction:column;background:var(--service-navy);border:1px solid rgba(229,228,223,.16);border-radius:20px;color:var(--service-highlight);box-shadow:0 22px 48px rgba(28,34,40,.20)}
 #service .imd-cta-split h3{margin:0 0 8px;font-size:22px;line-height:1.15;color:var(--service-highlight)}
 #service .imd-cta-split p,#service .imd-cta-split li,#service .imd-cta-split small{color:rgba(229,228,223,.72)}
-#service .imd-cta-split p{margin:0 0 8px;font-size:15px;line-height:1.45}
-#service .imd-cta-split ul{margin:0 0 10px;gap:4px}
 #service .imd-cta-split li{font-size:15px}
 #service .imd-cta-split li img{filter:brightness(0) invert(1);opacity:.88}
 #service .imd-button{min-height:48px;margin-top:auto;background:var(--service-highlight);border:1px solid var(--service-highlight);color:var(--service-navy);font-size:14px}
 #service .imd-button:hover{background:var(--service-navy);border-color:var(--service-navy);color:var(--service-highlight)}
 #service .imd-button:focus-visible{outline:2px solid var(--service-blue);outline-offset:4px}
+#service .imd-cta-split small{font-size:12px}
+}
+
+@media(min-width:1121px){
+#service{scroll-margin-top:72px}
+#service .imd-cta-split p{margin:0 0 8px;font-size:15px;line-height:1.45}
+#service .imd-cta-split ul{margin:0 0 10px;gap:4px}
 #service .imd-cta-split small{margin-top:6px;font-size:12px;line-height:1.35}
 }
 

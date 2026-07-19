@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- The complete service section must fit in the 1008px usable area at 1920×1080 after the fixed 72px navigation when the effective desktop range (`>=1121px`) applies.
+- The complete service section must fit in the 1008px usable area at 1920×1080 after the fixed 72px navigation when the effective desktop range (`>=1121px`) applies; a `#service` anchor uses `scroll-margin-top:72px` to align its top below navigation.
 - Body copy remains at least 15px and metadata remains at least 12px.
 - No clipping, hidden content, horizontal overflow, or global navigation/breakpoint changes.
 - Preserve the official IMD palette, WCAG AA states, focus treatment, CTA targets, and reduced-motion behavior.
@@ -95,6 +95,7 @@ In the final desktop layer, use the available viewport rather than fixed generou
   width:min(1480px,calc(100% - 96px));
   gap:16px;
 }
+@media(min-width:1121px){#service{scroll-margin-top:72px}}
 ```
 
 - [ ] **Step 2: Compact the opening and process rows while preserving copy minima**
