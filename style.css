@@ -3154,8 +3154,8 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-glass{border:1px solid rgba(154,156,153,.58);box-shadow:0 18px 44px rgba(28,34,40,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #service .imd-hero-card{width:100%;max-width:560px;margin:0;padding:28px 32px;background:var(--service-navy);border-color:rgba(229,228,223,.18);border-radius:20px;color:var(--service-highlight);box-shadow:0 26px 56px rgba(28,34,40,.22)}
 #service .imd-hero-card .imd-eyebrow{color:rgba(229,228,223,.68)}
-#service .imd-h1{margin:0 0 22px;font-size:clamp(40px,3.3vw,48px);line-height:1.04;letter-spacing:-.035em;color:var(--service-highlight)}
-#service .imd-subline{max-width:440px;margin:0 0 26px;font-size:16px;line-height:1.65;color:rgba(229,228,223,.78)}
+#service .imd-h1{margin:0 0 16px;font-size:clamp(36px,2.8vw,42px);line-height:1.04;letter-spacing:-.035em;color:var(--service-highlight)}
+#service .imd-subline{max-width:440px;margin:0 0 18px;font-size:16px;line-height:1.65;color:rgba(229,228,223,.78)}
 #service .imd-tags{gap:8px}
 #service .imd-tags span{min-height:34px;padding:0 12px;background:rgba(229,228,223,.08);border:1px solid rgba(229,228,223,.22);color:var(--service-highlight);font-size:12px}
 #service .imd-tags img{filter:brightness(0) invert(1);opacity:.84}
@@ -3166,8 +3166,8 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cost-list img{filter:brightness(0) saturate(100%) invert(12%) sepia(12%) saturate(1033%) hue-rotate(180deg) brightness(95%) contrast(92%)}
 #service .imd-note{padding-top:14px;font-size:12px;line-height:1.5;color:var(--service-body)}
 
-#service .imd-process-panel{width:100%;min-height:0;margin:0;padding:18px 24px;display:grid;grid-template-columns:minmax(250px,300px) 1fr;gap:32px;align-items:center;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
-#service .imd-process-panel .imd-intro-text{padding:0 28px 0 0;border-right:1px solid rgba(154,156,153,.46)}
+#service .imd-process-panel{width:100%;min-height:0;margin:0;padding:18px 24px;display:grid;grid-template-columns:minmax(340px,380px) 1fr;gap:24px;align-items:center;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
+#service .imd-process-panel .imd-intro-text{padding:0 20px 0 0;border-right:1px solid rgba(154,156,153,.46)}
 #service .imd-process-panel .imd-intro-text h3{margin:0 0 12px;font-size:21px;line-height:1.25;color:var(--service-graphite)}
 #service .imd-process-panel .imd-intro-text p{margin:0 0 8px;font-size:15px;line-height:1.55;color:var(--service-body)}
 #service .imd-process-panel .imd-intro-text .imd-strong{color:var(--service-navy)!important}
@@ -3191,16 +3191,17 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-why-icon img{width:22px;height:22px;filter:brightness(0) saturate(100%) invert(12%) sepia(12%) saturate(1033%) hue-rotate(180deg) brightness(95%) contrast(92%)}
 #service .imd-why-items h4{grid-column:2;grid-row:1;margin:0 0 6px;font-size:15px;color:var(--service-graphite)}
 #service .imd-why-items p{grid-column:2;grid-row:2;font-size:15px;line-height:1.5;color:var(--service-body)}
-#service .imd-cta-split{min-height:100%;padding:24px 28px;display:flex;flex-direction:column;background:var(--service-navy);border:1px solid rgba(229,228,223,.16);border-radius:20px;color:var(--service-highlight);box-shadow:0 22px 48px rgba(28,34,40,.20)}
-#service .imd-cta-split h3{margin:0 0 12px;font-size:24px;line-height:1.2;color:var(--service-highlight)}
+#service .imd-cta-split{min-height:100%;padding:12px 24px;display:flex;flex-direction:column;background:var(--service-navy);border:1px solid rgba(229,228,223,.16);border-radius:20px;color:var(--service-highlight);box-shadow:0 22px 48px rgba(28,34,40,.20)}
+#service .imd-cta-split h3{margin:0 0 8px;font-size:22px;line-height:1.15;color:var(--service-highlight)}
 #service .imd-cta-split p,#service .imd-cta-split li,#service .imd-cta-split small{color:rgba(229,228,223,.72)}
-#service .imd-cta-split p{font-size:15px}
+#service .imd-cta-split p{margin:0 0 8px;font-size:15px;line-height:1.45}
+#service .imd-cta-split ul{margin:0 0 10px;gap:4px}
 #service .imd-cta-split li{font-size:15px}
 #service .imd-cta-split li img{filter:brightness(0) invert(1);opacity:.88}
 #service .imd-button{min-height:48px;margin-top:auto;background:var(--service-highlight);border:1px solid var(--service-highlight);color:var(--service-navy);font-size:14px}
 #service .imd-button:hover{background:var(--service-navy);border-color:var(--service-navy);color:var(--service-highlight)}
 #service .imd-button:focus-visible{outline:2px solid var(--service-blue);outline-offset:4px}
-#service .imd-cta-split small{font-size:12px}
+#service .imd-cta-split small{margin-top:6px;font-size:12px;line-height:1.35}
 }
 
 @media(max-width:1120px){

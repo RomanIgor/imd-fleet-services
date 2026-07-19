@@ -31,7 +31,7 @@ test('service opening area has a navy primary panel and restrained card surface'
   assert.match(css, /@media\(min-width:1101px\)\{[\s\S]*#service \.imd-hero\{[^}]*grid-template-columns:minmax\(440px,560px\) 1fr minmax\(330px,390px\)/s);
   assert.match(css, /#service \.imd-hero-card\{[^}]*background:var\(--service-navy\)[^}]*color:var\(--service-highlight\)/s);
   assert.match(css, /#service \.imd-cost-card\{[^}]*background:var\(--service-card\)/s);
-  assert.match(css, /#service \.imd-h1\{[^}]*font-size:clamp\(40px,[^,]+,48px\)/s);
+  assert.match(css, /#service \.imd-h1\{[^}]*font-size:clamp\(36px,[^,]+,42px\)/s);
   assert.match(css, /#service \.imd-subline\{[^}]*font-size:16px/s);
 });
 
@@ -85,6 +85,19 @@ test('service desktop composition fits a 1080px viewport without shrinking copy'
   assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+});
+
+test('service desktop compaction controls composed content rather than relying on section height', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+
+  assert.match(desktopCss, /#service \.imd-h1\{(?=[^}]*font-size:clamp\(36px,2\.8vw,42px\))(?=[^}]*margin:0 0 16px)[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:minmax\(340px,380px\) 1fr)(?=[^}]*gap:24px)[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-process-panel \.imd-intro-text\{[^}]*padding:0 20px 0 0/s);
+  assert.match(desktopCss, /#service \.imd-cta-split\{[^}]*padding:12px 24px/s);
+  assert.match(desktopCss, /#service \.imd-cta-split h3\{(?=[^}]*margin:0 0 8px)(?=[^}]*font-size:22px)(?=[^}]*line-height:1\.15)[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-cta-split p\{(?=[^}]*margin:0 0 8px)(?=[^}]*font-size:15px)(?=[^}]*line-height:1\.45)[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-cta-split ul\{(?=[^}]*margin:0 0 10px)(?=[^}]*gap:4px)[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-cta-split small\{(?=[^}]*margin-top:6px)(?=[^}]*font-size:12px)(?=[^}]*line-height:1\.35)[^}]*\}/s);
 });
 
 test('service benefit icons remain in grid flow and cannot cover text', () => {
