@@ -49,7 +49,7 @@ test('service normal-size supporting copy uses the AA body color', () => {
 test('service benefits avoid an administrative boxed grid', () => {
   assert.match(css, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
   assert.match(css, /#service \.imd-why-items article\{[^}]*background:transparent[^}]*border:0/s);
-  assert.match(css, /#service \.imd-why-items article:not\(:last-child\)::after/);
+  assert.match(css, /#service \.imd-why-items article:nth-child\(-n\+2\)::after/);
   assert.match(css, /#service \.imd-why-items p\{[^}]*font-size:14px/s);
 });
 
@@ -77,6 +77,7 @@ test('service mobile layout is content-driven and deliberately stacked', () => {
   assert.match(finalMobileCss, /#service \.imd-why-items\{[^}]*grid-template-columns:1fr/s);
   assert.match(finalMobileCss, /#service \.imd-why-compact\{[^}]*padding:26px 22px[^}]*border-radius:16px/s);
   assert.match(finalMobileCss, /#service \.imd-why-items article,#service \.imd-why-items article:first-child,#service \.imd-why-items article:nth-child\(odd\)\{[^}]*min-height:100px[^}]*background:transparent[^}]*border:0/s);
+  assert.match(finalMobileCss, /#service \.imd-why-items article:not\(:last-child\)::after\{[^}]*content:""[^}]*bottom:0/s);
   assert.match(finalMobileCss, /#service \.imd-cta-split \.imd-button\{[^}]*min-height:52px/s);
   assert.doesNotMatch(css, /#service\{[^}]*max-height:(?!none\s*;)/s);
 });
@@ -96,8 +97,11 @@ test('service tablet layout keeps the message and cost panel in a deliberate two
   assert.match(finalTabletCss, /#service \.imd-process-grid article:nth-child\(odd\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
   assert.match(finalTabletCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{display:none\}/s);
   assert.match(finalTabletCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{[^}]*overflow-wrap:anywhere/s);
-  assert.match(finalTabletCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr minmax\(330px,\.7fr\)/s);
+  assert.match(finalTabletCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr[^}]*gap:24px/s);
   assert.match(finalTabletCss, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
+  assert.match(finalTabletCss, /#service \.imd-why-items article:nth-child\(-n\+2\)::after\{[^}]*content:""[^}]*bottom:0/s);
+  assert.doesNotMatch(finalTabletCss, /#service \.imd-why-items article:not\(:last-child\)::after/);
+  assert.match(finalTabletCss, /#service \.imd-why-items h4,#service \.imd-why-items p\{[^}]*overflow-wrap:anywhere/s);
   assert.match(finalTabletCss, /#service \.imd-button:focus-visible\{[^}]*outline:2px solid var\(--service-blue\)[^}]*outline-offset:4px/s);
 });
 
