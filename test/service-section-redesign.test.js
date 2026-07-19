@@ -77,6 +77,24 @@ test('service typography keeps body copy at 15px and metadata at 12px', () => {
   assert.match(mobileCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
 });
 
+test('service desktop composition fits a 1080px viewport without shrinking copy', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+
+  assert.match(desktopCss, /#service\{[^}]*min-height:calc\(100svh - 70px\)[^}]*padding:24px 0/s);
+  assert.match(desktopCss, /#service \.imd-page\{[^}]*gap:16px/s);
+  assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
+  assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
+  assert.match(desktopCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+});
+
+test('service benefit icons remain in grid flow and cannot cover text', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+
+  assert.match(desktopCss, /#service \.imd-why-items article\{[^}]*display:grid[^}]*grid-template-columns:42px minmax\(0,1fr\)/s);
+  assert.match(desktopCss, /#service \.imd-why-icon\{[^}]*position:static/s);
+  assert.doesNotMatch(desktopCss, /#service \.imd-why-icon\{[^}]*position:absolute/s);
+});
+
 test('service benefits avoid an administrative boxed grid', () => {
   assert.match(css, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
   assert.match(css, /#service \.imd-why-items article\{[^}]*background:transparent[^}]*border:0/s);
