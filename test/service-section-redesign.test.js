@@ -51,8 +51,38 @@ test('service mobile layout is content-driven and deliberately stacked', () => {
   assert.ok(finalMobileLayer > desktopHero, 'final mobile layer follows desktop service rules');
 
   const finalMobileCss = css.slice(finalMobileLayer);
+  assert.match(finalMobileCss, /#service\{[^}]*padding:52px 0 64px[^}]*background-attachment:scroll/s);
+  assert.match(finalMobileCss, /#service \.imd-page\{[^}]*width:calc\(100% - 32px\)[^}]*gap:22px/s);
   assert.match(finalMobileCss, /#service \.imd-hero\{[^}]*grid-template-columns:1fr/s);
+  assert.match(finalMobileCss, /#service \.imd-cost-card\{[^}]*grid-column:1/s);
   assert.match(finalMobileCss, /#service \.imd-process-grid\{[^}]*grid-template-columns:1fr/s);
-  assert.match(finalMobileCss, /#service \.imd-cta-split \.imd-button\{[^}]*min-height:(?:44|48|52)px/s);
+  assert.match(finalMobileCss, /#service \.imd-process-grid article\{[^}]*height:auto[^}]*min-height:92px/s);
+  assert.match(finalMobileCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr/s);
+  assert.match(finalMobileCss, /#service \.imd-why-items\{[^}]*grid-template-columns:1fr/s);
+  assert.match(finalMobileCss, /#service \.imd-why-items article\{[^}]*background:transparent[^}]*border:0/s);
+  assert.match(finalMobileCss, /#service \.imd-cta-split \.imd-button\{[^}]*min-height:52px/s);
   assert.doesNotMatch(css, /#service\{[^}]*max-height:(?!none\s*;)/s);
+});
+
+test('service tablet layout keeps the message and cost panel in a deliberate two-column composition', () => {
+  const desktopHero = css.indexOf('#service .imd-hero{min-height:430px');
+  const finalTabletLayer = css.lastIndexOf('@media(max-width:1120px){');
+
+  assert.ok(finalTabletLayer > desktopHero, 'final tablet layer follows desktop service rules');
+
+  const finalTabletCss = css.slice(finalTabletLayer);
+  assert.match(finalTabletCss, /#service \.imd-page\{[^}]*width:min\(calc\(100% - 48px\),980px\)/s);
+  assert.match(finalTabletCss, /#service \.imd-hero\{[^}]*grid-template-columns:minmax\(360px,1fr\) minmax\(300px,\.75fr\)/s);
+  assert.match(finalTabletCss, /#service \.imd-cost-card\{[^}]*grid-column:2[^}]*max-width:none/s);
+  assert.match(finalTabletCss, /#service \.imd-process-panel\{[^}]*grid-template-columns:1fr/s);
+  assert.match(finalTabletCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr minmax\(330px,\.7fr\)/s);
+  assert.match(finalTabletCss, /#service \.imd-button:focus-visible\{[^}]*outline:2px solid var\(--service-blue\)[^}]*outline-offset:4px/s);
+});
+
+test('service motion is disabled for reduced-motion users', () => {
+  const reducedMotionLayer = css.lastIndexOf('@media(prefers-reduced-motion:reduce){');
+
+  assert.ok(reducedMotionLayer >= 0, 'final reduced-motion layer is present');
+  const reducedMotionCss = css.slice(reducedMotionLayer);
+  assert.match(reducedMotionCss, /#service \.imd-process-grid article,#service \.imd-button\{[^}]*animation:none!important[^}]*transition:none!important/s);
 });
