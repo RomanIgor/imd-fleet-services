@@ -13,7 +13,7 @@ Compact the desktop `#service` section so its complete content fits inside the u
 
 ## Layout
 
-At desktop widths of at least 1101px, the service section uses three compact rows:
+At effective compact desktop widths of at least 1121px, the service section uses three compact rows. The final `max-width:1120px` cascade overrides the earlier desktop rule for 1101–1120px.
 
 1. Opening row: primary navy message card and cost card.
 2. Process row: one coherent horizontal process band.
@@ -27,8 +27,8 @@ Each benefit item uses an explicit two-column grid: a fixed icon column and a fl
 
 ## Responsive Behavior
 
-- `>= 1101px`: compact three-row desktop composition; complete section fits in the 1008px usable area at 1920×1080 after the 72px navigation.
-- `769–1100px`: retain the approved tablet composition and content-driven height.
+- `>= 1121px`: compact three-row desktop composition; complete section fits in the 1008px usable area at 1920×1080 after the 72px navigation.
+- `769–1120px`: retain the approved tablet composition and content-driven height.
 - `<= 768px`: retain the approved single-column mobile composition and touch targets.
 
 The no-scroll requirement applies specifically to 1920×1080 desktop. Smaller-height viewports must remain readable and may scroll rather than shrinking text below the design-system minimums.

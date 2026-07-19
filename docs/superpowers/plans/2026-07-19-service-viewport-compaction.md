@@ -4,13 +4,13 @@
 
 **Goal:** Make the complete `#service` section fit in the 1008px usable desktop area of a 1920×1080 viewport after the real 72px navigation, without scrolling, and eliminate benefit icon/text overlap.
 
-**Architecture:** Keep the approved three-row service composition and compact only the desktop layer at `min-width:1101px`. Replace the benefit item's absolute icon positioning with a normal-flow two-column grid shared safely across breakpoints, while retaining content-driven tablet/mobile layouts.
+**Architecture:** Keep the approved three-row service composition and compact only the effective desktop range at `>=1121px` (the final `max-width:1120px` cascade governs 1101–1120px). Replace the benefit item's absolute icon positioning with a normal-flow two-column grid shared safely across breakpoints, while retaining content-driven tablet/mobile layouts.
 
 **Tech Stack:** Static HTML, CSS, Node.js built-in test runner.
 
 ## Global Constraints
 
-- The complete service section must fit in the 1008px usable area at 1920×1080 after the fixed 72px navigation.
+- The complete service section must fit in the 1008px usable area at 1920×1080 after the fixed 72px navigation when the effective desktop range (`>=1121px`) applies.
 - Body copy remains at least 15px and metadata remains at least 12px.
 - No clipping, hidden content, horizontal overflow, or global navigation/breakpoint changes.
 - Preserve the official IMD palette, WCAG AA states, focus treatment, CTA targets, and reduced-motion behavior.
@@ -97,9 +97,9 @@ In the final desktop layer, use the available viewport rather than fixed generou
 }
 ```
 
-- [ ] **Step 2: Compact the opening and process rows without shrinking type**
+- [ ] **Step 2: Compact the opening and process rows while preserving copy minima**
 
-Keep the existing font sizes and palette, but reduce excess padding and fixed height:
+Preserve 15px-or-larger body copy, 12px-or-larger metadata, and the palette; desktop headings may compact to achieve the usable viewport target. Reduce excess padding and fixed height:
 
 ```css
 #service .imd-hero{min-height:0;align-items:center}
