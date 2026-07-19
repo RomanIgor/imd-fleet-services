@@ -57,16 +57,37 @@ test('service normal-size supporting copy uses the AA body color', () => {
   assert.match(css, /#service \.imd-process-number\{[^}]*font-size:12px[^}]*color:var\(--service-body\)/s);
 });
 
+test('service typography keeps body copy at 15px and metadata at 12px', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  const tabletCss = finalMediaBlock('@media(max-width:1120px){');
+  const mobileCss = finalMediaBlock('@media(max-width:768px){');
+
+  for (const responsiveCss of [desktopCss, tabletCss]) {
+    assert.match(responsiveCss, /#service \.imd-tags span\{[^}]*font-size:12px/s);
+    assert.match(responsiveCss, /#service \.imd-cost-list li\{[^}]*font-size:15px/s);
+    assert.match(responsiveCss, /#service \.imd-process-panel \.imd-intro-text p\{[^}]*font-size:15px/s);
+    assert.match(responsiveCss, /#service \.imd-process-number\{[^}]*font-size:12px/s);
+    assert.match(responsiveCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+    assert.match(responsiveCss, /#service \.imd-why-items p\{[^}]*font-size:15px/s);
+    assert.match(responsiveCss, /#service \.imd-cta-split li\{[^}]*font-size:15px/s);
+    assert.match(responsiveCss, /#service \.imd-cta-split small\{[^}]*font-size:12px/s);
+  }
+
+  assert.match(mobileCss, /#service \.imd-tags span\{[^}]*font-size:12px/s);
+  assert.match(mobileCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+});
+
 test('service benefits avoid an administrative boxed grid', () => {
   assert.match(css, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
   assert.match(css, /#service \.imd-why-items article\{[^}]*background:transparent[^}]*border:0/s);
   assert.match(css, /#service \.imd-why-items article:nth-child\(-n\+2\)::after/);
-  assert.match(css, /#service \.imd-why-items p\{[^}]*font-size:14px/s);
+  assert.match(css, /#service \.imd-why-items p\{[^}]*font-size:15px/s);
 });
 
 test('service CTA and keyboard focus are accessible', () => {
   assert.match(css, /#service \.imd-cta-split\{[^}]*background:var\(--service-navy\)/s);
   assert.match(css, /#service \.imd-button\{[^}]*min-height:48px/s);
+  assert.match(css, /#service \.imd-button:hover\{background:var\(--service-navy\);border-color:var\(--service-navy\);color:var\(--service-highlight\)\}/);
   assert.match(css, /#service \.imd-button:focus-visible\{[^}]*outline:2px solid var\(--service-blue\)/s);
 });
 
@@ -90,6 +111,7 @@ test('service mobile layout is content-driven and deliberately stacked', () => {
   assert.match(finalMobileCss, /#service \.imd-why-items article,#service \.imd-why-items article:first-child,#service \.imd-why-items article:nth-child\(odd\)\{[^}]*min-height:100px[^}]*background:transparent[^}]*border:0/s);
   assert.match(finalMobileCss, /#service \.imd-why-items article:not\(:last-child\)::after\{[^}]*content:""[^}]*bottom:0/s);
   assert.match(finalMobileCss, /#service \.imd-cta-split \.imd-button\{[^}]*min-height:52px/s);
+  assert.match(css, /\/\* ===== Fahrzeugverkauf dedicated mobile layout ===== \*\/\s*@media\(max-width:767px\)/);
   assert.doesNotMatch(css, /#service\{[^}]*max-height:(?!none\s*;)/s);
 });
 
