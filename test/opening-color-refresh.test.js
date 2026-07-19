@@ -9,7 +9,7 @@ const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
 test('opening sections share the approved concrete and navy palette', () => {
   assert.match(css, /\.hero,#service,#prozess\{--opening-concrete:#CAC9C4;--opening-highlight:#E5E4DF;--opening-navy:#202A3B;--opening-graphite:#1C2228;--opening-text:#4C5257;--opening-border:#9A9C99;--opening-accent:#36A2C5\}/);
-  assert.match(html, /style\.css\?v=opening-color-refresh-10/);
+  assert.match(html, /style\.css\?v=service-professional-redesign-11/);
 });
 
 test('hero keeps its photo while using graphite and concrete surfaces', () => {
@@ -18,11 +18,11 @@ test('hero keeps its photo while using graphite and concrete surfaces', () => {
   assert.match(css, /\.hero \.hc-btn\{[^}]*var\(--opening-navy\)/s);
 });
 
-test('service uses concrete glass and navy details', () => {
-  assert.match(css, /#service \.imd-glass\{[^}]*var\(--opening-highlight\)/s);
-  assert.match(css, /#service \.imd-process-grid article[^}]*\{[^}]*var\(--opening-concrete\)/s);
-  assert.match(css, /#service \.imd-process-line-icon\{[^}]*var\(--opening-navy\)/s);
-  assert.match(css, /#service \.imd-button\{[^}]*var\(--opening-navy\)/s);
+test('service uses professional concrete surfaces and navy details', () => {
+  assert.match(css, /#service \.imd-hero-card\{[^}]*var\(--service-navy\)/s);
+  assert.match(css, /#service \.imd-cost-card\{[^}]*var\(--service-card\)/s);
+  assert.match(css, /#service \.imd-process-line-icon\{[^}]*var\(--service-navy\)/s);
+  assert.match(css, /#service \.imd-button\{[^}]*var\(--service-highlight\)/s);
 });
 
 test('process uses concrete panels, navy markers, and a blue active state', () => {

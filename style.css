@@ -3144,6 +3144,7 @@ tbody tr:hover td{background:var(--f0)}
 
 /* Professional Fahrzeugverkauf redesign */
 #service{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4}
+@media(min-width:1101px){
 #service{min-height:0;padding:88px 0 96px;background-color:var(--service-concrete);background-image:linear-gradient(90deg,rgba(28,34,40,.08),transparent 28%,transparent 72%,rgba(28,34,40,.10)),url('assets/showroom-background.png');background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;color:var(--service-graphite)}
 #service::before{background:linear-gradient(180deg,rgba(229,228,223,.12),transparent 34%,rgba(28,34,40,.06));opacity:1}
 #service::after{display:none}
@@ -3163,7 +3164,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cost-h{margin-bottom:20px;font-size:25px;line-height:1.15;color:var(--service-graphite)}
 #service .imd-cost-list li{min-height:38px;padding:9px 0;border-bottom-color:rgba(154,156,153,.38);font-size:14px;color:var(--service-body)}
 #service .imd-cost-list img{filter:brightness(0) saturate(100%) invert(12%) sepia(12%) saturate(1033%) hue-rotate(180deg) brightness(95%) contrast(92%)}
-#service .imd-note{padding-top:14px;font-size:12px;line-height:1.5;color:var(--service-muted)}
+#service .imd-note{padding-top:14px;font-size:12px;line-height:1.5;color:var(--service-body)}
 
 #service .imd-process-panel{width:100%;min-height:168px;margin:0;padding:28px 30px;display:grid;grid-template-columns:minmax(250px,300px) 1fr;gap:32px;align-items:center;background:rgba(229,228,223,.72);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
 #service .imd-process-panel .imd-intro-text{padding:0 28px 0 0;border-right:1px solid rgba(154,156,153,.46)}
@@ -3176,7 +3177,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-process-grid article:not(:last-child)::after{content:"→";right:-7px;width:14px;text-align:center;background:rgba(229,228,223,.92);color:var(--service-muted)}
 #service .imd-process-line-icon{width:48px;height:48px;background:var(--service-navy);border:1px solid var(--service-navy);border-radius:12px}
 #service .imd-process-line-icon img{width:25px;height:25px;filter:brightness(0) invert(1);opacity:.94}
-#service .imd-process-number{font-size:12px;color:var(--service-muted)}
+#service .imd-process-number{font-size:12px;color:var(--service-body)}
 #service .imd-process-grid h4{margin:4px 0 5px;font-size:14px;color:var(--service-graphite)}
 #service .imd-process-grid p{font-size:13px;line-height:1.45;color:var(--service-body)}
 
@@ -3200,4 +3201,11 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-button:hover{background:var(--service-blue-hover);border-color:var(--service-blue-hover);color:#fff}
 #service .imd-button:focus-visible{outline:2px solid var(--service-blue);outline-offset:4px}
 #service .imd-cta-split small{font-size:12px}
+}
+
+@media(max-width:768px){
+  #service .imd-hero{grid-template-columns:1fr}
+  #service .imd-process-grid{grid-template-columns:1fr}
+  #service .imd-cta-split .imd-button{min-height:52px}
+}
 
