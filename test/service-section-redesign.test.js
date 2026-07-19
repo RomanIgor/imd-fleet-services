@@ -80,7 +80,7 @@ test('service typography keeps body copy at 15px and metadata at 12px', () => {
 test('service desktop composition fits a 1080px viewport without shrinking copy', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
 
-  assert.match(desktopCss, /#service\{(?=[^}]*min-height:calc\(100svh - 70px\))(?=[^}]*padding:24px 0)[^}]*\}/s);
+  assert.match(desktopCss, /#service\{(?=[^}]*min-height:calc\(100svh - 72px\))(?=[^}]*padding:24px 0)[^}]*\}/s);
   assert.match(desktopCss, /#service \.imd-page\{[^}]*gap:16px/s);
   assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
