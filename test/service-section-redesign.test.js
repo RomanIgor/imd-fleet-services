@@ -41,6 +41,17 @@ test('service process is one coherent editorial band', () => {
   assert.match(css, /#service \.imd-process-line-icon\{[^}]*background:var\(--service-navy\)/s);
 });
 
+test('service process emphasis overrides the global white rule with AA navy', () => {
+  assert.match(html, /<p class="imd-strong">Kein internes Projekt, sondern ein sauber abgewickelter Vorgang\.<\/p>/);
+
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  const tabletCss = finalMediaBlock('@media(max-width:1120px){');
+  const emphasisRule = /#service \.imd-process-panel \.imd-intro-text \.imd-strong\{color:var\(--service-navy\)!important\}/;
+
+  assert.match(desktopCss, emphasisRule);
+  assert.match(tabletCss, emphasisRule);
+});
+
 test('service normal-size supporting copy uses the AA body color', () => {
   assert.match(css, /#service \.imd-note\{[^}]*font-size:12px[^}]*color:var\(--service-body\)/s);
   assert.match(css, /#service \.imd-process-number\{[^}]*font-size:12px[^}]*color:var\(--service-body\)/s);
