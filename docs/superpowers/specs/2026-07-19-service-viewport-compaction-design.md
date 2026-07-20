@@ -19,7 +19,7 @@ At effective compact desktop widths of at least 1121px, the service section uses
 2. Process row: one coherent horizontal process band.
 3. Closing row: benefits and CTA side by side.
 
-The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation; a 1008px-or-shorter rendered section then ends within the 1080px viewport. Vertical padding, row gaps, and internal card padding are reduced first. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
+The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation. A 1920x1080 measurement found the service at 1058.8125px (51px beyond the 1008px post-nav target), so the desktop vertical padding is reduced to 20px and rendered fit remains pending remeasurement. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
 
 ### Logo-safe composition
 
@@ -31,7 +31,7 @@ At large desktop widths (`>=1260px`), the embossed IMD logo in the center of `as
 - Make the process band narrower and lower than the first compaction version, centered below the opening row instead of covering the full photographic width.
 - Keep benefits and CTA side by side with a more compact footprint that does not visually dominate the photograph.
 - At `>=1260px`, the process and closing bands use `width:min(1240px,100%)`: they cap at 1240px on wide screens and use the full page width at the boundary so process copy remains readable without desktop emergency wrapping.
-- At `>=1440px`, the process panel uses `grid-template-columns:minmax(230px,250px) 1fr` with a 16px gap. Each process step uses a 44px icon track and icon, a 10px text gap, and 8px 10px padding; the 15px body-copy minimum remains intact. Process text has `min-width:0` and `overflow-wrap:break-word` only as a German-compound safety net.
+- At `>=1440px`, the process panel uses `grid-template-columns:minmax(280px,300px) 1fr` with a 16px gap to reduce line wrapping while retaining approximately 147px per process text column. Each process step uses a 44px icon track and icon, a 10px text gap, and 8px 10px padding; the 15px body-copy minimum remains intact. Process text has `min-width:0` and `overflow-wrap:break-word` only as a German-compound safety net.
 - Keep solid IMD concrete/navy surfaces. Do not add translucent glass cards or duplicate the photographic logo as a separate overlay.
 - Achieve compactness through widths, padding, gaps, and heading scale while retaining 15px body copy and 12px metadata.
 
@@ -58,7 +58,7 @@ The no-scroll requirement applies specifically to 1920×1080 desktop. Smaller-he
 
 ## Verification
 
-- At 1920x1080, confirm the central embossed IMD mark is immediately recognizable and the panels frame it rather than cover it.
+- At 1920x1080, remeasure the service height after the 20px vertical-padding change; confirm the central embossed IMD mark is immediately recognizable and the panels frame it rather than cover it. Do not claim a rendered fit until this measurement passes.
 - Confirm the primary message, process band, benefits panel, and CTA are visibly less bulky than the first compact version while retaining all copy and accessible type sizes.
 - Add regression tests for desktop viewport compaction rules and flow-based benefit icon layout.
 - Run the focused opening, comparison, and service tests.

@@ -4,7 +4,7 @@
 
 **Goal:** Reduce the visual bulk of the compact desktop service panels and preserve a recognizable central view of the embossed IMD logo.
 
-**Architecture:** Add a final `min-width:1260px` logo-safe refinement after the existing desktop service layer. Keep the process grid in a symmetric 2×2 arrangement from `1121–1439px`; at `>=1260px`, constrain the two opening cards toward the outer edges and use fluid supporting bands; at `>=1440px`, explicitly restore the compact four-step horizontal process row, its connectors, and dividers. The revised desktop process geometry caps the intro track at 250px, uses a 44px icon/text track with 10px gaps and article padding, and retains 15px body copy with `break-word` safety for long German compounds.
+**Architecture:** Add a final `min-width:1260px` logo-safe refinement after the existing desktop service layer. Keep the process grid in a symmetric 2×2 arrangement from `1121–1439px`; at `>=1260px`, constrain the two opening cards toward the outer edges and use fluid supporting bands; at `>=1440px`, explicitly restore the compact four-step horizontal process row, its connectors, and dividers. The revised wide-desktop process geometry caps the intro track at 300px, uses a 44px icon/text track with 10px gaps and article padding, and retains 15px body copy with `break-word` safety for long German compounds. A 1920x1080 measurement found the service 51px over the post-nav target, so the base desktop vertical padding is 20px pending remeasurement.
 
 **Tech Stack:** Static HTML, CSS, Node.js built-in test runner.
 
@@ -137,7 +137,7 @@ Expected: all focused tests pass and checks exit 0.
 
 - [ ] **Step 5: Refresh the stylesheet cache key and commit**
 
-Update `index.html` from `service-logo-safe-4` to `service-logo-safe-5`, update all related regression assertions, then run the focused suite again.
+Update `index.html` from `service-logo-safe-5` to `service-logo-safe-6`, update all related regression assertions, then run the focused suite again.
 
 ```powershell
 git add style.css index.html test/service-section-redesign.test.js
@@ -157,11 +157,11 @@ git commit -m "Frame service content around IMD logo"
 
 - [ ] **Step 1: Inspect 1920×1080 after a hard reload**
 
-Confirm the loaded URL is `style.css?v=service-logo-safe-5`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
+Confirm the loaded URL is `style.css?v=service-logo-safe-6`, then remeasure the nav and complete service section at 1920x1080. The prior rendering exceeded the post-nav target by 51px, so do not claim a fit until the new measurement passes; also confirm the central embossed logo is immediately recognizable.
 
 - [ ] **Step 2: Measure panel and logo relationships**
 
-Confirm the opening left card width is at most 470px, the right card width is at most 330px, and the process and closing bands use `width:min(1240px,100%)` (at most 1240px on wide screens and full page width at the boundary). At `>=1440px`, confirm the process intro is at most 250px, each icon is 44px, and the 10px process spacing preserves readable 15px copy; also confirm there is no horizontal overflow and benefit icon/title rectangles are disjoint.
+Confirm the opening left card width is at most 470px, the right card width is at most 330px, and the process and closing bands use `width:min(1240px,100%)` (at most 1240px on wide screens and full page width at the boundary). At `>=1440px`, confirm the process intro is at most 300px, each icon is 44px, and the 10px process spacing preserves readable 15px copy; also confirm there is no horizontal overflow and benefit icon/title rectangles are disjoint.
 
 - [ ] **Step 3: Inspect 1440×900 and 390×844**
 
