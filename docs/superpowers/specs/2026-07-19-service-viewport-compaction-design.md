@@ -23,7 +23,7 @@ The usable section height is based on the viewport after the real 72px navigatio
 
 ### Logo-safe composition
 
-At compact desktop widths (`>=1121px`), the embossed IMD logo in the center of `assets/showroom-background.png` remains a visible part of the composition.
+At large desktop widths (`>=1260px`), the embossed IMD logo in the center of `assets/showroom-background.png` remains a visible part of the composition. The established compact desktop composition remains unchanged from `1121px` through `1259px`.
 
 - Reduce the primary navy message card by approximately 15–20% from the first compaction version and anchor it toward the left edge.
 - Keep the cost card narrow and anchored toward the right edge.
@@ -39,7 +39,8 @@ Each benefit item uses an explicit two-column grid: a fixed icon column and a fl
 
 ## Responsive Behavior
 
-- `>= 1121px`: compact three-row desktop composition; complete section fits in the 1008px usable area at 1920×1080 after the 72px navigation.
+- `1121–1259px`: compact three-row desktop composition; complete section fits in the 1008px usable area at 1920×1080 after the 72px navigation.
+- `>= 1260px`: apply the logo-safe refinement to frame the central embossed logo while retaining the compact desktop composition.
 - `769–1120px`: retain the approved tablet composition and content-driven height.
 - `<= 768px`: retain the approved single-column mobile composition and touch targets.
 

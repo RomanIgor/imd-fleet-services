@@ -4,7 +4,7 @@
 
 **Goal:** Reduce the visual bulk of the compact desktop service panels and preserve a recognizable central view of the embossed IMD logo.
 
-**Architecture:** Add a final `min-width:1121px` logo-safe refinement inside the existing desktop service layer. Constrain the two opening cards toward the outer edges, reduce the widths of the process and closing bands, and preserve solid palette surfaces and accessible typography.
+**Architecture:** Add a final `min-width:1260px` logo-safe refinement after the existing desktop service layer. Keep the established compact desktop layout for `1121–1259px`; at `>=1260px`, constrain the two opening cards toward the outer edges, reduce the widths of the process and closing bands, and preserve solid palette surfaces and accessible typography.
 
 **Tech Stack:** Static HTML, CSS, Node.js built-in test runner.
 
@@ -24,14 +24,14 @@
 - Modify: `test/service-section-redesign.test.js`
 
 **Interfaces:**
-- Consumes: the final `@media(min-width:1121px)` service refinement.
+- Consumes: the final `@media(min-width:1260px)` service refinement.
 - Produces: source-level guardrails for the logo-safe opening and narrower supporting bands.
 
 - [ ] **Step 1: Add a failing opening-row test**
 
 ```js
 test('service desktop opening preserves a central logo-safe area', () => {
-  const logoSafeCss = finalMediaBlock('@media(min-width:1121px){');
+  const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
   assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px)(?=[^}]*gap:32px)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-hero-card\{(?=[^}]*max-width:470px)(?=[^}]*padding:22px 28px)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-cost-card\{(?=[^}]*max-width:330px)(?=[^}]*justify-self:end)[^}]*\}/s);
@@ -42,13 +42,27 @@ test('service desktop opening preserves a central logo-safe area', () => {
 
 ```js
 test('service desktop supporting bands frame rather than cover the photograph', () => {
-  const logoSafeCss = finalMediaBlock('@media(min-width:1121px){');
+  const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
   assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
 });
 ```
 
-- [ ] **Step 3: Confirm RED and commit tests**
+- [ ] **Step 3: Add a failing range-boundary test**
+
+```js
+test('service logo-safe geometry begins only at the large desktop boundary', () => {
+  const compactDesktopCss = finalMediaBlock('@media(min-width:1121px){');
+  const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
+
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-hero\{[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+});
+```
+
+- [ ] **Step 4: Confirm RED and commit tests**
 
 ```powershell
 node --test test/service-section-redesign.test.js
@@ -56,7 +70,7 @@ git add test/service-section-redesign.test.js
 git commit -m "Test logo-safe service composition"
 ```
 
-Expected: the two new tests fail because the logo-safe geometry is not present.
+Expected: the three new tests fail because the logo-safe geometry is not present at `>=1260px`.
 
 ---
 
@@ -68,11 +82,11 @@ Expected: the two new tests fail because the logo-safe geometry is not present.
 
 **Interfaces:**
 - Consumes: current compact desktop layout and palette variables.
-- Produces: a visually lighter frame around the photographic logo at `>=1121px`.
+- Produces: a visually lighter frame around the photographic logo at `>=1260px`.
 
 - [ ] **Step 1: Refine the opening row**
 
-Add to the existing final `@media(min-width:1121px)` block:
+Add as a final `@media(min-width:1260px)` block after the established `>=1121px` compact layer:
 
 ```css
 #service .imd-hero{
@@ -123,7 +137,7 @@ Expected: all focused tests pass and checks exit 0.
 
 - [ ] **Step 5: Refresh the stylesheet cache key and commit**
 
-Update `index.html` from `service-viewport-compaction-1` to `service-logo-safe-1`, update its regression assertion, then run the focused suite again.
+Update `index.html` from `service-logo-safe-1` to `service-logo-safe-2`, update all related regression assertions, then run the focused suite again.
 
 ```powershell
 git add style.css index.html test/service-section-redesign.test.js
@@ -143,7 +157,7 @@ git commit -m "Frame service content around IMD logo"
 
 - [ ] **Step 1: Inspect 1920×1080 after a hard reload**
 
-Confirm the loaded URL is `style.css?v=service-logo-safe-1`, the nav and complete service section fit without another scroll, and the central embossed logo is immediately recognizable.
+Confirm the loaded URL is `style.css?v=service-logo-safe-2`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
 
 - [ ] **Step 2: Measure panel and logo relationships**
 
