@@ -3204,6 +3204,14 @@ tbody tr:hover td{background:var(--f0)}
 
 @media(min-width:1121px){
 #service{scroll-margin-top:72px}
+#service .imd-hero{grid-template-columns:470px minmax(300px,1fr) 330px;gap:32px}
+#service .imd-hero-card{max-width:470px;padding:22px 28px;justify-self:start}
+#service .imd-cost-card{max-width:330px;padding:20px 24px;justify-self:end}
+#service .imd-h1{font-size:clamp(34px,2.5vw,40px);line-height:1.05}
+#service .imd-cost-h{font-size:22px}
+#service .imd-process-panel{width:min(1240px,calc(100% - 240px));justify-self:center;padding:14px 20px}
+#service .imd-bottom-panel{width:min(1240px,calc(100% - 240px));justify-self:center}
+#service .imd-why-compact{padding:16px 20px}
 #service .imd-cta-split p{margin:0 0 8px;font-size:15px;line-height:1.45}
 #service .imd-cta-split ul{margin:0 0 10px;gap:4px}
 #service .imd-cta-split small{margin-top:6px;font-size:12px;line-height:1.35}
