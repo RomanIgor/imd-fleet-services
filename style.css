@@ -3145,7 +3145,7 @@ tbody tr:hover td{background:var(--f0)}
 /* Professional Fahrzeugverkauf redesign */
 #service{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4}
 @media(min-width:1101px){
-#service{min-height:calc(100svh - 72px);padding:20px 0;background-color:var(--service-concrete);background-image:linear-gradient(90deg,rgba(28,34,40,.08),transparent 28%,transparent 72%,rgba(28,34,40,.10)),url('assets/showroom-background.png');background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;color:var(--service-graphite)}
+#service{min-height:calc(100svh - 72px);padding:14px 0;background-color:var(--service-concrete);background-image:linear-gradient(90deg,rgba(28,34,40,.08),transparent 28%,transparent 72%,rgba(28,34,40,.10)),url('assets/showroom-background.png');background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;color:var(--service-graphite)}
 #service::before{background:linear-gradient(180deg,rgba(229,228,223,.12),transparent 34%,rgba(28,34,40,.06));opacity:1}
 #service::after{display:none}
 #service .imd-page{width:min(1480px,calc(100% - 96px));display:grid;grid-template-rows:auto auto auto;gap:16px}
@@ -3212,6 +3212,8 @@ tbody tr:hover td{background:var(--f0)}
 @media(min-width:1260px){
 #service .imd-hero{grid-template-columns:470px minmax(300px,1fr) 330px;gap:32px}
 #service .imd-hero-card{max-width:470px;padding:22px 28px;justify-self:start}
+#service .imd-tags{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+#service .imd-tags span{padding:0 8px}
 #service .imd-cost-card{max-width:330px;padding:20px 24px;justify-self:end}
 #service .imd-h1{font-size:clamp(34px,2.5vw,40px);line-height:1.05}
 #service .imd-cost-h{font-size:22px}

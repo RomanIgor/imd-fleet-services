@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-6/);
+  assert.match(html, /style\.css\?v=service-logo-safe-7/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -80,7 +80,7 @@ test('service typography keeps body copy at 15px and metadata at 12px', () => {
 test('service desktop composition uses the measured vertical target without shrinking copy', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
 
-  assert.match(desktopCss, /#service\{(?=[^}]*min-height:calc\(100svh - 72px\))(?=[^}]*padding:20px 0)[^}]*\}/s);
+  assert.match(desktopCss, /#service\{(?=[^}]*min-height:calc\(100svh - 72px\))(?=[^}]*padding:14px 0)[^}]*\}/s);
   assert.match(desktopCss, /#service \.imd-page\{[^}]*gap:16px/s);
   assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
@@ -114,6 +114,8 @@ test('service desktop opening preserves a central logo-safe area', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
   assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px)(?=[^}]*gap:32px)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-hero-card\{(?=[^}]*max-width:470px)(?=[^}]*padding:22px 28px)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-tags\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\))[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-tags span\{[^}]*padding:0 8px/s);
   assert.match(logoSafeCss, /#service \.imd-cost-card\{(?=[^}]*max-width:330px)(?=[^}]*justify-self:end)[^}]*\}/s);
 });
 
