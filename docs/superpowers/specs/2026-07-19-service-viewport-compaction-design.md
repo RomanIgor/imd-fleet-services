@@ -21,6 +21,18 @@ At effective compact desktop widths of at least 1121px, the service section uses
 
 The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation; a 1008px-or-shorter rendered section then ends within the 1080px viewport. Vertical padding, row gaps, and internal card padding are reduced first. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
 
+### Logo-safe composition
+
+At compact desktop widths (`>=1121px`), the embossed IMD logo in the center of `assets/showroom-background.png` remains a visible part of the composition.
+
+- Reduce the primary navy message card by approximately 15–20% from the first compaction version and anchor it toward the left edge.
+- Keep the cost card narrow and anchored toward the right edge.
+- Preserve an intentionally empty center column around the embossed logo; neither opening card may cross into this logo-safe area.
+- Make the process band narrower and lower than the first compaction version, centered below the opening row instead of covering the full photographic width.
+- Keep benefits and CTA side by side with a more compact footprint that does not visually dominate the photograph.
+- Keep solid IMD concrete/navy surfaces. Do not add translucent glass cards or duplicate the photographic logo as a separate overlay.
+- Achieve compactness through widths, padding, gaps, and heading scale while retaining 15px body copy and 12px metadata.
+
 ## Benefits Icon Repair
 
 Each benefit item uses an explicit two-column grid: a fixed icon column and a flexible content column. Icons remain in normal document flow and may not use absolute positioning. Headings and descriptions occupy the content column, preventing icon/text overlap at every supported desktop width.
@@ -42,6 +54,8 @@ The no-scroll requirement applies specifically to 1920×1080 desktop. Smaller-he
 
 ## Verification
 
+- At 1920x1080, confirm the central embossed IMD mark is immediately recognizable and the panels frame it rather than cover it.
+- Confirm the primary message, process band, benefits panel, and CTA are visibly less bulky than the first compact version while retaining all copy and accessible type sizes.
 - Add regression tests for desktop viewport compaction rules and flow-based benefit icon layout.
 - Run the focused opening, comparison, and service tests.
 - Run JavaScript syntax and diff checks.
