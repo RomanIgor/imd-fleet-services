@@ -43,8 +43,8 @@ test('service desktop opening preserves a central logo-safe area', () => {
 ```js
 test('service desktop supporting bands frame rather than cover the photograph', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1121px){');
-  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1340px,calc\(100% - 140px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
-  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1340px,calc\(100% - 140px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
 });
 ```
 
@@ -103,7 +103,7 @@ Add to the existing final `@media(min-width:1121px)` block:
 ```css
 #service .imd-process-panel,
 #service .imd-bottom-panel{
-  width:min(1340px,calc(100% - 140px));
+  width:min(1240px,calc(100% - 240px));
   justify-self:center;
 }
 #service .imd-process-panel{padding:14px 20px}
@@ -147,7 +147,7 @@ Confirm the loaded URL is `style.css?v=service-logo-safe-1`, the nav and complet
 
 - [ ] **Step 2: Measure panel and logo relationships**
 
-Confirm the opening left card width is at most 470px, the right card width is at most 330px, the process and closing bands are at most 1340px, there is no horizontal overflow, and benefit icon/title rectangles are disjoint.
+Confirm the opening left card width is at most 470px, the right card width is at most 330px, the process and closing bands are at most 1240px, there is no horizontal overflow, and benefit icon/title rectangles are disjoint.
 
 - [ ] **Step 3: Inspect 1440×900 and 390×844**
 
