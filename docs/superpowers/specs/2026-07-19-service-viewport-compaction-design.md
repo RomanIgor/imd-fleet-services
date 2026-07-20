@@ -19,7 +19,7 @@ At effective compact desktop widths of at least 1121px, the service section uses
 2. Process row: one coherent horizontal process band.
 3. Closing row: benefits and CTA side by side.
 
-The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation. A 1920x1080 measurement found the service at 1058.8125px (51px beyond the 1008px post-nav target), so the desktop vertical padding is reduced to 20px and rendered fit remains pending remeasurement. The compact CTA uses `padding:12px 24px`; its 48px button target remains intact. Text remains at the approved minimums: 15px body copy and 12px metadata. No content may be clipped or hidden to meet the viewport target.
+The usable section height is based on the viewport after the real 72px navigation (`min-height:calc(100svh - 72px)`). At the effective compact desktop range, `#service` also uses `scroll-margin-top:72px` so a `#service` anchor lands directly below the fixed navigation. Final 1920x1080 measurement confirms an exact 1008px section fit below the navigation. This uses 14px section padding and a three-column, two-row tag grid at `>=1260px`, preserving 15px body copy, 12px metadata, the 48px desktop CTA, and a measured 680px central logo opening. No content is clipped or hidden to meet the viewport target.
 
 ### Logo-safe composition
 
@@ -58,10 +58,10 @@ The no-scroll requirement applies specifically to 1920×1080 desktop. Smaller-he
 
 ## Verification
 
-- At 1920x1080, remeasure the service height after the 20px vertical-padding change; confirm the central embossed IMD mark is immediately recognizable and the panels frame it rather than cover it. Do not claim a rendered fit until this measurement passes.
+- At 1920x1080, confirm the measured 1008px section height, 680px central logo opening, and zero horizontal overflow remain stable.
 - Confirm the primary message, process band, benefits panel, and CTA are visibly less bulky than the first compact version while retaining all copy and accessible type sizes.
 - Add regression tests for desktop viewport compaction rules and flow-based benefit icon layout.
 - Run the focused opening, comparison, and service tests.
 - Run JavaScript syntax and diff checks.
-- Browser reload is currently policy-blocked, so manual visual acceptance is pending. When permitted, inspect the complete service section at 1920×1080 and inspect icon alignment at 1920×1080 and 1440×900.
+- Browser acceptance completed at 1920×1080, 1440×900, and 390×844; no horizontal overflow was measured and mobile retains its 52px CTA target.
 - Inspect mobile at 390×844 to confirm the shared icon structure did not regress stacking.
