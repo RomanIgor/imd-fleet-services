@@ -43,8 +43,8 @@ test('service desktop opening preserves a central logo-safe area', () => {
 ```js
 test('service desktop supporting bands frame rather than cover the photograph', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
-  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
-  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
 });
 ```
 
@@ -56,9 +56,9 @@ test('service logo-safe geometry begins only at the large desktop boundary', () 
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
 
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-hero\{[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px/s);
-  assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
-  assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
-  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
 });
 ```
 
@@ -117,7 +117,7 @@ Add as a final `@media(min-width:1260px)` block after the established `>=1121px`
 ```css
 #service .imd-process-panel,
 #service .imd-bottom-panel{
-  width:min(1240px,calc(100% - 240px));
+  width:min(1240px,100%);
   justify-self:center;
 }
 #service .imd-process-panel{padding:14px 20px}
@@ -137,7 +137,7 @@ Expected: all focused tests pass and checks exit 0.
 
 - [ ] **Step 5: Refresh the stylesheet cache key and commit**
 
-Update `index.html` from `service-logo-safe-1` to `service-logo-safe-2`, update all related regression assertions, then run the focused suite again.
+Update `index.html` from `service-logo-safe-2` to `service-logo-safe-3`, update all related regression assertions, then run the focused suite again.
 
 ```powershell
 git add style.css index.html test/service-section-redesign.test.js
@@ -157,11 +157,11 @@ git commit -m "Frame service content around IMD logo"
 
 - [ ] **Step 1: Inspect 1920×1080 after a hard reload**
 
-Confirm the loaded URL is `style.css?v=service-logo-safe-2`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
+Confirm the loaded URL is `style.css?v=service-logo-safe-3`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
 
 - [ ] **Step 2: Measure panel and logo relationships**
 
-Confirm the opening left card width is at most 470px, the right card width is at most 330px, the process and closing bands are at most 1240px, there is no horizontal overflow, and benefit icon/title rectangles are disjoint.
+Confirm the opening left card width is at most 470px, the right card width is at most 330px, and the process and closing bands use `width:min(1240px,100%)` (at most 1240px on wide screens and full page width at the boundary); also confirm there is no horizontal overflow and benefit icon/title rectangles are disjoint.
 
 - [ ] **Step 3: Inspect 1440×900 and 390×844**
 

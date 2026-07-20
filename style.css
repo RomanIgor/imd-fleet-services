@@ -3215,8 +3215,8 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cost-card{max-width:330px;padding:20px 24px;justify-self:end}
 #service .imd-h1{font-size:clamp(34px,2.5vw,40px);line-height:1.05}
 #service .imd-cost-h{font-size:22px}
-#service .imd-process-panel{width:min(1240px,calc(100% - 240px));justify-self:center;padding:14px 20px}
-#service .imd-bottom-panel{width:min(1240px,calc(100% - 240px));justify-self:center}
+#service .imd-process-panel{width:min(1240px,100%);justify-self:center;padding:14px 20px}
+#service .imd-bottom-panel{width:min(1240px,100%);justify-self:center}
 #service .imd-why-compact{padding:16px 20px}
 }
 

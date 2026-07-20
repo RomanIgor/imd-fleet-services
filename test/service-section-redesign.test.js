@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-2/);
+  assert.match(html, /style\.css\?v=service-logo-safe-3/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -119,8 +119,8 @@ test('service desktop opening preserves a central logo-safe area', () => {
 
 test('service desktop supporting bands frame rather than cover the photograph', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
-  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
-  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
 });
 
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
@@ -132,11 +132,23 @@ test('service logo-safe geometry begins only at the large desktop boundary', () 
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-cost-card\{[^}]*max-width:330px/s);
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-h1\{[^}]*font-size:clamp\(34px,2\.5vw,40px\)/s);
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-cost-h\{[^}]*font-size:22px/s);
-  assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
-  assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,100%\)/s);
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-why-compact\{[^}]*padding:16px 20px/s);
-  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
-  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,calc\(100% - 240px\)\)/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,100%\)/s);
+});
+
+test('service logo-safe bands stay fluid without weakening desktop process text', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
+
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,100%\)/s);
+  assert.doesNotMatch(logoSafeCss, /calc\(100% - 240px\)/);
+  assert.match(desktopCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+  assert.match(desktopCss, /#service \.imd-process-grid h4\{[^}]*font-size:14px/s);
+  assert.doesNotMatch(desktopCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{[^}]*overflow-wrap:/s);
 });
 
 test('service benefit icons remain in grid flow and cannot cover text', () => {

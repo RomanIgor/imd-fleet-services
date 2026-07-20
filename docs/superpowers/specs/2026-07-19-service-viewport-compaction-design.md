@@ -30,6 +30,7 @@ At large desktop widths (`>=1260px`), the embossed IMD logo in the center of `as
 - Preserve an intentionally empty center column around the embossed logo; neither opening card may cross into this logo-safe area.
 - Make the process band narrower and lower than the first compaction version, centered below the opening row instead of covering the full photographic width.
 - Keep benefits and CTA side by side with a more compact footprint that does not visually dominate the photograph.
+- At `>=1260px`, the process and closing bands use `width:min(1240px,100%)`: they cap at 1240px on wide screens and use the full page width at the boundary so process copy remains readable without desktop emergency wrapping.
 - Keep solid IMD concrete/navy surfaces. Do not add translucent glass cards or duplicate the photographic logo as a separate overlay.
 - Achieve compactness through widths, padding, gaps, and heading scale while retaining 15px body copy and 12px metadata.
 
