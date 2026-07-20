@@ -31,6 +31,7 @@ At large desktop widths (`>=1260px`), the embossed IMD logo in the center of `as
 - Make the process band narrower and lower than the first compaction version, centered below the opening row instead of covering the full photographic width.
 - Keep benefits and CTA side by side with a more compact footprint that does not visually dominate the photograph.
 - At `>=1260px`, the process and closing bands use `width:min(1240px,100%)`: they cap at 1240px on wide screens and use the full page width at the boundary so process copy remains readable without desktop emergency wrapping.
+- At `>=1440px`, the process panel uses `grid-template-columns:minmax(230px,250px) 1fr` with a 16px gap. Each process step uses a 44px icon track and icon, a 10px text gap, and 8px 10px padding; the 15px body-copy minimum remains intact. Process text has `min-width:0` and `overflow-wrap:break-word` only as a German-compound safety net.
 - Keep solid IMD concrete/navy surfaces. Do not add translucent glass cards or duplicate the photographic logo as a separate overlay.
 - Achieve compactness through widths, padding, gaps, and heading scale while retaining 15px body copy and 12px metadata.
 
@@ -40,8 +41,8 @@ Each benefit item uses an explicit two-column grid: a fixed icon column and a fl
 
 ## Responsive Behavior
 
-- `1121–1259px`: compact three-row desktop composition with a 2×2 process grid, symmetric row/column dividers, and no horizontal step arrows.
-- `1260–1439px`: retain that 2×2 process grid while applying the logo-safe opening and fluid-band refinement.
+- `1121–1259px`: compact three-row desktop composition with a 2×2 process grid, symmetric row/column dividers, no horizontal step arrows, and the compatible 44px process icon/text geometry.
+- `1260–1439px`: retain that 2×2 process grid and compact process geometry while applying the logo-safe opening and fluid-band refinement.
 - `>= 1440px`: retain the logo-safe opening and restore the compact four-step horizontal process row, its horizontal connectors, and its vertical dividers; this is the 1920px composition.
 - `769–1120px`: retain the approved tablet composition and content-driven height.
 - `<= 768px`: retain the approved single-column mobile composition and touch targets.
