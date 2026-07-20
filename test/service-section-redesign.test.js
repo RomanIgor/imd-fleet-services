@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-3/);
+  assert.match(html, /style\.css\?v=service-logo-safe-4/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -149,6 +149,21 @@ test('service logo-safe bands stay fluid without weakening desktop process text'
   assert.match(desktopCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
   assert.match(desktopCss, /#service \.imd-process-grid h4\{[^}]*font-size:14px/s);
   assert.doesNotMatch(desktopCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{[^}]*overflow-wrap:/s);
+});
+
+test('service process adapts between mid and wide desktop ranges', () => {
+  const midDesktopCss = finalMediaBlock('@media(min-width:1121px) and (max-width:1439px){');
+  const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
+
+  assert.match(midDesktopCss, /#service \.imd-process-grid\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/s);
+  assert.match(midDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:108px)(?=[^}]*grid-template-columns:52px minmax\(0,1fr\))[^}]*\}/s);
+  assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(odd\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
+  assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(-n\+2\)\{[^}]*border-bottom:1px solid rgba\(154,156,153,\.38\)/s);
+  assert.match(midDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{display:none\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:88px)(?=[^}]*padding:8px 16px)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"→")(?=[^}]*display:block)[^}]*\}/s);
 });
 
 test('service benefit icons remain in grid flow and cannot cover text', () => {

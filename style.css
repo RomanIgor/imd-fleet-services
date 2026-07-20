@@ -3220,6 +3220,23 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-why-compact{padding:16px 20px}
 }
 
+@media(min-width:1121px) and (max-width:1439px){
+#service .imd-process-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+#service .imd-process-grid article{min-height:108px;padding:18px 20px;grid-template-columns:52px minmax(0,1fr);column-gap:12px}
+#service .imd-process-grid article:not(:last-child){border-right:0}
+#service .imd-process-grid article:nth-child(odd){border-right:1px solid rgba(154,156,153,.38)}
+#service .imd-process-grid article:nth-child(-n+2){border-bottom:1px solid rgba(154,156,153,.38)}
+#service .imd-process-grid article:not(:last-child)::after{display:none}
+}
+
+@media(min-width:1440px){
+#service .imd-process-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+#service .imd-process-grid article{min-height:88px;padding:8px 16px;grid-template-columns:52px 1fr;column-gap:14px}
+#service .imd-process-grid article:not(:last-child){border-right:1px solid rgba(154,156,153,.38)}
+#service .imd-process-grid article:nth-child(-n+2){border-bottom:0}
+#service .imd-process-grid article:not(:last-child)::after{content:"→";display:block}
+}
+
 @media(max-width:1120px){
   #service{min-height:0;padding:72px 0 80px;background-color:var(--service-concrete);background-image:linear-gradient(90deg,rgba(28,34,40,.08),transparent 28%,transparent 72%,rgba(28,34,40,.10)),url('assets/showroom-background.png');background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;color:var(--service-graphite)}
   #service::before{inset:0;height:auto;background:linear-gradient(180deg,rgba(229,228,223,.12),transparent 34%,rgba(28,34,40,.06));opacity:1;mask-image:none}

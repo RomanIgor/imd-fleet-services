@@ -40,8 +40,9 @@ Each benefit item uses an explicit two-column grid: a fixed icon column and a fl
 
 ## Responsive Behavior
 
-- `1121–1259px`: compact three-row desktop composition; complete section fits in the 1008px usable area at 1920×1080 after the 72px navigation.
-- `>= 1260px`: apply the logo-safe refinement to frame the central embossed logo while retaining the compact desktop composition.
+- `1121–1259px`: compact three-row desktop composition with a 2×2 process grid, symmetric row/column dividers, and no horizontal step arrows.
+- `1260–1439px`: retain that 2×2 process grid while applying the logo-safe opening and fluid-band refinement.
+- `>= 1440px`: retain the logo-safe opening and restore the compact four-step horizontal process row, its horizontal connectors, and its vertical dividers; this is the 1920px composition.
 - `769–1120px`: retain the approved tablet composition and content-driven height.
 - `<= 768px`: retain the approved single-column mobile composition and touch targets.
 

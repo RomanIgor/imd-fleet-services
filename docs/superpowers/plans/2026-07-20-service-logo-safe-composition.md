@@ -4,7 +4,7 @@
 
 **Goal:** Reduce the visual bulk of the compact desktop service panels and preserve a recognizable central view of the embossed IMD logo.
 
-**Architecture:** Add a final `min-width:1260px` logo-safe refinement after the existing desktop service layer. Keep the established compact desktop layout for `1121–1259px`; at `>=1260px`, constrain the two opening cards toward the outer edges, reduce the widths of the process and closing bands, and preserve solid palette surfaces and accessible typography.
+**Architecture:** Add a final `min-width:1260px` logo-safe refinement after the existing desktop service layer. Keep the process grid in a symmetric 2×2 arrangement from `1121–1439px`; at `>=1260px`, constrain the two opening cards toward the outer edges and use fluid supporting bands; at `>=1440px`, explicitly restore the compact four-step horizontal process row, its connectors, and dividers.
 
 **Tech Stack:** Static HTML, CSS, Node.js built-in test runner.
 
@@ -137,7 +137,7 @@ Expected: all focused tests pass and checks exit 0.
 
 - [ ] **Step 5: Refresh the stylesheet cache key and commit**
 
-Update `index.html` from `service-logo-safe-2` to `service-logo-safe-3`, update all related regression assertions, then run the focused suite again.
+Update `index.html` from `service-logo-safe-3` to `service-logo-safe-4`, update all related regression assertions, then run the focused suite again.
 
 ```powershell
 git add style.css index.html test/service-section-redesign.test.js
@@ -157,7 +157,7 @@ git commit -m "Frame service content around IMD logo"
 
 - [ ] **Step 1: Inspect 1920×1080 after a hard reload**
 
-Confirm the loaded URL is `style.css?v=service-logo-safe-3`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
+Confirm the loaded URL is `style.css?v=service-logo-safe-4`, the nav and complete service section fit without another scroll at `>=1260px`, and the central embossed logo is immediately recognizable.
 
 - [ ] **Step 2: Measure panel and logo relationships**
 
@@ -165,7 +165,7 @@ Confirm the opening left card width is at most 470px, the right card width is at
 
 - [ ] **Step 3: Inspect 1440×900 and 390×844**
 
-At 1440×900, confirm the logo remains readable and wrapping remains professional. At 390×844, confirm no production change to the single-column flow and CTA target.
+At 1121–1439px, confirm the process steps form a symmetric 2×2 grid with no arrows. At 1440×900, confirm the logo remains readable and the four-step horizontal row, connectors, and dividers are restored. At 390×844, confirm no production change to the single-column flow and CTA target.
 
 - [ ] **Step 4: Request whole-branch review and run final checks**
 
