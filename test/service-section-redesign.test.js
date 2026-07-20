@@ -110,6 +110,19 @@ test('service anchor offset and compact CTA rhythm apply only at the effective d
   assert.doesNotMatch(desktopCss, /#service \.imd-cta-split small\{[^}]*margin-top:6px/s);
 });
 
+test('service desktop opening preserves a central logo-safe area', () => {
+  const logoSafeCss = finalMediaBlock('@media(min-width:1121px){');
+  assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px)(?=[^}]*gap:32px)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-hero-card\{(?=[^}]*max-width:470px)(?=[^}]*padding:22px 28px)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-cost-card\{(?=[^}]*max-width:330px)(?=[^}]*justify-self:end)[^}]*\}/s);
+});
+
+test('service desktop supporting bands frame rather than cover the photograph', () => {
+  const logoSafeCss = finalMediaBlock('@media(min-width:1121px){');
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1240px,calc\(100% - 240px\)\))(?=[^}]*justify-self:center)[^}]*\}/s);
+});
+
 test('service benefit icons remain in grid flow and cannot cover text', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
 
