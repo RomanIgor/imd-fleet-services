@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-7/);
+  assert.match(html, /style\.css\?v=service-logo-safe-8/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -85,6 +85,12 @@ test('service desktop composition uses the measured vertical target without shri
   assert.match(desktopCss, /#service \.imd-hero\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-panel\{[^}]*min-height:0/s);
   assert.match(desktopCss, /#service \.imd-process-grid p\{[^}]*font-size:15px/s);
+});
+
+test('service desktop keeps the showroom photograph dark and dimensional', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  assert.match(desktopCss, /#service\{[^}]*background-image:linear-gradient\(90deg,rgba\(14,16,20,\.84\) 0%,rgba\(14,16,20,\.20\) 49%,rgba\(14,16,20,\.82\) 100%\),linear-gradient\(to bottom,rgba\(14,16,20,\.06\),rgba\(14,16,20,\.30\) 58%,rgba\(14,16,20,\.68\) 100%\),radial-gradient\(circle at 52% 20%,rgba\(255,255,255,\.13\),rgba\(255,255,255,0\) 27%\),url\('assets\/showroom-background\.png'\)/s);
+  assert.doesNotMatch(desktopCss, /#service\{[^}]*background-image:linear-gradient\(90deg,rgba\(28,34,40,\.08\),transparent 28%,transparent 72%,rgba\(28,34,40,\.10\)\)/s);
 });
 
 test('service desktop compaction controls composed content rather than relying on section height', () => {
