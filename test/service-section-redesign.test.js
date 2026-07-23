@@ -148,7 +148,7 @@ test('service uses a unified desktop grid with content-driven cards', () => {
 
 test('service wide desktop protects the showroom logo with compact rails', () => {
   const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
-  assert.match(wideDesktopCss, /#service\{[^}]*background-position:center center,center center,center center,center calc\(50% - 170px\)/s);
+  assert.match(wideDesktopCss, /#service\{(?=[^}]*background-size:cover,cover,cover,min\(100vw,1920px\) auto)(?=[^}]*background-position:center center,center center,center center,center calc\(50% - 170px\))[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-hero\{(?=[^}]*width:min\(1400px,100%\))(?=[^}]*grid-template-columns:360px minmax\(600px,1fr\) 270px)[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-hero-card\{[^}]*max-width:360px/s);
   assert.match(wideDesktopCss, /#service \.imd-subline\{(?=[^}]*font-size:13px)(?=[^}]*line-height:1\.45)(?=[^}]*margin-bottom:12px)[^}]*\}/s);
