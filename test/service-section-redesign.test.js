@@ -157,6 +157,40 @@ test('service wide desktop protects the showroom logo with compact rails', () =>
   assert.match(html, /Ein Vorgang\. Ein Ansprechpartner\./);
 });
 
+test('service wide desktop uses the reference support-card composition without new claims', () => {
+  const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
+  const supportTier = html.match(/<section class="imd-bottom-panel imd-glass">([\s\S]*?)<\/section>/)?.[1];
+
+  assert.ok(supportTier, 'service support tier is present');
+  assert.match(html, /class="imd-benefit-card imd-benefit-card--primary"/);
+  assert.match(html, /class="imd-benefit-card imd-benefit-card--secondary"/);
+  assert.match(wideDesktopCss, /grid-template-columns:360px minmax\(600px,1fr\) 270px/);
+  assert.match(wideDesktopCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/s);
+
+  const primaryIndex = supportTier.indexOf('class="imd-benefit-card imd-benefit-card--primary"');
+  const ctaIndex = supportTier.indexOf('class="imd-cta-split"');
+  const secondaryIndex = supportTier.indexOf('class="imd-benefit-card imd-benefit-card--secondary"');
+  assert.ok(primaryIndex >= 0 && primaryIndex < ctaIndex && ctaIndex < secondaryIndex, 'CTA remains between benefit cards');
+
+  const claimText = [...supportTier.matchAll(/<(h4|p|li|small)>([\s\S]*?)<\/\1>/g)]
+    .map((match) => match[2].replace(/<[^>]+>/g, '').trim());
+  assert.deepEqual(claimText, [
+    'Sicher &amp; zuverlässig',
+    'Professionelle und diskrete Abwicklung.',
+    'Zeit- &amp; ressourcensparend',
+    'Der komplette Prozess aus einer Hand.',
+    'Starten Sie Ihren Verkaufsprozess.',
+    'Schnell &amp; unkompliziert',
+    'Kostenlos &amp; ohne Aufwand',
+    'Faire Preise ohne Nachverhandlung',
+    'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
+    'Bestmöglicher Preis',
+    'Transparente Wertermittlung.',
+    'Persönlicher Partner',
+    'Ein Ansprechpartner für den Fuhrpark.',
+  ]);
+});
+
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
   const compactDesktopCss = finalMediaBlock('@media(min-width:1121px){');
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
