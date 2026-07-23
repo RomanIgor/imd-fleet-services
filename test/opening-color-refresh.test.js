@@ -9,7 +9,7 @@ const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
 
 test('opening sections share the approved concrete and navy palette', () => {
   assert.match(css, /\.hero,#service,#prozess\{--opening-concrete:#CAC9C4;--opening-highlight:#E5E4DF;--opening-navy:#202A3B;--opening-graphite:#1C2228;--opening-text:#4C5257;--opening-border:#9A9C99;--opening-accent:#36A2C5\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-11/);
+  assert.match(html, /style\.css\?v=service-logo-safe-12/);
 });
 
 test('hero keeps its photo while using graphite and concrete surfaces', () => {

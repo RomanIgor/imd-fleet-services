@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-11/);
+  assert.match(html, /style\.css\?v=service-logo-safe-12/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -118,21 +118,31 @@ test('service anchor offset and compact CTA rhythm apply only at the effective d
 
 test('service desktop opening preserves a central logo-safe area', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
-  assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*grid-template-columns:430px minmax\(300px,1fr\) 300px)(?=[^}]*gap:32px)[^}]*\}/s);
-  assert.match(logoSafeCss, /#service \.imd-hero-card\{(?=[^}]*max-width:430px)(?=[^}]*padding:18px 24px)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*grid-template-columns:420px minmax\(300px,1fr\) 300px)(?=[^}]*gap:32px)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-hero-card\{(?=[^}]*max-width:420px)(?=[^}]*padding:18px 24px)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-tags\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\))[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-tags span\{[^}]*padding:0 4px/s);
   assert.match(logoSafeCss, /#service \.imd-cost-card\{(?=[^}]*max-width:300px)(?=[^}]*justify-self:end)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-h1\{[^}]*font-size:clamp\(32px,2\.1vw,36px\)/s);
   assert.match(html, />Terminplanung<\/span>/);
   assert.match(html, />Übergabe<\/span>/);
-  assert.match(html, />Interne Prozesse<\/span>/);
+  assert.match(html, />Interne Abläufe<\/span>/);
 });
 
 test('service desktop supporting bands frame rather than cover the photograph', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
   assert.match(logoSafeCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*justify-self:center)[^}]*\}/s);
+});
+
+test('service uses a unified desktop grid with content-driven cards', () => {
+  const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
+  assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*justify-self:center)(?=[^}]*align-items:start)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1180px,100%\)/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*align-items:start)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-process-panel \.imd-process-grid article\{[^}]*min-height:0/s);
+  assert.match(logoSafeCss, /#service \.imd-why-items article\{[^}]*min-height:0/s);
+  assert.match(logoSafeCss, /#service \.imd-cta-split\{(?=[^}]*min-height:0)(?=[^}]*align-self:start)[^}]*\}/s);
 });
 
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
