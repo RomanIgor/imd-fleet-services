@@ -3247,7 +3247,7 @@ tbody tr:hover td{background:var(--f0)}
 }
 
 @media(min-width:1440px){
-#service{background-size:cover,cover,cover,min(100vw,1920px) auto;background-position:center center,center center,center center,center calc(50% - 170px)}
+#service{background-size:cover,cover,cover,min(100vw,1920px) auto;background-position:center center,center center,center center,center -300px}
 #service .imd-hero{width:min(1400px,100%);grid-template-columns:360px minmax(600px,1fr) 270px;gap:28px;align-items:start}
 #service .imd-hero-card{max-width:360px;padding:14px 18px}
 #service .imd-h1{font-size:32px;line-height:1.04}
