@@ -148,10 +148,14 @@ test('service uses a unified desktop grid with content-driven cards', () => {
 
 test('service wide desktop protects the showroom logo with compact rails', () => {
   const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
+  assert.match(wideDesktopCss, /#service\{[^}]*background-position:center center,center center,center center,center calc\(50% - 170px\)/s);
   assert.match(wideDesktopCss, /#service \.imd-hero\{(?=[^}]*width:min\(1400px,100%\))(?=[^}]*grid-template-columns:360px minmax\(600px,1fr\) 270px)[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-hero-card\{[^}]*max-width:360px/s);
+  assert.match(wideDesktopCss, /#service \.imd-subline\{(?=[^}]*font-size:13px)(?=[^}]*line-height:1\.45)(?=[^}]*margin-bottom:12px)[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-cost-card\{[^}]*max-width:270px/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*grid-template-columns:220px 1fr)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*grid-template-columns:280px 1fr)(?=[^}]*margin-top:40px)(?=[^}]*height:clamp\(112px,7\.5vw,145px\))(?=[^}]*padding:6px 14px)(?=[^}]*overflow:visible)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel \.imd-intro-text h3\{(?=[^}]*margin-bottom:4px)(?=[^}]*font-size:15px)(?=[^}]*line-height:1\.2)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel \.imd-intro-text p\{(?=[^}]*margin-bottom:2px)(?=[^}]*font-size:12\.5px)(?=[^}]*line-height:1\.3)[^}]*\}/s);
   assert.doesNotMatch(wideDesktopCss, /max-height:175px/);
   assert.match(html, /Online melden\. Wir übernehmen Abholung, Gutachten und Auszahlung\./);
   assert.match(html, /Ein Vorgang\. Ein Ansprechpartner\./);
@@ -218,15 +222,25 @@ test('service process adapts between mid and wide desktop ranges', () => {
   assert.match(midDesktopCss, /#service \.imd-process-line-icon\{[^}]*width:44px[^}]*height:44px/s);
   assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(odd\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
   assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(-n\+2\)\{[^}]*border-bottom:1px solid rgba\(154,156,153,\.38\)/s);
-  assert.match(midDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{display:none\}/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:220px 1fr)(?=[^}]*gap:12px)[^}]*\}/s);
+  assert.match(midDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:280px 1fr)(?=[^}]*gap:8px)[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-process-grid\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:0)(?=[^}]*padding:6px 8px)(?=[^}]*grid-template-columns:40px minmax\(0,1fr\))(?=[^}]*column-gap:8px)[^}]*\}/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-line-icon\{[^}]*width:40px[^}]*height:40px/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:0)(?=[^}]*padding:4px 6px)(?=[^}]*grid-template-columns:36px minmax\(0,1fr\))(?=[^}]*column-gap:8px)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-line-icon\{[^}]*width:36px[^}]*height:36px/s);
   assert.match(wideDesktopCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{(?=[^}]*min-width:0)(?=[^}]*overflow-wrap:break-word)[^}]*\}/s);
   assert.doesNotMatch(wideDesktopCss, /overflow-wrap:anywhere/);
   assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"→")(?=[^}]*display:block)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
+});
+
+test('service process uses divider-only connectors with no arrows in the final layer', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+  const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
+  const noArrowRule = /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s;
+
+  assert.match(desktopCss, noArrowRule);
+  assert.match(wideDesktopCss, noArrowRule);
+  assert.doesNotMatch(finalServiceCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{[^}]*content:"/s);
 });
 
 test('service benefit icons remain in grid flow and cannot cover text', () => {
