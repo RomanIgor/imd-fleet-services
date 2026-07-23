@@ -3210,16 +3210,16 @@ tbody tr:hover td{background:var(--f0)}
 }
 
 @media(min-width:1260px){
-#service .imd-hero{grid-template-columns:470px minmax(300px,1fr) 330px;gap:32px}
-#service .imd-hero-card{max-width:470px;padding:22px 28px;justify-self:start}
+#service .imd-hero{grid-template-columns:430px minmax(300px,1fr) 300px;gap:32px}
+#service .imd-hero-card{max-width:430px;padding:18px 24px;justify-self:start}
 #service .imd-tags{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-#service .imd-tags span{padding:0 8px}
-#service .imd-cost-card{max-width:330px;padding:20px 24px;justify-self:end}
-#service .imd-h1{font-size:clamp(34px,2.5vw,40px);line-height:1.05}
-#service .imd-cost-h{font-size:22px}
-#service .imd-process-panel{width:min(1240px,100%);justify-self:center;padding:14px 20px}
-#service .imd-bottom-panel{width:min(1240px,100%);justify-self:center}
-#service .imd-why-compact{padding:16px 20px}
+#service .imd-tags span{padding:0 4px}
+#service .imd-cost-card{max-width:300px;padding:18px 20px;justify-self:end}
+#service .imd-h1{font-size:clamp(32px,2.1vw,36px);line-height:1.05}
+#service .imd-cost-h{font-size:20px}
+#service .imd-process-panel{width:min(1180px,100%);justify-self:center;padding:12px 18px}
+#service .imd-bottom-panel{width:min(1180px,100%);justify-self:center}
+#service .imd-why-compact{padding:14px 18px}
 }
 
 @media(min-width:1121px) and (max-width:1439px){
