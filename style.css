@@ -3186,8 +3186,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-benefit-card{display:flex;flex-direction:column;border:1px solid rgba(154,156,153,.52);box-shadow:0 18px 44px rgba(28,34,40,.12)}
 #service .imd-benefit-card--primary{background:var(--service-highlight);color:var(--service-graphite)}
 #service .imd-benefit-card--secondary{background:var(--service-navy);border-color:rgba(229,228,223,.16);color:var(--service-highlight);box-shadow:0 22px 48px rgba(28,34,40,.20)}
-#service .imd-benefit-card h3,#service .imd-why-compact h3{margin:0 0 14px;font-size:20px;line-height:1.2;color:var(--service-graphite)}
-#service .imd-why-compact{padding:20px 24px;background:var(--service-highlight);border:1px solid rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
+#service .imd-benefit-card h3{margin:0 0 14px;font-size:20px;line-height:1.2;color:var(--service-graphite)}
 #service .imd-why-items{height:auto;display:grid;grid-template-columns:1fr;gap:0}
 #service .imd-why-items article{position:relative;min-width:0;min-height:70px;padding:10px 0;display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-content:center;background:transparent;border:0;border-radius:0;box-shadow:none}
 #service .imd-why-items article:not(:last-child)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(154,156,153,.44)}
@@ -3201,7 +3200,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-benefit-card--secondary .imd-why-items p{color:rgba(229,228,223,.76)}
 #service .imd-benefit-card--secondary .imd-why-icon{background:rgba(229,228,223,.10);border-color:rgba(229,228,223,.28)}
 #service .imd-benefit-card--secondary .imd-why-icon img{filter:brightness(0) invert(1);opacity:.92}
-#service .imd-cta-split{padding:12px 24px;display:flex;flex-direction:column;background:var(--service-navy);border:1px solid rgba(154,156,153,.52);color:var(--service-graphite);box-shadow:0 18px 44px rgba(28,34,40,.12)}
+#service .imd-cta-split{padding:12px 24px;display:flex;flex-direction:column;background:var(--service-highlight);border:1px solid rgba(154,156,153,.52);color:var(--service-graphite);box-shadow:0 18px 44px rgba(28,34,40,.12)}
 #service .imd-cta-split h3{margin:0 0 8px;font-size:22px;line-height:1.15;color:var(--service-graphite)}
 #service .imd-cta-split p,#service .imd-cta-split li,#service .imd-cta-split small{color:var(--service-body)}
 #service .imd-cta-split li{font-size:15px}
@@ -3212,7 +3211,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cta-split small{font-size:12px}
 }
 
-@media(min-width:1121px){
+@media(min-width:1120px){
 #service{scroll-margin-top:72px}
 #service .imd-cta-split p{margin:0 0 8px;font-size:15px;line-height:1.45}
 #service .imd-cta-split ul{margin:0 0 10px;gap:4px}
@@ -3229,15 +3228,12 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-cost-h{font-size:20px}
 #service .imd-process-panel{width:min(1180px,100%);justify-self:center;padding:12px 18px}
 #service .imd-process-panel .imd-process-grid article{min-height:0}
-#service .imd-bottom-panel{width:min(1180px,100%);justify-self:center;align-items:start}
-#service .imd-bottom-panel.imd-glass{align-items:stretch}
-#service .imd-why-compact{padding:14px 18px}
+#service .imd-bottom-panel{width:min(1180px,100%);justify-self:center;align-items:stretch}
 #service .imd-why-items article{min-height:0}
-#service .imd-cta-split{min-height:0;align-self:start}
-#service .imd-benefit-card,#service .imd-bottom-panel .imd-cta-split{min-height:205px;align-self:stretch}
+#service .imd-benefit-card,#service .imd-cta-split{min-height:205px;align-self:stretch}
 }
 
-@media(min-width:1121px) and (max-width:1439px){
+@media(min-width:1120px) and (max-width:1440px){
 #service .imd-process-panel{grid-template-columns:minmax(230px,250px) 1fr;gap:16px}
 #service .imd-process-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
 #service .imd-process-grid article{min-height:108px;padding:14px 10px;grid-template-columns:44px minmax(0,1fr);column-gap:10px}
@@ -3247,7 +3243,7 @@ tbody tr:hover td{background:var(--f0)}
 #service .imd-process-grid article:nth-child(odd){border-right:1px solid rgba(154,156,153,.38)}
 #service .imd-process-grid article:nth-child(-n+2){border-bottom:1px solid rgba(154,156,153,.38)}
 #service .imd-process-grid article:not(:last-child)::after{display:none}
-#service .imd-cta-split{padding:20px 22px;background:var(--service-highlight)}
+#service .imd-cta-split{padding:20px 22px}
 }
 
 @media(min-width:1440px){
@@ -3334,8 +3330,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-benefit-card{display:flex;flex-direction:column;border:1px solid rgba(154,156,153,.52);box-shadow:0 18px 44px rgba(28,34,40,.12)}
   #service .imd-benefit-card--primary{background:var(--service-highlight);color:var(--service-graphite)}
   #service .imd-benefit-card--secondary{background:var(--service-navy);border-color:rgba(229,228,223,.16);color:var(--service-highlight);box-shadow:0 22px 48px rgba(28,34,40,.20)}
-  #service .imd-benefit-card h3,#service .imd-why-compact h3{margin:0 0 24px;font-size:22px;color:var(--service-graphite)}
-  #service .imd-why-compact{min-height:0;padding:28px 30px;background:var(--service-highlight);border:1px solid rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
+  #service .imd-benefit-card h3{margin:0 0 24px;font-size:22px;color:var(--service-graphite)}
   #service .imd-why-items{height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:0 24px}
   #service .imd-why-items article,#service .imd-why-items article:first-child,#service .imd-why-items article:nth-child(odd){position:relative;min-width:0;min-height:112px;padding:20px 10px;display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-content:center;overflow:visible;background:transparent;border:0;border-radius:0;box-shadow:none}
   #service .imd-why-items article:nth-child(-n+2)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(154,156,153,.44)}
@@ -3382,7 +3377,6 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-process-grid p{font-size:15px}
   #service .imd-bottom-panel{grid-template-columns:1fr;gap:24px}
   #service .imd-benefit-card{padding:26px 22px;border-radius:16px}
-  #service .imd-why-compact{padding:26px 22px;border-radius:16px}
   #service .imd-why-items{grid-template-columns:1fr;gap:0}
   #service .imd-why-items article,#service .imd-why-items article:first-child,#service .imd-why-items article:nth-child(odd){min-height:100px;padding:18px 0;display:grid;grid-template-columns:50px minmax(0,1fr);column-gap:12px;background:transparent;border:0}
   #service .imd-why-items article:not(:last-child)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(154,156,153,.44)}

@@ -6,6 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
+const finalServiceCss = css.slice(css.lastIndexOf('/* Professional Fahrzeugverkauf redesign */'));
 
 function finalMediaBlock(marker) {
   const start = css.lastIndexOf(marker);
@@ -105,7 +106,7 @@ test('service desktop compaction controls composed content rather than relying o
 
 test('service anchor offset and compact CTA rhythm apply only at the effective desktop range', () => {
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
-  const effectiveDesktopCss = finalMediaBlock('@media(min-width:1121px){');
+  const effectiveDesktopCss = finalMediaBlock('@media(min-width:1120px){');
 
   assert.match(effectiveDesktopCss, /#service\{[^}]*scroll-margin-top:72px/s);
   assert.match(effectiveDesktopCss, /#service \.imd-cta-split p\{(?=[^}]*margin:0 0 8px)(?=[^}]*line-height:1\.45)[^}]*\}/s);
@@ -139,10 +140,10 @@ test('service uses a unified desktop grid with content-driven cards', () => {
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
   assert.match(logoSafeCss, /#service \.imd-hero\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*justify-self:center)(?=[^}]*align-items:start)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1180px,100%\)/s);
-  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*align-items:start)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*align-items:stretch)[^}]*\}/s);
   assert.match(logoSafeCss, /#service \.imd-process-panel \.imd-process-grid article\{[^}]*min-height:0/s);
   assert.match(logoSafeCss, /#service \.imd-why-items article\{[^}]*min-height:0/s);
-  assert.match(logoSafeCss, /#service \.imd-cta-split\{(?=[^}]*min-height:0)(?=[^}]*align-self:start)[^}]*\}/s);
+  assert.match(logoSafeCss, /#service \.imd-benefit-card,#service \.imd-cta-split\{(?=[^}]*min-height:205px)(?=[^}]*align-self:stretch)[^}]*\}/s);
 });
 
 test('service wide desktop protects the showroom logo with compact rails', () => {
@@ -180,7 +181,7 @@ test('service wide desktop uses the reference support-card composition without n
 });
 
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
-  const compactDesktopCss = finalMediaBlock('@media(min-width:1121px){');
+  const compactDesktopCss = finalMediaBlock('@media(min-width:1120px){');
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
 
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-hero\{[^}]*grid-template-columns:470px minmax\(300px,1fr\) 330px/s);
@@ -190,7 +191,7 @@ test('service logo-safe geometry begins only at the large desktop boundary', () 
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-cost-h\{[^}]*font-size:22px/s);
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-process-panel\{[^}]*width:min\(1240px,100%\)/s);
   assert.doesNotMatch(compactDesktopCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1240px,100%\)/s);
-  assert.doesNotMatch(compactDesktopCss, /#service \.imd-why-compact\{[^}]*padding:16px 20px/s);
+  assert.doesNotMatch(compactDesktopCss, /#service \.imd-benefit-card\{[^}]*padding:16px 20px/s);
   assert.match(logoSafeCss, /#service \.imd-process-panel\{[^}]*width:min\(1180px,100%\)/s);
   assert.match(logoSafeCss, /#service \.imd-bottom-panel\{[^}]*width:min\(1180px,100%\)/s);
 });
@@ -208,7 +209,7 @@ test('service logo-safe bands stay fluid without weakening desktop process text'
 });
 
 test('service process adapts between mid and wide desktop ranges', () => {
-  const midDesktopCss = finalMediaBlock('@media(min-width:1121px) and (max-width:1439px){');
+  const midDesktopCss = finalMediaBlock('@media(min-width:1120px) and (max-width:1440px){');
   const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
 
   assert.match(midDesktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:minmax\(230px,250px\) 1fr)(?=[^}]*gap:16px)[^}]*\}/s);
@@ -237,17 +238,30 @@ test('service benefit icons remain in grid flow and cannot cover text', () => {
 });
 
 test('service benefits avoid an administrative boxed grid', () => {
-  assert.match(css, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
+  assert.match(finalServiceCss, /#service \.imd-benefit-card--primary\{[^}]*background:var\(--service-highlight\)/s);
   assert.match(css, /#service \.imd-why-items article\{[^}]*background:transparent[^}]*border:0/s);
   assert.match(css, /#service \.imd-why-items article:nth-child\(-n\+2\)::after/);
   assert.match(css, /#service \.imd-why-items p\{[^}]*font-size:15px/s);
+  assert.doesNotMatch(finalServiceCss, /\.imd-why-compact/);
 });
 
-test('service CTA and keyboard focus are accessible', () => {
-  assert.match(css, /#service \.imd-cta-split\{[^}]*background:var\(--service-navy\)/s);
+test('service CTA has a gapless light surface and keyboard focus', () => {
+  const desktopCss = finalMediaBlock('@media(min-width:1101px){');
+
+  assert.match(desktopCss, /#service \.imd-cta-split\{(?=[^}]*background:var\(--service-highlight\))(?=[^}]*color:var\(--service-graphite\))[^}]*\}/s);
+  assert.match(desktopCss, /#service \.imd-cta-split p,#service \.imd-cta-split li,#service \.imd-cta-split small\{color:var\(--service-body\)\}/s);
+  assert.match(desktopCss, /#service \.imd-button\{(?=[^}]*background:var\(--service-navy\))(?=[^}]*color:var\(--service-highlight\))[^}]*\}/s);
+  assert.doesNotMatch(finalServiceCss, /#service \.imd-cta-split\{[^}]*background:var\(--service-navy\)/s);
+  assert.match(finalServiceCss, /@media\(min-width:1120px\) and \(max-width:1440px\)\{/);
   assert.match(css, /#service \.imd-button\{[^}]*min-height:48px/s);
   assert.match(css, /#service \.imd-button:hover\{background:var\(--service-navy\);border-color:var\(--service-navy\);color:var\(--service-highlight\)\}/);
   assert.match(css, /#service \.imd-button:focus-visible\{[^}]*outline:2px solid var\(--service-blue\)/s);
+});
+
+test('service secondary benefit card keeps navy contrast independently of CTA refinements', () => {
+  assert.match(finalServiceCss, /#service \.imd-benefit-card--secondary\{(?=[^}]*background:var\(--service-navy\))(?=[^}]*color:var\(--service-highlight\))[^}]*\}/s);
+  assert.match(finalServiceCss, /#service \.imd-benefit-card--secondary h3,#service \.imd-benefit-card--secondary \.imd-why-items h4\{color:var\(--service-highlight\)\}/s);
+  assert.match(finalServiceCss, /#service \.imd-benefit-card--secondary \.imd-why-icon img\{[^}]*filter:brightness\(0\) invert\(1\)/s);
 });
 
 test('service mobile layout is content-driven and deliberately stacked', () => {
@@ -266,7 +280,7 @@ test('service mobile layout is content-driven and deliberately stacked', () => {
   assert.match(finalMobileCss, /#service \.imd-process-grid article\{[^}]*height:auto[^}]*min-height:92px/s);
   assert.match(finalMobileCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr/s);
   assert.match(finalMobileCss, /#service \.imd-why-items\{[^}]*grid-template-columns:1fr/s);
-  assert.match(finalMobileCss, /#service \.imd-why-compact\{[^}]*padding:26px 22px[^}]*border-radius:16px/s);
+  assert.match(finalMobileCss, /#service \.imd-benefit-card\{[^}]*padding:26px 22px[^}]*border-radius:16px/s);
   assert.match(finalMobileCss, /#service \.imd-why-items article,#service \.imd-why-items article:first-child,#service \.imd-why-items article:nth-child\(odd\)\{[^}]*min-height:100px[^}]*background:transparent[^}]*border:0/s);
   assert.match(finalMobileCss, /#service \.imd-why-items article:not\(:last-child\)::after\{[^}]*content:""[^}]*bottom:0/s);
   assert.match(finalMobileCss, /#service \.imd-cta-split \.imd-button\{[^}]*min-height:52px/s);
@@ -291,7 +305,7 @@ test('service tablet layout keeps the message and cost panel in a deliberate two
   assert.match(finalTabletCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{display:none\}/s);
   assert.match(finalTabletCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{[^}]*overflow-wrap:anywhere/s);
   assert.match(finalTabletCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr[^}]*gap:24px/s);
-  assert.match(finalTabletCss, /#service \.imd-why-compact\{[^}]*background:var\(--service-highlight\)/s);
+  assert.match(finalTabletCss, /#service \.imd-benefit-card--primary\{[^}]*background:var\(--service-highlight\)/s);
   assert.match(finalTabletCss, /#service \.imd-why-items article:nth-child\(-n\+2\)::after\{[^}]*content:""[^}]*bottom:0/s);
   assert.doesNotMatch(finalTabletCss, /#service \.imd-why-items article:not\(:last-child\)::after/);
   assert.match(finalTabletCss, /#service \.imd-why-items h4,#service \.imd-why-items p\{[^}]*overflow-wrap:anywhere/s);
