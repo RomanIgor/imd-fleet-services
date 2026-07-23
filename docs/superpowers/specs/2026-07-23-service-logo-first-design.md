@@ -8,7 +8,7 @@ Make the embossed IMD showroom logo the visual center of the desktop service sec
 
 ## Desktop composition
 
-The logo-first composition applies at `min-width:1260px`.
+The logo-first composition applies at `min-width:1440px`. The existing compact composition remains active from `1260px` through `1439px`, because the two side cards, gaps, and a 600px logo-safe track cannot fit below 1440px without overflow.
 
 ### Opening stage
 
@@ -47,7 +47,7 @@ The logo-first composition applies at `min-width:1260px`.
 
 ## Responsive behavior
 
-- `1121–1259px`, tablet, and mobile compositions remain unchanged.
+- `1121–1439px`, tablet, and mobile compositions remain unchanged.
 - The compact wide-desktop design must not create horizontal overflow.
 - Tags remain at least `12px`; body copy remains at least `15px`; interactive targets remain at least `48px`.
 

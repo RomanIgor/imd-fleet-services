@@ -24,7 +24,7 @@ function finalMediaBlock(marker) {
 
 test('service redesign uses the binding IMD concrete palette', () => {
   assert.match(css, /#service\{--service-concrete:#CAC9C4;--service-medium:#B3B4B0;--service-highlight:#E5E4DF;--service-card:#D6D6D2;--service-navy:#202A3B;--service-graphite:#1C2228;--service-body:#4C5257;--service-muted:#777A78;--service-border:#9A9C99;--service-soft-border:#BCBDB9;--service-blue:#36A2C5;--service-blue-hover:#278FB4\}/);
-  assert.match(html, /style\.css\?v=service-logo-safe-12/);
+  assert.match(html, /style\.css\?v=service-logo-safe-13/);
 });
 
 test('service opening area has a navy primary panel and restrained card surface', () => {
@@ -42,7 +42,7 @@ test('service process is one coherent editorial band', () => {
 });
 
 test('service process emphasis overrides the global white rule with AA navy', () => {
-  assert.match(html, /<p class="imd-strong">Kein internes Projekt, sondern ein sauber abgewickelter Vorgang\.<\/p>/);
+  assert.match(html, /<p class="imd-strong">Ein Vorgang\. Ein Ansprechpartner\.<\/p>/);
 
   const desktopCss = finalMediaBlock('@media(min-width:1101px){');
   const tabletCss = finalMediaBlock('@media(max-width:1120px){');
@@ -145,6 +145,18 @@ test('service uses a unified desktop grid with content-driven cards', () => {
   assert.match(logoSafeCss, /#service \.imd-cta-split\{(?=[^}]*min-height:0)(?=[^}]*align-self:start)[^}]*\}/s);
 });
 
+test('service wide desktop protects the showroom logo with compact rails', () => {
+  const wideDesktopCss = finalMediaBlock('@media(min-width:1440px){');
+  assert.match(wideDesktopCss, /#service \.imd-hero\{(?=[^}]*width:min\(1400px,100%\))(?=[^}]*grid-template-columns:360px minmax\(600px,1fr\) 270px)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-hero-card\{[^}]*max-width:360px/s);
+  assert.match(wideDesktopCss, /#service \.imd-cost-card\{[^}]*max-width:270px/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*grid-template-columns:220px 1fr)[^}]*\}/s);
+  assert.doesNotMatch(wideDesktopCss, /max-height:175px/);
+  assert.match(wideDesktopCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\) 300px/s);
+  assert.match(html, /Online melden\. Wir übernehmen Abholung, Gutachten und Auszahlung\./);
+  assert.match(html, /Ein Vorgang\. Ein Ansprechpartner\./);
+});
+
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
   const compactDesktopCss = finalMediaBlock('@media(min-width:1121px){');
   const logoSafeCss = finalMediaBlock('@media(min-width:1260px){');
@@ -184,10 +196,10 @@ test('service process adapts between mid and wide desktop ranges', () => {
   assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(odd\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
   assert.match(midDesktopCss, /#service \.imd-process-grid article:nth-child\(-n\+2\)\{[^}]*border-bottom:1px solid rgba\(154,156,153,\.38\)/s);
   assert.match(midDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)::after\{display:none\}/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:minmax\(280px,300px\) 1fr)(?=[^}]*gap:16px)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*grid-template-columns:220px 1fr)(?=[^}]*gap:12px)[^}]*\}/s);
   assert.match(wideDesktopCss, /#service \.imd-process-grid\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:88px)(?=[^}]*padding:8px 10px)(?=[^}]*grid-template-columns:44px minmax\(0,1fr\))(?=[^}]*column-gap:10px)[^}]*\}/s);
-  assert.match(wideDesktopCss, /#service \.imd-process-line-icon\{[^}]*width:44px[^}]*height:44px/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-grid article\{(?=[^}]*min-height:0)(?=[^}]*padding:6px 8px)(?=[^}]*grid-template-columns:40px minmax\(0,1fr\))(?=[^}]*column-gap:8px)[^}]*\}/s);
+  assert.match(wideDesktopCss, /#service \.imd-process-line-icon\{[^}]*width:40px[^}]*height:40px/s);
   assert.match(wideDesktopCss, /#service \.imd-process-grid h4,#service \.imd-process-grid p\{(?=[^}]*min-width:0)(?=[^}]*overflow-wrap:break-word)[^}]*\}/s);
   assert.doesNotMatch(wideDesktopCss, /overflow-wrap:anywhere/);
   assert.match(wideDesktopCss, /#service \.imd-process-grid article:not\(:last-child\)\{[^}]*border-right:1px solid rgba\(154,156,153,\.38\)/s);
