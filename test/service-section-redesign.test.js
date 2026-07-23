@@ -152,7 +152,6 @@ test('service wide desktop protects the showroom logo with compact rails', () =>
   assert.match(wideDesktopCss, /#service \.imd-cost-card\{[^}]*max-width:270px/s);
   assert.match(wideDesktopCss, /#service \.imd-process-panel\{(?=[^}]*width:min\(1180px,100%\))(?=[^}]*grid-template-columns:220px 1fr)[^}]*\}/s);
   assert.doesNotMatch(wideDesktopCss, /max-height:175px/);
-  assert.match(wideDesktopCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\) 300px/s);
   assert.match(html, /Online melden\. Wir übernehmen Abholung, Gutachten und Auszahlung\./);
   assert.match(html, /Ein Vorgang\. Ein Ansprechpartner\./);
 });
@@ -162,33 +161,22 @@ test('service wide desktop uses the reference support-card composition without n
   const supportTier = html.match(/<section class="imd-bottom-panel imd-glass">([\s\S]*?)<\/section>/)?.[1];
 
   assert.ok(supportTier, 'service support tier is present');
-  assert.match(html, /class="imd-benefit-card imd-benefit-card--primary"/);
-  assert.match(html, /class="imd-benefit-card imd-benefit-card--secondary"/);
+  assert.match(supportTier, /class="imd-benefit-card imd-benefit-card--primary"/);
+  assert.match(supportTier, /class="imd-benefit-card imd-benefit-card--secondary"/);
   assert.match(wideDesktopCss, /grid-template-columns:360px minmax\(600px,1fr\) 270px/);
   assert.match(wideDesktopCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/s);
+  assert.doesNotMatch(wideDesktopCss, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\) 300px/s);
 
   const primaryIndex = supportTier.indexOf('class="imd-benefit-card imd-benefit-card--primary"');
   const ctaIndex = supportTier.indexOf('class="imd-cta-split"');
   const secondaryIndex = supportTier.indexOf('class="imd-benefit-card imd-benefit-card--secondary"');
   assert.ok(primaryIndex >= 0 && primaryIndex < ctaIndex && ctaIndex < secondaryIndex, 'CTA remains between benefit cards');
 
-  const claimText = [...supportTier.matchAll(/<(h4|p|li|small)>([\s\S]*?)<\/\1>/g)]
-    .map((match) => match[2].replace(/<[^>]+>/g, '').trim());
-  assert.deepEqual(claimText, [
-    'Sicher &amp; zuverlässig',
-    'Professionelle und diskrete Abwicklung.',
-    'Zeit- &amp; ressourcensparend',
-    'Der komplette Prozess aus einer Hand.',
-    'Starten Sie Ihren Verkaufsprozess.',
-    'Schnell &amp; unkompliziert',
-    'Kostenlos &amp; ohne Aufwand',
-    'Faire Preise ohne Nachverhandlung',
-    'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
-    'Bestmöglicher Preis',
-    'Transparente Wertermittlung.',
-    'Persönlicher Partner',
-    'Ein Ansprechpartner für den Fuhrpark.',
-  ]);
+  const supportTierText = supportTier.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  assert.equal(
+    supportTierText,
+    'Warum Unternehmen IMD wählen Sicher &amp; zuverlässig Professionelle und diskrete Abwicklung. Zeit- &amp; ressourcensparend Der komplette Prozess aus einer Hand. Bereit für einen einfachen Fahrzeugverkauf? Starten Sie Ihren Verkaufsprozess. Schnell &amp; unkompliziert Kostenlos &amp; ohne Aufwand Faire Preise ohne Nachverhandlung Jetzt unverbindlich anfragen → Wir melden uns innerhalb von 24 Stunden bei Ihnen. Warum Unternehmen IMD wählen Bestmöglicher Preis Transparente Wertermittlung. Persönlicher Partner Ein Ansprechpartner für den Fuhrpark.',
+  );
 });
 
 test('service logo-safe geometry begins only at the large desktop boundary', () => {
