@@ -846,7 +846,7 @@ function submitForm(){
   fd.append('telefon', document.getElementById('fTel').value||'');
   fd.append('marke',   document.getElementById('fMarke').value||'');
   fd.append('modell',  document.getElementById('fModell')?.value||'');
-  fd.append('baujahr', document.getElementById('fBaujahr')?.value||'');
+  fd.append('baujahr', document.getElementById('fJahr')?.value||'');
   fd.append('km',      document.getElementById('fKm')?.value||'');
   fd.append('fahrzeuge','');
   fd.append('anmerkung', document.getElementById('fHinweise')?.value||'');

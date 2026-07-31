@@ -4,31 +4,27 @@ const test = require('node:test');
 
 const index = readFileSync('index.html', 'utf8');
 const css = readFileSync('style.css', 'utf8');
-const homeCss = readFileSync('home-final.css', 'utf8');
 const js = readFileSync('main.js', 'utf8');
 
-test('homepage follows the new premium fleet-services visual direction', () => {
-  assert.match(index, /Einfach\.\s*Digital\.\s*Zuverl(?:ae|ä)ssig\./);
-  assert.match(index, /Wir kaufen Ihre Dienst- und Firmenfahrzeuge/);
-  assert.match(index, /class="[^"]*ops-hero/);
-  assert.match(index, /class="[^"]*ops-trust-strip/);
-  assert.match(index, /class="[^"]*ops-step-card/);
-  assert.doesNotMatch(index, /fonts\.googleapis\.com/);
-  assert.doesNotMatch(index, /Garantierter Mindestpreis durch Wertgutachten/);
-  assert.doesNotMatch(index, /🏆|ðŸ†/);
+test('homepage exposes the complete current vehicle-sale journey', () => {
+  assert.match(index, /class="hero" id="top"/);
+  assert.match(index, /<section id="service">/);
+  assert.match(index, /<section class="section" id="prozess">/);
+  assert.match(index, /<section class="section" id="warum">/);
+  assert.match(index, /<section class="section sec-light" id="rechner">/);
+  assert.match(index, /<section class="section sec-dark" id="anmelden">/);
+  assert.match(index, /<section class="section sec-light" id="kontakt">/);
+  assert.match(index, /Dienstwagen verkaufen/);
+  assert.match(index, /Ohne Aufwand für Ihr Unternehmen/);
 });
 
-test('homepage includes real PWA proof and non-autoplay demo affordance', () => {
-  assert.match(index, /class="[^"]*pwa-showcase/);
-  assert.match(index, /Digitales Schadenmanagement/);
-  assert.match(index, /schaden-mobile\.png/);
-  assert.match(index, /upload-guides\.png/);
-  assert.match(index, /id="pwa-videoModal"/);
-  assert.match(index, /openPwaVideo\(\)/);
-  assert.doesNotMatch(index, /<video[^>]+autoplay/i);
+test('homepage loads the active stylesheet and consent-gates external fonts', () => {
+  assert.match(index, /href="style\.css\?v=[^"]+"/);
+  assert.match(index, /data-consent-category="external"[^>]+fonts\.googleapis\.com/);
+  assert.doesNotMatch(index, /href="home-final\.css/);
 });
 
-test('existing lead form IDs required by submitForm are preserved', () => {
+test('current lead form IDs required by its three-step flow are preserved', () => {
   [
     'fFirma',
     'fName',
@@ -36,36 +32,35 @@ test('existing lead form IDs required by submitForm are preserved', () => {
     'fTel',
     'fMarke',
     'fModell',
-    'fBaujahr',
+    'fJahr',
     'fKm',
     'fHinweise',
     'fC1',
     'fC2',
+    'fp1',
+    'fp2',
     'fp3',
     'fOk',
     'formBar',
   ].forEach((id) => assert.match(index, new RegExp(`id="${id}"`), `missing #${id}`));
+
+  assert.match(js, /document\.getElementById\('fJahr'\)\.value/);
+  assert.match(js, /fd\.append\('baujahr',\s*document\.getElementById\('fJahr'\)\?\.value\|\|''\)/);
+  assert.doesNotMatch(js, /getElementById\('fBaujahr'\)/);
 });
 
-test('legacy homepage scripts safely no-op when removed sections are absent', () => {
+test('optional homepage modules safely no-op when their markup is absent', () => {
   assert.match(js, /function calcUpdate\(\)\{\s*const cAnzahl=document\.getElementById\('cAnzahl'\);\s*if\(!cAnzahl\)return;/);
-  assert.match(js, /if\(!SLIDES\.length\)return;/);
-  assert.match(js, /function openPwaVideo\(\)/);
-  assert.match(js, /function closePwaVideo\(\)/);
+  assert.match(js, /function openPwaVideo\(\)[\s\S]*?if \(!modal\) return;/);
+  assert.match(js, /function closePwaVideo\(\)[\s\S]*?if \(!modal\) return;/);
 });
 
-test('operational homepage CSS is scoped and uses local font stack', () => {
-  assert.match(index, /home-final\.css\?v=20260527f/);
-  assert.match(css, /body\.ops-home/);
-  assert.match(css, /--ops-font:/);
-  assert.match(css, /\.ops-hero/);
-  assert.match(css, /background-image:.*image\.jpg/s);
-  assert.match(css, /\.ops-trust-strip/);
-  assert.match(css, /\.ops-step-card/);
-  assert.match(css, /\.pwa-showcase/);
-  assert.match(css, /\.pwa-video-modal/);
-  assert.match(homeCss, /body\.premium-home/);
-  assert.match(homeCss, /--page-max: min\(1760px/);
-  assert.match(homeCss, /@media \(min-width: 1600px\)/);
-  assert.match(homeCss, /@media \(max-width: 760px\)/);
+test('current homepage styles include the concrete service composition and responsive layout', () => {
+  assert.match(css, /--service-concrete:\s*#CAC9C4/);
+  assert.match(css, /--service-navy:\s*#202A3B/);
+  assert.match(css, /url\('assets\/showroom-background\.png'\)/);
+  assert.match(css, /#service \.imd-process-panel/);
+  assert.match(css, /#service \.imd-bottom-panel/);
+  assert.match(css, /@media\(max-width:\s*768px\)/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
 });
