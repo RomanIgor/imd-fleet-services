@@ -31,3 +31,11 @@ test('process uses concrete panels, navy markers, and a blue active state', () =
   assert.match(css, /#prozess \.home-road-step::before\{[^}]*var\(--opening-navy\)/s);
   assert.match(css, /#prozess \.home-road-step\.is-active\{[^}]*var\(--opening-accent\)/s);
 });
+
+test('process section uses a layered medium-concrete hierarchy', () => {
+  assert.match(css, /#prozess\.section\{--process-section:#B3B4B0;--process-roadmap:#D6D6D2;--process-card:#CAC9C4;--process-intro:#202A3B;/);
+  assert.match(css, /#prozess \.home-process-intro\{[^}]*background:var\(--process-intro\)/);
+  assert.match(css, /#prozess \.home-roadmap\{[^}]*background:var\(--process-roadmap\)/);
+  assert.match(css, /#prozess \.home-road-step,#prozess \.home-road-benefit\{[^}]*background:var\(--process-card\)/);
+  assert.match(css, /#prozess \.home-road-step\.is-active\{[^}]*background:var\(--opening-highlight\)/);
+});

@@ -3391,3 +3391,15 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-process-grid article,#service .imd-button{animation:none!important;transition:none!important}
 }
 
+/* Process section: layered IMD concrete hierarchy */
+#prozess.section{--process-section:#B3B4B0;--process-roadmap:#D6D6D2;--process-card:#CAC9C4;--process-intro:#202A3B;background-color:var(--process-section);background-image:linear-gradient(90deg,rgba(28,34,40,.18),rgba(179,180,176,.58) 46%,rgba(28,34,40,.24)),url('new_images/2.jpeg')}
+#prozess::before{background:linear-gradient(90deg,rgba(28,34,40,.18),transparent 42%,rgba(28,34,40,.22))}
+#prozess .home-process-intro{background:var(--process-intro);border-color:rgba(229,228,223,.18);box-shadow:0 20px 48px rgba(28,34,40,.24),inset 0 1px rgba(229,228,223,.08);color:var(--opening-highlight)}
+#prozess .home-process-intro .h2,#prozess .home-process-note strong{color:var(--opening-highlight)}
+#prozess .home-process-intro .lead,#prozess .home-process-note span{color:rgba(229,228,223,.76)}
+#prozess .home-process-intro .eyebrow{color:rgba(229,228,223,.68)}
+#prozess .home-process-note{background:rgba(229,228,223,.07);border-color:rgba(229,228,223,.18)}
+#prozess .home-roadmap{background:var(--process-roadmap);border-color:rgba(154,156,153,.72);box-shadow:0 20px 50px rgba(28,34,40,.20),inset 0 1px rgba(255,255,255,.42)}
+#prozess .home-road-step,#prozess .home-road-benefit{background:var(--process-card);border-color:rgba(154,156,153,.72);box-shadow:inset 0 1px rgba(255,255,255,.34)}
+#prozess .home-road-step.is-active{background:var(--opening-highlight);border-color:var(--opening-accent);box-shadow:0 16px 36px rgba(28,34,40,.18),0 0 0 2px rgba(54,162,197,.15),inset 0 1px rgba(255,255,255,.60)}
+
