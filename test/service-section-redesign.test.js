@@ -102,7 +102,7 @@ test('desktop process uses centered equal steps and subtle connectors', () => {
   assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:48px minmax\(0,1fr\))(?=[^}]*grid-template-rows:auto auto)(?=[^}]*column-gap:14px)(?=[^}]*align-items:center)(?=[^}]*text-align:left)(?=[^}]*padding:0)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*display:block)(?=[^}]*top:21px)(?=[^}]*left:calc\(100% \+ 4px\))(?=[^}]*width:24px)(?=[^}]*height:6px)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-line-icon\{(?=[^}]*grid-column:1)(?=[^}]*grid-row:1 \/ 3)(?=[^}]*width:48px)(?=[^}]*height:48px)(?=[^}]*margin:0)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid h4\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:1)(?=[^}]*margin:0 0 3px)(?=[^}]*font-size:17px)(?=[^}]*font-weight:600)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid h4\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:1)(?=[^}]*margin:0 0 3px)(?=[^}]*font-size:17px)(?=[^}]*font-weight:600)(?=[^}]*line-height:1\.1)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid h4::before\{(?=[^}]*display:block)(?=[^}]*margin-bottom:2px)(?=[^}]*font-size:11px)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid p\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:2)(?=[^}]*max-width:190px)(?=[^}]*font-size:14px)(?=[^}]*line-height:1\.35)(?=[^}]*-webkit-line-clamp:2)[^}]*\}/s);
 });
