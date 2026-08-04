@@ -134,7 +134,7 @@ test('mobile process becomes a connected vertical timeline', () => {
   const mobile = finalMediaBlock('@media(max-width:768px){');
   assert.match(mobile, /#service \.imd-process-grid\{[^}]*grid-template-columns:1fr/s);
   assert.match(mobile, /#service \.imd-process-grid::before\{(?=[^}]*left:22px)(?=[^}]*top:22px)(?=[^}]*bottom:22px)(?=[^}]*width:1px)(?=[^}]*height:auto)[^}]*\}/s);
-  assert.match(mobile, /#service \.imd-process-grid article\{[^}]*border:0[^}]*background:transparent/s);
+  assert.match(mobile, /#service \.imd-process-grid article\{(?=[^}]*border:0)(?=[^}]*background:transparent)[^}]*\}/s);
   assert.match(mobile, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr/s);
 });
 
