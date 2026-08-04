@@ -88,7 +88,7 @@ test('service lower tier preserves all current benefit and CTA content', () => {
 test('desktop uses 48 to 64px editorial section rhythm', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
   assert.match(desktop, /#service \.imd-page\{[^}]*gap:clamp\(48px,4vw,64px\)/s);
-  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*grid-template-columns:1fr)(?=[^}]*padding:clamp\(32px,3vw,40px\))[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*height:auto)(?=[^}]*grid-template-columns:1fr)(?=[^}]*padding:clamp\(32px,3vw,40px\))[^}]*\}/s);
 });
 
 test('desktop process is one centered connected flow without step cards', () => {
@@ -124,6 +124,7 @@ test('CTA is compact, top-aligned, and uses existing navy contrast', () => {
 
 test('tablet keeps the process readable and stacks benefits above CTA', () => {
   const tablet = finalMediaBlock('@media(max-width:1120px){');
+  assert.match(tablet, /#service \.imd-process-panel\{[^}]*height:auto/s);
   assert.match(tablet, /#service \.imd-process-grid\{[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/s);
   assert.match(tablet, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr[^}]*gap:24px/s);
   assert.match(tablet, /#service \.imd-why-items\{[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/s);

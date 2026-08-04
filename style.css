@@ -3394,7 +3394,7 @@ tbody tr:hover td{background:var(--f0)}
 /* Service editorial composition */
 @media(min-width:1101px){
   #service .imd-page{gap:clamp(48px,4vw,64px)}
-  #service .imd-process-panel{width:min(1360px,100%);min-height:0;justify-self:center;margin:0;padding:clamp(32px,3vw,40px);display:grid;grid-template-columns:1fr;gap:32px;align-items:start;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
+  #service .imd-process-panel{width:min(1360px,100%);height:auto;min-height:0;justify-self:center;margin:0;padding:clamp(32px,3vw,40px);display:grid;grid-template-columns:1fr;gap:32px;align-items:start;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
   #service .imd-process-panel .imd-intro-text{max-width:720px;padding:0;border:0}
   #service .imd-process-grid{position:relative;width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(24px,3vw,48px)}
   #service .imd-process-grid::before{content:"";position:absolute;left:12.5%;right:12.5%;top:24px;height:1px;background:rgba(154,156,153,.52);z-index:0;pointer-events:none}
@@ -3426,7 +3426,7 @@ tbody tr:hover td{background:var(--f0)}
 
 @media(max-width:1120px){
   #service .imd-page{gap:48px}
-  #service .imd-process-panel{width:100%;min-height:0;margin:0;padding:36px 32px;display:grid;grid-template-columns:1fr;gap:28px;align-items:start;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
+  #service .imd-process-panel{width:100%;height:auto;min-height:0;margin:0;padding:36px 32px;display:grid;grid-template-columns:1fr;gap:28px;align-items:start;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
   #service .imd-process-panel .imd-intro-text{max-width:720px;padding:0;border:0}
   #service .imd-process-grid{position:relative;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
   #service .imd-process-grid::before{content:"";position:absolute;left:12.5%;right:12.5%;top:24px;height:1px;background:rgba(154,156,153,.52);z-index:0;pointer-events:none}
