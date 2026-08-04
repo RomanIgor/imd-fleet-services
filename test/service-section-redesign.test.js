@@ -88,33 +88,35 @@ test('service lower tier preserves all current benefit and CTA content', () => {
 test('desktop uses compact intentional section rhythm', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
   assert.match(desktop, /#service \.imd-page\{[^}]*gap:0/s);
-  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:clamp\(56px,4vw,64px\) 0 0)(?=[^}]*padding:18px 32px)(?=[^}]*gap:14px)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-bottom-panel\{[^}]*margin:26px 0 0/s);
+  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*padding:28px 32px)(?=[^}]*grid-template-columns:1fr)(?=[^}]*gap:24px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:24px 0 0)[^}]*\}/s);
 });
 
 test('desktop process uses centered equal steps and subtle connectors', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text h3\{(?=[^}]*margin:0 0 16px)(?=[^}]*font-size:23px)(?=[^}]*color:var\(--service-graphite\))[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*position:relative)(?=[^}]*width:min\(1040px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*gap:clamp\(32px,3vw,48px\))(?=[^}]*counter-reset:service-step)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text\{(?=[^}]*max-width:760px)(?=[^}]*justify-self:center)(?=[^}]*display:flex)(?=[^}]*flex-wrap:wrap)(?=[^}]*justify-content:center)(?=[^}]*column-gap:8px)(?=[^}]*row-gap:2px)(?=[^}]*text-align:center)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text h3\{(?=[^}]*flex-basis:100%)(?=[^}]*margin:0 0 6px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text p\{[^}]*margin:0/s);
+  assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*width:min\(1080px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*gap:32px)(?=[^}]*counter-reset:service-step)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
-  assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*counter-increment:service-step)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"")(?=[^}]*display:block)(?=[^}]*height:6px)(?=[^}]*background:rgba\(76,82,87,\.28\))(?=[^}]*clip-path:polygon\([^}]*\))[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid h4::before\{[^}]*content:"0" counter\(service-step\)/s);
-  assert.match(desktop, /#service \.imd-process-line-icon\{[^}]*width:52px[^}]*height:52px/s);
-  assert.match(desktop, /#service \.imd-process-grid h4\{[^}]*margin:0 0 4px/s);
-  assert.match(desktop, /#service \.imd-process-grid p\{(?=[^}]*max-width:210px)(?=[^}]*-webkit-line-clamp:2)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:48px minmax\(0,1fr\))(?=[^}]*grid-template-rows:auto auto)(?=[^}]*column-gap:14px)(?=[^}]*align-items:center)(?=[^}]*text-align:left)(?=[^}]*padding:0)(?=[^}]*border:0)(?=[^}]*background:transparent)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*display:block)(?=[^}]*top:21px)(?=[^}]*left:calc\(100% \+ 4px\))(?=[^}]*width:24px)(?=[^}]*height:6px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-line-icon\{(?=[^}]*grid-column:1)(?=[^}]*grid-row:1 \/ 3)(?=[^}]*width:48px)(?=[^}]*height:48px)(?=[^}]*margin:0)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid h4\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:1)(?=[^}]*margin:0 0 3px)(?=[^}]*font-size:17px)(?=[^}]*font-weight:600)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid h4::before\{(?=[^}]*display:block)(?=[^}]*margin-bottom:2px)(?=[^}]*font-size:11px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid p\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:2)(?=[^}]*max-width:190px)(?=[^}]*font-size:14px)(?=[^}]*line-height:1\.35)(?=[^}]*-webkit-line-clamp:2)[^}]*\}/s);
 });
 
-test('desktop support tier uses a top-aligned 58/42 composition', () => {
+test('desktop support tier uses a top-aligned 56/44 composition', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*grid-template-columns:minmax\(0,58fr\) minmax\(420px,42fr\))(?=[^}]*gap:clamp\(24px,2vw,32px\))(?=[^}]*align-items:start)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*grid-template-columns:minmax\(0,56fr\) minmax\(420px,44fr\))(?=[^}]*gap:24px)(?=[^}]*align-items:start)[^}]*\}/s);
   assert.doesNotMatch(desktop, /#service \.imd-bottom-panel\{[^}]*repeat\(3,minmax\(0,1fr\)\)/s);
 });
 
 test('benefits use an open 2x2 editorial grid', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
   assert.match(desktop, /#service \.imd-benefit-card\{[^}]*padding:clamp\(32px,3vw,40px\)/s);
-  assert.match(desktop, /#service \.imd-why-items\{(?=[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\))(?=[^}]*row-gap:32px)(?=[^}]*column-gap:40px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-why-items\{(?=[^}]*grid-template-columns:repeat\(2,minmax\(0,1fr\)\))(?=[^}]*row-gap:36px)(?=[^}]*column-gap:40px)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-why-items article\{(?=[^}]*grid-template-columns:46px minmax\(0,1fr\))(?=[^}]*column-gap:18px)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
   assert.doesNotMatch(desktop, /#service \.imd-why-items article[^}]*::after\{[^}]*content:""/s);
   assert.match(desktop, /#service \.imd-why-icon\{[^}]*width:46px[^}]*height:46px/s);
@@ -123,9 +125,9 @@ test('benefits use an open 2x2 editorial grid', () => {
 
 test('CTA is proportioned, top-aligned, and uses existing navy contrast', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-cta-split\{(?=[^}]*min-width:400px)(?=[^}]*align-self:start)(?=[^}]*padding:44px)(?=[^}]*background:var\(--service-navy\))[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-cta-split h3\{[^}]*margin:0 0 16px/s);
-  assert.match(desktop, /#service \.imd-cta-split \.imd-button\{(?=[^}]*min-height:58px)(?=[^}]*margin-top:22px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-cta-split\{(?=[^}]*min-width:400px)(?=[^}]*align-self:start)(?=[^}]*padding:32px)(?=[^}]*background:var\(--service-navy\))[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-cta-split h3\{(?=[^}]*margin:0 0 16px)(?=[^}]*max-width:460px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-cta-split \.imd-button\{(?=[^}]*width:100%)(?=[^}]*min-height:54px)(?=[^}]*margin-top:22px)[^}]*\}/s);
   assert.doesNotMatch(desktop, /#service \.imd-cta-split \.imd-button\{[^}]*margin-top:auto/s);
   assert.match(desktop, /#service \.imd-cta-split small\{[^}]*font-size:12px/s);
 });
