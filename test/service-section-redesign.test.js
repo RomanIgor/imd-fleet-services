@@ -98,7 +98,7 @@ test('desktop process uses centered equal steps and subtle connectors', () => {
   assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*position:relative)(?=[^}]*width:min\(1040px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*gap:clamp\(32px,3vw,48px\))(?=[^}]*counter-reset:service-step)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
   assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*counter-increment:service-step)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"")(?=[^}]*height:6px)(?=[^}]*background:rgba\(76,82,87,\.28\))(?=[^}]*clip-path:polygon\([^}]*\))[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"")(?=[^}]*display:block)(?=[^}]*height:6px)(?=[^}]*background:rgba\(76,82,87,\.28\))(?=[^}]*clip-path:polygon\([^}]*\))[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid h4::before\{[^}]*content:"0" counter\(service-step\)/s);
   assert.match(desktop, /#service \.imd-process-line-icon\{[^}]*width:52px[^}]*height:52px/s);
   assert.match(desktop, /#service \.imd-process-grid h4\{[^}]*margin:0 0 4px/s);
@@ -143,7 +143,7 @@ test('mobile process becomes a connected vertical timeline', () => {
   const mobile = finalMediaBlock('@media(max-width:768px){');
   assert.match(mobile, /#service \.imd-process-grid\{[^}]*grid-template-columns:1fr/s);
   assert.match(mobile, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
-  assert.match(mobile, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"↓")(?=[^}]*left:18px)[^}]*\}/s);
+  assert.match(mobile, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"↓")(?=[^}]*display:block)(?=[^}]*left:18px)[^}]*\}/s);
   assert.match(mobile, /#service \.imd-process-grid article\{(?=[^}]*border:0)(?=[^}]*background:transparent)[^}]*\}/s);
   assert.match(mobile, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr/s);
 });
@@ -151,7 +151,7 @@ test('mobile process becomes a connected vertical timeline', () => {
 test('tablet process uses short arrows without a continuous line', () => {
   const tablet = finalMediaBlock('@media(max-width:1120px){');
   assert.match(tablet, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
-  assert.match(tablet, /#service \.imd-process-grid article:not\(:last-child\)::after\{[^}]*content:"→"/s);
+  assert.match(tablet, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"→")(?=[^}]*display:block)[^}]*\}/s);
   assert.match(tablet, /#service \.imd-process-grid h4::before\{[^}]*content:"0" counter\(service-step\)/s);
 });
 

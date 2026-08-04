@@ -193,4 +193,3 @@ At desktop (`1904×957`), tablet (`1024×900`), and mobile (`390×844`), verify:
 git add style.css test/service-section-redesign.test.js
 git commit -m "Refine service process connections"
 ```
-

@@ -3401,7 +3401,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-process-grid::before{content:none;display:none}
   #service .imd-process-grid article{position:relative;z-index:1;min-width:0;min-height:0;padding:0 16px;display:flex;flex-direction:column;align-items:center;text-align:center;background:transparent;border:0;border-radius:0;box-shadow:none;counter-increment:service-step}
   #service .imd-process-grid article:not(:last-child){border:0}
-  #service .imd-process-grid article:not(:last-child)::after{content:"";position:absolute;z-index:0;top:23px;left:calc(50% + 38px);width:calc(100% + clamp(32px,3vw,48px) - 76px);height:6px;background:rgba(76,82,87,.28);clip-path:polygon(0 42%,calc(100% - 6px) 42%,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,calc(100% - 6px) 58%,0 58%);pointer-events:none}
+  #service .imd-process-grid article:not(:last-child)::after{content:"";display:block;position:absolute;z-index:0;top:23px;left:calc(50% + 38px);width:calc(100% + clamp(32px,3vw,48px) - 76px);height:6px;background:rgba(76,82,87,.28);clip-path:polygon(0 42%,calc(100% - 6px) 42%,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,calc(100% - 6px) 58%,0 58%);pointer-events:none}
   #service .imd-process-line-icon{position:relative;z-index:1;flex:0 0 auto;width:52px;height:52px;margin:0 0 12px;background:var(--service-navy);border:1px solid var(--service-navy);border-radius:12px}
   #service .imd-process-grid h4{margin:0 0 4px;font-size:14px;color:var(--service-graphite)}
   #service .imd-process-grid h4::before{content:"0" counter(service-step) "  ";color:var(--service-muted);font-size:11px;letter-spacing:.08em}
@@ -3435,7 +3435,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-process-grid::before{content:none;display:none}
   #service .imd-process-grid article{position:relative;z-index:1;min-width:0;min-height:0;padding:0 6px;display:flex;flex-direction:column;align-items:center;text-align:center;background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;counter-increment:service-step}
   #service .imd-process-grid article:first-child,#service .imd-process-grid article:nth-child(odd),#service .imd-process-grid article:nth-child(-n+2),#service .imd-process-grid article:not(:last-child){border:0}
-  #service .imd-process-grid article:not(:last-child)::after{content:"→";position:absolute;top:18px;right:-13px;color:rgba(76,82,87,.48);font-size:15px;line-height:1}
+  #service .imd-process-grid article:not(:last-child)::after{content:"→";display:block;position:absolute;top:18px;right:-13px;color:rgba(76,82,87,.48);font-size:15px;line-height:1}
   #service .imd-process-line-icon{position:relative;z-index:1;flex:0 0 auto;width:50px;height:50px;margin:0 0 12px;background:var(--service-navy);border:1px solid var(--service-navy);border-radius:12px}
   #service .imd-process-grid h4{margin:0 0 4px;font-size:14px;color:var(--service-graphite)}
   #service .imd-process-grid h4::before{content:"0" counter(service-step) "  ";color:var(--service-muted);font-size:11px;letter-spacing:.08em}
@@ -3463,7 +3463,7 @@ tbody tr:hover td{background:var(--f0)}
   #service .imd-process-grid::before{content:none;display:none}
   #service .imd-process-grid article{position:relative;z-index:1;min-height:0;padding:16px 0;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:16px;align-items:start;text-align:left;background:transparent;border:0;border-radius:0;box-shadow:none}
   #service .imd-process-grid article:not(:last-child),#service .imd-process-grid article:nth-child(odd){border:0}
-  #service .imd-process-grid article:not(:last-child)::after{content:"↓";top:auto;right:auto;bottom:-6px;left:18px;color:rgba(76,82,87,.48);font-size:14px}
+  #service .imd-process-grid article:not(:last-child)::after{content:"↓";display:block;top:auto;right:auto;bottom:-6px;left:18px;color:rgba(76,82,87,.48);font-size:14px}
   #service .imd-process-line-icon{grid-column:1;grid-row:1 / 3;width:44px;height:44px;margin:0;align-self:start}
   #service .imd-process-grid h4{grid-column:2;grid-row:1;margin:2px 0 4px;font-size:14px;text-align:left}
   #service .imd-process-grid p{grid-column:2;grid-row:2;max-width:100%;font-size:15px;text-align:left}
