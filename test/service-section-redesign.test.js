@@ -89,24 +89,25 @@ test('desktop uses compact intentional section rhythm', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
   assert.match(desktop, /#service \.imd-page\{[^}]*gap:0/s);
   assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:clamp\(56px,4vw,64px\) 0 0)(?=[^}]*padding:18px 32px)(?=[^}]*gap:14px)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-bottom-panel\{[^}]*margin:36px 0 0/s);
+  assert.match(desktop, /#service \.imd-bottom-panel\{[^}]*margin:26px 0 0/s);
 });
 
-test('desktop process uses numbered steps and short adjacent arrows', () => {
+test('desktop process uses centered equal steps and subtle connectors', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*position:relative)(?=[^}]*width:min\(1120px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*counter-reset:service-step)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text h3\{(?=[^}]*margin:0 0 16px)(?=[^}]*font-size:23px)(?=[^}]*color:var\(--service-graphite\))[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*position:relative)(?=[^}]*width:min\(1040px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*gap:clamp\(32px,3vw,48px\))(?=[^}]*counter-reset:service-step)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
   assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*counter-increment:service-step)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"→")(?=[^}]*position:absolute)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"")(?=[^}]*height:6px)(?=[^}]*background:rgba\(76,82,87,\.28\))(?=[^}]*clip-path:polygon\([^}]*\))[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid h4::before\{[^}]*content:"0" counter\(service-step\)/s);
   assert.match(desktop, /#service \.imd-process-line-icon\{[^}]*width:52px[^}]*height:52px/s);
   assert.match(desktop, /#service \.imd-process-grid h4\{[^}]*margin:0 0 4px/s);
   assert.match(desktop, /#service \.imd-process-grid p\{(?=[^}]*max-width:210px)(?=[^}]*-webkit-line-clamp:2)[^}]*\}/s);
 });
 
-test('desktop support tier uses a top-aligned 60/40 composition', () => {
+test('desktop support tier uses a top-aligned 58/42 composition', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*grid-template-columns:minmax\(0,3fr\) minmax\(400px,2fr\))(?=[^}]*gap:clamp\(24px,2vw,32px\))(?=[^}]*align-items:start)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*grid-template-columns:minmax\(0,58fr\) minmax\(420px,42fr\))(?=[^}]*gap:clamp\(24px,2vw,32px\))(?=[^}]*align-items:start)[^}]*\}/s);
   assert.doesNotMatch(desktop, /#service \.imd-bottom-panel\{[^}]*repeat\(3,minmax\(0,1fr\)\)/s);
 });
 
@@ -120,11 +121,11 @@ test('benefits use an open 2x2 editorial grid', () => {
   assert.match(desktop, /#service \.imd-why-items h4\{[^}]*font-size:16px[^}]*font-weight:750/s);
 });
 
-test('CTA is compact, top-aligned, and uses existing navy contrast', () => {
+test('CTA is proportioned, top-aligned, and uses existing navy contrast', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
-  assert.match(desktop, /#service \.imd-cta-split\{(?=[^}]*min-width:400px)(?=[^}]*align-self:start)(?=[^}]*padding:40px)(?=[^}]*background:var\(--service-navy\))[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-cta-split\{(?=[^}]*min-width:400px)(?=[^}]*align-self:start)(?=[^}]*padding:44px)(?=[^}]*background:var\(--service-navy\))[^}]*\}/s);
   assert.match(desktop, /#service \.imd-cta-split h3\{[^}]*margin:0 0 16px/s);
-  assert.match(desktop, /#service \.imd-cta-split \.imd-button\{(?=[^}]*min-height:54px)(?=[^}]*margin-top:22px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-cta-split \.imd-button\{(?=[^}]*min-height:58px)(?=[^}]*margin-top:22px)[^}]*\}/s);
   assert.doesNotMatch(desktop, /#service \.imd-cta-split \.imd-button\{[^}]*margin-top:auto/s);
   assert.match(desktop, /#service \.imd-cta-split small\{[^}]*font-size:12px/s);
 });
