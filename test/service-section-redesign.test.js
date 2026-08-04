@@ -88,7 +88,7 @@ test('service lower tier preserves all current benefit and CTA content', () => {
 test('desktop uses compact intentional section rhythm', () => {
   const desktop = finalMediaBlock('@media(min-width:1101px){');
   assert.match(desktop, /#service \.imd-page\{[^}]*gap:0/s);
-  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:clamp\(56px,4vw,64px\) 0 0)(?=[^}]*padding:24px 32px)(?=[^}]*gap:20px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:clamp\(56px,4vw,64px\) 0 0)(?=[^}]*padding:18px 32px)(?=[^}]*gap:14px)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-bottom-panel\{[^}]*margin:36px 0 0/s);
 });
 
