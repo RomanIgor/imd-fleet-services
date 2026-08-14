@@ -248,4 +248,3 @@ At `1024×900` and `390×844`, confirm:
 git add style.css test/service-section-redesign.test.js
 git commit -m "Make service process visibly compact"
 ```
-

@@ -3392,7 +3392,7 @@ tbody tr:hover td{background:var(--f0)}
 }
 
 /* Service editorial composition */
-@media(min-width:1101px){
+@media(min-width:1121px){
   #service .imd-page{gap:0}
   #service .imd-process-panel{width:min(1360px,100%);height:auto;min-height:0;justify-self:center;margin:clamp(56px,4vw,64px) 0 0;padding:28px 32px;display:grid;grid-template-columns:1fr;gap:24px;align-items:start;background:var(--service-highlight);border-color:rgba(154,156,153,.52);border-radius:20px;box-shadow:0 18px 44px rgba(28,34,40,.12)}
   #service .imd-process-panel .imd-intro-text{max-width:760px;justify-self:center;display:flex;flex-wrap:wrap;justify-content:center;column-gap:8px;row-gap:2px;text-align:center;padding:0;border:0}

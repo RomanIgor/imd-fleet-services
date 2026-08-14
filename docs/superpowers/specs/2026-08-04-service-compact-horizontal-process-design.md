@@ -78,4 +78,3 @@ After implementation:
 6. The process-to-lower-row gap must measure `24px`.
 7. The lower split must measure approximately `56/44` with a `24px` gap.
 8. Tablet and mobile must have no horizontal overflow.
-
