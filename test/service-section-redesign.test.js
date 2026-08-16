@@ -125,7 +125,7 @@ test('desktop uses compact intentional section rhythm', () => {
   assert.match(desktop, /#service \.imd-bottom-panel\{(?=[^}]*width:min\(1360px,100%\))(?=[^}]*margin:24px 0 0)[^}]*\}/s);
 });
 
-test('desktop process uses centered equal steps and subtle connectors', () => {
+test('desktop process uses centered equal steps without numbers or arrows', () => {
   const desktop = finalMediaBlock(compactDesktopMedia);
   assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text\{(?=[^}]*max-width:760px)(?=[^}]*justify-self:center)(?=[^}]*display:flex)(?=[^}]*flex-wrap:wrap)(?=[^}]*justify-content:center)(?=[^}]*column-gap:8px)(?=[^}]*row-gap:2px)(?=[^}]*text-align:center)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-panel \.imd-intro-text h3\{(?=[^}]*flex-basis:100%)(?=[^}]*margin:0 0 6px)[^}]*\}/s);
@@ -133,10 +133,10 @@ test('desktop process uses centered equal steps and subtle connectors', () => {
   assert.match(desktop, /#service \.imd-process-grid\{(?=[^}]*width:min\(1080px,100%\))(?=[^}]*grid-template-columns:repeat\(4,minmax\(0,1fr\)\))(?=[^}]*gap:32px)(?=[^}]*counter-reset:service-step)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
   assert.match(desktop, /#service \.imd-process-grid article\{(?=[^}]*display:grid)(?=[^}]*grid-template-columns:48px minmax\(0,1fr\))(?=[^}]*grid-template-rows:auto auto)(?=[^}]*column-gap:14px)(?=[^}]*align-items:center)(?=[^}]*text-align:left)(?=[^}]*padding:0)(?=[^}]*border:0)(?=[^}]*background:transparent)(?=[^}]*box-shadow:none)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*display:block)(?=[^}]*top:21px)(?=[^}]*left:calc\(100% \+ 4px\))(?=[^}]*width:24px)(?=[^}]*height:6px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-line-icon\{(?=[^}]*grid-column:1)(?=[^}]*grid-row:1 \/ 3)(?=[^}]*width:48px)(?=[^}]*height:48px)(?=[^}]*margin:0)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid h4\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:1)(?=[^}]*margin:0 0 3px)(?=[^}]*font-size:17px)(?=[^}]*font-weight:600)(?=[^}]*line-height:1\.1)[^}]*\}/s);
-  assert.match(desktop, /#service \.imd-process-grid h4::before\{(?=[^}]*display:block)(?=[^}]*margin-bottom:2px)(?=[^}]*font-size:11px)[^}]*\}/s);
+  assert.match(desktop, /#service \.imd-process-grid h4::before\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
   assert.match(desktop, /#service \.imd-process-grid p\{(?=[^}]*grid-column:2)(?=[^}]*grid-row:2)(?=[^}]*max-width:190px)(?=[^}]*font-size:14px)(?=[^}]*line-height:1\.35)(?=[^}]*-webkit-line-clamp:2)[^}]*\}/s);
 });
 
@@ -174,20 +174,20 @@ test('tablet keeps the process readable and stacks benefits above CTA', () => {
   assert.match(tablet, /#service \.imd-cta-split\{(?=[^}]*width:100%)(?=[^}]*min-width:0)[^}]*\}/s);
 });
 
-test('mobile process becomes a connected vertical timeline', () => {
+test('mobile process becomes a clean vertical list without arrows', () => {
   const mobile = finalMediaBlock('@media(max-width:768px){');
   assert.match(mobile, /#service \.imd-process-grid\{[^}]*grid-template-columns:1fr/s);
   assert.match(mobile, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
-  assert.match(mobile, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"↓")(?=[^}]*display:block)(?=[^}]*left:18px)[^}]*\}/s);
+  assert.match(mobile, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
   assert.match(mobile, /#service \.imd-process-grid article\{(?=[^}]*border:0)(?=[^}]*background:transparent)[^}]*\}/s);
   assert.match(mobile, /#service \.imd-bottom-panel\{[^}]*grid-template-columns:1fr/s);
 });
 
-test('tablet process uses short arrows without a continuous line', () => {
+test('tablet process hides decorative numbers and arrows', () => {
   const tablet = finalMediaBlock(compactTabletMedia);
   assert.match(tablet, /#service \.imd-process-grid::before\{[^}]*content:none[^}]*display:none/s);
-  assert.match(tablet, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:"→")(?=[^}]*display:block)[^}]*\}/s);
-  assert.match(tablet, /#service \.imd-process-grid h4::before\{[^}]*content:"0" counter\(service-step\)/s);
+  assert.match(tablet, /#service \.imd-process-grid article:not\(:last-child\)::after\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
+  assert.match(tablet, /#service \.imd-process-grid h4::before\{(?=[^}]*content:none)(?=[^}]*display:none)[^}]*\}/s);
 });
 
 test('very narrow mobile stacks benefits into one column', () => {
@@ -198,4 +198,21 @@ test('very narrow mobile stacks benefits into one column', () => {
 test('service motion remains disabled for reduced-motion users', () => {
   const reducedMotion = finalMediaBlock('@media(prefers-reduced-motion:reduce){');
   assert.match(reducedMotion, /#service \.imd-process-grid article,#service \.imd-button\{[^}]*animation:none!important[^}]*transition:none!important/s);
+});
+
+test('service benefits use only icons that are published with the site', () => {
+  const support = supportTier();
+  assert.match(support, /src="assets\/icons\/custom\/why-time\.svg"/);
+  assert.doesNotMatch(support, /timer-reset_black\.svg/);
+  assert.ok(fs.existsSync(path.join(root, 'assets', 'icons', 'custom', 'why-time.svg')));
+});
+
+test('desktop service background preserves the centered showroom logo', () => {
+  const desktop = finalMediaBlock(compactDesktopMedia);
+  assert.match(desktop, /#service\{(?=[^}]*background-size:cover,cover,cover,cover)(?=[^}]*background-position:center,center,center,center calc\(50% - 120px\))[^}]*\}/s);
+});
+
+test('desktop first benefit aligns with the remaining benefit icons', () => {
+  const desktop = finalMediaBlock(compactDesktopMedia);
+  assert.match(desktop, /#service \.imd-why-items article:first-child\{[^}]*padding-left:0/s);
 });
