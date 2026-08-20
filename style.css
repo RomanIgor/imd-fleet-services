@@ -1010,7 +1010,7 @@ tbody tr:hover td{background:var(--f0)}
 }
 @media(max-width:860px){
   .ueber-stats-grid{grid-template-columns:repeat(2,1fr)}
-  .ueber-stat-cell{border-right:0}
+  .ueber-stat-cell:not(:last-child){border-right:0}
   .ueber-stat-cell:nth-child(odd){border-right:1px solid var(--ueber-border)}
   .ueber-stat-cell:nth-child(-n+2){border-bottom:1px solid var(--ueber-border)}
   .nav-links,.nav-cta{display:none}.hamburglar{display:block}
@@ -1042,7 +1042,7 @@ tbody tr:hover td{background:var(--f0)}
 }
 @media(max-width:480px){
   .ueber-stats-grid{grid-template-columns:1fr}
-  .ueber-stat-cell{border-right:0}
+  .ueber-stat-cell:not(:last-child){border-right:0}
   .ueber-stat-cell:not(:last-child){border-bottom:1px solid var(--ueber-border)}
 }
 @media(max-width:720px){

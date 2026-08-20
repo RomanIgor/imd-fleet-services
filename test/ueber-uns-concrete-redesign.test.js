@@ -71,3 +71,8 @@ test('ueber-uns grids stack on mobile at the correct breakpoints', () => {
   assert.match(css, /@media\(max-width:620px\)\{[^}]*\.ueber-prinzip-grid\{grid-template-columns:1fr\}[^}]*\}/s);
   assert.match(css, /@media\(max-width:480px\)\{[^}]*\.ueber-stats-grid\{grid-template-columns:1fr\}[^}]*\}/s);
 });
+
+test('stat-cell right-border reset matches the base rule specificity at both mobile breakpoints', () => {
+  assert.match(css, /@media\(max-width:860px\)\{[\s\S]*?\.ueber-stat-cell:not\(:last-child\)\{border-right:0\}/);
+  assert.match(css, /@media\(max-width:480px\)\{[\s\S]*?\.ueber-stat-cell:not\(:last-child\)\{border-right:0\}/);
+});
