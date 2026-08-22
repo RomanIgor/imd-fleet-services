@@ -50,7 +50,7 @@ test('ueber-uns has a process diagram with origin, hub, and 4 steps', () => {
   assert.match(section, /Ihr Fuhrpark/);
   assert.match(section, /Ein Fahrzeug\. Viele Aufgaben\. <strong>Ihr Aufwand\.<\/strong>/);
   assert.match(section, /class="ub-diagram-hub"/);
-  assert.match(section, /src="logo_dark\.png"/);
+  assert.match(section, /src="logo_light\.png"/);
   assert.equal((section.match(/class="ub-diagram-step"/g) || []).length, 4);
   for (const [title, text] of [
     ['Bewertung', 'Marktgerechte Bewertung in wenigen Stunden.'],

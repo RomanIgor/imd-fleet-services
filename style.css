@@ -43,7 +43,7 @@
 .allein-text{font-size:13px;color:var(--text-2);line-height:1.7}
 
 /* ══════════════ ÜBER UNS — Concrete ══════════════ */
-#ueber-uns{--ueber-base:#CAC9C4;--ueber-highlight:#E5E4DF;--ueber-card:#D6D6D2;--ueber-navy:#202A3B;--ueber-graphite:#1C2228;--ueber-body:#4C5257;--ueber-muted:#777A78;--ueber-border:#9A9C99;--ueber-soft-border:#BCBDB9;--ueber-blue:#36A2C5;background-color:var(--ueber-base);background-image:radial-gradient(circle at 50% 10%,rgba(229,228,223,.4),transparent 32%);color:var(--ueber-graphite)}
+#ueber-uns{--ueber-base:#CAC9C4;--ueber-medium:#B3B4B0;--ueber-highlight:#E5E4DF;--ueber-card:#D6D6D2;--ueber-navy:#202A3B;--ueber-graphite:#1C2228;--ueber-body:#4C5257;--ueber-muted:#777A78;--ueber-border:#9A9C99;--ueber-soft-border:#BCBDB9;--ueber-blue:#36A2C5;background-color:var(--ueber-medium);background-image:linear-gradient(155deg,rgba(28,34,40,.14),rgba(229,228,223,.42) 42%,rgba(28,34,40,.10)),radial-gradient(circle at 82% 8%,rgba(229,228,223,.5),transparent 34%);color:var(--ueber-graphite)}
 #ueber-uns .eyebrow{color:var(--ueber-blue)}
 #ueber-uns .h2{color:var(--ueber-graphite)}
 #ueber-uns .h2 em{font-style:normal;color:var(--ueber-blue)}
