@@ -1,6 +1,7 @@
 function requireAdmin(req, res, next) {
   if (req.session && req.session.user) return next();
-  res.status(401).json({ error: 'Unauthorized' });
+  if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'Unauthorized' });
+  res.redirect('/intern/login');
 }
 
 module.exports = requireAdmin;

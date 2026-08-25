@@ -88,7 +88,11 @@ async function openDash(){
   }
 }
 
-function closeDash(){document.getElementById('dash').classList.remove('open');document.body.style.overflow='';}
+// The dashboard is now its own page (/intern) rather than an overlay on top
+// of the public page, so "closing" it means navigating back to the site.
+// Guarded so the shared Escape-key listener is a no-op on pages (like the
+// public homepage) that don't have a #dash element at all.
+function closeDash(){if(document.getElementById('dash')){window.location.href='/';}}
 function showPanel(id,el){document.querySelectorAll('.dp').forEach(p=>p.classList.remove('act'));document.getElementById(id).classList.add('act');if(el){document.querySelectorAll('.dsb-item').forEach(i=>i.classList.remove('act'));el.classList.add('act');}if(id==='dUsers')loadUsers();if(id==='dSch')loadSchaeden();if(id==='dWerk')loadWerkstaetten();if(id==='dFuhrparks')loadFuhrparks();if(id==='dFahrer'){loadFahrer();loadFuhrparkDropdown();ensureImportFuhrparks();}}
 
 async function doLogin(){
@@ -1050,10 +1054,12 @@ function closePwaVideo() {
 }
 
 // Dashboard (employee only — triggered via Ctrl+Shift+D)
+// The dashboard now lives on its own server-authenticated page (/intern), so
+// this shortcut navigates there instead of toggling an in-page overlay.
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && e.shiftKey && e.key === 'D') {
     e.preventDefault();
-    openDash();
+    window.location.href = '/intern';
   }
   if (e.key === 'Escape') { closeDash(); }
 });

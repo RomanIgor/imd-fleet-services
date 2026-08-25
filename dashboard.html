@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — IMD Fleet Services</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/icon-192.png">
+  <link rel="stylesheet" href="style.css?v=service-logo-safe-13-reference-grid-17">
+<script>(function(){var t=localStorage.getItem('imd-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');})();</script>
+</head>
+
+<body>
+
+<div id="dash" class="open">
+
+  <!-- Login Overlay -->
+  <div id="dashLogin" style="position:absolute;inset:0;z-index:100;background:var(--f0);display:flex;align-items:center;justify-content:center">
+    <div style="background:#fff;border:1.5px solid var(--f2);border-radius:var(--r-2xl);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-xl)">
+      <div style="margin-bottom:28px">
+        <img src="logo_light.png" alt="IMD Fleet Services" style="width:160px;height:auto;display:block">
+      </div>
+      <div style="font-family:var(--fh);font-size:20px;font-weight:800;color:var(--t0);margin-bottom:6px">Anmelden</div>
+      <div style="font-size:13px;color:var(--t2);margin-bottom:24px">Nur für IMD Fleet Services Team</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);display:block;margin-bottom:5px">Benutzername</label>
+          <input type="text" id="loginUser" class="fi" placeholder="username" autocomplete="username"></div>
+        <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);display:block;margin-bottom:5px">Passwort</label>
+          <input type="password" id="loginPass" class="fi" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+        <div id="loginErr" style="font-size:12px;color:var(--red);display:none"></div>
+        <button class="btn btn-navy" style="width:100%;justify-content:center;margin-top:4px" onclick="doLogin()">Anmelden →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Anfrage Edit Modal -->
+  <div id="anfrageModal" style="display:none;position:absolute;inset:0;z-index:200;background:rgba(9,21,42,.55);align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:14px;padding:32px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.22)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+        <div style="font-family:var(--fh);font-size:18px;font-weight:800;color:var(--t0)">Anfrage bearbeiten</div>
+        <button onclick="closeAnfrageModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--t3);line-height:1">×</button>
+      </div>
+      <input type="hidden" id="editId">
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Firma</label><input type="text" id="editFirma" class="fi"></div>
+        <div class="fg"><label class="fl">Ansprechpartner</label><input type="text" id="editName" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Telefon</label><input type="text" id="editTelefon" class="fi"></div>
+        <div class="fg"><label class="fl">E-Mail</label><input type="email" id="editEmail" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Marke</label><input type="text" id="editMarke" class="fi"></div>
+        <div class="fg"><label class="fl">Modell</label><input type="text" id="editModell" class="fi"></div>
+      </div>
+      <div class="fg2" style="margin-bottom:12px">
+        <div class="fg"><label class="fl">Baujahr</label><input type="text" id="editBaujahr" class="fi"></div>
+        <div class="fg"><label class="fl">Kilometerstand</label><input type="text" id="editKm" class="fi"></div>
+      </div>
+      <div class="fg" style="margin-bottom:12px"><label class="fl">Anmerkung</label><textarea id="editAnmerkung" class="fi" rows="3" style="resize:vertical;font-family:inherit"></textarea></div>
+      <div class="fg" style="margin-bottom:24px"><label class="fl">Status</label><select id="editStatus" class="fi fsel"></select></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button onclick="closeAnfrageModal()" class="dash-close" style="padding:10px 20px">Abbrechen</button>
+        <button onclick="saveAnfrage()" class="btn btn-navy" style="padding:10px 24px">Speichern →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-nav">
+    <div class="dash-logo">
+      <div class="dash-logo-name">IMD Fleet Services</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="dashUserLabel" style="font-size:11px;color:var(--t2)"></span>
+      <button class="dash-close" onclick="doLogout()" style="margin-right:4px">Abmelden</button>
+      <button class="dash-close" onclick="closeDash()">← Website</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="dash-sb">
+      <div class="dsb-sec" style="padding-top:8px">
+        <div class="dsb-lbl">Übersicht</div>
+        <div class="dsb-item act" onclick="showPanel('dOv',this)"><span class="di">📊</span><span>Dashboard</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Fuhrpark</div>
+        <div class="dsb-item" onclick="showPanel('dFuhrparks',this)"><span class="di">🏢</span><span>Fuhrparks</span></div>
+        <div class="dsb-item" onclick="showPanel('dFahrer',this)"><span class="di">👤</span><span>Fahrer</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Fahrzeuge</div>
+        <div class="dsb-item" onclick="showPanel('dAll',this)"><span class="di">🚗</span><span>Alle Fahrzeuge</span></div>
+        <div class="dsb-item" onclick="showPanel('dDet',this)"><span class="di">🔍</span><span>Fahrzeugdetail</span></div>
+        <div class="dsb-item" onclick="showPanel('dNew',this)"><span class="di">➕</span><span>Neu erfassen</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Schäden</div>
+        <div class="dsb-item" onclick="showPanel('dSch',this)"><span class="di">🚨</span><span>Schäden</span></div>
+        <div class="dsb-item" onclick="showPanel('dWerk',this)"><span class="di">🔧</span><span>Werkstätten</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Prozess</div>
+        <div class="dsb-item" onclick="showPanel('dGut',this)"><span class="di">📋</span><span>Gutachten</span></div>
+        <div class="dsb-item" onclick="showPanel('dPre',this)"><span class="di">📈</span><span>Preisermittlung</span></div>
+        <div class="dsb-item" onclick="showPanel('dAus',this)"><span class="di">💶</span><span>Auszahlungen</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Netzwerk</div>
+        <div class="dsb-item" onclick="showPanel('dHdl',this)"><span class="di">🏢</span><span>Händlernetz</span></div>
+        <div class="dsb-item" onclick="showPanel('dPar',this)"><span class="di">🤝</span><span>Partner</span></div>
+      </div>
+      <div class="dsb-sec">
+        <div class="dsb-lbl">Dokumente</div>
+        <div class="dsb-item" onclick="showPanel('dVert',this)"><span class="di">📝</span><span>Verträge</span></div>
+        <div class="dsb-lbl">Einstellungen</div>
+        <div class="dsb-item" onclick="showPanel('dUsers',this)"><span class="di">👤</span><span>Benutzer</span></div>
+      </div>
+      <div class="dsb-sec" style="border-top:1px dashed var(--f2);margin-top:8px;padding-top:8px">
+        <div class="dsb-lbl" style="color:var(--amber)">🚧 In Entwicklung</div>
+        <a href="/schaden" target="_blank" style="text-decoration:none"><div class="dsb-item"><span class="di">🚨</span><span>Schadenmanagement</span></div></a>
+      </div>
+    </div>
+    <div class="dash-main">
+
+      <div class="dp act" id="dOv">
+        <div class="dh">Dashboard</div><div id="dashDate" class="dsub">—</div>
+        <div class="kpi-row">
+          <div class="kpi"><div class="kpi-lbl">Anfragen gesamt</div><div class="kpi-val" id="kpiTotal">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Heute eingegangen</div><div class="kpi-val" id="kpiToday">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Neu / unbearbeitet</div><div class="kpi-val" id="kpiNeu">—</div></div>
+          <div class="kpi"><div class="kpi-lbl">Status</div><div class="kpi-val" style="color:var(--green);font-size:13px">● Online</div></div>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Neue Anfragen</div>
+            <div style="display:flex;gap:8px">
+              <button class="tbl-sel" onclick="exportExcel()" style="cursor:pointer">⬇ Excel</button>
+              <button class="tbl-sel" onclick="loadDashData()" style="cursor:pointer">↻ Aktualisieren</button>
+            </div>
+          </div>
+          <table><thead><tr><th>Datum</th><th>Firma</th><th>Ansprechpartner</th><th>Telefon</th><th>Fahrzeug</th><th>Status</th></tr></thead><tbody id="tblBody"></tbody></table>
+        </div>
+      </div>
+
+      <div class="dp" id="dAll">
+        <div class="dh">Alle Fahrzeuge</div><div class="dsub">Fahrzeugübersicht aller Anfragen</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Fahrzeugliste</div></div>
+        <table><thead><tr><th>Marke</th><th>Modell</th><th>Baujahr</th><th>KM-Stand</th><th>Firma</th><th>Datum</th><th>Status</th></tr></thead><tbody id="tblAll"></tbody></table></div>
+      </div>
+
+      <div class="dp" id="dDet">
+        <div class="dh">Fahrzeugdetail</div><div class="dsub">BMW 320d xDrive · WBA3A71090G123456 · TechCorp GmbH</div>
+        <div class="det-grid">
+          <div class="det-card"><div class="dc-lbl">Fahrzeugdaten</div>
+            <div class="dc-row"><span class="dc-k">Marke / Modell</span><span class="dc-v">BMW 320d xDrive</span></div>
+            <div class="dc-row"><span class="dc-k">Baujahr / KM</span><span class="dc-v">2021 · 45.200 km</span></div>
+            <div class="dc-row"><span class="dc-k">Kraftstoff / Getr.</span><span class="dc-v">Diesel · Automatik</span></div>
+            <div class="dc-row"><span class="dc-k">VIN</span><span class="dc-v" style="font-size:10px">WBA3A71090G123456</span></div>
+            <div class="dc-row"><span class="dc-k">Abholadresse</span><span class="dc-v">Hauptstraße 1, 09111 Chemnitz</span></div>
+            <div class="dc-row"><span class="dc-k">Ansprechpartner v.O.</span><span class="dc-v">Max Berger · +49 30 123456</span></div>
+          </div>
+          <div class="det-card"><div class="dc-lbl">Wertgutachten (GKK)</div>
+            <div class="dc-row"><span class="dc-k">HEK (Mindestpreis)</span><span class="dc-v g" style="font-size:16px;font-weight:800">22.400 €</span></div>
+            <div class="dc-row"><span class="dc-k">HVK</span><span class="dc-v">28.900 €</span></div>
+            <div class="dc-row"><span class="dc-k">REP</span><span class="dc-v">1.200 €</span></div>
+            <div class="dc-row"><span class="dc-k">ÜDV</span><span class="dc-v">Dokumentiert ✓</span></div>
+            <div class="dc-row"><span class="dc-k">Bonus über HEK</span><span class="dc-v b">+800 €</span></div>
+            <div class="dc-row"><span class="dc-k">EK Gesamt</span><span class="dc-v g" style="font-size:16px;font-weight:800">23.200 €</span></div>
+            <div class="dc-row"><span class="dc-k">PDF</span><span class="dc-v"><a href="#" style="color:var(--navy-legacy);font-size:11px">📄 Download</a></span></div>
+          </div>
+        </div>
+        <div class="det-card"><div class="dc-lbl">Prozessverlauf</div>
+          <div class="proc-track">
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot done"></div><div class="ptline done"></div></div><div class="ptbody"><div class="pttitle">✅ Fahrzeugmeldung</div><div class="ptdate">12.03.2026 · 09:14 · TechCorp GmbH — Max Berger</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot done"></div><div class="ptline done"></div></div><div class="ptbody"><div class="pttitle">✅ Logistik & Abholung</div><div class="ptdate">13.03.2026 · 08:00</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot done"></div><div class="ptline done"></div></div><div class="ptbody"><div class="pttitle">✅ Vorbereitung & GKK-Gutachten</div><div class="ptdate">13.03.2026 · 14:00 · HEK: 22.400 €</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot now"></div><div class="ptline"></div></div><div class="ptbody"><div class="pttitle">⏳ Ankaufangebot versandt</div><div class="ptdate">13.03.2026 · 16:20 · Angebot: 23.200 €</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot todo"></div><div class="ptline"></div></div><div class="ptbody"><div class="pttitle">Bestätigung &amp; Rechnungsstellung</div><div class="ptdate">–</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot todo"></div><div class="ptline"></div></div><div class="ptbody"><div class="pttitle">Eingang KFZ-Papiere</div><div class="ptdate">–</div></div></div>
+            <div class="ptrack-step"><div class="ptl"><div class="ptdot todo"></div></div><div class="ptbody"><div class="pttitle">Auszahlung erfolgt</div><div class="ptdate">–</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="dGut">
+        <div class="dh">Gutachten</div><div class="dsub">Alle Wertgutachten (GKK)</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Gutachten-Übersicht</div></div>
+        <table><thead><tr><th>Fahrzeug</th><th>Datum</th><th>HEK</th><th>HVK</th><th>REP</th><th>Bonus</th><th>Status</th><th>PDF</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BMW 320d xDrive</strong></td><td>13.03.2026</td><td style="color:var(--green);font-weight:700">22.400 €</td><td>28.900 €</td><td>1.200 €</td><td style="color:var(--navy-legacy)">+800 €</td><td><span class="sb sb-bl">Angebot</span></td><td><a href="#" style="color:var(--navy-legacy)">📄</a></td></tr>
+          <tr><td><strong>Audi A4 Avant</strong></td><td>12.03.2026</td><td style="color:var(--green);font-weight:700">19.800 €</td><td>25.500 €</td><td>400 €</td><td style="color:var(--navy-legacy)">+1.000 €</td><td><span class="sb sb-gr">Bestätigt</span></td><td><a href="#" style="color:var(--navy-legacy)">📄</a></td></tr>
+          <tr><td><strong>VW Passat GTE</strong></td><td>11.03.2026</td><td style="color:var(--green);font-weight:700">18.200 €</td><td>23.100 €</td><td>0 €</td><td style="color:var(--t3)">—</td><td><span class="sb sb-am">Ausstehend</span></td><td><a href="#" style="color:var(--navy-legacy)">📄</a></td></tr>
+          <tr><td><strong>Mercedes C 220d</strong></td><td>10.03.2026</td><td style="color:var(--green);font-weight:700">18.400 €</td><td>24.200 €</td><td>600 €</td><td style="color:var(--navy-legacy)">+1.200 €</td><td><span class="sb sb-gr">Ausgezahlt</span></td><td><a href="#" style="color:var(--navy-legacy)">📄</a></td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="dp" id="dPre">
+        <div class="dh">Preisermittlung</div><div class="dsub">HEK / HVK / REP / ÜDV · Erklärung &amp; Kostenregelung</div>
+        <div class="tp-grid">
+          <div class="tp-card"><div class="tp-ico">📋</div><div class="tp-lbl">Mindestpreis</div><div class="tp-val">HEK</div><div class="tp-title">Händlereinkaufswert</div><div class="tp-text">Garantierter Mindest-Ankaufspreis aus dem Gutachten. Verbindlich zugesichert.</div></div>
+          <div class="tp-card feat"><div class="tp-ico">💰</div><div class="tp-lbl">Tatsächlicher Preis</div><div class="tp-val">HEK +</div><div class="tp-title">Garantiert + Bonus</div><div class="tp-text">Je nach Marktlage: Bonus über HEK möglich.</div></div>
+          <div class="tp-card"><div class="tp-ico">📊</div><div class="tp-lbl">Unabhängig</div><div class="tp-val">GKK</div><div class="tp-title">Zert. Gutachten</div><div class="tp-text">Revisionssicher, transparent für beide Seiten.</div></div>
+        </div>
+        <div class="gl-box">
+          <div class="gl-head">📖 Glossar</div>
+          <div class="gl-grid">
+            <div class="gl-item"><div class="gl-abbr">HEK</div><div class="gl-name">Händlereinkaufswert</div><div class="gl-desc"><strong>Garantierter Mindestpreis.</strong> Schriftlich.</div></div>
+            <div class="gl-item"><div class="gl-abbr">HVK</div><div class="gl-name">Händlerverkaufswert</div><div class="gl-desc">Basis für <strong>Bonus-Berechnung.</strong></div></div>
+            <div class="gl-item"><div class="gl-abbr">REP</div><div class="gl-name">Reparaturwert</div><div class="gl-desc"><strong>Transparent</strong> in Preisermittlung.</div></div>
+            <div class="gl-item"><div class="gl-abbr">ÜDV</div><div class="gl-name">Übergabedokument</div><div class="gl-desc"><strong>Rechtliche Absicherung</strong> bei Übergabe.</div></div>
+          </div>
+        </div>
+        <div class="bed-grid">
+          <div class="bed ok"><div class="bed-dot ok"></div><div><div class="bed-title">✅ Kostenfrei bei Verkauf</div><div class="bed-text">Gesamter Service kostenfrei sofern Fahrzeug an IMD Fleet Services verkauft.</div></div></div>
+          <div class="bed warn"><div class="bed-dot warn"></div><div><div class="bed-title">⚠ Rückabwicklung</div><div class="bed-text">Nach Leistungserbringung können entstandene Kosten &amp; Gebühr berechnet werden.</div></div></div>
+        </div>
+      </div>
+
+      <div class="dp" id="dAus">
+        <div class="dh">Auszahlungen</div><div class="dsub">Transaktionen &amp; offene Zahlungen</div>
+        <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+          <div class="kpi"><div class="kpi-lbl">Diesen Monat</div><div class="kpi-val">€182k</div><div class="kpi-delta up">↑ 12 Fahrzeuge</div></div>
+          <div class="kpi"><div class="kpi-lbl">Ø Bonus über HEK</div><div class="kpi-val">+9.4%</div><div class="kpi-delta up">↑ vs. Vormonat</div></div>
+          <div class="kpi"><div class="kpi-lbl">Offen</div><div class="kpi-val">3</div><div class="kpi-delta flat">€48k ausstehend</div></div>
+        </div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Letzte Auszahlungen</div></div>
+        <table><thead><tr><th>Fahrzeug</th><th>Firma</th><th>HEK</th><th>Bonus</th><th>Gesamt</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Mercedes C 220d</strong></td><td>TechCorp GmbH</td><td>18.400 €</td><td style="color:var(--green)">+1.200 €</td><td style="color:var(--green);font-weight:700">19.600 €</td><td><span class="sb sb-gr">Ausgezahlt</span></td></tr>
+          <tr><td><strong>BMW X3 20d</strong></td><td>Pharma AG</td><td>26.800 €</td><td style="color:var(--green)">+2.100 €</td><td style="color:var(--green);font-weight:700">28.900 €</td><td><span class="sb sb-gr">Ausgezahlt</span></td></tr>
+          <tr><td><strong>Audi Q5 TDI</strong></td><td>Bau-Holding</td><td>31.200 €</td><td style="color:var(--t3)">—</td><td style="font-weight:700">31.200 €</td><td><span class="sb sb-am">Ausstehend</span></td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="dp" id="dHdl">
+        <div class="dh">Händlernetzwerk</div><div class="dsub">Partner-Händler</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Registrierte Händler</div><div><button class="td-btn" onclick="showToast('Folgt in Phase 2')">+ Einladen</button></div></div>
+        <table><thead><tr><th>Name</th><th>Ort</th><th>Fzg.</th><th>Ø Preis</th><th>Status</th></tr></thead>
+        <tbody><tr><td><strong>AutoHaus Müller</strong></td><td>Berlin</td><td>34</td><td>24.800 €</td><td><span class="sb sb-gr">Aktiv</span></td></tr><tr><td><strong>Fahrzeughandel Schmidt</strong></td><td>Hamburg</td><td>18</td><td>31.200 €</td><td><span class="sb sb-gr">Aktiv</span></td></tr><tr><td><strong>Premium Cars Leipzig</strong></td><td>Leipzig</td><td>11</td><td>28.400 €</td><td><span class="sb sb-bl">Neu</span></td></tr></tbody></table></div>
+      </div>
+
+      <div class="dp" id="dPar">
+        <div class="dh">Partner</div><div class="dsub">Leasinggesellschaften &amp; Fuhrparksoftware</div>
+        <div class="tbl-wrap"><div class="tbl-head"><div class="tbl-title">Kooperationen</div></div>
+        <table><thead><tr><th>Partner</th><th>Typ</th><th>Status</th></tr></thead>
+        <tbody><tr><td><strong>LeasePlan Deutschland</strong></td><td>Leasinggesellschaft</td><td><span class="sb sb-bl">In Verhandlung</span></td></tr><tr><td><strong>Vimcar Fleet</strong></td><td>Fuhrparksoftware</td><td><span class="sb sb-am">Gespräch geplant</span></td></tr></tbody></table></div>
+      </div>
+
+      <div class="dp" id="dNew">
+        <div class="dh">Fahrzeug erfassen</div><div class="dsub">Neues Fahrzeug manuell aufnehmen</div>
+        <div class="det-card" style="max-width:480px">
+          <div class="dc-lbl">Fahrzeugdaten</div>
+          <div class="fg2" style="margin-bottom:10px"><div class="fg"><label class="fl">Marke</label><input type="text" class="fi" placeholder="BMW"></div><div class="fg"><label class="fl">Modell</label><input type="text" class="fi" placeholder="320d xDrive"></div></div>
+          <div class="fg2" style="margin-bottom:10px"><div class="fg"><label class="fl">Baujahr</label><input type="number" class="fi" placeholder="2022"></div><div class="fg"><label class="fl">KM-Stand</label><input type="number" class="fi" placeholder="42000"></div></div>
+          <div class="fg" style="margin-bottom:10px"><label class="fl">VIN</label><input type="text" class="fi" placeholder="WBA..."></div>
+          <div class="fg" style="margin-bottom:10px"><label class="fl">Firma</label><input type="text" class="fi" placeholder="Musterfirma GmbH"></div>
+          <div class="fg" style="margin-bottom:16px"><label class="fl">Abholadresse</label><input type="text" class="fi" placeholder="Straße Nr., PLZ Ort"></div>
+          <button class="btn-next" onclick="showToast('Fahrzeug aufgenommen!')">Speichern →</button>
+        </div>
+      </div>
+
+      <div class="dp" id="dVert">
+        <div class="dh">Verträge</div><div class="dsub">Rahmenvertrag erstellen &amp; exportieren</div>
+
+        <div style="max-width:640px;margin-top:24px">
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Auftragnehmer (AN)</div>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
+            <div class="fg">
+              <label class="fl">AN Firmierung &amp; Adresse</label>
+              <input type="text" id="vAN" class="fi" placeholder="IMD Fleet Services, Musterstraße 1, 12345 Berlin">
+            </div>
+          </div>
+
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Auftraggeber (AG)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Firma / Unternehmen *</label>
+              <input type="text" id="vAGFirma" class="fi" placeholder="Muster GmbH &amp; Co. KG">
+            </div>
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Adresse (optional — für interne Notiz)</label>
+              <input type="text" id="vAGAdresse" class="fi" placeholder="Musterstraße 1, 12345 Musterstadt">
+            </div>
+            <div class="fg" style="grid-column:1/-1">
+              <label class="fl">Ansprechpartner (optional)</label>
+              <input type="text" id="vAGAnsp" class="fi" placeholder="Max Mustermann">
+            </div>
+          </div>
+
+          <div class="dh" style="font-size:15px;margin-bottom:16px;color:var(--t2)">Vertragsdetails</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:32px">
+            <div class="fg">
+              <label class="fl">Datum *</label>
+              <input type="date" id="vDatum" class="fi">
+            </div>
+            <div class="fg">
+              <label class="fl">Ort (AN-Seite)</label>
+              <input type="text" id="vOrtAN" class="fi" placeholder="Berlin">
+            </div>
+            <div class="fg">
+              <label class="fl">Ort (AG-Seite)</label>
+              <input type="text" id="vOrtAG" class="fi" placeholder="München">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center">
+            <button class="btn btn-navy" onclick="exportVertrag()">Word exportieren →</button>
+            <span id="vertragMsg" style="font-size:13px;display:none"></span>
+          </div>
+
+          <div style="margin-top:24px;padding:16px;background:var(--f1);border-radius:8px;font-size:12px;color:var(--t3);line-height:1.6">
+            <strong>Hinweis:</strong> Der Export befüllt automatisch den <em>Rahmenvertrag_Version1.docx</em>-Vorlage mit den eingegebenen Daten und lädt die fertige Word-Datei herunter. Das Dokument kann dann direkt ausgedruckt und unterschrieben werden.
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="dUsers">
+        <div class="dh">Benutzer verwalten</div><div class="dsub">Interne Zugänge</div>
+        <div class="tbl-wrap">
+          <div class="tbl-head"><div class="tbl-title">Alle Benutzer</div><button class="tbl-sel" onclick="loadUsers()" style="cursor:pointer">↻ Aktualisieren</button></div>
+          <table><thead><tr><th>Benutzername</th><th>Erstellt am</th><th>Aktion</th></tr></thead><tbody id="tblUsers"></tbody></table>
+        </div>
+        <div style="margin-top:28px">
+          <div class="dh" style="font-size:16px;margin-bottom:12px">Neuen Benutzer hinzufügen</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+            <div class="fg"><label class="fl">Benutzername</label><input type="text" id="newUserName" class="fi" placeholder="benutzername" style="max-width:200px"></div>
+            <div class="fg"><label class="fl">Passwort</label><input type="password" id="newUserPass" class="fi" placeholder="••••••••" style="max-width:200px"></div>
+            <button class="btn btn-navy" style="height:44px;margin-bottom:1px" onclick="addUser()">Hinzufügen →</button>
+          </div>
+          <div id="userMsg" style="font-size:12px;margin-top:8px;display:none"></div>
+        </div>
+      </div>
+
+      <div class="dp" id="dSch">
+        <div class="dh">Schäden</div>
+        <div id="dSchDate" class="dsub">—</div>
+        <div class="kpi-row" style="margin-bottom:24px">
+          <div class="kpi-card"><div class="kpi-val" id="schTotal">—</div><div class="kpi-lbl">Gesamt</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="schNeu">—</div><div class="kpi-lbl">Neu</div></div>
+          <div class="kpi-card"><div class="kpi-val" id="schInProgress">—</div><div class="kpi-lbl">In Bearbeitung</div></div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="dt" id="schTable">
+            <thead>
+              <tr>
+                <th>Fall-Nr</th><th>Datum</th><th>Fahrer</th><th>Firma</th>
+                <th>Kennzeichen</th><th>Fahrbereit</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="schBody"></tbody>
+          </table>
+        </div>
+        <!-- Detail panel (hidden by default) -->
+        <div id="schDetail" style="display:none;margin-top:24px;background:var(--f0);border-radius:12px;padding:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-family:var(--fh);font-size:16px;font-weight:800;color:var(--t0)" id="schDetailTitle">—</div>
+            <button onclick="document.getElementById('schDetail').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--t3)">×</button>
+          </div>
+          <div id="schDetailBody"></div>
+        </div>
+      </div>
+
+      <div class="dp" id="dWerk">
+        <div class="dh">Werkstätten</div>
+        <div class="dsub">IMD-Partnerwerkstätten verwalten</div>
+
+        <!-- Add form -->
+        <div style="background:var(--f0);border-radius:12px;padding:20px;margin-bottom:24px">
+          <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--t0);margin-bottom:14px">Neue Werkstatt hinzufügen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <input id="wName"     class="fi" placeholder="Name *" style="grid-column:1/-1">
+            <input id="wCity"     class="fi" placeholder="Stadt">
+            <input id="wPlz"      class="fi" placeholder="PLZ">
+            <input id="wEmail"    class="fi" placeholder="E-Mail *" type="email" style="grid-column:1/-1">
+            <input id="wServices" class="fi" placeholder="Leistungen (z.B. Karosserie · Lack)" style="grid-column:1/-1">
+            <input id="wRating"   class="fi" placeholder="Bewertung (z.B. 4.8)" type="number" min="1" max="5" step="0.1">
+          </div>
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <button id="wSaveBtn" class="td-btn" onclick="saveWerkstatt()">+ Hinzufügen</button>
+            <button id="wCancelBtn" class="td-btn" onclick="cancelEditWerkstatt()" style="display:none;color:var(--t2)">Abbrechen</button>
+            <span id="werkMsg" style="font-size:13px"></span>
+          </div>
+        </div>
+
+        <!-- List -->
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Werkstätten</div>
+            <button class="tbl-sel" onclick="loadWerkstaetten()" style="cursor:pointer">↻ Aktualisieren</button>
+          </div>
+          <table><thead><tr><th>Name</th><th>Ort</th><th>E-Mail</th><th>Leistungen</th><th>★</th><th>Aktiv</th><th>Aktion</th></tr></thead>
+          <tbody id="tblWerk"></tbody></table>
+        </div>
+      </div>
+
+      <div class="dp" id="dFuhrparks">
+        <div class="dh">Fuhrparks</div>
+        <div class="dsub">Alle Fuhrparks verwalten</div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Fuhrparks</div>
+            <button class="tbl-sel" onclick="loadFuhrparks(true)">↻ Aktualisieren</button>
+          </div>
+          <table>
+            <thead><tr><th>Name</th><th>Kontakt-E-Mail</th><th>Telefon</th><th>Erstellt am</th><th style="width:110px">Aktion</th></tr></thead>
+            <tbody id="tblFuhrparks"></tbody>
+          </table>
+        </div>
+        <div style="background:var(--f0);border-radius:12px;padding:24px;margin-top:20px">
+          <input type="hidden" id="fpId">
+          <div id="fpFormTitle" style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t0);margin-bottom:16px">Fuhrpark anlegen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+            <div class="fg"><label class="fl">Name *</label><input type="text" id="fpName" class="fi" placeholder="Muster GmbH"></div>
+            <div class="fg"><label class="fl">Kontakt-E-Mail</label><input type="email" id="fpEmail" class="fi" placeholder="manager@muster.de"></div>
+            <div class="fg"><label class="fl">Telefon</label><input type="text" id="fpTel" class="fi" placeholder="030 123456"></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+            <button class="btn btn-navy" id="fpSubmitBtn" onclick="createFuhrpark()">Fuhrpark anlegen →</button>
+            <button class="btn" id="fpCancelBtn" onclick="cancelFuhrparkEdit()" style="display:none;background:var(--f2);color:var(--t1)">Abbrechen</button>
+            <span id="fpMsg" style="font-size:13px;display:none"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dp" id="dFahrer">
+        <div class="dh">Fahrer</div>
+        <div class="dsub">Fahrerverwaltung — Einladungen · Zugänge · DSGVO</div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">
+            <div class="tbl-title">Alle Fahrer</div>
+            <button class="tbl-sel" onclick="loadFahrer(true)">↻ Aktualisieren</button>
+          </div>
+          <table>
+            <thead><tr><th>Name</th><th>Fuhrpark</th><th>E-Mail</th><th>Status</th><th>Aktionen</th></tr></thead>
+            <tbody id="tblFahrer"></tbody>
+          </table>
+        </div>
+        <div style="background:var(--f0);border-radius:12px;padding:24px;margin-top:20px">
+          <div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t0);margin-bottom:16px">Fahrer anlegen</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+            <div class="fg"><label class="fl">Vorname *</label><input type="text" id="frVorname" class="fi" placeholder="Max"></div>
+            <div class="fg"><label class="fl">Nachname *</label><input type="text" id="frNachname" class="fi" placeholder="Mustermann"></div>
+            <div class="fg"><label class="fl">E-Mail *</label><input type="email" id="frEmail" class="fi" placeholder="max@muster.de"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
+            <div class="fg"><label class="fl">Telefon</label><input type="text" id="frTel" class="fi" placeholder="0170 1234567"></div>
+            <div class="fg">
+              <label class="fl">Fuhrpark *</label>
+              <select id="frFuhrpark" class="fi" style="appearance:auto">
+                <option value="">— Fuhrpark wählen —</option>
+              </select>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px">
+            <button class="btn btn-navy" onclick="createFahrer()">Anlegen + Einladung →</button>
+            <span id="frMsg" style="font-size:13px;display:none"></span>
+          </div>
+        </div>
+        <div style="background:var(--f0);border-radius:12px;padding:24px;margin-top:20px">
+          <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px">
+            <div>
+              <div style="font-family:var(--fh);font-size:15px;font-weight:700;color:var(--t0);margin-bottom:5px">Fahrer per Excel importieren</div>
+              <div style="font-size:13px;color:var(--t2);line-height:1.5">Spalten: Vorname, Nachname, E-Mail, optional Telefon. Danach werden Einladungen automatisch gesendet.</div>
+            </div>
+            <button class="tbl-sel" onclick="downloadFahrerImportTemplate()">Vorlage herunterladen</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="fg">
+              <label class="fl">Fuhrpark *</label>
+              <select id="frImportFuhrpark" class="fi" style="appearance:auto" onfocus="ensureImportFuhrparks()">
+                <option value="">&mdash; Fuhrpark w&auml;hlen &mdash;</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="fl">Excel / CSV *</label>
+              <input type="file" id="frImportFile" class="fi" accept=".xlsx,.xls,.csv">
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap">
+            <button class="btn btn-navy" id="frImportBtn" onclick="importFahrerExcel()">Importieren + Einladungen senden &rarr;</button>
+            <span id="frImportMsg" style="font-size:13px;display:none"></span>
+          </div>
+          <div id="frImportResult" style="display:none;margin-top:14px;font-size:13px;line-height:1.55"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="toast-ico">✓</span><span id="toastMsg"></span></div>
+
+<script src="/csrf-client.js"></script>
+<script src="main.js?v=privacy-xlsx-connectors-refinement-4"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@ const path       = require('path');
 const { Resend } = require('resend');
 const { pool }   = require('../db');
 const { chatLimiter, escapeHtml, formLimiter, logError, sendError } = require('../middleware/security');
+const requireAdmin = require('../middleware/requireAdmin');
 
 const upload = multer({
   limits: { fields: 20, fieldSize: 20 * 1024 },
@@ -55,8 +56,15 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-router.get('/intern', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+router.get('/intern', requireAdmin, (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.sendFile(path.join(__dirname, '..', 'dashboard.html'));
+});
+
+router.get('/intern/login', (req, res) => {
+  if (req.session && req.session.user) return res.redirect('/intern');
+  res.setHeader('Cache-Control', 'no-store');
+  res.sendFile(path.join(__dirname, '..', 'intern-login.html'));
 });
 
 router.get('/preview', (req, res) => {
