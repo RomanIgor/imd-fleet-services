@@ -91,143 +91,15 @@
         Dienstwagen verkaufen.<br>
         <span>Ohne Aufwand für Ihr Unternehmen.</span>
       </h1>
-      <p class="hero-sub">Der Verkauf eines Dienstwagens bindet Zeit, Personal und interne Ressourcen. Fahrzeugdaten müssen zusammengestellt werden. Händler werden kontaktiert. Termine werden koordiniert. Wertgutachten organisiert. Dokumente vorbereitet. Fahrzeuge übergeben. Abmeldungen durchgeführt. Aufgaben, die nicht zu Ihrem Kerngeschäft gehören. Genau deshalb haben wir IMD Fleet Services gegründet.</p>
-      <div class="hero-mobile-features">
-        <div class="hero-feature"><span>✓</span><strong>Fahrzeugbewertung</strong><small>Unabhängige Gutachten nach GKK</small></div>
-        <div class="hero-feature"><span>✓</span><strong>Bundesweite Abholung</strong><small>Wir übernehmen die Logistik</small></div>
-        <div class="hero-feature"><span>✓</span><strong>Garantierter Mindestpreis</strong><small>Transparent & revisionssicher</small></div>
-        <div class="hero-feature"><span>✓</span><strong>Auszahlung in wenigen Tagen</strong><small>Schnell. Digital. Nachvollziehbar.</small></div>
-      </div>
+      <p class="hero-sub">Unternehmen benötigen keinen weiteren Fahrzeugankäufer, sondern einen Partner, der ihnen den gesamten Verkaufsprozess abnimmt.</p>
       <div class="hero-btns">
         <button class="btn btn-primary btn-lg" onclick="goTo('anmelden')">Fahrzeug zum Verkauf anmelden</button>
         <button class="btn btn-ghost btn-lg" onclick="goTo('prozess')">So funktioniert es</button>
       </div>
-      <button class="hc-open-btn" onclick="hcOpenCalc()">IMD Wirtschaftlichkeits-Check</button>
     </div>
 
     <!-- RIGHT: photo background -->
     <div class="hero-photo"></div>
-    <div class="hero-calc">
-        <button class="hc-close-btn" onclick="hcCloseCalc()">✕ Schließen</button>
-        <div class="hc-badge">Live-Rechner</div>
-        <h3 class="hc-title">IMD Wirtschaftlichkeits-Check</h3>
-        <div id="hcForm">
-          <div class="hc-2col">
-            <div class="hc-field">
-              <label>Marke</label>
-              <select id="hcManufacturer" onchange="hcPopulateModels(this.value)">
-                <option value="">— Marke —</option>
-                <option>Alfa Romeo</option><option>Audi</option><option>BMW</option>
-                <option>BYD</option><option>Citroën</option><option>Cupra</option>
-                <option>Dacia</option><option>DS Automobiles</option><option>Fiat</option>
-                <option>Ford</option><option>Genesis</option><option>Honda</option>
-                <option>Hyundai</option><option>Jaguar</option><option>Jeep</option>
-                <option>Kia</option><option>Land Rover</option><option>Lexus</option>
-                <option>Mazda</option><option>Mercedes-Benz</option><option>MG</option>
-                <option>MINI</option><option>Mitsubishi</option><option>Nissan</option>
-                <option>Opel</option><option>Peugeot</option><option>Polestar</option>
-                <option>Porsche</option><option>Renault</option><option>Seat</option>
-                <option>Skoda</option><option>Smart</option><option>Subaru</option>
-                <option>Suzuki</option><option>Tesla</option><option>Toyota</option>
-                <option>Volkswagen</option><option>Volvo</option><option>Andere</option>
-              </select>
-            </div>
-            <div class="hc-field">
-              <label>Modell</label>
-              <select id="hcModel" disabled style="opacity:.5">
-                <option value="">— erst Marke wählen —</option>
-              </select>
-            </div>
-          </div>
-          <div class="hc-field">
-            <label>Fahrzeugart</label>
-            <select id="hcType">
-              <option value="pkw_ice">PKW Verbrenner / Hybrid</option>
-              <option value="pkw_ev">PKW Elektro</option>
-              <option value="van_35">Kleintransporter bis 3,5 t</option>
-            </select>
-          </div>
-          <div class="hc-2col">
-            <div class="hc-field">
-              <label>Erstzulassung</label>
-              <input id="hcFirstReg" type="date">
-            </div>
-            <div class="hc-field">
-              <label>Kilometerstand</label>
-              <input id="hcKm" type="number" placeholder="118000">
-            </div>
-          </div>
-          <div class="hc-field">
-            <label>Kaufpreis netto (€)</label>
-            <input id="hcPurchase" type="number" placeholder="42000">
-          </div>
-          <div class="hc-field">
-            <label>Größere Reparaturen letzte 12 Monate? <span style="opacity:.5;font-weight:400">optional</span></label>
-            <div class="hc-chips">
-              <button class="hc-chip active" data-repair="0" onclick="hcChip(this)">Nein / unbekannt</button>
-              <button class="hc-chip" data-repair="1200" onclick="hcChip(this)">bis 1.500 €</button>
-              <button class="hc-chip" data-repair="2500" onclick="hcChip(this)">1.500–3.000 €</button>
-              <button class="hc-chip" data-repair="4000" onclick="hcChip(this)">über 3.000 €</button>
-            </div>
-          </div>
-          <button class="hc-btn" onclick="hcCalculate()">IMD Wirtschaftlichkeits-Check</button>
-          <p class="hc-note">Jahresfahrleistung wird automatisch berechnet. Keine Marktwertanalyse.</p>
-        </div>
-        <div id="hcResult" style="display:none">
-          <div class="hc-status-icon" id="hcStatusIcon"></div>
-          <div class="hc-pill" id="hcStatusPill">—</div>
-          <p class="hc-status-label" id="hcStatusLabel"></p>
-          <p class="hc-headline" id="hcHeadline"></p>
-          <p class="hc-copy" id="hcResultCopy"></p>
-          <div class="hc-kpis">
-            <div class="hc-kpi">
-              <small>Fahrzeug</small>
-              <strong id="hcVehicleOut">—</strong>
-            </div>
-            <div class="hc-kpi">
-              <small>Nutzungsdauer</small>
-              <strong id="hcAge">—</strong>
-            </div>
-            <div class="hc-kpi">
-              <small>Kilometerstand</small>
-              <strong id="hcKmOut">—</strong>
-            </div>
-            <div class="hc-kpi">
-              <small>Jahresfahrleistung autom.</small>
-              <strong id="hcAnnualKmOut">—</strong>
-            </div>
-            <div class="hc-kpi hc-hi">
-              <small>Buchwert heute</small>
-              <strong id="hcBookVal">—</strong>
-            </div>
-            <div class="hc-kpi hc-hi">
-              <small>Restbuchwertquote</small>
-              <strong id="hcBookQuote">—</strong>
-            </div>
-          </div>
-          <div class="hc-compare">
-            <div class="hc-cmp-col">
-              <div class="hc-cmp-head">Heute</div>
-              <div class="hc-cmp-row"><span>Buchwert</span><b id="hcTodayBook">—</b></div>
-              <div class="hc-cmp-row"><span>Quote</span><b id="hcTodayQ">—</b></div>
-              <div class="hc-cmp-row"><span>Status</span><b id="hcTodayStatus">—</b></div>
-            </div>
-            <div class="hc-cmp-div"></div>
-            <div class="hc-cmp-col">
-              <div class="hc-cmp-head">Bis Maximalnutzung</div>
-              <div class="hc-cmp-row"><span>Restkm</span><b id="hcRemainingKm">—</b></div>
-              <div class="hc-cmp-row"><span>Restmonate</span><b id="hcRemainingMonths">—</b></div>
-              <div class="hc-cmp-row"><span>Zeitpunkt</span><b id="hcTargetDate">—</b></div>
-            </div>
-          </div>
-          <div class="hc-checklist" id="hcChecklist"></div>
-          <div class="hc-next-box" id="hcNextBox"></div>
-          <div class="hc-recommend" id="hcRecommendBox"></div>
-          <p class="hc-disclaimer">Statische Orientierungsrechnung auf AfA-Basis. Kein Ersatz f&#252;r steuerliche Beratung oder Marktwertbewertung.</p>
-          <button class="hc-btn hc-cta" id="hcSellBtn" onclick="hcGoToForm()">Fahrzeug an IMD Fleet Services verkaufen →</button>
-          <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block';var c=document.querySelector('.hero-calc');if(c)c.scrollTop=0;">← Neu berechnen</a>
-        </div>
-      </div>
 
   </div>
   <div class="trust-bar">
@@ -248,7 +120,6 @@
       <div class="imd-hero-card imd-glass">
         <p class="imd-eyebrow">FAHRZEUGVERKAUF FÜR UNTERNEHMEN</p>
         <h2 class="imd-h1">Firmenfahrzeuge<br>verkaufen –<br>ohne Aufwand für<br>Ihren Fuhrpark.</h2>
-        <p class="imd-subline">Der Aufwand entsteht nicht durch das Fahrzeug –<br>sondern durch den Verkaufsprozess.</p>
         <div class="imd-tags">
           <span><img src="assets/icons/star-plus.svg" alt="">Bewertung</span>
           <span><img src="assets/icons/calendar-check.svg" alt="">Terminplanung</span>
@@ -273,82 +144,10 @@
       </aside>
     </section>
 
-    <section class="imd-process-panel imd-glass">
-      <article class="imd-intro-text">
-        <h3>Genau hier setzt IMD Fleet Services an.</h3>
-        <p>Online melden. Wir übernehmen Abholung, Gutachten und Auszahlung.</p>
-        <p class="imd-strong">Ein Vorgang. Ein Ansprechpartner.</p>
-      </article>
-      <div class="imd-process-grid">
-        <article>
-          <div class="imd-process-line-icon">
-            <img src="assets/icons/laptop-minimal-check.svg" alt="">
-            <svg class="imd-process-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
-          </div>
-          <h4>Meldung</h4>
-          <p>Fahrzeug online anmelden.</p>
-        </article>
-        <article>
-          <div class="imd-process-line-icon">
-            <img src="assets/icons/truck_v2.svg" alt="">
-            <svg class="imd-process-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17h4V5H2v12h3"/><path d="M14 9h4l4 4v4h-3"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg>
-          </div>
-          <h4>Abholung</h4>
-          <p>Bundesweit</p>
-        </article>
-        <article>
-          <div class="imd-process-line-icon">
-            <img src="assets/icons/scale.svg" alt="">
-            <svg class="imd-process-lucide" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="18" x="5" y="3" rx="2"/><path d="M9 3V1h6v2"/><path d="m9 12 2 2 4-4"/></svg>
-          </div>
-          <h4>Wertgutachten</h4>
-          <p>Nachvollziehbares Wertgutachten.</p>
-        </article>
-        <article>
-          <div class="imd-process-line-icon">
-            <img src="assets/icons/hand-coins.svg" alt="">
-            <svg class="imd-process-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a3 3 0 0 0 0 6h15a1 1 0 0 1 1 1v8a2 2 0 0 1-2 2H5a3 3 0 0 1-3-3V6"/><path d="M16 13h2"/></svg>
-          </div>
-          <h4>Auszahlung</h4>
-          <p>Schnell und Fair.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="imd-bottom-panel imd-glass">
-      <div class="imd-benefit-card imd-benefit-card--primary">
-        <h3>Warum Unternehmen IMD wählen</h3>
-        <div class="imd-why-items">
-          <article>
-            <div class="imd-why-icon"><img src="assets/icons/shield-check.svg" alt=""></div>
-            <h4>Sicher &amp; zuverlässig</h4>
-            <p>Professionelle und diskrete Abwicklung.</p>
-          </article>
-          <article>
-            <div class="imd-why-icon"><img src="assets/icons/custom/why-time.svg" alt=""></div>
-            <h4>Zeit- &amp; ressourcensparend</h4>
-            <p>Der komplette Prozess aus einer Hand.</p>
-          </article>
-          <article>
-            <div class="imd-why-icon"><img src="assets/icons/badge-euro.svg" alt=""></div>
-            <h4>Bestmöglicher Preis</h4>
-            <p>Transparente Wertermittlung.</p>
-          </article>
-          <article>
-            <div class="imd-why-icon"><img src="assets/icons/handshake.svg" alt=""></div>
-            <h4>Persönlicher Partner</h4>
-            <p>Ein Ansprechpartner für den Fuhrpark.</p>
-          </article>
-        </div>
-      </div>
+    <section class="imd-bottom-panel imd-glass imd-bottom-panel--single">
       <div class="imd-cta-split">
         <h3>Bereit für einen einfachen Fahrzeugverkauf?</h3>
         <p>Starten Sie Ihren Verkaufsprozess.</p>
-        <ul>
-          <li><img src="assets/icons/check.svg" alt="">Schnell &amp; unkompliziert</li>
-          <li><img src="assets/icons/check.svg" alt="">Kostenlos &amp; ohne Aufwand</li>
-          <li><img src="assets/icons/check.svg" alt="">Faire Preise ohne Nachverhandlung</li>
-        </ul>
         <a class="imd-button" href="#kontakt-form">Jetzt unverbindlich anfragen <span>→</span></a>
         <small>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</small>
       </div>
@@ -551,13 +350,15 @@
 <section class="section" id="ueber-uns">
   <div class="wrap" style="position:relative;z-index:1">
 
-    <div class="ub-content-grid">
-      <div class="ub-text-col">
-        <span class="eyebrow">Warum wir IMD Fleet Services gegründet haben</span>
-        <h2 class="h2" style="margin-top:14px;margin-bottom:20px">Nicht Fahrzeuge vermitteln.<br><em>Prozesse abnehmen.</em></h2>
-        <p style="font-size:18px;color:var(--ueber-body);line-height:1.7;font-weight:500;font-style:italic;border-left:3px solid var(--ueber-blue);padding-left:20px;margin-bottom:0">
-          „Der Verkauf eines Dienstwagens sollte für Ihr Unternehmen nicht mehr als wenige Minuten Aufwand bedeuten. Genau dafür wurde IMD Fleet Services gegründet."
-        </p>
+    <div class="ub-editorial">
+      <div class="ub-editorial-top">
+        <div class="ub-editorial-lead">
+          <span class="eyebrow">Warum wir IMD Fleet Services gegründet haben</span>
+          <h2 class="h2" style="margin-top:14px;margin-bottom:24px">Nicht Fahrzeuge vermitteln.<br><em>Prozesse abnehmen.</em></h2>
+          <p class="ub-quote">
+            „Der Verkauf eines Dienstwagens sollte für Ihr Unternehmen nicht mehr als wenige Minuten Aufwand bedeuten. Genau dafür wurde IMD Fleet Services gegründet."
+          </p>
+        </div>
 
         <div class="ub-point-list">
           <div class="ub-point">
@@ -568,12 +369,6 @@
           </div>
           <div class="ub-point">
             <div class="ub-point-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            </div>
-            <p class="ub-point-text">Dabei wurde uns immer wieder bewusst: Unternehmen benötigen keinen weiteren Fahrzeugankäufer. Unternehmen benötigen einen Partner, der ihnen <strong>den gesamten Verkaufsprozess abnimmt</strong>. Aus dieser Überzeugung entstand IMD Fleet Services.</p>
-          </div>
-          <div class="ub-point">
-            <div class="ub-point-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
             </div>
             <p class="ub-point-text">Unser Ziel ist nicht, Fahrzeuge zu vermitteln. Unser Ziel ist nicht, Unternehmen in zusätzliche Verkaufsprozesse einzubinden. Unser Ziel ist es, Dienstwagenankauf für Unternehmen so einfach wie möglich zu machen: <strong>Digital melden. Direkt an <span class="ub-accent">IMD</span> verkaufen. Den Rest übernehmen wir.</strong></p>
@@ -581,110 +376,73 @@
         </div>
       </div>
 
-      <div class="ub-visual-col">
-        <div class="ub-diagram-card">
-          <div class="ub-diagram-body">
-            <div class="ub-diagram-origin">
-              <div class="ub-diagram-origin-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="18" rx="1"/><path d="M9 21v-4h2v4M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/></svg>
-              </div>
-              <div class="ub-diagram-origin-label">Ihr Fuhrpark</div>
-              <div class="ub-diagram-origin-sub">Ein Fahrzeug. Viele Aufgaben. <strong>Ihr Aufwand.</strong></div>
-            </div>
-            <div class="ub-diagram-hub">
-              <img src="logo_light.png" alt="IMD Fleet Services">
-            </div>
-            <div class="ub-diagram-steps">
-              <div class="ub-diagram-step">
-                <div class="ub-diagram-step-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 14l5-5 2 2-5 5H9v-2z"/></svg>
-                </div>
-                <div>
-                  <div class="ub-diagram-step-title">Bewertung</div>
-                  <div class="ub-diagram-step-text">Marktgerechte Bewertung in wenigen Stunden.</div>
-                </div>
-              </div>
-              <div class="ub-diagram-step">
-                <div class="ub-diagram-step-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="10" width="9" height="6" rx="1"/><path d="M11 12h4l3 3v1h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="16" cy="18" r="1.8"/><path d="M18 8v4"/></svg>
-                </div>
-                <div>
-                  <div class="ub-diagram-step-title">Abholung</div>
-                  <div class="ub-diagram-step-text">Bundesweite Abholung zum Wunschtermin.</div>
-                </div>
-              </div>
-              <div class="ub-diagram-step">
-                <div class="ub-diagram-step-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 14l2 2 4-4"/></svg>
-                </div>
-                <div>
-                  <div class="ub-diagram-step-title">Abmeldung</div>
-                  <div class="ub-diagram-step-text">Stilllegung und Abmeldung übernehmen wir.</div>
-                </div>
-              </div>
-              <div class="ub-diagram-step">
-                <div class="ub-diagram-step-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 8.5a5 5 0 100 7"/><path d="M7.5 11h6M7.5 13.5h5"/></svg>
-                </div>
-                <div>
-                  <div class="ub-diagram-step-title">Auszahlung</div>
-                  <div class="ub-diagram-step-text">Schnelle und sichere Auszahlung.</div>
-                </div>
-              </div>
-            </div>
-            <svg class="ub-diagram-connectors" viewBox="0 0 416 360" preserveAspectRatio="none">
-              <path d="M202,148 C218,148 218,45 230,45"/>
-              <path d="M215,168 C222,168 222,135 230,135"/>
-              <path d="M215,192 C222,192 222,225 230,225"/>
-              <path d="M202,212 C218,212 218,315 230,315"/>
-            </svg>
+      <div class="ub-expertise-row">
+        <div class="ub-expertise-card ub-expertise-card-1">
+          <span class="ub-expertise-num" aria-hidden="true">01</span>
+          <div class="ub-expertise-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
           </div>
+          <div class="ub-expertise-title">Fuhrparkmanagement</div>
+          <div class="ub-expertise-text">Operative Erfahrung im Management von Firmenflotten.</div>
         </div>
-        <div class="ub-photo-card">
-          <img src="assets/icons/blue-car-speed-motion-stretch-style.jpg" alt="IMD Fleet Services Fahrzeugverkauf" class="ub-car-photo" loading="lazy">
+        <div class="ub-expertise-card ub-expertise-card-2">
+          <span class="ub-expertise-num" aria-hidden="true">02</span>
+          <div class="ub-expertise-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="ub-expertise-title">Fahrzeughandel</div>
+          <div class="ub-expertise-text">Professionelle Erfahrung im Fahrzeughandel.</div>
         </div>
-      </div>
-    </div>
-
-    <div class="ub-benefits-band">
-      <div class="ub-benefit">
-        <div class="ub-benefit-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <div class="ub-expertise-card ub-expertise-card-3">
+          <span class="ub-expertise-num" aria-hidden="true">03</span>
+          <div class="ub-expertise-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7"/></svg>
+          </div>
+          <div class="ub-expertise-title">Digitalisierung</div>
+          <div class="ub-expertise-text">Erfahrung in der Digitalisierung von Geschäftsprozessen.</div>
         </div>
-        <div class="ub-benefit-title">Zeit sparen</div>
-        <div class="ub-benefit-text">Verkauf Ihres Fuhrparks in wenigen Minuten Aufwand.</div>
-      </div>
-      <div class="ub-benefit">
-        <div class="ub-benefit-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-        </div>
-        <div class="ub-benefit-title">Risiken reduzieren</div>
-        <div class="ub-benefit-text">Rechtssichere Abwicklung durch einen erfahrenen Partner.</div>
-      </div>
-      <div class="ub-benefit">
-        <div class="ub-benefit-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7"/></svg>
-        </div>
-        <div class="ub-benefit-title">Ressourcen schonen</div>
-        <div class="ub-benefit-text">Wir übernehmen den gesamten Prozess für Sie.</div>
-      </div>
-      <div class="ub-benefit">
-        <div class="ub-benefit-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20c-1-6 2-13 12-15 1 9-3 14-9 15-1 .1-2 .1-3 0z"/><path d="M8 18c2-3 5-6 9-9"/></svg>
-        </div>
-        <div class="ub-benefit-title">Nachhaltig handeln</div>
-        <div class="ub-benefit-text">Fahrzeuge optimal verwerten. Ressourcen verantwortungsvoll nutzen.</div>
       </div>
     </div>
 
   </div>
 </section>
 
+<!-- ═════════ ZIELGRUPPE ═════════ -->
+<section class="section sec-light" id="zielgruppe">
+  <div class="wrap">
+    <div class="ziel-grid">
+      <div>
+        <span class="eyebrow">Für wen ist IMD Fleet Services?</span>
+        <h2 class="h2" style="margin-bottom:16px">Entwickelt für<br><em>Fuhrparkverantwortliche.</em></h2>
+        <p class="lead">IMD Fleet Services ist speziell für Unternehmen mit Firmenfahrzeugen konzipiert — nicht für Privatpersonen.</p>
+        <div class="branchen">
+          <div class="branche rev"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></div><div><div class="branche-name">Pharma</div><div class="branche-sub">Außendienstflotten</div></div></div>
+          <div class="branche rev d1"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div><div class="branche-name">Beratung & IT</div><div class="branche-sub">Dienstwagen für Berater</div></div></div>
+          <div class="branche rev d2"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="branche-name">Versicherungen</div><div class="branche-sub">Außendienst-Fuhrparks</div></div></div>
+          <div class="branche rev d3"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><line x1="9" y1="7" x2="9" y2="7.01"/><line x1="15" y1="7" x2="15" y2="7.01"/><line x1="9" y1="12" x2="9" y2="12.01"/><line x1="15" y1="12" x2="15" y2="12.01"/></svg></div><div><div class="branche-name">Alle Branchen</div><div class="branche-sub">Ab 1 bis 300+ Fzg.</div></div></div>
+        </div>
+      </div>
+      <div class="rev d1">
+        <div class="persona">
+          <div class="pe-label">Der wichtigste Ansprechpartner</div>
+          <div class="pe-name">Der Fuhrparkleiter</div>
+          <div class="pe-role">Fleet Manager · Mobility Manager</div>
+          <div class="pe-qs">
+            <div class="pe-q"><div class="pe-q-q">„Ist das seriös? Bekomme ich wirklich den fairen Preis?"</div><div class="pe-q-a">→ Garantierter HEK-Wert durch zertifiziertes, unabhängiges Gutachten.</div></div>
+            <div class="pe-q"><div class="pe-q-q">„Wie viel Aufwand entsteht für meinen Fuhrpark?"</div><div class="pe-q-a">→ 2 Minuten Fahrzeugmeldung. Alles andere macht IMD Fleet Services.</div></div>
+            <div class="pe-q"><div class="pe-q-q">„Kann ich mehrere Fahrzeuge gleichzeitig abgeben?"</div><div class="pe-q-a">→ Ja. Ab 1 bis zur gesamten Flotte — ein Prozess, ein Ansprechpartner.</div></div>
+          </div>
+          <div class="pe-footer"><strong>Ideale Firmengröße:</strong> Unternehmen mit 20 bis 300+ Dienstwagen. Leasingrückläufer besonders willkommen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═════════ EXPERTISE ═════════ -->
-<section class="section sec-light" id="expertise">
+<section class="section" id="expertise">
   <div class="wrap">
     <div class="sec-head sec-center">
-      <span class="eyebrow" style="display:block;margin-bottom:12px">IMD Fleet Services in Zahlen</span>
       <h2 class="h2">Die Zahlen hinter<br><em>unserem Versprechen.</em></h2>
       <p class="lead" style="max-width:580px;margin:12px auto 0">Vertrauen entsteht durch Ergebnisse. Das sind die Kennzahlen, die für IMD Fleet Services sprechen.</p>
     </div>
@@ -710,16 +468,9 @@
       </div>
     </div>
 
-    <!-- 3 Erfahrungspunkte -->
+    <!-- 2 Erfahrungspunkte -->
     <div class="exp-grid">
       <div class="exp-card rev">
-        <div class="exp-card-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <div class="exp-card-title">Operative Praxiserfahrung</div>
-        <div class="exp-card-text">Unsere Gründer haben Flottenankäufe nicht vom Schreibtisch aus koordiniert — sie haben sie selbst verhandelt, bewertet und abgewickelt. Dieses Wissen steckt in jedem Schritt unseres Prozesses.</div>
-      </div>
-      <div class="exp-card rev d1">
         <div class="exp-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
@@ -738,45 +489,140 @@
   </div>
 </section>
 
-<!-- ═════════ ZIELGRUPPE ═════════ -->
-<section class="section" id="zielgruppe">
-  <div class="wrap">
-    <div class="ziel-grid">
-      <div>
-        <span class="eyebrow">Für wen ist IMD Fleet Services?</span>
-        <h2 class="h2" style="margin-bottom:16px">Entwickelt für<br><em>Fuhrparkverantwortliche.</em></h2>
-        <p class="lead">IMD Fleet Services ist speziell für Unternehmen mit Firmenfahrzeugen konzipiert — nicht für Privatpersonen.</p>
-        <div class="branchen">
-          <div class="branche rev"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></div><div><div class="branche-name">Pharma</div><div class="branche-sub">Außendienstflotten</div></div></div>
-          <div class="branche rev d1"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div><div class="branche-name">Beratung & IT</div><div class="branche-sub">Dienstwagen für Berater</div></div></div>
-          <div class="branche rev d2"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="branche-name">Versicherungen</div><div class="branche-sub">Außendienst-Fuhrparks</div></div></div>
-          <div class="branche rev d3"><div class="branche-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><line x1="9" y1="7" x2="9" y2="7.01"/><line x1="15" y1="7" x2="15" y2="7.01"/><line x1="9" y1="12" x2="9" y2="12.01"/><line x1="15" y1="12" x2="15" y2="12.01"/></svg></div><div><div class="branche-name">Alle Branchen</div><div class="branche-sub">Ab 1 bis 300+ Fzg.</div></div></div>
-        </div>
-      </div>
-      <div class="rev d1">
-        <div class="persona">
-          <div class="pe-label">Der wichtigste Ansprechpartner</div>
-          <div class="pe-avatar">👨‍💼</div>
-          <div class="pe-name">Der Fuhrparkleiter</div>
-          <div class="pe-role">Fleet Manager · Mobility Manager</div>
-          <div class="pe-qs">
-            <div class="pe-q"><div class="pe-q-q">„Ist das seriös? Bekomme ich wirklich den fairen Preis?"</div><div class="pe-q-a">→ Garantierter HEK-Wert durch zertifiziertes, unabhängiges Gutachten.</div></div>
-            <div class="pe-q"><div class="pe-q-q">„Wie viel Aufwand entsteht für meinen Fuhrpark?"</div><div class="pe-q-a">→ 2 Minuten Fahrzeugmeldung. Alles andere macht IMD Fleet Services.</div></div>
-            <div class="pe-q"><div class="pe-q-q">„Kann ich mehrere Fahrzeuge gleichzeitig abgeben?"</div><div class="pe-q-a">→ Ja. Ab 1 bis zur gesamten Flotte — ein Prozess, ein Ansprechpartner.</div></div>
-          </div>
-          <div class="pe-footer"><strong>Ideale Firmengröße:</strong> Unternehmen mit 20 bis 300+ Dienstwagen. Leasingrückläufer besonders willkommen.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═════════ ZEITRECHNER ═════════ -->
+<!-- ═════════ RECHNER ═════════ -->
 <section class="section sec-light" id="rechner">
   <div class="wrap">
     <div class="sec-head">
+      <span class="eyebrow">Rechner</span>
+      <h2 class="h2" style="margin-bottom:14px">Verkaufszeitpunkt prüfen.<br>Ersparnis <em>berechnen.</em></h2>
+    </div>
+
+    <!-- Tool 1: Wirtschaftlichkeits-Check (moved from hero) -->
+    <div class="calc-box wcheck-panel">
+      <div class="hc-badge">Live-Rechner</div>
+      <h3 class="hc-title">IMD Wirtschaftlichkeits-Check</h3>
+      <div id="hcForm">
+        <div class="hc-2col">
+          <div class="hc-field">
+            <label>Marke</label>
+            <select id="hcManufacturer" onchange="hcPopulateModels(this.value)">
+              <option value="">— Marke —</option>
+              <option>Alfa Romeo</option><option>Audi</option><option>BMW</option>
+              <option>BYD</option><option>Citroën</option><option>Cupra</option>
+              <option>Dacia</option><option>DS Automobiles</option><option>Fiat</option>
+              <option>Ford</option><option>Genesis</option><option>Honda</option>
+              <option>Hyundai</option><option>Jaguar</option><option>Jeep</option>
+              <option>Kia</option><option>Land Rover</option><option>Lexus</option>
+              <option>Mazda</option><option>Mercedes-Benz</option><option>MG</option>
+              <option>MINI</option><option>Mitsubishi</option><option>Nissan</option>
+              <option>Opel</option><option>Peugeot</option><option>Polestar</option>
+              <option>Porsche</option><option>Renault</option><option>Seat</option>
+              <option>Skoda</option><option>Smart</option><option>Subaru</option>
+              <option>Suzuki</option><option>Tesla</option><option>Toyota</option>
+              <option>Volkswagen</option><option>Volvo</option><option>Andere</option>
+            </select>
+          </div>
+          <div class="hc-field">
+            <label>Modell</label>
+            <select id="hcModel" disabled style="opacity:.5">
+              <option value="">— erst Marke wählen —</option>
+            </select>
+          </div>
+        </div>
+        <div class="hc-field">
+          <label>Fahrzeugart</label>
+          <select id="hcType">
+            <option value="pkw_ice">PKW Verbrenner / Hybrid</option>
+            <option value="pkw_ev">PKW Elektro</option>
+            <option value="van_35">Kleintransporter bis 3,5 t</option>
+          </select>
+        </div>
+        <div class="hc-2col">
+          <div class="hc-field">
+            <label>Erstzulassung</label>
+            <input id="hcFirstReg" type="date">
+          </div>
+          <div class="hc-field">
+            <label>Kilometerstand</label>
+            <input id="hcKm" type="number" placeholder="118000">
+          </div>
+        </div>
+        <div class="hc-field">
+          <label>Kaufpreis netto (€)</label>
+          <input id="hcPurchase" type="number" placeholder="42000">
+        </div>
+        <div class="hc-field">
+          <label>Größere Reparaturen letzte 12 Monate? <span style="opacity:.5;font-weight:400">optional</span></label>
+          <div class="hc-chips">
+            <button class="hc-chip active" data-repair="0" onclick="hcChip(this)">Nein / unbekannt</button>
+            <button class="hc-chip" data-repair="1200" onclick="hcChip(this)">bis 1.500 €</button>
+            <button class="hc-chip" data-repair="2500" onclick="hcChip(this)">1.500–3.000 €</button>
+            <button class="hc-chip" data-repair="4000" onclick="hcChip(this)">über 3.000 €</button>
+          </div>
+        </div>
+        <button class="hc-btn" onclick="hcCalculate()">IMD Wirtschaftlichkeits-Check</button>
+        <p class="hc-note">Jahresfahrleistung wird automatisch berechnet. Keine Marktwertanalyse.</p>
+      </div>
+      <div id="hcResult" style="display:none">
+        <div class="hc-status-icon" id="hcStatusIcon"></div>
+        <div class="hc-pill" id="hcStatusPill">—</div>
+        <p class="hc-status-label" id="hcStatusLabel"></p>
+        <p class="hc-headline" id="hcHeadline"></p>
+        <p class="hc-copy" id="hcResultCopy"></p>
+        <div class="hc-kpis">
+          <div class="hc-kpi">
+            <small>Fahrzeug</small>
+            <strong id="hcVehicleOut">—</strong>
+          </div>
+          <div class="hc-kpi">
+            <small>Nutzungsdauer</small>
+            <strong id="hcAge">—</strong>
+          </div>
+          <div class="hc-kpi">
+            <small>Kilometerstand</small>
+            <strong id="hcKmOut">—</strong>
+          </div>
+          <div class="hc-kpi">
+            <small>Jahresfahrleistung autom.</small>
+            <strong id="hcAnnualKmOut">—</strong>
+          </div>
+          <div class="hc-kpi hc-hi">
+            <small>Buchwert heute</small>
+            <strong id="hcBookVal">—</strong>
+          </div>
+          <div class="hc-kpi hc-hi">
+            <small>Restbuchwertquote</small>
+            <strong id="hcBookQuote">—</strong>
+          </div>
+        </div>
+        <div class="hc-compare">
+          <div class="hc-cmp-col">
+            <div class="hc-cmp-head">Heute</div>
+            <div class="hc-cmp-row"><span>Buchwert</span><b id="hcTodayBook">—</b></div>
+            <div class="hc-cmp-row"><span>Quote</span><b id="hcTodayQ">—</b></div>
+            <div class="hc-cmp-row"><span>Status</span><b id="hcTodayStatus">—</b></div>
+          </div>
+          <div class="hc-cmp-div"></div>
+          <div class="hc-cmp-col">
+            <div class="hc-cmp-head">Bis Maximalnutzung</div>
+            <div class="hc-cmp-row"><span>Restkm</span><b id="hcRemainingKm">—</b></div>
+            <div class="hc-cmp-row"><span>Restmonate</span><b id="hcRemainingMonths">—</b></div>
+            <div class="hc-cmp-row"><span>Zeitpunkt</span><b id="hcTargetDate">—</b></div>
+          </div>
+        </div>
+        <div class="hc-checklist" id="hcChecklist"></div>
+        <div class="hc-next-box" id="hcNextBox"></div>
+        <div class="hc-recommend" id="hcRecommendBox"></div>
+        <p class="hc-disclaimer">Statische Orientierungsrechnung auf AfA-Basis. Kein Ersatz f&#252;r steuerliche Beratung oder Marktwertbewertung.</p>
+        <button class="hc-btn hc-cta" id="hcSellBtn" onclick="hcGoToForm()">Fahrzeug an IMD Fleet Services verkaufen →</button>
+        <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block';">← Neu berechnen</a>
+      </div>
+    </div>
+
+    <!-- Tool 2: Zeitrechner -->
+    <div class="sec-head" style="margin-bottom:32px">
       <span class="eyebrow">Zeitrechner</span>
-      <h2 class="h2" style="margin-bottom:14px">Wie viel sparen Sie<br>mit <em>IMD Fleet Services?</em></h2>
+      <h3 class="h2" style="font-size:24px;margin-bottom:10px">Wie viel sparen Sie mit IMD Fleet Services?</h3>
       <p class="lead" style="max-width:540px">Berechnen Sie, wie lange der klassische Fahrzeugverkauf dauert — und was das Ihr Unternehmen kostet.</p>
     </div>
     <div class="calc-grid">
@@ -810,13 +656,13 @@
         </div>
         <div class="cr-compare">
           <div class="cr-cmp old"><div class="cr-cmp-lbl old">Klassisch</div><div class="cr-cmp-val old" id="cOldH">—</div><div class="cr-cmp-sub">Stunden Aufwand</div></div>
-          <div class="cr-cmp new"><div class="cr-cmp-lbl new">✦ IMD Fleet Services</div><div class="cr-cmp-val new" id="cNewH">—</div><div class="cr-cmp-sub">~2 Min. pro Fzg.</div></div>
+          <div class="cr-cmp new"><div class="cr-cmp-lbl new">IMD Fleet Services</div><div class="cr-cmp-val new" id="cNewH">—</div><div class="cr-cmp-sub">~2 Min. pro Fzg.</div></div>
         </div>
         <div class="cr-rows">
-          <div class="cr-row"><span class="crr-label">⏱ Zeitersparnis</span><span class="crr-val" id="cB1">—</span></div>
-          <div class="cr-row"><span class="crr-label">💶 Eingesparte Personalkosten</span><span class="crr-val" id="cB2">—</span></div>
-          <div class="cr-row"><span class="crr-label">📈 Möglicher Bonus über HEK (Ø 9.4%)</span><span class="crr-val" id="cB3">—</span></div>
-          <div class="cr-row total"><span class="crr-label total">✦ Gesamtvorteil (geschätzt)</span><span class="crr-val total" id="cTotal">—</span></div>
+          <div class="cr-row"><span class="crr-label">Zeitersparnis</span><span class="crr-val" id="cB1">—</span></div>
+          <div class="cr-row"><span class="crr-label">Eingesparte Personalkosten</span><span class="crr-val" id="cB2">—</span></div>
+          <div class="cr-row"><span class="crr-label">Möglicher Bonus über HEK (Ø 9.4%)</span><span class="crr-val" id="cB3">—</span></div>
+          <div class="cr-row total"><span class="crr-label total">Gesamtvorteil (geschätzt)</span><span class="crr-val total" id="cTotal">—</span></div>
         </div>
         <div class="cr-note">* Schätzwerte. Tatsächlicher Bonus abhängig von Marktsituation und Gutachten.</div>
         <button class="btn btn-green btn-lg" style="width:100%;justify-content:center;margin-top:16px" onclick="goTo('anmelden')">Jetzt Fahrzeug anmelden →</button>
@@ -884,10 +730,10 @@
           <button class="fleet-opt" onclick="selectFleet(this,'250+ Fahrzeuge')">250+ Fahrzeuge</button>
         </div>
         <div class="form-trust">
-          <div class="form-ti"><div class="form-ti-ico">🔒</div>Ihre Daten sind sicher. Keine Weitergabe an Dritte.</div>
-          <div class="form-ti"><div class="form-ti-ico">⚡</div>Rückmeldung innerhalb von 24 Stunden.</div>
-          <div class="form-ti"><div class="form-ti-ico">💶</div>Komplett kostenfrei.</div>
-          <div class="form-ti"><div class="form-ti-ico">🏆</div>HEK-Mindestpreis zugesichert.</div>
+          <div class="form-ti">Ihre Daten sind sicher. Keine Weitergabe an Dritte.</div>
+          <div class="form-ti">Rückmeldung innerhalb von 24 Stunden.</div>
+          <div class="form-ti">Komplett kostenfrei.</div>
+          <div class="form-ti">HEK-Mindestpreis zugesichert.</div>
         </div>
       </div>
       <div>
@@ -1032,7 +878,7 @@
 <!-- ═════════ KONTAKT ═════════ -->
 <section class="section sec-light" id="kontakt">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:start">
+    <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:stretch">
       <!-- Left: info + form -->
       <div>
         <span class="eyebrow">Kontakt</span>
@@ -1041,20 +887,13 @@
         <!-- Contact details -->
         <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px">
           <div class="contact-card">
-            <div class="contact-card-ico">📧</div>
-            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:2px">E-Mail</div><div style="font-size:14px;font-weight:600;color:var(--text-1)"><a href="mailto:info@imdfleet.de" style="color:inherit;text-decoration:none">info@imdfleet.de</a></div></div>
+            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cmp-muted);margin-bottom:2px">E-Mail</div><div style="font-size:14px;font-weight:600;color:var(--text-1)"><a href="mailto:info@imdfleet.de" style="color:inherit;text-decoration:none">info@imdfleet.de</a></div></div>
           </div>
           <div class="contact-card">
-            <div class="contact-card-ico">📞</div>
-            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:2px">Telefon</div><div style="font-size:14px;font-weight:600;color:var(--text-1)">+49 30 xxx xxx xx</div></div>
+            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cmp-muted);margin-bottom:2px">Standort</div><div style="font-size:14px;font-weight:600;color:var(--text-1)">Chemnitz, Deutschland</div></div>
           </div>
           <div class="contact-card">
-            <div class="contact-card-ico">📍</div>
-            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:2px">Standort</div><div style="font-size:14px;font-weight:600;color:var(--text-1)">Chemnitz, Deutschland</div></div>
-          </div>
-          <div class="contact-card">
-            <div class="contact-card-ico">⏰</div>
-            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:2px">Erreichbarkeit</div><div style="font-size:14px;font-weight:600;color:var(--text-1)">Mo–Fr, 08:00 – 18:00 Uhr</div></div>
+            <div><div style="font-family:var(--fh);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cmp-muted);margin-bottom:2px">Erreichbarkeit</div><div style="font-size:14px;font-weight:600;color:var(--text-1)">Mo–Fr, 08:00 – 18:00 Uhr</div></div>
           </div>
         </div>
         <!-- Quick contact form -->
@@ -1074,17 +913,16 @@
         <div class="contact-map-box">
           <!-- Map header -->
           <div style="padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
-            <div class="contact-card-ico">🗺</div>
             <div>
               <div style="font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text-1)">IMD Fleet Services — Chemnitz</div>
               <div style="font-size:12px;color:var(--text-2);margin-top:1px">Bundesweiter Service mit Sitz in Chemnitz</div>
             </div>
             <div style="margin-left:auto">
-              <span class="contact-active-badge">🟢 Bundesweit aktiv</span>
+              <span class="contact-active-badge"><i class="cab-dot"></i>Bundesweit aktiv</span>
             </div>
           </div>
           <!-- OpenStreetMap embed -->
-          <div style="position:relative;height:340px">
+          <div class="contact-map-embed" style="position:relative;min-height:340px">
             <div class="imd-map-consent" data-consent-placeholder data-consent-category="external">
               <div class="imd-map-consent-card">
                 <strong>Externe Karte laden</strong>
@@ -1104,10 +942,10 @@
           <div style="padding:18px 22px;border-top:1px solid var(--border)">
             <div style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:12px">Service-Abdeckung</div>
             <div class="coverage-grid">
-              <div class="coverage-city"><div style="font-size:16px;margin-bottom:4px">🏙</div><div class="coverage-city-name">Chemnitz</div></div>
-              <div class="coverage-city"><div style="font-size:16px;margin-bottom:4px">🌆</div><div class="coverage-city-name">München</div></div>
-              <div class="coverage-city"><div style="font-size:16px;margin-bottom:4px">🌇</div><div class="coverage-city-name">Hamburg</div></div>
-              <div class="coverage-city coverage-city-accent"><div style="font-size:16px;margin-bottom:4px">🇩🇪</div><div class="coverage-city-name coverage-city-name-acc">Bundesweit</div></div>
+              <div class="coverage-city"><div class="coverage-city-name">Chemnitz</div></div>
+              <div class="coverage-city"><div class="coverage-city-name">München</div></div>
+              <div class="coverage-city"><div class="coverage-city-name">Hamburg</div></div>
+              <div class="coverage-city coverage-city-accent"><div class="coverage-city-name coverage-city-name-acc">Bundesweit</div></div>
             </div>
           </div>
         </div>
@@ -1119,7 +957,7 @@
 <!-- CTA FINAL -->
 <section class="cta-sec">
   <div class="cta-inner">
-    <span class="tag tag-white" style="margin-bottom:20px;display:inline-flex">✦ Ein Verkauf. Ein Vertragspartner. Ein abgeschlossener Vorgang.</span>
+    <span class="tag tag-white" style="margin-bottom:20px;display:inline-flex">Ein Verkauf. Ein Vertragspartner. Ein abgeschlossener Vorgang.</span>
     <h2 class="h2 h2-white" style="margin-bottom:14px">Der Aufwand entsteht nicht durch das Fahrzeug.<br><em>Der Aufwand entsteht durch den Verkaufsprozess.</em></h2>
     <p class="lead lead-white" style="margin-bottom:36px">Genau diesen Prozess übernehmen wir. Nach dem Verkauf an IMD ist der Vorgang für Ihr Unternehmen abgeschlossen. Die weitere Vermarktung erfolgt vollständig durch IMD Fleet Services im eigenen Namen. Sie müssen sich nicht um Folgeprozesse, Vermarktung oder weitere Verkaufsaktivitäten kümmern.</p>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
@@ -1137,7 +975,7 @@
         <div style="margin-bottom:12px"><img src="logo_dark.png" alt="IMD Fleet Services" style="width:200px;height:auto;display:block;margin-bottom:8px" loading="lazy"></div>
         
         <div class="fb-desc">IMD Fleet Services — professioneller Fahrzeugankauf mit garantiertem HEK-Mindestpreis. Bundesweit, kostenfrei, revisionssicher.</div>
-        <div class="fb-badges"><span class="fb-badge">🏆 HEK-Garantie</span><span class="fb-badge">⚡ 24h</span><span class="fb-badge">🚛 Bundesweit</span><span class="fb-badge">💡 IMD Fleet Services IQ</span></div>
+        <div class="fb-badges"><span class="fb-badge">HEK-Garantie</span><span class="fb-badge">24h</span><span class="fb-badge">Bundesweit</span><span class="fb-badge">IMD Fleet Services IQ</span></div>
       </div>
       <div class="f-col"><h5>Service</h5><ul>
         <li><a href="#service">Für Fuhrparks</a></li>
@@ -1151,8 +989,7 @@
         <li><a href="#">Karriere</a></li>
       </ul></div>
       <div class="f-col"><h5>Kontakt</h5><ul>
-        <li><a href="#"><span class="__cf_email__" data-cfemail="11787f777e51757c78777d7474653f7574">[email&#160;protected]</span></a></li>
-        <li><a href="#">+49 30 xxx xxx xx</a></li>
+        <li><a href="mailto:info@imdfleet.de">info@imdfleet.de</a></li>
         <li><a href="#">Chemnitz, Deutschland</a></li>
       </ul></div>
     </div>
@@ -1648,21 +1485,12 @@
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/csrf-client.js"></script><script src="/cookie-consent.js?v=12"></script><script src="main.js?v=privacy-xlsx-connectors-refinement-4"></script>
 <script>
 var hcRepair=0;
-function hcOpenCalc(){
-  document.querySelector('.hero-calc').classList.add('hc-open');
-  document.body.style.overflow='hidden';
-}
-function hcCloseCalc(){
-  document.querySelector('.hero-calc').classList.remove('hc-open');
-  document.body.style.overflow='';
-}
 function hcChip(el){
   document.querySelectorAll('.hc-chip').forEach(function(c){c.classList.remove('active');});
   el.classList.add('active');
   hcRepair=Number(el.dataset.repair)||0;
 }
 function hcGoToForm(){
-  hcCloseCalc();
   var el=document.querySelector('#anmelden .form-card')||document.getElementById('anmelden');
   if(!el)return;
   var nav=document.querySelector('nav');

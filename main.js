@@ -748,6 +748,29 @@ function initHomeRoadmap(){
 }
 window.addEventListener('load', initHomeRoadmap);
 
+// ─── ÜBER UNS — expertise card entrance (01 → 02 → 03 stagger, CSS transition-delay handles the stagger itself) ───
+function initUeberUnsExpertise(){
+  const cards = document.querySelectorAll('#ueber-uns .ub-expertise-card');
+  if (!cards.length) return;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) {
+    cards.forEach(card => card.classList.add('in'));
+    return;
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  cards.forEach(card => obs.observe(card));
+}
+window.addEventListener('load', initUeberUnsExpertise);
+
 function animateCountup(el) {
   var target = parseFloat(el.dataset.countup);
   var prefix = el.dataset.prefix || '';
