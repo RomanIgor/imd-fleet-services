@@ -45,8 +45,8 @@
 /* ══════════════ ÜBER UNS — Concrete ══════════════ */
 #ueber-uns{--ueber-base:var(--cmp-base);--ueber-medium:var(--cmp-medium);--ueber-highlight:var(--cmp-highlight);--ueber-card:var(--cmp-card);--ueber-navy:var(--cmp-navy);--ueber-graphite:var(--cmp-graphite);--ueber-body:var(--cmp-text);--ueber-muted:var(--cmp-muted);--ueber-border:var(--cmp-border);--ueber-soft-border:var(--cmp-soft);--ueber-blue:var(--cmp-blue);
 /* Phase 3B.1: was --ueber-medium (#B3B4B0), reading as flat industrial grey
-   and tonally indistinguishable from #zielgruppe/#expertise/#rechner below
-   it. --ueber-highlight (#E5E4DF) is the same Concrete palette's lighter,
+   and tonally indistinguishable from #rechner below it. --ueber-highlight
+   (#E5E4DF) is the same Concrete palette's lighter,
    warmer stone tone — reused, not invented — so this section now reads as
    the page's "warm white editorial chapter" instead of another grey block. */
 background-color:var(--ueber-highlight);background-image:linear-gradient(155deg,rgba(28,34,40,.10),rgba(229,228,223,.55) 42%,rgba(28,34,40,.06)),radial-gradient(circle at 82% 8%,rgba(255,255,255,.6),transparent 34%);color:var(--ueber-graphite)}
@@ -54,17 +54,17 @@ background-color:var(--ueber-highlight);background-image:linear-gradient(155deg,
 #ueber-uns .h2{color:var(--ueber-graphite)}
 #ueber-uns .h2 em{font-style:normal;color:var(--ueber-blue)}
 
-/* Phase 4B: #zielgruppe, #rechner and #kontakt are .sec-light — their surface
+/* Phase 4B: #rechner and #kontakt are .sec-light — their surface
    stays visually light/concrete in both themes (--bg-s only goes translucent,
    not dark, in dark mode), but their headline/eyebrow/lead were still using
    the canonical --text-1/--text-2/--blue tokens, which invert to near-white
    for dark mode. Result: near-white text on a still-light surface. Fixed the
    same way #ueber-uns already is — scoped to the theme-invariant Concrete
    tokens instead of a global token change. */
-#zielgruppe .eyebrow,#rechner .eyebrow,#kontakt .eyebrow{color:var(--cmp-blue)}
-#zielgruppe .h2,#rechner .h2,#kontakt .h2{color:var(--cmp-graphite)}
-#zielgruppe .h2 em,#rechner .h2 em,#kontakt .h2 em{color:var(--cmp-blue)}
-#zielgruppe .lead,#rechner .lead,#kontakt .lead{color:var(--cmp-text)}
+#rechner .eyebrow,#kontakt .eyebrow{color:var(--cmp-blue)}
+#rechner .h2,#kontakt .h2{color:var(--cmp-graphite)}
+#rechner .h2 em,#kontakt .h2 em{color:var(--cmp-blue)}
+#rechner .lead,#kontakt .lead{color:var(--cmp-text)}
 /* Phase 3: the one deliberate IBM Plex Serif use on the page — this pull-quote
    is the page's single genuine founder/positioning-quote moment. Upright, not
    italic: only weights 600/700 are loaded, so italic would render as a faked
@@ -325,10 +325,6 @@ img{display:block;max-width:100%}
 .wrap{max-width:1600px;margin:0 auto;padding:0 64px}
 .section{padding:var(--space-section-y) 0;background:var(--bg)}
 #service.section{padding:var(--space-section-y-dense) 0 28px}
-/* Phase 3: #expertise (plain) sits directly against #rechner (sec-light) with
-   no background break between them — full section-y padding on both sides
-   doubled into a dead gap. Tighten this one boundary only. */
-#expertise.section{padding-bottom:56px}
 .sec-light{background:var(--bg-s)}
 .sec-dark{background:var(--bg-deep);position:relative;overflow:hidden}
 .sec-head{margin-bottom:64px}
@@ -761,42 +757,6 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .dim-cursor{animation:dimBlink .8s ease-in-out infinite}
 @keyframes dimBlink{0%,100%{opacity:1}50%{opacity:0}}
 
-/* ══════════════ EXPERTISE ══════════════ */
-.exp-stats{display:flex;align-items:center;justify-content:center;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden;margin-top:56px;margin-bottom:52px}
-.exp-stat{flex:1;padding:36px 32px;text-align:center}
-.exp-stat-divider{width:1px;height:80px;background:var(--border);flex-shrink:0}
-.exp-stat-val{font-family:var(--fh);font-size:48px;font-weight:800;color:var(--blue);letter-spacing:-.04em;line-height:1;margin-bottom:8px}
-.exp-stat-lbl{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:5px}
-.exp-stat-sub{font-size:12px;color:var(--text-3);line-height:1.5}
-.exp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.exp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-2xl);padding:28px;display:flex;flex-direction:column;gap:12px}
-.exp-card-icon{width:44px;height:44px;border-radius:50%;background:var(--blue-bg);border:1px solid var(--blue-bd);display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0}
-.exp-card-title{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);letter-spacing:-.02em}
-.exp-card-text{font-size:13px;color:var(--text-2);line-height:1.8}
-
-/* ══════════════ ZIELGRUPPE ══════════════ */
-.ziel-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.branchen{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
-.branche{display:flex;align-items:center;gap:12px;background:var(--bg-s);border:1px solid transparent;border-radius:var(--r-lg);padding:14px 16px}
-.branche-ico{width:36px;height:36px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0}
-.branche-name{font-family:var(--fh);font-size:13px;font-weight:700;color:var(--text-1)}
-.branche-sub{font-size:11px;color:var(--text-2);margin-top:1px}
-/* Persona card — Phase 3B.1: this is the section's visual anchor (the
-   branchen cards on the left are secondary), so it gets a restrained navy
-   top accent instead of the plain border every other card uses — same
-   technique as .ub-quote's accent border elsewhere on the page. */
-.persona{background:var(--bg-card);border:1px solid var(--border);border-top:3px solid var(--blue);border-radius:var(--r-2xl);padding:28px;display:flex;flex-direction:column;gap:16px}
-.pe-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
-.pe-avatar{font-size:48px;line-height:1}
-.pe-name{font-family:var(--fh);font-size:18px;font-weight:800;color:var(--text-1);letter-spacing:-.02em}
-.pe-role{font-size:12px;color:var(--text-3)}
-.pe-qs{display:flex;flex-direction:column;gap:12px;padding-top:8px;border-top:1px solid var(--border)}
-.pe-q{background:var(--bg-card);border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--border)}
-.pe-q-q{font-size:13px;color:var(--text-2);font-style:italic;margin-bottom:6px}
-.pe-q-a{font-size:12px;color:var(--blue);font-weight:600;line-height:1.5}
-.pe-footer{font-size:12px;color:var(--text-3);line-height:1.6;padding-top:8px;border-top:1px solid var(--border)}
-.pe-footer strong{color:var(--text-2)}
-
 /* ══════════════ ZEITRECHNER ══════════════ */
 /* Phase 3B.2: capped so the Zeitrechner (secondary/supporting tool) no
    longer spans the section's full width and outweighs the Wirtschaftlichkeits-
@@ -1148,7 +1108,7 @@ tbody tr:hover td{background:var(--f0)}
 
 /* ══════════════ RESPONSIVE ══════════════ */
 @media(max-width:1060px){
-  .svc-grid,.ziel-grid,.calc-grid,.form-grid{grid-template-columns:1fr;gap:40px}
+  .svc-grid,.calc-grid,.form-grid{grid-template-columns:1fr;gap:40px}
   .ub-intro-grid{grid-template-columns:1fr}
   #kontakt .wrap > div{grid-template-columns:1fr!important}
   .form-sticky{position:static}
@@ -1159,9 +1119,6 @@ tbody tr:hover td{background:var(--f0)}
   .kpi-row{grid-template-columns:1fr 1fr}
   .gl-grid{grid-template-columns:1fr 1fr}
   .tp-grid{grid-template-columns:1fr 1fr}
-  .exp-stats{flex-direction:column}
-  .exp-stat-divider{width:80px;height:1px}
-  .exp-grid{grid-template-columns:1fr 1fr}
   .ub-editorial-top{grid-template-columns:1fr;gap:32px;max-width:none;margin-bottom:40px}
   .ub-expertise-row{grid-template-columns:1fr;gap:20px}
 }
@@ -1184,7 +1141,6 @@ tbody tr:hover td{background:var(--f0)}
   .home-road-benefit:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.10)}
   .faq-grid{grid-template-columns:1fr}
   .wrap,.nav-in,.trust-inner,.cta-inner{padding-left:24px;padding-right:24px}
-  .branchen{grid-template-columns:1fr}
   .hero{padding-top:72px;min-height:0}
   .hero-sub{font-size:15px}
   .hero-split{min-height:0;flex:none;position:relative}
@@ -1201,9 +1157,6 @@ tbody tr:hover td{background:var(--f0)}
   .ueber-stats-grid{grid-template-columns:1fr}
   .ueber-stat-cell:not(:last-child){border-right:0}
   .ueber-stat-cell:not(:last-child){border-bottom:1px solid var(--ueber-border)}
-}
-@media(max-width:720px){
-  .exp-grid{grid-template-columns:1fr}
 }
 /* Mobile calc trigger button — hidden on desktop */
 .hc-open-btn{display:none}
