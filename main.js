@@ -811,24 +811,17 @@ function calcUpdate(){
   if(!cAnzahl)return;
   const cStd=document.getElementById('cStd');
   const cSatz=document.getElementById('cSatz');
-  const cPreis=document.getElementById('cPreis');
-  if(!cStd||!cSatz||!cPreis)return;
+  if(!cStd||!cSatz)return;
   const n=+cAnzahl.value||5;
   const s=+cStd.value||8;
   const rate=+cSatz.value||65;
-  const price=+cPreis.value||22000;
   document.getElementById('cAnzahlLbl').textContent=n+(n===1?' Fahrzeug':' Fahrzeuge');
   document.getElementById('cStdLbl').textContent=s+' Std./Fzg.';
-  const oldH=n*s,newH=n*0.3,saved=Math.round(oldH-newH);
-  const kosten=Math.round(saved*rate),bonus=Math.round(n*price*0.094);
+  const oldH=n*s;
+  const kosten=Math.round(oldH*rate);
   document.getElementById('calcRes').classList.add('show');
-  document.getElementById('cSavedH').textContent=saved+'h';
-  document.getElementById('cOldH').textContent=oldH+'h';
-  document.getElementById('cNewH').textContent=Math.round(newH*10)/10+'h';
-  document.getElementById('cB1').textContent=saved+' Stunden';
-  document.getElementById('cB2').textContent=kosten.toLocaleString('de-DE')+' €';
-  document.getElementById('cB3').textContent='~ '+bonus.toLocaleString('de-DE')+' €';
-  document.getElementById('cTotal').textContent='~ '+(kosten+bonus).toLocaleString('de-DE')+' €';
+  document.getElementById('cAufwandH').textContent=oldH+'h';
+  document.getElementById('cKosten').textContent=kosten.toLocaleString('de-DE')+' €';
 }
 window.addEventListener('load',calcUpdate);
 

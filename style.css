@@ -229,7 +229,6 @@ a{text-decoration:none;color:inherit}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:5px 14px;align-self:flex-start}
 .hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
 @keyframes heDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.10)}}
-@keyframes hcSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes mobSlideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tiSlideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tiSlideLeft{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:translateX(0)}}
@@ -254,11 +253,7 @@ a{text-decoration:none;color:inherit}
 .hkpi-val{font-family:var(--fh);font-size:22px;font-weight:800;color:#fff;letter-spacing:-.035em}
 .hkpi-lbl{font-family:var(--fh);font-size:9px;font-weight:600;color:rgba(255,255,255,.60);margin-top:4px;text-transform:uppercase;letter-spacing:.12em}
 
-/* ══════════════ HERO CALCULATOR ══════════════ */
-.hero-calc{position:absolute;top:50%;right:4%;transform:translateY(-50%);width:345px;max-height:calc(100% - 40px);overflow-y:auto;background:rgba(6,10,22,0.28);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.10);border-radius:14px;padding:20px 22px;z-index:4;color:#fff;font-family:var(--fh)}
-.hero-calc::-webkit-scrollbar{width:3px}.hero-calc::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
-.hc-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;background:rgba(147,197,253,.10);border:1px solid rgba(147,197,253,.22);border-radius:100px;padding:4px 10px;margin-bottom:10px}
-.hc-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
+/* ══════════════ CALCULATOR (#rechner) — base component styles ══════════════ */
 .hc-title{font-size:16px;font-weight:700;color:#fff;margin:0 0 14px;line-height:1.3}
 .hc-field{margin-bottom:9px}
 .hc-field label{display:block;font-size:10px;font-weight:600;color:rgba(200,216,232,.65);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
@@ -783,13 +778,8 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .cnum:focus{border-color:var(--blue-bd)}
 /* Result panel */
 .calc-result{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r-2xl);padding:32px;display:flex;flex-direction:column;gap:16px}
-/* Phase 3A: in dark mode, --blue-bg is translucent (18%) and stacks on top of
-   #rechner's own translucent sec-light background — two light-toned layers
-   compositing over the dark body produce a muddy mid-grey (~rgb(114,117,123),
-   confirmed via computed-style inspection) that fails contrast for every text
-   tier in this card. --bg-deep is opaque enough to stop that compositing and
-   is the token this codebase already uses for other dark surfaces. */
-[data-theme="dark"] .calc-result{background:var(--bg-deep)}
+/* Dark-mode opacity fix superseded by the scoped #rechner opaque-panel
+   system below (Phase 4D) — see the comment there for the reasoning. */
 .cr-hero{text-align:center;padding:20px 0;border-bottom:1px solid var(--border)}
 .cr-h-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
 .cr-h-val{font-family:var(--fh);font-size:52px;font-weight:800;color:var(--text-1);letter-spacing:-.04em;line-height:1}
@@ -804,11 +794,37 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .cr-cmp-sub{font-size:11px;color:var(--text-3);margin-top:3px}
 .cr-rows{display:flex;flex-direction:column;gap:8px}
 .cr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg-s);border-radius:var(--r-md);border:1px solid var(--border)}
-.cr-row.total{background:var(--blue-bg);border-color:var(--blue-bd)}
 .crr-label{font-size:13px;color:var(--text-2)}
-.crr-label.total{color:var(--text-1);font-weight:700}
 .crr-val{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--blue)}
 .cr-note{font-size:11px;color:var(--text-3)}
+
+/* ── #rechner — chapter layout, Phase 4D ──
+   Tool 01 and Tool 02 each get their own .rechner-tool wrapper (numbered
+   eyebrow + one-line "what this answers" intro, then the calculator) so the
+   gap between them is one deliberate rule instead of two stacked
+   section-level margins reading as unrelated forms. */
+#rechner .rechner-tool-head{margin-bottom:28px}
+#rechner .rechner-tool+.rechner-tool{margin-top:80px}
+@media(max-width:860px){
+  #rechner .rechner-tool+.rechner-tool{margin-top:56px}
+}
+
+/* ── #rechner — opaque calculator surfaces, Phase 4D ──
+   The site's surface tokens (--bg-card, --bg-s, --blue-bg in dark mode) are
+   deliberately translucent everywhere else so the fixed concrete/network
+   body photo reads through ambient marketing sections. That same
+   translucency made the calculator panels illegible — worst in dark mode,
+   where --bg-card drops to 30% opacity and produced the "muddy" surface
+   dark mode had here before. Fully opaque, #rechner-scoped values instead
+   of touching the global tokens (which other sections still rely on). */
+#rechner{--rechner-panel:#f8fafc;--rechner-panel-sub:#eef2f7;--rechner-accent-bg:var(--blue-bg)}
+[data-theme="dark"] #rechner{--rechner-panel:#14192d;--rechner-panel-sub:#1c2440;--rechner-accent-bg:#24365c}
+#rechner .calc-box,#rechner .calc-result{background:var(--rechner-panel)}
+#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem,#rechner .hc-recommend,#rechner .hc-chip,#rechner .cnum,#rechner .cr-cmp,#rechner .cr-row{background:var(--rechner-panel-sub)}
+#rechner .hc-chip:hover,#rechner .hc-chip.active,#rechner .cr-cmp.new{background:var(--rechner-accent-bg)}
+[data-theme="dark"] #rechner .hc-field input,[data-theme="dark"] #rechner .hc-field select{background:var(--rechner-panel-sub)}
+[data-theme="dark"] #rechner .hc-field select option{background:var(--rechner-panel-sub);color:var(--text-1)}
+[data-theme="dark"] #rechner .hc-btn{background:#0f172a}
 
 /* ── Wirtschaftlichkeits-Check (relocated from hero, Phase 2) ──
    .hc-* rules are the calculator's own base styling (dark, originally
@@ -817,30 +833,28 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
    this re-themes the same ~18 color-bearing properties the old
    ".hero .hc-*" block used to override — same technique, brand tokens
    instead of --cmp-*. Structural layout (padding/gaps/sizes) is untouched. */
-/* Phase 3B.2: was max-width:640px + margin:0 auto (inline in HTML) — a narrow
-   centered box floating in the section's full ~1440px width, while the
-   Zeitrechner grid below had no width constraint at all and so read as the
-   larger, more dominant tool. Widened and left-aligned to match the
-   section heading's own (non-centered) alignment, and given the same
-   border-top accent used for .persona in Phase 3B.1 to mark it as the
-   section's primary anchor. */
-#rechner .wcheck-panel{position:relative;max-width:760px;margin:0 0 64px;border-top:3px solid var(--blue)}
-#rechner .hc-badge{color:var(--blue);background:var(--blue-bg);border-color:var(--blue-bd)}
+/* Phase 4D: widened from max-width:760px to align with the Zeitrechner's
+   1100px .calc-grid — Tool 01 was a narrow floating card with unused space
+   beside it; both tools now share one width rhythm. #hcForm keeps its own
+   comfortable reading width so the input fields don't stretch full-bleed;
+   the result view (#hcResult) uses the full panel width. */
+#rechner .wcheck-panel{position:relative;max-width:1100px;margin:0;border-top:3px solid var(--blue)}
+#rechner #hcForm{max-width:640px}
 #rechner .hc-title,#rechner .hc-kpi strong,#rechner .hc-cmp-row b{color:var(--text-1)}
 #rechner .hc-field label,#rechner .hc-note,#rechner .hc-kpi small,#rechner .hc-next-box,#rechner .hc-headline,#rechner .hc-cmp-head,#rechner .hc-cmp-row span,#rechner .hc-status-label,#rechner .hc-copy,#rechner .hc-disclaimer{color:var(--text-2)}
 #rechner .hc-field input,#rechner .hc-field select{background:#fff;border-color:var(--border);color:var(--text-1)}
 #rechner .hc-field input:focus,#rechner .hc-field select:focus{border-color:var(--blue);background:#fff}
 #rechner .hc-field select option{background:#fff;color:var(--text-1)}
-#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem{background:var(--bg-s);border-color:var(--border)}
+#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem{border-color:var(--border)}
 #rechner .hc-cmp-div{background:var(--border)}
-#rechner .hc-chip{background:var(--bg-s);border-color:var(--border);color:var(--text-2)}
-#rechner .hc-chip:hover{background:var(--blue-bg);color:var(--text-1)}
-#rechner .hc-chip.active{background:var(--blue-bg);border-color:var(--blue);color:var(--blue)}
+#rechner .hc-chip{border-color:var(--border);color:var(--text-2)}
+#rechner .hc-chip:hover{color:var(--text-1)}
+#rechner .hc-chip.active{border-color:var(--blue);color:var(--blue)}
 #rechner .hc-btn{background:var(--navy);border-color:var(--navy);color:#fff}
 #rechner .hc-btn:hover,#rechner .hc-btn.hc-cta:hover{background:#0f172a}
 #rechner .hc-back{color:var(--text-3)}
 #rechner .hc-back:hover{color:var(--text-1)}
-#rechner .hc-recommend{color:var(--text-2);background:var(--bg-s);border-left-color:var(--blue)}
+#rechner .hc-recommend{color:var(--text-2);border-left-color:var(--blue)}
 #rechner .hc-disclaimer{border-top-color:var(--border)}
 
 /* ══════════════ FAQ ══════════════ */
@@ -1146,7 +1160,6 @@ tbody tr:hover td{background:var(--f0)}
   .hero-split{min-height:0;flex:none;position:relative}
   .hero-split::after{display:none}
   .hero-copy{width:62%;min-height:0;padding:24px 18px 32px}
-  .hero-calc{position:relative;top:auto;right:auto;transform:none;display:block;width:calc(100% - 32px);max-height:none;overflow-y:visible;background:rgba(10,15,35,0.97);backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:12px;margin:0 16px 32px;border:1px solid rgba(255,255,255,.16);z-index:5}
   .ub-intro-grid{grid-template-columns:1fr}
   .ub-photo{max-width:100%;height:260px}
 }
@@ -1158,10 +1171,6 @@ tbody tr:hover td{background:var(--f0)}
   .ueber-stat-cell:not(:last-child){border-right:0}
   .ueber-stat-cell:not(:last-child){border-bottom:1px solid var(--ueber-border)}
 }
-/* Mobile calc trigger button — hidden on desktop */
-.hc-open-btn{display:none}
-.hc-close-btn{display:none}
-
 @media(max-width:600px){
   /* Hero: image first, premium content container below */
   .hero{background:#10131a;padding-top:70px}
@@ -1286,25 +1295,7 @@ tbody tr:hover td{background:var(--f0)}
     background:#0f172a;
     border-color:rgba(255,255,255,.48);
   }
-  /* Trigger button */
-  .hc-open-btn{display:flex;align-items:center;justify-content:center;width:100%;background:transparent;border:1.5px solid rgba(255,255,255,0.45);border-radius:4px;color:#fff;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--fh);cursor:pointer;letter-spacing:-.012em;transition:background .18s,border-color .18s}
-  .hc-open-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.75)}
-  /* Calculator: verborgen, apare ca bottom sheet */
-  .hero-calc{display:none;position:fixed;top:72px;bottom:0;left:0;right:0;width:100%;margin:0;overflow-y:auto;background:rgba(6,10,22,0.28);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:0;padding:16px 20px 40px;z-index:1000;border:none;border-top:1px solid rgba(255,255,255,0.10)}
-  .hero-calc.hc-open{display:block;animation:hcSlideUp .22s cubic-bezier(0.32,0.72,0,1) forwards}
-  .hc-close-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,0.70);font-size:12px;font-weight:600;cursor:pointer;margin-bottom:14px;width:fit-content}
   .hc-2col{grid-template-columns:1fr}
-  /* Result section: 6 KPIs 2-col, rest hidden */
-  .hero-calc .hc-kpis{grid-template-columns:1fr 1fr}
-  .hero-calc .hc-status-icon{display:none}
-  .hero-calc .hc-status-label{display:none}
-  .hero-calc .hc-copy{display:none}
-  .hero-calc .hc-compare{display:none}
-  .hero-calc .hc-checklist{display:none}
-  .hero-calc .hc-next-box{display:none}
-  .hero-calc .hc-recommend{display:none}
-  .hero-calc .hc-disclaimer{display:none}
-  .hero-calc .hc-btn.hc-cta{margin-top:14px}
   /* Trust-bar: ghost cards pe mobile.
      Phase 2: hero-mobile-features (the old mobile substitute for this) was
      removed as duplicate content — trust-bar is now the only trust display
@@ -3231,25 +3222,6 @@ tbody tr:hover td{background:var(--f0)}
 .hero .hero-copy{background:linear-gradient(to right,var(--opening-graphite) 0%,rgba(28,34,40,.88) 52%,rgba(28,34,40,.38) 80%,transparent 100%)}
 .hero .hero-split::after{background:linear-gradient(to bottom,transparent 0%,rgba(32,42,59,.96) 100%)}
 .hero .hero-h1 span{color:#9DD2E3}
-.hero .hero-calc{background:var(--opening-highlight);border-color:rgba(154,156,153,.72);color:var(--opening-graphite);box-shadow:0 24px 58px rgba(28,34,40,.25),inset 0 1px rgba(255,255,255,.66)}
-.hero .hero-calc::-webkit-scrollbar-thumb{background:rgba(32,42,59,.24)}
-.hero .hc-title,.hero .hc-kpi strong,.hero .hc-cmp-row b{color:var(--opening-graphite)}
-.hero .hc-field label,.hero .hc-note,.hero .hc-kpi small,.hero .hc-kpi span,.hero .hc-next-box,.hero .hc-headline,.hero .hc-cmp-head,.hero .hc-cmp-row span,.hero .hc-status-label,.hero .hc-copy,.hero .hc-disclaimer{color:var(--opening-text)}
-.hero .hc-field input,.hero .hc-field select{background:rgba(255,255,255,.42);border-color:rgba(154,156,153,.58);color:var(--opening-graphite)}
-.hero .hc-field input:focus,.hero .hc-field select:focus{border-color:var(--opening-accent);background:rgba(255,255,255,.66)}
-.hero .hc-field select option{background:var(--opening-highlight);color:var(--opening-graphite)}
-.hero .hc-kpi,.hero .hc-next-box,.hero .hc-compare,.hero .hc-checkitem{background:rgba(202,201,196,.44);border-color:rgba(154,156,153,.48)}
-.hero .hc-cmp-div{background:rgba(32,42,59,.13)}
-.hero .hc-chip{background:rgba(202,201,196,.48);border-color:rgba(154,156,153,.58);color:var(--opening-text)}
-.hero .hc-chip:hover{background:rgba(255,255,255,.58);color:var(--opening-graphite)}
-.hero .hc-chip.active{background:rgba(54,162,197,.15);border-color:var(--opening-accent);color:#237F9E}
-.hero .hc-btn{background:var(--opening-navy);border-color:var(--opening-navy);color:#fff}
-.hero .hc-btn:hover,.hero .hc-btn.hc-cta:hover{background:var(--opening-accent)}
-.hero .hc-btn.hc-cta{background:var(--opening-navy)}
-.hero .hc-back{color:var(--opening-text)}
-.hero .hc-back:hover{color:var(--opening-graphite)}
-.hero .hc-recommend{color:var(--opening-text);background:rgba(202,201,196,.38);border-left-color:var(--opening-accent)}
-.hero .hc-disclaimer{border-top-color:rgba(154,156,153,.42)}
 
 /* Six-step process: concrete stage with navy markers and blue active state. */
 #prozess.section{background-color:var(--opening-concrete);background-image:radial-gradient(circle at 47% 15%,rgba(229,228,223,.46),transparent 32%),linear-gradient(90deg,rgba(202,201,196,.90),rgba(179,180,176,.76)),url('new_images/2.jpeg');background-position:center;background-size:cover;background-attachment:fixed;color:var(--opening-graphite)}
@@ -3273,7 +3245,6 @@ tbody tr:hover td{background:var(--f0)}
 
 @media(max-width:620px){
   #service,#prozess.section{background-attachment:scroll}
-  .hero .hero-calc{background:rgba(229,228,223,.97)}
 }
 
 /* Professional Fahrzeugverkauf redesign */

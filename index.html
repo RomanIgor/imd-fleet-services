@@ -412,12 +412,17 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">Rechner</span>
-      <h2 class="h2" style="margin-bottom:14px">Verkaufszeitpunkt prüfen.<br>Ersparnis <em>berechnen.</em></h2>
+      <h2 class="h2" style="margin-bottom:14px">Verkaufszeitpunkt und Prozessaufwand<br>gezielt <em>prüfen.</em></h2>
+      <p class="lead" style="max-width:620px">Zwei unabhängige Tools für zwei unterschiedliche Fragen: der richtige Zeitpunkt für den Verkauf eines Fahrzeugs und der interne Prozessaufwand über den gesamten Fuhrpark.</p>
     </div>
 
     <!-- Tool 1: Wirtschaftlichkeits-Check (moved from hero) -->
-    <div class="calc-box wcheck-panel">
-      <div class="hc-badge">Live-Rechner</div>
+    <div class="rechner-tool">
+      <div class="sec-head rechner-tool-head">
+        <span class="eyebrow">01 — Verkaufszeitpunkt prüfen</span>
+        <p class="lead" style="max-width:640px;margin:0">Beurteilt anhand von Alter, Laufleistung und Restbuchwert, ob der Verkauf eines bestimmten Firmenfahrzeugs aktuell wirtschaftlich sinnvoll ist.</p>
+      </div>
+      <div class="calc-box wcheck-panel">
       <h3 class="hc-title">IMD Wirtschaftlichkeits-Check</h3>
       <div id="hcForm">
         <div class="hc-2col">
@@ -535,15 +540,17 @@
         <button class="hc-btn hc-cta" id="hcSellBtn" onclick="hcGoToForm()">Fahrzeug an IMD Fleet Services verkaufen →</button>
         <a class="hc-back" onclick="document.getElementById('hcResult').style.display='none';document.getElementById('hcForm').style.display='block';">← Neu berechnen</a>
       </div>
+      </div>
     </div>
 
     <!-- Tool 2: Zeitrechner -->
-    <div class="sec-head" style="margin-bottom:32px">
-      <span class="eyebrow">Zeitrechner</span>
-      <h3 class="h2" style="font-size:24px;margin-bottom:10px">Wie viel sparen Sie mit IMD Fleet Services?</h3>
-      <p class="lead" style="max-width:540px">Berechnen Sie, wie lange der klassische Fahrzeugverkauf dauert — und was das Ihr Unternehmen kostet.</p>
-    </div>
-    <div class="calc-grid">
+    <div class="rechner-tool">
+      <div class="sec-head rechner-tool-head">
+        <span class="eyebrow">02 — Prozessaufwand berechnen</span>
+        <h3 class="h2" style="font-size:24px;margin:10px 0 10px">Wie hoch ist der interne Aufwand Ihres klassischen Fahrzeugverkaufs?</h3>
+        <p class="lead" style="max-width:540px;margin:0">Berechnet den internen Zeit- und Kostenaufwand, den der klassische Fahrzeugverkauf in Ihrem Unternehmen verursacht.</p>
+      </div>
+      <div class="calc-grid">
       <div class="calc-box">
         <div class="calc-box-title">Ihre Parameter</div>
         <div class="calc-box-sub">Schieberegler anpassen — Ergebnis aktualisiert sich sofort.</div>
@@ -561,29 +568,20 @@
           <label class="cfield-label">Stundensatz Fuhrparkleiter (€)</label>
           <input type="number" class="cnum" id="cSatz" value="65" min="20" max="200" oninput="calcUpdate()">
         </div>
-        <div class="cfield">
-          <label class="cfield-label">Ø Fahrzeugwert (€)</label>
-          <input type="number" class="cnum" id="cPreis" value="22000" min="5000" max="80000" oninput="calcUpdate()">
-        </div>
       </div>
       <div class="calc-result" id="calcRes">
         <div class="cr-hero">
-          <div class="cr-h-label">Ihre Zeitersparnis</div>
-          <div class="cr-h-val" id="cSavedH">—</div>
-          <div class="cr-h-unit">Stunden gespart</div>
-        </div>
-        <div class="cr-compare">
-          <div class="cr-cmp old"><div class="cr-cmp-lbl old">Klassisch</div><div class="cr-cmp-val old" id="cOldH">—</div><div class="cr-cmp-sub">Stunden Aufwand</div></div>
-          <div class="cr-cmp new"><div class="cr-cmp-lbl new">IMD Fleet Services</div><div class="cr-cmp-val new" id="cNewH">—</div><div class="cr-cmp-sub">~2 Min. pro Fzg.</div></div>
+          <div class="cr-h-label">Klassischer interner Aufwand</div>
+          <div class="cr-h-val" id="cAufwandH">—</div>
+          <div class="cr-h-unit">Stunden gesamt</div>
         </div>
         <div class="cr-rows">
-          <div class="cr-row"><span class="crr-label">Zeitersparnis</span><span class="crr-val" id="cB1">—</span></div>
-          <div class="cr-row"><span class="crr-label">Eingesparte Personalkosten</span><span class="crr-val" id="cB2">—</span></div>
-          <div class="cr-row"><span class="crr-label">Möglicher Bonus über HEK (Ø 9.4%)</span><span class="crr-val" id="cB3">—</span></div>
-          <div class="cr-row total"><span class="crr-label total">Gesamtvorteil (geschätzt)</span><span class="crr-val total" id="cTotal">—</span></div>
+          <div class="cr-row"><span class="crr-label">Geschätzte interne Prozesskosten</span><span class="crr-val" id="cKosten">—</span></div>
         </div>
-        <div class="cr-note">* Schätzwerte. Tatsächlicher Bonus abhängig von Marktsituation und Gutachten.</div>
+        <div class="cr-note">Mit IMD entfällt ein Großteil des internen Verkaufsprozesses.</div>
+        <div class="cr-note">* Schätzwerte auf Basis Ihrer Angaben.</div>
         <button class="btn btn-green btn-lg" style="width:100%;justify-content:center;margin-top:16px" onclick="goTo('anmelden')">Jetzt Fahrzeug anmelden →</button>
+      </div>
       </div>
     </div>
   </div>
