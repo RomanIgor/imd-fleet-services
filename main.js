@@ -822,6 +822,8 @@ function calcUpdate(){
   document.getElementById('calcRes').classList.add('show');
   document.getElementById('cAufwandH').textContent=oldH+'h';
   document.getElementById('cKosten').textContent=kosten.toLocaleString('de-DE')+' €';
+  document.getElementById('cMetricHours').textContent=oldH+'h';
+  document.getElementById('cMetricCost').textContent=kosten.toLocaleString('de-DE')+' €';
 }
 window.addEventListener('load',calcUpdate);
 

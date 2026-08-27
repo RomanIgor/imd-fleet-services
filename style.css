@@ -757,7 +757,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
    longer spans the section's full width and outweighs the Wirtschaftlichkeits-
    Check above it — still substantial, still fully functional, just no
    longer the widest, most dominant element in the section. */
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;max-width:1100px}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;max-width:1280px}
 .calc-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-2xl);padding:32px}
 .calc-box-title{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:4px}
 .calc-box-sub{font-size:13px;color:var(--text-3);margin-bottom:24px}
@@ -776,26 +776,13 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .crange-val{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--blue)}
 .cnum{width:100%;background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text-1);padding:10px 14px;font-family:var(--fh);font-size:15px;font-weight:600;outline:none;transition:border-color .2s}
 .cnum:focus{border-color:var(--blue-bd)}
-/* Result panel */
+/* Result panel — base rule superseded for #rechner by the theme-invariant
+   Concrete-palette treatment further below (Phase 4D.2). */
 .calc-result{background:var(--blue-bg);border:1px solid var(--blue-bd);border-radius:var(--r-2xl);padding:32px;display:flex;flex-direction:column;gap:16px}
-/* Dark-mode opacity fix superseded by the scoped #rechner opaque-panel
-   system below (Phase 4D) — see the comment there for the reasoning. */
 .cr-hero{text-align:center;padding:20px 0;border-bottom:1px solid var(--border)}
 .cr-h-label{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
 .cr-h-val{font-family:var(--fh);font-size:52px;font-weight:800;color:var(--text-1);letter-spacing:-.04em;line-height:1}
 .cr-h-unit{font-size:13px;color:var(--text-3);margin-top:4px}
-.cr-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cr-cmp{background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;text-align:center}
-.cr-cmp.new{border-color:var(--blue-bd);background:var(--blue-bg)}
-.cr-cmp-lbl{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px}
-.cr-cmp-lbl.new{color:var(--blue)}
-.cr-cmp-val{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text-2);letter-spacing:-.03em}
-.cr-cmp-val.new{color:var(--blue)}
-.cr-cmp-sub{font-size:11px;color:var(--text-3);margin-top:3px}
-.cr-rows{display:flex;flex-direction:column;gap:8px}
-.cr-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg-s);border-radius:var(--r-md);border:1px solid var(--border)}
-.crr-label{font-size:13px;color:var(--text-2)}
-.crr-val{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--blue)}
 .cr-note{font-size:11px;color:var(--text-3)}
 
 /* ── #rechner — chapter layout, Phase 4D ──
@@ -819,9 +806,9 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
    of touching the global tokens (which other sections still rely on). */
 #rechner{--rechner-panel:#f8fafc;--rechner-panel-sub:#eef2f7;--rechner-accent-bg:var(--blue-bg)}
 [data-theme="dark"] #rechner{--rechner-panel:#14192d;--rechner-panel-sub:#1c2440;--rechner-accent-bg:#24365c}
-#rechner .calc-box,#rechner .calc-result{background:var(--rechner-panel)}
-#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem,#rechner .hc-recommend,#rechner .hc-chip,#rechner .cnum,#rechner .cr-cmp,#rechner .cr-row{background:var(--rechner-panel-sub)}
-#rechner .hc-chip:hover,#rechner .hc-chip.active,#rechner .cr-cmp.new{background:var(--rechner-accent-bg)}
+#rechner .calc-box{background:var(--rechner-panel)}
+#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem,#rechner .hc-recommend,#rechner .hc-chip{background:var(--rechner-panel-sub)}
+#rechner .hc-chip:hover,#rechner .hc-chip.active{background:var(--rechner-accent-bg)}
 [data-theme="dark"] #rechner .hc-field input,[data-theme="dark"] #rechner .hc-field select{background:var(--rechner-panel-sub)}
 [data-theme="dark"] #rechner .hc-field select option{background:var(--rechner-panel-sub);color:var(--text-1)}
 [data-theme="dark"] #rechner .hc-btn{background:#0f172a}
@@ -856,6 +843,85 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 #rechner .hc-back:hover{color:var(--text-1)}
 #rechner .hc-recommend{color:var(--text-2);border-left-color:var(--blue)}
 #rechner .hc-disclaimer{border-top-color:var(--border)}
+
+/* ── Zeitrechner (Tool 02) — Phase 4D.2 visual rebuild, Phase 4D.4 color pass ──
+   Reuses the Concrete Design System (--cmp-*) already established as
+   #rechner's own theme-invariant palette (the eyebrow/h2/lead rule near the
+   top of this file) instead of the dark-mode-variant --rechner-panel/-sub
+   tokens above — those went near-black in dark mode for Tool 02, which this
+   phase explicitly avoids repeating.
+   Phase 4D.4: the --cmp-* family is a warm stone/beige palette by design —
+   it has no cool near-white, so these local tokens borrow RGB values
+   already established elsewhere for the site's cool/brand surfaces,
+   applied as static hex so they stay theme-invariant like the rest of
+   #rechner.
+   Phase 4D.5: the 4D.4 pass (near-white --zr-card) read as too pale/
+   clinical once seen alongside the rest of the page — darkened the whole
+   scale one step toward a light steel/blue-grey so the card, its two
+   recessed surfaces (parameter separators, metric cells) and the concrete
+   background form a visible 4-step hierarchy instead of "white card on
+   grey". --zr-track now reuses --text-3's light-mode hex (#94a3b8, a cool
+   slate already used site-wide) instead of the previous interpolated
+   value, since it's dark enough on its own to read clearly against the
+   deeper card. --zr-card/-surface/-border have no existing token match
+   (nothing in the palette forms a light-steel *scale*) and are new local
+   values scoped to #rechner only, per the brief's explicit permission to
+   do so when no token fits. --zr-control (#f8fafc) is the *previous*
+   phase's card color, repurposed as the brighter "clean control" surface
+   for the Stundensatz input now that the card itself sits one step
+   deeper. */
+#rechner{--zr-card:#e9eef3;--zr-surface:#d6dee6;--zr-border:#bcc7d1;--zr-track:#94a3b8;--zr-control:#f8fafc}
+#rechner .calc-grid .zr-params,
+#rechner .calc-grid .calc-result{background:var(--zr-card);border-color:var(--zr-border);box-shadow:var(--sh-concrete);padding:40px}
+#rechner .calc-box-title{color:var(--cmp-navy)}
+#rechner .calc-box-sub,#rechner .cfield-label{color:var(--cmp-muted)}
+#rechner .cr-h-label,#rechner .crange-hint,#rechner .zr-metric-lbl,#rechner .zr-ring-label{color:var(--cmp-muted)}
+#rechner .cr-h-val,#rechner .zr-metric-val{color:var(--cmp-navy)}
+#rechner .cr-hero{border-color:var(--zr-border)}
+#rechner .cr-h-unit,#rechner .cr-note{color:var(--cmp-text)}
+#rechner .crange-val,#rechner .zr-field-val{color:var(--cmp-blue)}
+#rechner .crange{background:var(--zr-track)}
+#rechner .crange::-webkit-slider-thumb{background:var(--cmp-blue);box-shadow:0 0 0 3px rgba(54,162,197,.25)}
+#rechner .crange::-moz-range-thumb{background:var(--cmp-blue)}
+#rechner .cnum{background:var(--zr-control);border-color:var(--zr-border);color:var(--cmp-navy)}
+#rechner .cnum:focus{border-color:var(--cmp-blue)}
+
+#rechner .zr-card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:24px}
+#rechner .zr-card-icon{width:34px;height:34px;border-radius:50%;background:rgba(54,162,197,.12);color:var(--cmp-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#rechner .zr-card-icon svg{width:16px;height:16px}
+#rechner .zr-field{background:transparent;border:none;border-bottom:1px solid var(--zr-border);border-radius:0;padding:20px 2px 26px;margin-bottom:0}
+#rechner .zr-field:last-child{border-bottom:none;padding-bottom:2px}
+#rechner .zr-field-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#rechner .zr-field-label{display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cmp-muted)}
+#rechner .zr-field-ico{width:15px;height:15px;color:var(--cmp-blue);flex-shrink:0}
+#rechner .zr-field-val{font-family:var(--fh);font-size:13px;font-weight:700}
+
+#rechner .zr-ring-wrap{position:relative;width:212px;height:212px;margin:8px auto 4px}
+#rechner .zr-ring{width:100%;height:100%;display:block;transform:rotate(-90deg)}
+#rechner .zr-ring-track{fill:none;stroke:var(--zr-track);stroke-width:10}
+#rechner .zr-ring-value{fill:none;stroke:var(--cmp-blue);stroke-width:10;stroke-linecap:round}
+#rechner .zr-ring-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 22px}
+#rechner .zr-ring-label{font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.4;margin-bottom:6px}
+#rechner .zr-ring-val{font-family:var(--fh);font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--cmp-navy)}
+
+#rechner .zr-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#rechner .zr-metric{display:flex;align-items:center;gap:10px;background:var(--zr-surface);border:1px solid var(--zr-border);border-radius:var(--r-md);padding:14px 16px}
+#rechner .zr-metric-ico{width:28px;height:28px;border-radius:50%;background:rgba(54,162,197,.12);color:var(--cmp-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#rechner .zr-metric-ico svg{width:14px;height:14px}
+#rechner .zr-metric-lbl{font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+#rechner .zr-metric-val{font-family:var(--fh);font-size:15px;font-weight:800}
+
+#rechner .zr-info-strip{display:flex;align-items:flex-start;gap:10px;background:rgba(54,162,197,.15);border:1px solid rgba(54,162,197,.34);border-radius:var(--r-md);padding:12px 14px;color:var(--cmp-navy);font-size:12.5px;line-height:1.5}
+#rechner .zr-info-ico{width:18px;height:18px;color:var(--cmp-blue);flex-shrink:0;margin-top:1px}
+
+#rechner .calc-result .zr-cta{background:var(--cmp-navy);border-color:var(--cmp-navy);color:var(--text-inv)}
+#rechner .calc-result .zr-cta:hover{background:#0f172a;border-color:#0f172a;color:var(--text-inv)}
+/* Phase 4D.4: strengthens the #rechner headline specifically (chapter intro
+   h2 + Tool 02's own h3.h2) from --cmp-graphite to the more saturated
+   --cmp-navy for better perceived contrast against the concrete section —
+   scoped to #rechner only so #kontakt's own h2 (governed by the combined
+   rule near the top of this file) is untouched. */
+#rechner .h2{color:var(--cmp-navy)}
 
 /* ══════════════ FAQ ══════════════ */
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -1331,7 +1397,6 @@ tbody tr:hover td{background:var(--f0)}
   .home-road-benefit span{margin-top:0;font-size:10.5px;line-height:1.35}
   .home-road-cta{margin-top:22px}
   .ver-wrap{overflow-x:auto}
-  .cr-compare{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{
     flex-direction:column;

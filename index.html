@@ -551,21 +551,34 @@
         <p class="lead" style="max-width:540px;margin:0">Berechnet den internen Zeit- und Kostenaufwand, den der klassische Fahrzeugverkauf in Ihrem Unternehmen verursacht.</p>
       </div>
       <div class="calc-grid">
-      <div class="calc-box">
-        <div class="calc-box-title">Ihre Parameter</div>
-        <div class="calc-box-sub">Schieberegler anpassen — Ergebnis aktualisiert sich sofort.</div>
-        <div class="cfield">
-          <label class="cfield-label">Anzahl Fahrzeuge</label>
+      <div class="calc-box zr-params">
+        <div class="zr-card-head">
+          <span class="zr-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="7" cy="18" r="2" fill="currentColor" stroke="none"/></svg></span>
+          <div>
+            <div class="calc-box-title">Ihre Parameter</div>
+            <div class="calc-box-sub">Schieberegler anpassen — Ergebnis aktualisiert sich sofort.</div>
+          </div>
+        </div>
+        <div class="cfield zr-field">
+          <div class="zr-field-head">
+            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="17" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg>Anzahl Fahrzeuge</span>
+            <span class="zr-field-val" id="cAnzahlLbl">5 Fahrzeuge</span>
+          </div>
           <input type="range" class="crange" id="cAnzahl" min="1" max="50" value="5" oninput="calcUpdate()">
-          <div class="crange-row"><span class="crange-hint">1 Fzg.</span><span class="crange-val" id="cAnzahlLbl">5 Fahrzeuge</span><span class="crange-hint">50 Fzg.</span></div>
+          <div class="crange-row"><span class="crange-hint">1 Fzg.</span><span class="crange-hint">50 Fzg.</span></div>
         </div>
-        <div class="cfield">
-          <label class="cfield-label">Ø Stunden pro Fahrzeug (klassisch)</label>
+        <div class="cfield zr-field">
+          <div class="zr-field-head">
+            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Ø Stunden pro Fahrzeug (klassisch)</span>
+            <span class="zr-field-val" id="cStdLbl">8 Std./Fzg.</span>
+          </div>
           <input type="range" class="crange" id="cStd" min="2" max="20" value="8" oninput="calcUpdate()">
-          <div class="crange-row"><span class="crange-hint">2 Std.</span><span class="crange-val" id="cStdLbl">8 Std./Fzg.</span><span class="crange-hint">20 Std.</span></div>
+          <div class="crange-row"><span class="crange-hint">2 Std.</span><span class="crange-hint">20 Std.</span></div>
         </div>
-        <div class="cfield">
-          <label class="cfield-label">Stundensatz Fuhrparkleiter (€)</label>
+        <div class="cfield zr-field">
+          <div class="zr-field-head">
+            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.7a4 4 0 1 0 0 6.6"/><path d="M7.5 10.3h6M7.5 13.3h5"/></svg>Stundensatz Fuhrparkleiter (€)</span>
+          </div>
           <input type="number" class="cnum" id="cSatz" value="65" min="20" max="200" oninput="calcUpdate()">
         </div>
       </div>
@@ -575,12 +588,32 @@
           <div class="cr-h-val" id="cAufwandH">—</div>
           <div class="cr-h-unit">Stunden gesamt</div>
         </div>
-        <div class="cr-rows">
-          <div class="cr-row"><span class="crr-label">Geschätzte interne Prozesskosten</span><span class="crr-val" id="cKosten">—</span></div>
+        <div class="zr-ring-wrap">
+          <svg class="zr-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="zr-ring-track" cx="100" cy="100" r="86"/>
+            <circle class="zr-ring-value" cx="100" cy="100" r="86" stroke-dasharray="475.5 540.35"/>
+          </svg>
+          <div class="zr-ring-content">
+            <div class="zr-ring-label">Geschätzte interne<br>Prozesskosten</div>
+            <div class="zr-ring-val" id="cKosten">—</div>
+          </div>
         </div>
-        <div class="cr-note">Mit IMD entfällt ein Großteil des internen Verkaufsprozesses.</div>
+        <div class="zr-metrics">
+          <div class="zr-metric">
+            <span class="zr-metric-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+            <div><div class="zr-metric-lbl">Stunden gesamt</div><div class="zr-metric-val" id="cMetricHours">—</div></div>
+          </div>
+          <div class="zr-metric">
+            <span class="zr-metric-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 8.7a4 4 0 1 0 0 6.6"/><path d="M7.5 10.3h6M7.5 13.3h5"/></svg></span>
+            <div><div class="zr-metric-lbl">Kosten gesamt</div><div class="zr-metric-val" id="cMetricCost">—</div></div>
+          </div>
+        </div>
+        <div class="zr-info-strip">
+          <span class="zr-info-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.6" r=".9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Mit IMD entfällt ein Großteil des internen Verkaufsprozesses.</span>
+        </div>
         <div class="cr-note">* Schätzwerte auf Basis Ihrer Angaben.</div>
-        <button class="btn btn-green btn-lg" style="width:100%;justify-content:center;margin-top:16px" onclick="goTo('anmelden')">Jetzt Fahrzeug anmelden →</button>
+        <button class="btn btn-green btn-lg zr-cta" style="width:100%;justify-content:center;margin-top:16px" onclick="goTo('anmelden')">Jetzt Fahrzeug anmelden →</button>
       </div>
       </div>
     </div>
