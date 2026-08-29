@@ -796,53 +796,48 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
   #rechner .rechner-tool+.rechner-tool{margin-top:56px}
 }
 
-/* ── #rechner — opaque calculator surfaces, Phase 4D ──
-   The site's surface tokens (--bg-card, --bg-s, --blue-bg in dark mode) are
-   deliberately translucent everywhere else so the fixed concrete/network
-   body photo reads through ambient marketing sections. That same
-   translucency made the calculator panels illegible — worst in dark mode,
-   where --bg-card drops to 30% opacity and produced the "muddy" surface
-   dark mode had here before. Fully opaque, #rechner-scoped values instead
-   of touching the global tokens (which other sections still rely on). */
-#rechner{--rechner-panel:#f8fafc;--rechner-panel-sub:#eef2f7;--rechner-accent-bg:var(--blue-bg)}
-[data-theme="dark"] #rechner{--rechner-panel:#14192d;--rechner-panel-sub:#1c2440;--rechner-accent-bg:#24365c}
-#rechner .calc-box{background:var(--rechner-panel)}
-#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem,#rechner .hc-recommend,#rechner .hc-chip{background:var(--rechner-panel-sub)}
-#rechner .hc-chip:hover,#rechner .hc-chip.active{background:var(--rechner-accent-bg)}
-[data-theme="dark"] #rechner .hc-field input,[data-theme="dark"] #rechner .hc-field select{background:var(--rechner-panel-sub)}
-[data-theme="dark"] #rechner .hc-field select option{background:var(--rechner-panel-sub);color:var(--text-1)}
-[data-theme="dark"] #rechner .hc-btn{background:#0f172a}
+/* ── #rechner — unified light-steel chapter, Phase 4D.6 ──
+   Tool 01 previously kept its own dark-navy panel treatment
+   (--rechner-panel/-sub/-accent-bg, Phase 4D) while Tool 02 moved to the
+   light-steel Concrete-based system (Phase 4D.2–4D.5). On the user's
+   explicit request, Tool 01 now shares that exact same system — the
+   --zr-* tokens defined below (Zeitrechner block) — so the whole #rechner
+   chapter reads as one surface language instead of "dark form, light
+   form" side by side. The dark-mode-only overrides this used to need are
+   gone because --zr- and --cmp-prefixed tokens are already theme-invariant. */
+#rechner .calc-box{background:var(--zr-card)}
+#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem,#rechner .hc-recommend,#rechner .hc-chip{background:var(--zr-surface)}
+#rechner .hc-chip:hover,#rechner .hc-chip.active{background:var(--zr-accent-bg)}
 
 /* ── Wirtschaftlichkeits-Check (relocated from hero, Phase 2) ──
    .hc-* rules are the calculator's own base styling (dark, originally
-   designed to float over the hero photo). #rechner is a plain sec-light
-   section using the canonical brand tokens, not the Concrete palette, so
-   this re-themes the same ~18 color-bearing properties the old
-   ".hero .hc-*" block used to override — same technique, brand tokens
-   instead of --cmp-*. Structural layout (padding/gaps/sizes) is untouched. */
+   designed to float over the hero photo). Re-themed onto the shared
+   #rechner light-steel palette (Phase 4D.6) instead of brand tokens.
+   Structural layout (padding/gaps/sizes) is untouched. */
 /* Phase 4D: widened from max-width:760px to align with the Zeitrechner's
    1100px .calc-grid — Tool 01 was a narrow floating card with unused space
    beside it; both tools now share one width rhythm. #hcForm keeps its own
    comfortable reading width so the input fields don't stretch full-bleed;
    the result view (#hcResult) uses the full panel width. */
-#rechner .wcheck-panel{position:relative;max-width:1100px;margin:0;border-top:3px solid var(--blue)}
+#rechner .wcheck-panel{position:relative;max-width:1100px;margin:0;border-top:3px solid var(--zr-accent)}
 #rechner #hcForm{max-width:640px}
-#rechner .hc-title,#rechner .hc-kpi strong,#rechner .hc-cmp-row b{color:var(--text-1)}
-#rechner .hc-field label,#rechner .hc-note,#rechner .hc-kpi small,#rechner .hc-next-box,#rechner .hc-headline,#rechner .hc-cmp-head,#rechner .hc-cmp-row span,#rechner .hc-status-label,#rechner .hc-copy,#rechner .hc-disclaimer{color:var(--text-2)}
-#rechner .hc-field input,#rechner .hc-field select{background:#fff;border-color:var(--border);color:var(--text-1)}
-#rechner .hc-field input:focus,#rechner .hc-field select:focus{border-color:var(--blue);background:#fff}
-#rechner .hc-field select option{background:#fff;color:var(--text-1)}
-#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem{border-color:var(--border)}
-#rechner .hc-cmp-div{background:var(--border)}
-#rechner .hc-chip{border-color:var(--border);color:var(--text-2)}
-#rechner .hc-chip:hover{color:var(--text-1)}
-#rechner .hc-chip.active{border-color:var(--blue);color:var(--blue)}
-#rechner .hc-btn{background:var(--navy);border-color:var(--navy);color:#fff}
+#rechner .hc-title,#rechner .hc-kpi strong,#rechner .hc-cmp-row b{color:var(--cmp-navy)}
+#rechner .hc-field label,#rechner .hc-note,#rechner .hc-kpi small,#rechner .hc-next-box,#rechner .hc-headline,#rechner .hc-cmp-head,#rechner .hc-cmp-row span,#rechner .hc-status-label,#rechner .hc-copy,#rechner .hc-disclaimer{color:var(--cmp-text)}
+#rechner .hc-field input,#rechner .hc-field select{background:var(--zr-control);border-color:var(--zr-border);color:var(--cmp-navy)}
+#rechner .hc-field input:focus,#rechner .hc-field select:focus{border-color:var(--zr-accent);background:var(--zr-control)}
+#rechner .hc-field select option{background:var(--zr-control);color:var(--cmp-navy)}
+#rechner .hc-kpi,#rechner .hc-next-box,#rechner .hc-compare,#rechner .hc-checkitem{border-color:var(--zr-border)}
+#rechner .hc-checkitem{color:var(--cmp-text)}
+#rechner .hc-cmp-div{background:var(--zr-border)}
+#rechner .hc-chip{border-color:var(--zr-border);color:var(--cmp-text)}
+#rechner .hc-chip:hover{color:var(--cmp-navy)}
+#rechner .hc-chip.active{border-color:var(--zr-accent);color:var(--zr-accent)}
+#rechner .hc-btn{background:var(--cmp-navy);border-color:var(--cmp-navy);color:var(--text-inv)}
 #rechner .hc-btn:hover,#rechner .hc-btn.hc-cta:hover{background:#0f172a}
-#rechner .hc-back{color:var(--text-3)}
-#rechner .hc-back:hover{color:var(--text-1)}
-#rechner .hc-recommend{color:var(--text-2);border-left-color:var(--blue)}
-#rechner .hc-disclaimer{border-top-color:var(--border)}
+#rechner .hc-back{color:var(--cmp-muted)}
+#rechner .hc-back:hover{color:var(--cmp-navy)}
+#rechner .hc-recommend{color:var(--cmp-text);border-left-color:var(--zr-accent)}
+#rechner .hc-disclaimer{border-top-color:var(--zr-border)}
 
 /* ── Zeitrechner (Tool 02) — Phase 4D.2 visual rebuild, Phase 4D.4 color pass ──
    Reuses the Concrete Design System (--cmp-*) already established as
@@ -870,7 +865,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
    phase's card color, repurposed as the brighter "clean control" surface
    for the Stundensatz input now that the card itself sits one step
    deeper. */
-#rechner{--zr-card:#e9eef3;--zr-surface:#d6dee6;--zr-border:#bcc7d1;--zr-track:#94a3b8;--zr-control:#f8fafc}
+#rechner{--zr-card:#e9eef3;--zr-surface:#d6dee6;--zr-border:#bcc7d1;--zr-track:#94a3b8;--zr-control:#f8fafc;--zr-accent:#278FB4;--zr-accent-bg:rgba(39,143,180,.12)}
 #rechner .calc-grid .zr-params,
 #rechner .calc-grid .calc-result{background:var(--zr-card);border-color:var(--zr-border);box-shadow:var(--sh-concrete);padding:40px}
 #rechner .calc-box-title{color:var(--cmp-navy)}
@@ -879,40 +874,40 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 #rechner .cr-h-val,#rechner .zr-metric-val{color:var(--cmp-navy)}
 #rechner .cr-hero{border-color:var(--zr-border)}
 #rechner .cr-h-unit,#rechner .cr-note{color:var(--cmp-text)}
-#rechner .crange-val,#rechner .zr-field-val{color:var(--cmp-blue)}
+#rechner .crange-val,#rechner .zr-field-val{color:var(--zr-accent)}
 #rechner .crange{background:var(--zr-track)}
-#rechner .crange::-webkit-slider-thumb{background:var(--cmp-blue);box-shadow:0 0 0 3px rgba(54,162,197,.25)}
-#rechner .crange::-moz-range-thumb{background:var(--cmp-blue)}
+#rechner .crange::-webkit-slider-thumb{background:var(--zr-accent);box-shadow:0 0 0 3px var(--zr-accent-bg)}
+#rechner .crange::-moz-range-thumb{background:var(--zr-accent)}
 #rechner .cnum{background:var(--zr-control);border-color:var(--zr-border);color:var(--cmp-navy)}
-#rechner .cnum:focus{border-color:var(--cmp-blue)}
+#rechner .cnum:focus{border-color:var(--zr-accent)}
 
 #rechner .zr-card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:24px}
-#rechner .zr-card-icon{width:34px;height:34px;border-radius:50%;background:rgba(54,162,197,.12);color:var(--cmp-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#rechner .zr-card-icon{width:34px;height:34px;border-radius:50%;background:var(--zr-accent-bg);color:var(--zr-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 #rechner .zr-card-icon svg{width:16px;height:16px}
 #rechner .zr-field{background:transparent;border:none;border-bottom:1px solid var(--zr-border);border-radius:0;padding:20px 2px 26px;margin-bottom:0}
 #rechner .zr-field:last-child{border-bottom:none;padding-bottom:2px}
 #rechner .zr-field-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 #rechner .zr-field-label{display:flex;align-items:center;gap:8px;font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cmp-muted)}
-#rechner .zr-field-ico{width:15px;height:15px;color:var(--cmp-blue);flex-shrink:0}
+#rechner .zr-field-ico{width:15px;height:15px;color:var(--zr-accent);flex-shrink:0}
 #rechner .zr-field-val{font-family:var(--fh);font-size:13px;font-weight:700}
 
 #rechner .zr-ring-wrap{position:relative;width:212px;height:212px;margin:8px auto 4px}
 #rechner .zr-ring{width:100%;height:100%;display:block;transform:rotate(-90deg)}
 #rechner .zr-ring-track{fill:none;stroke:var(--zr-track);stroke-width:10}
-#rechner .zr-ring-value{fill:none;stroke:var(--cmp-blue);stroke-width:10;stroke-linecap:round}
+#rechner .zr-ring-value{fill:none;stroke:var(--zr-accent);stroke-width:10;stroke-linecap:round}
 #rechner .zr-ring-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 22px}
 #rechner .zr-ring-label{font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.4;margin-bottom:6px}
 #rechner .zr-ring-val{font-family:var(--fh);font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--cmp-navy)}
 
 #rechner .zr-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #rechner .zr-metric{display:flex;align-items:center;gap:10px;background:var(--zr-surface);border:1px solid var(--zr-border);border-radius:var(--r-md);padding:14px 16px}
-#rechner .zr-metric-ico{width:28px;height:28px;border-radius:50%;background:rgba(54,162,197,.12);color:var(--cmp-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#rechner .zr-metric-ico{width:28px;height:28px;border-radius:50%;background:var(--zr-accent-bg);color:var(--zr-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 #rechner .zr-metric-ico svg{width:14px;height:14px}
 #rechner .zr-metric-lbl{font-family:var(--fh);font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
 #rechner .zr-metric-val{font-family:var(--fh);font-size:15px;font-weight:800}
 
-#rechner .zr-info-strip{display:flex;align-items:flex-start;gap:10px;background:rgba(54,162,197,.15);border:1px solid rgba(54,162,197,.34);border-radius:var(--r-md);padding:12px 14px;color:var(--cmp-navy);font-size:12.5px;line-height:1.5}
-#rechner .zr-info-ico{width:18px;height:18px;color:var(--cmp-blue);flex-shrink:0;margin-top:1px}
+#rechner .zr-info-strip{display:flex;align-items:flex-start;gap:10px;background:var(--zr-accent-bg);border:1px solid rgba(39,143,180,.34);border-radius:var(--r-md);padding:12px 14px;color:var(--cmp-navy);font-size:12.5px;line-height:1.5}
+#rechner .zr-info-ico{width:18px;height:18px;color:var(--zr-accent);flex-shrink:0;margin-top:1px}
 
 #rechner .calc-result .zr-cta{background:var(--cmp-navy);border-color:var(--cmp-navy);color:var(--text-inv)}
 #rechner .calc-result .zr-cta:hover{background:#0f172a;border-color:#0f172a;color:var(--text-inv)}
@@ -922,6 +917,13 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
    scoped to #rechner only so #kontakt's own h2 (governed by the combined
    rule near the top of this file) is untouched. */
 #rechner .h2{color:var(--cmp-navy)}
+/* Phase 4D.6: eyebrow gets the chapter's own accent (Hover Blue) instead of
+   the shared #kontakt-combined --cmp-blue, and .lead gets a stronger
+   font-weight (color stays the doc-mandated Body Text #4C5257 — only the
+   weight changes) since the paragraph text read as too faint against the
+   concrete texture at the default 400 weight. */
+#rechner .eyebrow,#rechner .h2 em{color:var(--zr-accent)}
+#rechner .lead{font-weight:600}
 
 /* ══════════════ FAQ ══════════════ */
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
