@@ -938,6 +938,23 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .faq-item.open .faq-a{max-height:300px}
 .faq-a-inner{padding:0 20px 18px;font-size:13px;color:var(--text-2);line-height:1.8;border-top:1px solid var(--border)}
 
+/* ── #faq — light-steel conversion, Phase 4D.7 ──
+   Was a plain .section (theme-flipping text, translucent --bg-s cards) —
+   ported the same #rechner/#anmelden light-steel + navy + Hover-Blue
+   system so all three "card" sections read consistently. */
+#faq{--zr-card:#e9eef3;--zr-surface:#d6dee6;--zr-border:#bcc7d1;--zr-accent:#278FB4}
+#faq.section{background:var(--bg-s)}
+#faq .eyebrow{color:var(--zr-accent)}
+#faq .h2{color:var(--cmp-navy)}
+#faq .h2 em{color:var(--zr-accent)}
+#faq .faq-item{background:var(--zr-card);border-color:var(--zr-border)}
+#faq .faq-item:hover,#faq .faq-item.open{border-color:var(--zr-accent)}
+#faq .faq-q-text{color:var(--cmp-navy)}
+#faq .faq-icon{color:var(--cmp-muted)}
+#faq .faq-item.open .faq-q{border-left-color:var(--zr-accent)}
+#faq .faq-item.open .faq-icon{color:var(--zr-accent)}
+#faq .faq-a-inner{color:var(--cmp-text);border-top-color:var(--zr-border)}
+
 /* ══════════════ FORMULAR ══════════════ */
 .form-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
 .form-sticky{position:sticky;top:112px}
@@ -994,6 +1011,57 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 .form-success-ico{font-size:48px;margin-bottom:16px}
 .form-success-title{font-family:var(--fh);font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:12px}
 .form-success-text{font-size:14px;color:var(--text-2);line-height:1.8}
+
+/* ── #anmelden — light-steel conversion, Phase 4D.7 ──
+   Was .sec-dark (a deliberately dark, --bg-deep-based CTA block, unrelated
+   to #rechner's concrete-based system). On the user's explicit request,
+   ported the exact same light-steel + navy + Hover-Blue system already
+   established for #rechner (same hex values, declared locally here since
+   the two sections are siblings and can't share custom properties via
+   inheritance). .fi/.fsel/.ftxt are shared with #kontakt's quick-contact
+   form, so every override below is scoped with the #anmelden prefix. */
+#anmelden{--zr-card:#e9eef3;--zr-surface:#d6dee6;--zr-border:#bcc7d1;--zr-track:#94a3b8;--zr-control:#f8fafc;--zr-accent:#278FB4;--zr-accent-bg:rgba(39,143,180,.12)}
+#anmelden.sec-dark{background:var(--bg-s)}
+/* eyebrow/.h2/.h2 em/.lead are set further below, in the older
+   #anmelden-specific block (search "Phase 4D.7" there) rather than
+   duplicated here — that block used to hardcode a dark palette and had
+   higher effective priority (same specificity, later in the file). */
+#anmelden .form-ti{color:var(--cmp-text)}
+#anmelden .fleet-opt{background:var(--zr-card);border-color:var(--zr-border);color:var(--cmp-navy)}
+#anmelden .fleet-opt:hover{border-color:var(--zr-accent);color:var(--zr-accent)}
+#anmelden .fleet-opt.active{background:var(--zr-accent-bg);border-color:var(--zr-accent);color:var(--zr-accent)}
+#anmelden .form-card{background:var(--zr-card);border-color:var(--zr-border)}
+#anmelden .form-bar{background:var(--zr-accent-bg)}
+#anmelden .form-hd{border-bottom-color:var(--zr-border)}
+#anmelden .spill{color:var(--cmp-muted);background:var(--zr-surface);border-color:var(--zr-border)}
+#anmelden .spill.act{color:var(--zr-accent);background:var(--zr-accent-bg);border-color:rgba(39,143,180,.3)}
+#anmelden .spill-n{color:var(--zr-card)}
+#anmelden .spill.act .spill-n{background:var(--zr-accent);color:var(--text-inv)}
+#anmelden .form-step-title{color:var(--cmp-navy)}
+#anmelden .form-step-sub{color:var(--cmp-muted)}
+#anmelden .fl{color:var(--cmp-muted)}
+#anmelden .fl em{color:var(--cmp-muted)}
+#anmelden .fi,#anmelden .fsel,#anmelden .ftxt{background:var(--zr-control);border-color:var(--zr-border);color:var(--cmp-navy)}
+#anmelden .fi:focus,#anmelden .fsel:focus,#anmelden .ftxt:focus{border-color:var(--zr-accent)}
+#anmelden .fi::placeholder{color:var(--cmp-muted)}
+#anmelden .fhint{color:var(--cmp-muted)}
+#anmelden .chk{background:var(--zr-surface);border-color:var(--zr-border);color:var(--cmp-text)}
+#anmelden .chk.on{background:var(--zr-accent-bg);border-color:var(--zr-accent);color:var(--cmp-navy)}
+#anmelden .chk input{accent-color:var(--zr-accent)}
+#anmelden .fdivider{background:var(--zr-surface);border-color:var(--zr-border)}
+#anmelden .fdiv-label{color:var(--cmp-muted)}
+#anmelden .consent{background:var(--zr-surface);border-color:var(--zr-border);color:var(--cmp-text)}
+#anmelden .consent.on{border-color:var(--zr-accent)}
+#anmelden .consent a{color:var(--zr-accent)}
+#anmelden .consent input{accent-color:var(--zr-accent)}
+#anmelden .form-nav{border-top-color:var(--zr-border)}
+#anmelden .form-nav span{color:var(--cmp-muted)}
+#anmelden .btn-next,#anmelden .btn-submit{background:var(--cmp-navy);border-color:var(--cmp-navy);color:var(--text-inv)}
+#anmelden .btn-next:hover,#anmelden .btn-submit:hover{background:#0f172a;border-color:#0f172a}
+#anmelden .btn-back{color:var(--cmp-muted);border-color:var(--zr-border)}
+#anmelden .btn-back:hover{color:var(--cmp-navy);border-color:var(--zr-border)}
+#anmelden .form-success-title{color:var(--cmp-navy)}
+#anmelden .form-success-text{color:var(--cmp-text)}
 
 /* ══════════════ KONTAKT ══════════════ */
 .contact-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg-s);border:1px solid var(--border);border-radius:var(--r-lg);transition:border-color .2s}
@@ -1068,22 +1136,25 @@ footer{background:var(--bg-footer);border-top:1px solid rgba(255,255,255,.06);pa
 
 #anmelden .btn-primary,
 #anmelden .btn-green {
-  background: var(--blue);
+  background: var(--cmp-navy);
   border-color: transparent;
 }
 #anmelden .btn-primary:hover,
 #anmelden .btn-green:hover {
-  background: #1d4ed8;
+  background: #0f172a;
 }
 #anmelden select option {
-  background: #1a2540;
-  color: #fff;
+  background: var(--zr-control);
+  color: var(--cmp-navy);
 }
-#anmelden .eyebrow { color: #c8d8e8; }
-#anmelden .h2 { color: #fff; }
-#anmelden .h2 em { color: #c8d8e8; }
-#anmelden .lead { color: rgba(255,255,255,0.65); }
-#anmelden p { color: rgba(255,255,255,0.65); }
+/* Phase 4D.7: this block used to hardcode #anmelden to a dark palette
+   regardless of theme (older than the Concrete/light-steel token system) —
+   updated in place to the same light-steel values rather than duplicated. */
+#anmelden .eyebrow { color: var(--zr-accent); }
+#anmelden .h2 { color: var(--cmp-navy); }
+#anmelden .h2 em { color: var(--zr-accent); }
+#anmelden .lead { color: var(--cmp-text); }
+#anmelden p { color: var(--cmp-text); }
 
 /* ══════════════ DASHBOARD ══════════════ */
 #dash{display:none;position:fixed;inset:0;z-index:400;background:var(--f0);flex-direction:column;overflow:hidden}
