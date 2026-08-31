@@ -67,19 +67,6 @@ router.get('/intern/login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'intern-login.html'));
 });
 
-router.get('/preview', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'redesign.html'));
-});
-
-router.get('/fahrzeugverkauf', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'fahrzeugverkauf.html'));
-});
-
-router.get('/schaden', (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache');
-  res.sendFile(path.join(__dirname, '..', 'schaden.html'));
-});
-
 // ── POST /submit — Flottenankauf inquiry ──────────────────────────────────────
 router.post('/submit', formLimiter, upload.none(), async (req, res) => {
   const {

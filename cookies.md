@@ -2,7 +2,7 @@
 
 Stand: 2026-07-05
 
-Scope: Hauptwebsite (`index.html`, `fahrzeugverkauf.html`) und serverseitige Funktionen der Website. Die Schaden-App (`schaden.html`) ist bewusst ausgenommen und benoetigt eine eigene Cookie-/Datenschutzpruefung mit eigenem Hinweis.
+Scope: Hauptwebsite (`index.html`) und serverseitige Funktionen der Website. Die Schaden-App (`schaden.html`) ist bewusst ausgenommen und benoetigt eine eigene Cookie-/Datenschutzpruefung mit eigenem Hinweis.
 
 ## Ergebnis
 

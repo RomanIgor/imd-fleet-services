@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /intern
+Disallow: /fahrer
+Disallow: /schaden
+Disallow: /api/
+
+Sitemap: https://imdfleet.de/sitemap.xml

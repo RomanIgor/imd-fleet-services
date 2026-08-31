@@ -838,6 +838,9 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 #rechner .hc-back:hover{color:var(--cmp-navy)}
 #rechner .hc-recommend{color:var(--cmp-text);border-left-color:var(--zr-accent)}
 #rechner .hc-disclaimer{border-top-color:var(--zr-border)}
+#rechner .hc-field-err{display:none;color:var(--red);font-size:11px;font-weight:600;margin-top:4px}
+#rechner .hc-field.invalid .hc-field-err{display:block}
+#rechner .hc-field.invalid input,#rechner .hc-field.invalid select{border-color:var(--red)}
 
 /* ── Zeitrechner (Tool 02) — Phase 4D.2 visual rebuild, Phase 4D.4 color pass ──
    Reuses the Concrete Design System (--cmp-*) already established as
@@ -1094,7 +1097,7 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 /* ══════════════ FOOTER ══════════════ */
 footer{background:var(--bg-footer);border-top:1px solid rgba(255,255,255,.06);padding:64px 0 0}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
-.f-col h5{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:16px}
+.f-col h3{font-family:var(--fh);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:16px}
 .f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
 .f-col a{font-size:13px;color:#94a3b8;transition:color .2s}
 .f-col a:hover{color:#fff}

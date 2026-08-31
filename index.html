@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IMD Fleet Services — Fahrzeugankauf für Fuhrparks · Firmenfahrzeuge verkaufen</title>
 <meta name="description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir übernehmen Abholung, Wertgutachten und Auszahlung. Garantierter HEK-Mindestpreis.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://imdfleet.de/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IMD Fleet Services">
+<meta property="og:title" content="IMD Fleet Services — Fahrzeugankauf für Fuhrparks · Firmenfahrzeuge verkaufen">
+<meta property="og:description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir übernehmen Abholung, Wertgutachten und Auszahlung. Garantierter HEK-Mindestpreis.">
+<meta property="og:url" content="https://imdfleet.de/">
+<meta property="og:image" content="https://imdfleet.de/icon-192.png">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IMD Fleet Services — Fahrzeugankauf für Fuhrparks · Firmenfahrzeuge verkaufen">
+<meta name="twitter:description" content="IMD Fleet Services kauft Firmenfahrzeuge und Fuhrparks bundesweit. Wir übernehmen Abholung, Wertgutachten und Auszahlung. Garantierter HEK-Mindestpreis.">
+<meta name="twitter:image" content="https://imdfleet.de/icon-192.png">
 <link rel="stylesheet" data-consent-category="external" data-consent-href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Serif:wght@600;700&display=swap">
 <link rel="icon" href="/icon-192.png">
   <link rel="stylesheet" href="style.css?v=service-logo-safe-13-reference-grid-17">
@@ -427,7 +440,7 @@
       <div id="hcForm">
         <div class="hc-2col">
           <div class="hc-field">
-            <label>Marke</label>
+            <label for="hcManufacturer">Marke</label>
             <select id="hcManufacturer" onchange="hcPopulateModels(this.value)">
               <option value="">— Marke —</option>
               <option>Alfa Romeo</option><option>Audi</option><option>BMW</option>
@@ -446,14 +459,14 @@
             </select>
           </div>
           <div class="hc-field">
-            <label>Modell</label>
+            <label for="hcModel">Modell</label>
             <select id="hcModel" disabled style="opacity:.5">
               <option value="">— erst Marke wählen —</option>
             </select>
           </div>
         </div>
         <div class="hc-field">
-          <label>Fahrzeugart</label>
+          <label for="hcType">Fahrzeugart</label>
           <select id="hcType">
             <option value="pkw_ice">PKW Verbrenner / Hybrid</option>
             <option value="pkw_ev">PKW Elektro</option>
@@ -461,18 +474,21 @@
           </select>
         </div>
         <div class="hc-2col">
-          <div class="hc-field">
-            <label>Erstzulassung</label>
+          <div class="hc-field" id="hcFirstRegField">
+            <label for="hcFirstReg">Erstzulassung</label>
             <input id="hcFirstReg" type="date">
+            <small class="hc-field-err" id="hcFirstRegErr"></small>
           </div>
-          <div class="hc-field">
-            <label>Kilometerstand</label>
-            <input id="hcKm" type="number" placeholder="118000">
+          <div class="hc-field" id="hcKmField">
+            <label for="hcKm">Kilometerstand</label>
+            <input id="hcKm" type="number" min="0" placeholder="118000">
+            <small class="hc-field-err" id="hcKmErr"></small>
           </div>
         </div>
-        <div class="hc-field">
-          <label>Kaufpreis netto (€)</label>
-          <input id="hcPurchase" type="number" placeholder="42000">
+        <div class="hc-field" id="hcPurchaseField">
+          <label for="hcPurchase">Kaufpreis netto (€)</label>
+          <input id="hcPurchase" type="number" min="1" placeholder="42000">
+          <small class="hc-field-err" id="hcPurchaseErr"></small>
         </div>
         <div class="hc-field">
           <label>Größere Reparaturen letzte 12 Monate? <span style="opacity:.5;font-weight:400">optional</span></label>
@@ -561,7 +577,7 @@
         </div>
         <div class="cfield zr-field">
           <div class="zr-field-head">
-            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="17" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg>Anzahl Fahrzeuge</span>
+            <label class="zr-field-label" for="cAnzahl"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="17" cy="18.5" r="1.5" fill="currentColor" stroke="none"/></svg>Anzahl Fahrzeuge</label>
             <span class="zr-field-val" id="cAnzahlLbl">5 Fahrzeuge</span>
           </div>
           <input type="range" class="crange" id="cAnzahl" min="1" max="50" value="5" oninput="calcUpdate()">
@@ -569,7 +585,7 @@
         </div>
         <div class="cfield zr-field">
           <div class="zr-field-head">
-            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Ø Stunden pro Fahrzeug (klassisch)</span>
+            <label class="zr-field-label" for="cStd"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Ø Stunden pro Fahrzeug (klassisch)</label>
             <span class="zr-field-val" id="cStdLbl">8 Std./Fzg.</span>
           </div>
           <input type="range" class="crange" id="cStd" min="2" max="20" value="8" oninput="calcUpdate()">
@@ -577,7 +593,7 @@
         </div>
         <div class="cfield zr-field">
           <div class="zr-field-head">
-            <span class="zr-field-label"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.7a4 4 0 1 0 0 6.6"/><path d="M7.5 10.3h6M7.5 13.3h5"/></svg>Stundensatz Fuhrparkleiter (€)</span>
+            <label class="zr-field-label" for="cSatz"><svg class="zr-field-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.7a4 4 0 1 0 0 6.6"/><path d="M7.5 10.3h6M7.5 13.3h5"/></svg>Stundensatz Fuhrparkleiter (€)</label>
           </div>
           <input type="number" class="cnum" id="cSatz" value="65" min="20" max="200" oninput="calcUpdate()">
         </div>
@@ -703,7 +719,7 @@
             <!-- STEP 1 -->
             <div class="fpanel act" id="fp1">
               <div class="fg2">
-                <div class="fg"><label class="fl">Marke <em>*</em></label>
+                <div class="fg"><label class="fl" for="fMarke">Marke <em>*</em></label>
                   <select class="fsel" id="fMarke" onchange="populateModels(this.value)">
                     <option value="">— Marke —</option>
                     <option>Alfa Romeo</option><option>Audi</option><option>BMW</option>
@@ -721,32 +737,32 @@
                     <option>Volkswagen</option><option>Volvo</option><option>Andere</option>
                   </select>
                 </div>
-                <div class="fg"><label class="fl">Modell <em>*</em></label>
+                <div class="fg"><label class="fl" for="fModell">Modell <em>*</em></label>
                   <select class="fsel" id="fModell" disabled style="opacity:.5">
                     <option value="">— erst Marke wählen —</option>
                   </select>
                 </div>
               </div>
               <div class="fg2">
-                <div class="fg"><label class="fl">Baujahr <em>*</em></label>
+                <div class="fg"><label class="fl" for="fJahr">Baujahr <em>*</em></label>
                   <select class="fsel" id="fJahr">
                     <option value="">— Baujahr —</option>
                     <option>2024</option><option>2023</option><option>2022</option><option>2021</option>
                     <option>2020</option><option>2019</option><option>2018</option><option>2017 oder älter</option>
                   </select>
                 </div>
-                <div class="fg"><label class="fl">Kilometerstand <em>*</em></label><input type="number" class="fi" id="fKm" placeholder="z.B. 45000"></div>
+                <div class="fg"><label class="fl" for="fKm">Kilometerstand <em>*</em></label><input type="number" class="fi" id="fKm" placeholder="z.B. 45000"></div>
               </div>
               <div class="fg2">
-                <div class="fg"><label class="fl">Kraftstoff</label>
-                  <select class="fsel"><option value="">— Kraftstoff —</option><option>Benzin</option><option>Diesel</option><option>Hybrid</option><option>Plug-in Hybrid</option><option>Elektro</option></select>
+                <div class="fg"><label class="fl" for="fKraftstoff">Kraftstoff</label>
+                  <select class="fsel" id="fKraftstoff"><option value="">— Kraftstoff —</option><option>Benzin</option><option>Diesel</option><option>Hybrid</option><option>Plug-in Hybrid</option><option>Elektro</option></select>
                 </div>
-                <div class="fg"><label class="fl">Getriebe</label>
-                  <select class="fsel"><option value="">— Getriebe —</option><option>Automatik</option><option>Schaltgetriebe</option></select>
+                <div class="fg"><label class="fl" for="fGetriebe">Getriebe</label>
+                  <select class="fsel" id="fGetriebe"><option value="">— Getriebe —</option><option>Automatik</option><option>Schaltgetriebe</option></select>
                 </div>
               </div>
               <div class="fg">
-                <label class="fl">Fahrgestellnummer (VIN)</label>
+                <label class="fl" for="fVin">Fahrgestellnummer (VIN)</label>
                 <input type="text" class="fi" id="fVin" placeholder="WBA3A71090G123456" maxlength="17">
                 <div class="fhint">ℹ️ 17-stellig · Fahrzeugschein Punkt E · ermöglicht präzisere Bewertung</div>
               </div>
@@ -767,34 +783,34 @@
                 </div>
               </div>
               <div class="fg">
-                <label class="fl">Anzahl Fahrzeuge</label>
-                <select class="fsel"><option>1 Fahrzeug</option><option>2–5 Fahrzeuge</option><option>6–20 Fahrzeuge</option><option>21–100 Fahrzeuge</option><option>Über 100 Fahrzeuge</option></select>
+                <label class="fl" for="fAnzahlFahrzeuge">Anzahl Fahrzeuge</label>
+                <select class="fsel" id="fAnzahlFahrzeuge"><option>1 Fahrzeug</option><option>2–5 Fahrzeuge</option><option>6–20 Fahrzeuge</option><option>21–100 Fahrzeuge</option><option>Über 100 Fahrzeuge</option></select>
               </div>
               <div class="fdivider">
                 <div class="fdiv-label">Ansprechpartner vor Ort <span style="color:var(--red)">*</span></div>
                 <div class="fg2">
-                  <div class="fg"><label class="fl">Vorname <em>*</em></label><input type="text" class="fi" id="fVorname" placeholder="Max"></div>
-                  <div class="fg"><label class="fl">Nachname <em>*</em></label><input type="text" class="fi" id="fNachname" placeholder="Mustermann"></div>
+                  <div class="fg"><label class="fl" for="fVorname">Vorname <em>*</em></label><input type="text" class="fi" id="fVorname" placeholder="Max"></div>
+                  <div class="fg"><label class="fl" for="fNachname">Nachname <em>*</em></label><input type="text" class="fi" id="fNachname" placeholder="Mustermann"></div>
                 </div>
-                <div class="fg"><label class="fl">Telefon vor Ort <em>*</em></label><input type="tel" class="fi" id="fTelOrt" placeholder="+49 xxx xxxxxxx"></div>
+                <div class="fg"><label class="fl" for="fTelOrt">Telefon vor Ort <em>*</em></label><input type="tel" class="fi" id="fTelOrt" placeholder="+49 xxx xxxxxxx"></div>
               </div>
-              <div class="fg"><label class="fl">Hinweise / Sonderausstattung</label><textarea class="ftxt" id="fHinweise" placeholder="Bekannte Mängel, Sonderausstattung, Zubehör..."></textarea></div>
+              <div class="fg"><label class="fl" for="fHinweise">Hinweise / Sonderausstattung</label><textarea class="ftxt" id="fHinweise" placeholder="Bekannte Mängel, Sonderausstattung, Zubehör..."></textarea></div>
               <div class="form-nav"><button class="btn-back" onclick="goStep(1)">← Zurück</button><button class="btn-next" onclick="goStep(3)">Weiter →</button></div>
             </div>
 
             <!-- STEP 3 -->
             <div class="fpanel" id="fp3">
               <div class="fg2">
-                <div class="fg"><label class="fl">Firma <em>*</em></label><input type="text" class="fi" id="fFirma" placeholder="Musterfirma GmbH"></div>
-                <div class="fg"><label class="fl">Ansprechpartner <em>*</em></label><input type="text" class="fi" id="fName" placeholder="Max Mustermann"></div>
+                <div class="fg"><label class="fl" for="fFirma">Firma <em>*</em></label><input type="text" class="fi" id="fFirma" placeholder="Musterfirma GmbH"></div>
+                <div class="fg"><label class="fl" for="fName">Ansprechpartner <em>*</em></label><input type="text" class="fi" id="fName" placeholder="Max Mustermann"></div>
               </div>
               <div class="fg2">
-                <div class="fg"><label class="fl">Telefon <em>*</em></label><input type="tel" class="fi" id="fTel" placeholder="+49 30 xxxxxxx"></div>
-                <div class="fg"><label class="fl">E-Mail <em>*</em></label><input type="email" class="fi" id="fEmail" placeholder="fleet@firma.de"></div>
+                <div class="fg"><label class="fl" for="fTel">Telefon <em>*</em></label><input type="tel" class="fi" id="fTel" placeholder="+49 30 xxxxxxx"></div>
+                <div class="fg"><label class="fl" for="fEmail">E-Mail <em>*</em></label><input type="email" class="fi" id="fEmail" placeholder="fleet@firma.de"></div>
               </div>
-              <div class="fg"><label class="fl">Abholadresse <em>*</em></label><input type="text" class="fi" id="fAdresse" placeholder="Straße Nr., PLZ Ort"></div>
+              <div class="fg"><label class="fl" for="fAdresse">Abholadresse <em>*</em></label><input type="text" class="fi" id="fAdresse" placeholder="Straße Nr., PLZ Ort"></div>
               <div class="fg">
-                <label class="fl">Wunschtermin Abholung</label>
+                <label class="fl" for="fTermin">Wunschtermin Abholung</label>
                 <input type="date" class="fi" id="fTermin">
                 <div class="fhint" id="terminHint"></div>
               </div>
@@ -849,11 +865,11 @@
         <div class="contact-form-box" id="kontakt-form">
           <div style="font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:16px">Schnellanfrage</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-            <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Name</label><input type="text" class="fi" placeholder="Max Mustermann"></div>
-            <div><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Unternehmen</label><input type="text" class="fi" placeholder="Musterfirma GmbH"></div>
+            <div><label for="kFormName" style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Name</label><input type="text" class="fi" id="kFormName" placeholder="Max Mustermann"></div>
+            <div><label for="kFormFirma" style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Unternehmen</label><input type="text" class="fi" id="kFormFirma" placeholder="Musterfirma GmbH"></div>
           </div>
-          <div style="margin-bottom:12px"><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">E-Mail</label><input type="email" class="fi" placeholder="info@firma.de"></div>
-          <div style="margin-bottom:16px"><label style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Nachricht</label><textarea class="ftxt" placeholder="Ihre Anfrage..." style="height:80px"></textarea></div>
+          <div style="margin-bottom:12px"><label for="kFormEmail" style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">E-Mail</label><input type="email" class="fi" id="kFormEmail" placeholder="info@firma.de"></div>
+          <div style="margin-bottom:16px"><label for="kFormNachricht" style="font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px">Nachricht</label><textarea class="ftxt" id="kFormNachricht" placeholder="Ihre Anfrage..." style="height:80px"></textarea></div>
           <button class="btn btn-navy" style="width:100%;justify-content:center" onclick="showToast('✓ Nachricht gesendet — wir melden uns innerhalb von 24h!')">Nachricht senden →</button>
         </div>
       </div>
@@ -926,18 +942,18 @@
         <div class="fb-desc">IMD Fleet Services — professioneller Fahrzeugankauf mit garantiertem HEK-Mindestpreis. Bundesweit, kostenfrei, revisionssicher.</div>
         <div class="fb-badges"><span class="fb-badge">HEK-Garantie</span><span class="fb-badge">24h</span><span class="fb-badge">Bundesweit</span><span class="fb-badge">IMD Fleet Services IQ</span></div>
       </div>
-      <div class="f-col"><h5>Service</h5><ul>
+      <div class="f-col"><h3>Service</h3><ul>
         <li><a href="#service">Für Fuhrparks</a></li>
         <li><a href="#prozess">So funktioniert es</a></li>
         <li><a href="#warum">Warum IMD Fleet Services</a></li>
         <li><a href="#anmelden">Fahrzeug anmelden</a></li>
       </ul></div>
-      <div class="f-col"><h5>Unternehmen</h5><ul>
+      <div class="f-col"><h3>Unternehmen</h3><ul>
         <li><a href="#ueber-uns">Über uns</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#">Karriere</a></li>
       </ul></div>
-      <div class="f-col"><h5>Kontakt</h5><ul>
+      <div class="f-col"><h3>Kontakt</h3><ul>
         <li><a href="mailto:info@imdfleet.de">info@imdfleet.de</a></li>
         <li><a href="#">Chemnitz, Deutschland</a></li>
       </ul></div>
@@ -1020,14 +1036,62 @@ function hcPopulateModels(marke){
   });
   sel.disabled=false;sel.style.opacity='1';
 }
+function hcSetFieldError(fieldId,errId,msg){
+  var field=document.getElementById(fieldId),err=document.getElementById(errId);
+  field.classList.add('invalid');
+  err.textContent=msg;
+}
+function hcClearFieldError(fieldId,errId){
+  var field=document.getElementById(fieldId),err=document.getElementById(errId);
+  field.classList.remove('invalid');
+  err.textContent='';
+}
 function hcCalculate(){
   var manufacturer=document.getElementById('hcManufacturer').value.trim();
   var model=document.getElementById('hcModel').value.trim();
   var type=document.getElementById('hcType').value;
-  var firstReg=document.getElementById('hcFirstReg').value;
-  var purchase=Number(document.getElementById('hcPurchase').value)||0;
-  var km=Number(document.getElementById('hcKm').value)||0;
-  if(!purchase||!firstReg){alert('Bitte Erstzulassung und Kaufpreis eingeben.');return;}
+  var firstRegStr=document.getElementById('hcFirstReg').value;
+  var kmStr=document.getElementById('hcKm').value;
+  var purchaseStr=document.getElementById('hcPurchase').value;
+
+  hcClearFieldError('hcFirstRegField','hcFirstRegErr');
+  hcClearFieldError('hcKmField','hcKmErr');
+  hcClearFieldError('hcPurchaseField','hcPurchaseErr');
+  var valid=true;
+
+  var todayStr=new Date().toISOString().slice(0,10);
+  if(!firstRegStr){
+    hcSetFieldError('hcFirstRegField','hcFirstRegErr','Bitte Erstzulassung eingeben.');
+    valid=false;
+  }else if(firstRegStr>todayStr){
+    hcSetFieldError('hcFirstRegField','hcFirstRegErr','Erstzulassung darf nicht in der Zukunft liegen.');
+    valid=false;
+  }
+
+  var km=0;
+  if(kmStr!==''){
+    km=Number(kmStr);
+    if(isNaN(km)||km<0){
+      hcSetFieldError('hcKmField','hcKmErr','Kilometerstand muss 0 oder größer sein.');
+      valid=false;
+    }
+  }
+
+  var purchase=0;
+  if(purchaseStr===''){
+    hcSetFieldError('hcPurchaseField','hcPurchaseErr','Bitte Kaufpreis eingeben.');
+    valid=false;
+  }else{
+    purchase=Number(purchaseStr);
+    if(isNaN(purchase)||purchase<=0){
+      hcSetFieldError('hcPurchaseField','hcPurchaseErr','Kaufpreis muss größer als 0 € sein.');
+      valid=false;
+    }
+  }
+
+  if(!valid)return;
+
+  var firstReg=firstRegStr;
   var s=new Date(firstReg),n=new Date();
   var months=(n.getFullYear()-s.getFullYear())*12+(n.getMonth()-s.getMonth());
   if(n.getDate()<s.getDate())months--;
@@ -1141,6 +1205,10 @@ function hcCalculate(){
   document.getElementById('hcForm').style.display='none';
   document.getElementById('hcResult').style.display='block';
 }
+(function(){
+  var fr=document.getElementById('hcFirstReg');
+  if(fr)fr.max=new Date().toISOString().slice(0,10);
+})();
 function selectFleet(btn,val){
   document.querySelectorAll('.fleet-opt').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');

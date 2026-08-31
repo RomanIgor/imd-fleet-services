@@ -50,8 +50,9 @@ setupMaintenance(app);
 app.use(fahrerRoutes);
 
 const publicAssets = new Set([
+  '/robots.txt',
+  '/sitemap.xml',
   '/style.css',
-  '/redesign.css',
   '/main.js',
   '/cookie-consent.js',
   '/csrf-client.js',
