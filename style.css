@@ -225,15 +225,10 @@ a{text-decoration:none;color:inherit}
 /* Left copy panel — gradient overlay, no diagonal line */
 .hero-copy{position:relative;z-index:2;width:58%;min-height:0;background:linear-gradient(to right,rgba(6,10,22,0.88) 0%,rgba(6,10,22,0.72) 50%,rgba(6,10,22,0.30) 78%,transparent 100%);padding:80px 72px 80px;display:flex;flex-direction:column;justify-content:center}
 
-/* Eyebrow badge — always light on photo */
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:28px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:100px;padding:5px 14px;align-self:flex-start}
-.hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:heDotPulse 3s ease-in-out infinite}
-@keyframes heDotPulse{0%,100%{box-shadow:0 0 0 2px rgba(34,197,94,.25)}50%{box-shadow:0 0 0 5px rgba(34,197,94,.10)}}
 @keyframes mobSlideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tiSlideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tiSlideLeft{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:translateX(0)}}
 @keyframes tiSlideRight{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:translateX(0)}}
-.hero-eyebrow-text{font-family:var(--fh);font-size:10px;font-weight:700;color:rgba(200,216,232,.9);letter-spacing:.10em;text-transform:uppercase}
 
 /* H1 — always white on photo */
 .hero-h1{font-family:var(--fh);font-size:clamp(38px,4vw,60px);font-weight:800;line-height:1.04;letter-spacing:-.04em;color:#fff;margin-bottom:20px}
@@ -666,8 +661,6 @@ nav.sc .nav-links a:hover{color:var(--text-1)}
 /* ── Order card (sl2) ── */
 .mgp-order-header{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid var(--border);background:rgba(238,242,246,.07)}
 .mgp-order-label{font-family:var(--fh);font-size:10px;font-weight:700;color:var(--text-2)}
-.mgp-order-live{display:flex;align-items:center;gap:5px;font-family:var(--fh);font-size:10px;font-weight:700;color:#4ade80}
-.mgp-order-live-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:heDotPulse 2s infinite}
 .mgp-order-vehicle{display:flex;align-items:center;gap:8px;padding:9px 13px;border-bottom:1px solid var(--border)}
 .mgp-order-vehicle-ico{font-size:17px;flex-shrink:0}
 .mgp-order-vehicle-name{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--text-1)}
@@ -1352,18 +1345,6 @@ tbody tr:hover td{background:var(--f0)}
     box-shadow:0 22px 54px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.06);
     backdrop-filter:none;
     -webkit-backdrop-filter:none;
-  }
-  .hero-eyebrow{
-    display:inline-flex;
-    margin-bottom:16px;
-    background:rgba(255,255,255,.07);
-    border-color:rgba(255,255,255,.14);
-    border-radius:999px;
-  }
-  .hero-eyebrow-text{
-    font-size:8.5px;
-    letter-spacing:.095em;
-    line-height:1.25;
   }
   .hero-h1{
     font-size:clamp(28px,8vw,34px);
