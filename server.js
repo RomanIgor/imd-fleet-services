@@ -107,6 +107,7 @@ const publicAssets = new Set([
   '/assets/icons/shield-check.svg',
   '/assets/icons/star-plus.svg',
   '/assets/icons/timer-reset.svg',
+  '/assets/icons/timer-reset_black.svg',
   '/assets/icons/user-key.svg',
   '/assets/icons/custom/why-calendar.svg',
   '/assets/icons/custom/why-certificate.svg',
